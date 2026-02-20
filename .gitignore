@@ -19,9 +19,6 @@ image/resize/*
 image/watermark/*
 image/system/*
 image/vendors/*
-image/webp/*
-image/webp/*
-*X.*
 cdn/backup/*
 cdn/css/*
 cdn/js/*
