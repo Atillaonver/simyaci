@@ -21,3 +21,13 @@ image/system/*
 image/vendors/*
 image/webp/*
 image/webp/*
+*X.*
+cdn/backup/*
+cdn/css/*
+cdn/js/*
+cdn/image/*
+*.tpl
+open/*.php  
+local/* 
+*.bak  
+develope/*
