@@ -1,0 +1,116 @@
+<div class="row" id="order-mail">
+		<div class="col-md-4">
+			<h4>Mail History</h4>
+			<div id="sendedMailTo">
+				<ul class="list-group">
+					{{ mail_history }}
+				</ul>
+				
+			</div>
+		</div>
+		<div class="col-sm-4">
+				<h4>Customer Product/s</h4>
+				<div  id="orderedProducts">
+					<ul class="list-group has-active">
+					{% set fprod = 0 %}
+					{% if product_history %}
+						{% set fprod = product_history[0]['product_id'] %}
+						
+						{%  for hproduct in product_history %} 
+						
+						<li class="list-group-item{{ loop.first?' active':'' }}" data-pid="{{ hproduct['product_id'] }}">
+							<span class="POSt">{{ hproduct['order_status'] }}</span>
+							<img src="{{ hproduct['thm'] }}" alt="{{ hproduct['name'] }}" title="{{ hproduct['name'] }}" class="img-thumbnail" />
+							{{ hproduct['pstatus']?'':'<i class="un fa-solid fa-x"></i>' }}
+							<span class="PModel">{{ hproduct['model'] }}</span>
+							<span class="PName">{{ hproduct['name'] }} -></span>
+							
+						</li>
+						{%  endfor %} 		
+					{%  endif %} 
+					</ul>		
+							
+				</div>
+		</div>
+		<div class="col-md-4">
+				<h4>Coupon/s</h4>
+      			<div id="divPreview">
+      				{% if AllCoupons %}
+      					<ul class="list-group has-active">
+						{%  for coupon in AllCoupons %} 
+							<li class="list-group-item {{ coupon.status?'':'disabled' }}" data-cid="{{ coupon.coupon_id }}">
+							<span class="cType">{{ coupon.type_customer == 0?' Gen:':'' }}{{ coupon.type_customer == 1?' 2Weeks:':'' }}{{ coupon.type_customer == 2?' 2Weeks:':'' }}</span>
+							<span class="coName">{{ coupon.name }}</span> <span class="coStatus"></span>
+							
+							</li>
+						{%  endfor %} 
+						</ul>		
+					{%  endif %}
+      			</div>
+		</div>
+</div>
+<form id="coupon-form" class="text-end">
+			<input type="hidden" name="product_id" id="coupon_product_id" value="{{ fprod }}">
+			<input type="hidden" name="coupon_id" id="coupon_coupon_id" value="">
+			<input type="hidden" name="mail" id="coupon_email" value="{{ email }}">
+			<input type="button" value=" SEND " onclick="sendMail($(this))" id="mail-sender-btn" class="btn btn-primary" disabled="disabled">
+		</form>
+
+<script type="text/javascript"><!--
+
+$(document).ready(function() {
+	
+	$('#orderedProducts .list-group-item').on('click',function(){
+		$('#orderedProducts .list-group-item').removeClass('active');
+		$(this).addClass('active');
+		$('#coupon_product_id').val($(this).data('pid'))
+		
+	});
+
+	$('#divPreview .list-group-item').on('click',function(){
+		if(!$(this).hasClass('disabled')){
+			$('#divPreview .list-group-item').removeClass('active');
+			$(this).addClass('active');
+			$('#coupon_coupon_id').val($(this).data('cid'))
+		}
+	});
+
+	$('.has-active').on('click',function(){
+		ActCol = $('.has-active').find('active');
+		if($(ActCol).length == $('.has-active').length && !$('#coupon_coupon_id').val() && !$('#coupon_product_id').val() ){
+			$( "#mail-sender-btn" ).prop( "disabled", true );
+		}else{
+			$( "#mail-sender-btn" ).prop( "disabled", false );
+		}
+	});
+
+		
+	$('.popoverM').popover({
+	  html: true,
+	   container: 'body',
+	  trigger: 'hover',
+	  content: function(){return $(this).parent().find('div').html();}
+	});
+
+});
+
+function sendMail(BTN) {
+	var bHTML = $(BTN).html(); 
+	$.ajax({
+		url: 'index.php?route=bytao/mail.couponsend&user_token={{ user_token }}',
+		type: 'post',
+		data: $('#coupon-form').serialize(),		
+		dataType: 'json',
+		success: function(json) {
+			
+			if (json['sendedTo']) {
+				alert(json['sendedTo'])
+			}
+			if (json['success']) {
+				alert(json['success'])
+			}				
+		}
+	});
+}
+
+//--></script>

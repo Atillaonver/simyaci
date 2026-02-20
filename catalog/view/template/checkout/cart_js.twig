@@ -1,0 +1,89 @@
+<script type="text/javascript"><!--
+
+class Chain {
+    constructor() {
+        this.start = false;
+        this.data = [];
+    }
+
+    attach(call) {
+        this.data.push(call);
+
+        if (!this.start) {
+            this.execute();
+        }
+    }
+
+    execute() {
+        if (this.data.length) {
+            this.start = true;
+
+            var call = this.data.shift();
+
+            var jqxhr = call();
+
+            jqxhr.done(function() {
+                chain.execute();
+            });
+        } else {
+            this.start = false;
+        }
+    }
+}
+
+var chain = new Chain();
+	
+var confirm =  function() {
+	$('#checkout-confirm').load('index.php?route=checkout/confirm.confirm&language={{ language }}');
+	sameHeight();
+}
+
+var scrllDiv = function(parentid, id){
+	TOP = parseInt($("#"+id).position().top)
+	HEIGHT = parseInt($("#"+parentid).height())
+	
+	if( TOP > HEIGHT ){
+		$("#"+parentid).animate({scrollTop: $("#"+id).position().top}, 800, 'swing');
+	}
+}
+
+var adrChange = function(elem){
+	//address changed
+    var language = $('#clanguage').val();
+    var element = $('#input-shipping-existing');
+    chain.attach(function() {
+      	return $.ajax({
+            url: 'index.php?route=checkout/shipping_address.address&language={{ language }}&address_id=' + $(element).val(),
+            dataType: 'json',
+            success: function(json) {
+                
+                $('#input-shipping-address').removeClass('is-invalid');
+                $('#error-shipping-address').removeClass('d-block');
+
+                if (json['redirect']) {
+                    location = json['redirect'];
+                }
+
+                if (json['error']) {
+                    $('#input-shipping-address').addClass('is-invalid');
+                    $('#error-shipping-address').html(json['error']).addClass('d-block');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                    
+                    
+                }
+            }
+        });
+    });
+}
+
+var sameHeight = function(){
+	$('.same-height').each(function(ind,elem){
+		$(this).css('height',$(this).prev().height()+'px');	
+	});
+}
+
+
+//--></script>

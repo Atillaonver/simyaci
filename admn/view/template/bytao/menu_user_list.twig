@@ -1,0 +1,477 @@
+{{ header }}
+{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      
+      <h1>{{ heading_title }}</h1>
+      <ul class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid">
+    {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> {{ success }}
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    {% endif %}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
+      </div>
+      <div class="panel-body">
+      	<div class="row">
+      		<div class="col-md-4">
+      		<div class="container-fluid">
+      			<div class="pull-right"><a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary ajax"><i class="fa fa-plus"></i></a>
+        <button type="button" data-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger" onclick="confirm('{{ text_confirm }}') ? $('#form-list-user').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      </div>
+      </div>
+      			 <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-list-user">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{% if sort == 'username' %}
+                    <a href="{{ sort_username }}" class="{{ order|lower }}">{{ column_username }}</a>
+                    {% else %}
+                    <a href="{{ sort_username }}">{{ column_username }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'status' %}
+                    <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                    {% else %}
+                    <a href="{{ sort_status }}">{{ column_status }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'date_added' %}
+                    <a href="{{ sort_date_added }}" class="{{ order|lower }}">{{ column_date_added }}</a>
+                    {% else %}
+                    <a href="{{ sort_date_added }}">{{ column_date_added }}</a>
+                    {% endif %}</td>
+                  <td class="text-right" colspan="2">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody id="users-body">
+                {% if users %}
+                {% for user in users %}
+                <tr id="tr-{{ user.user_id }}" data-uid="{{ user.user_id }}">
+                  <td class="text-center">{% if user.user_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ user.user_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ user.user_id }}" />
+                    {% endif %}</td>
+                  <td class="text-left">{{ user.username }}</td>
+                  <td class="text-left">{{ user.status }}</td>
+                  <td class="text-left">{{ user.date_added }}</td>
+                  <td class="text-right"><a href="{{ user.menu }}" title="{{ button_menu }}" class="btn btn-alert ajax"><i class="fa fa-bars"></i></a></td>
+                  <td class="text-right"><a href="{{ user.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary ajax"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="5">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+      		</div>	
+      		<div class="col-md-8">
+      			<div id="userForm"></div>
+      			<div id="menuForm"></div>
+      			
+      		</div>	
+      	</div>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="cmodal" class="modal fade deleteTree-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				{{ message_delete_category }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>
+				<button type="button" class="btn btn-primary" id="btnDeleteTree">{{ button_remove }}</button>
+			</div>
+			<input id="menuid" type="hidden" name="menuid" value="0"/>
+		</div>
+	</div>
+</div>
+
+<div id="dmodal" class="modal fade deleteMenu-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				{{ message_delete }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>
+				<button type="button" class="btn btn-primary" id="btnDeleteMenu">{{ button_remove }}</button>
+			</div>
+			<input class="menu-id" type="hidden" name="menuid" value="0"/>
+		</div>
+	</div>
+</div>
+
+<style>
+	tr.active {
+    color: #000;
+    background-color: #ccc;
+    font-weight: bold;
+}
+</style>
+
+<link href="view/stylesheet/bytao/menu/menu.css?v11" rel="stylesheet" />
+<link href="view/javascript/jquery/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/bytao/menu/jquerycookie.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/jquery-ui/jquery-ui.min.css"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="view/javascript/bytao/menu/jquery.nestable.js"></script>
+
+<script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+<link href="view/javascript/summernote/summernote.css" rel="stylesheet"/>
+<script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
+<script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+
+
+<script>
+
+	$(document).on('click','.najax',function(e){
+		e.preventDefault();
+		$($(this).attr('href')).html('');
+		$('tr.active').removeClass('active')
+		return false;
+	});
+	
+	$(document).on('click','.ajax',function(e){
+		e.preventDefault();
+		var button=$(this);
+		
+		$.ajax({
+			url: $(this).attr('href'),
+			dataType: 'json',
+			success: function(json) {
+				if(json['error']){
+					alert(json['error']);
+				}
+				if(json['userForm']){
+					$('tr.active').removeClass('active')
+					$(button).parents('tr').addClass('active')
+					$('#menuForm').html('')
+					$('#userForm').html(json['userForm'])
+				}
+				
+				if(json['menuForm']){
+					$('tr.active').removeClass('active')
+					$(button).parents('tr').addClass('active')
+					$('#userForm').html('')
+					$('#menuForm').html(json['menuForm'])
+					$("#menuForm ol.sortable").nestedSortable({
+						forcePlaceholderSize: true,
+						handle: 'div',
+						helper:	'clone',
+						items: 'li',
+						opacity: .6,
+						placeholder: 'placeholder',
+						revert: 250,
+						tabSize: 25,
+						tolerance: 'pointer',
+						toleranceElement: '> div',
+						maxLevels: 4,
+						isTree: true,
+						expandOnHover: 700,
+						startCollapsed: true
+					});
+					$("#language a:first").tab('show');
+					
+				}
+			}
+		});
+	});
+</script>
+  
+<script type="text/javascript">
+
+$('body').delegate('#serialize, .btn-updatetree','click', function(e) {
+	var uid = $('#users-body tr.active').attr('data-uid');
+	var serialized = $('ol.sortable').nestedSortable('serialize');
+	$.ajax({
+		async : false,
+		type: 'POST',
+		dataType:'json',
+		url: 'index.php?route=bytao/menu_user/updatetree&user_token={{ user_token }}&uid='+uid,
+		data : serialized, 
+		success : function (r) {
+	
+		}
+	});
+});
+
+function formReset(){
+	$("#menu-form").find("[name=\'menu[menu_id]\']").val('');
+	$("#menu-form").find("[name=\'menu[user_id]\']").val($('#users-body tr.active').attr('data-uid'));
+	$("#menu-form").find("[name=\'menu[menu_class]\']").val('');
+	$("#menu-form").find("[name=\'menu[parent_id]\']").val(0);
+	$("#menu-form").find("[name=\'menu[url]\']").val('');
+	$("#menu-form").find("[name=\'menu[ctrl]\']").val('');
+	{% for language in languages %}
+	$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][title]\']').val('');
+	$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][description]\']').val('');
+	{% endfor %}
+	$("#language a:first").tab('show');
+}
+	
+
+</script>  
+<script type="text/javascript"><!--
+	$(document).on('click','.quickedit', function(e) {
+			e.preventDefault();
+	 
+			formId = $(this).parents('form').attr('id');
+			$(".treeContainer li.active").removeClass('active');
+			$(this).parent().parent().addClass('active');
+	
+			$.ajax({
+					url: 'index.php?route=bytao/menu_user/getmenu&user_token={{ user_token }}&mid='+$(this).attr('rel'),
+					type: "POST",
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['menu']){
+							$("#menu-form").find("[name=\'menu[menu_id]\']").val(data['menu'].menu_id);
+							$("#menu-form").find("[name=\'menu[user_id]\']").val(data['menu'].user_id);
+							$("#menu-form").find("[name=\'menu[menu_class]\']").val(data['menu'].menu_class);
+							$("#menu-form").find("[name=\'menu[parent_id]\']").val(data['menu'].parent_id);
+							$("#menu-form").find("[name=\'menu[url]\']").val(data['menu'].url);
+							$("#menu-form").find("[name=\'menu[ctrl]\']").val(data['menu'].ctrl);
+						}
+						if(data['menu_user_description']){
+							{% for language in languages %}
+							$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][title]\']').val(data['menu_user_description'][{{ language.language_id }}].title);
+							$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][description]\']').val(data['menu_user_description'][{{ language.language_id }}].description);
+							{% endfor %}
+							$("#language a:first").tab('show');
+
+						}
+						
+						if(data['menus']){
+							$("#menu-form").find('#menu-pos').html(data['menus']);
+						}
+					},
+					error: function(jqXHR, textStatus, errorThrown) 
+					{ 
+					}
+				});
+		});
+	$(document).on('click','.btn-copied', function(e) {
+			e.preventDefault();
+	 		var uid=$('#userID').val();
+			var Button=$(this)
+			if($(Button).hasClass('btn-warning')){
+				$.ajax({
+					url: 'index.php?route=bytao/menu_user/copied&user_token={{ user_token }}&uid='+uid,
+					type: "POST",
+					success:function(data, textStatus, jqXHR) 
+					{
+						$(Button).removeClass('btn-warning').addClass('btn-default')
+						$(Button).html($(Button).attr('text-paste'))
+					},
+					error: function(jqXHR, textStatus, errorThrown) 
+					{ 
+					}
+				});
+				
+			}else{
+				$.ajax({
+					url: 'index.php?route=bytao/menu_user/paste&user_token={{ user_token }}&uid='+uid,
+					type: "POST",
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['tree']){
+							$('#tree-part .treeContainer').html(data['tree']);
+							$("ol.sortable").nestedSortable({
+									forcePlaceholderSize: true,
+									handle: 'div',
+									helper:	'clone',
+									items: 'li',
+									opacity: .6,
+									placeholder: 'placeholder',
+									revert: 250,
+									tabSize: 25,
+									tolerance: 'pointer',
+									toleranceElement: '> div',
+									maxLevels: 4,
+
+									isTree: true,
+									expandOnHover: 700,
+									startCollapsed: true
+								});
+								
+						}
+						
+						if(data['parent']){
+							$('[name=\'menu[parent_id]\']').find('option').remove();
+							$('[name=\'menu[parent_id]\']').html(data['parent']);
+							$(".treeContainer li.active").removeClass('active');
+						}
+						
+						$(Button).removeClass('btn-default').addClass('btn-warning');
+						$(Button).html($(Button).attr('text-copy'))
+						$("#menu-form").trigger("reset");
+						$("[name=\'menu[menu_id]\'").val(0);
+				  		formReset();
+					},
+					error: function(jqXHR, textStatus, errorThrown) 
+					{ 
+					}
+				});
+				
+			}
+	
+			
+		});
+	
+	$(document).on('click','.btnCancel', function(e) {
+			e.preventDefault();
+			$("#menu-form").trigger("reset");
+			$("[name=\'menu[menu_id]\'").val(0);
+	  		$(".treeContainer li.active").removeClass("active");
+	  		formReset();
+		});
+
+	$(document).on('click','.quickdel', function(e) {
+			$('#cmodal .modal-body').html( "{{ message_delete }}" );
+			$('#cmodal').modal();
+			var id = $(this).attr("rel").replace("id_","");
+			$("#menuid").attr('pform',$(this).parents('form').attr('nform'));
+		
+			$("#menuid").val(id);
+			
+			return false;
+		});
+	
+	$(document).on('click','.quickdisplay', function(e) {
+		e.preventDefault();
+		var M = $(this)
+		var Mval=1;
+			if($(M).find('i').hasClass('fa-eye')){
+				Mval=0;
+			}
+			$.ajax({
+					url: 'index.php?route=bytao/menu_user/hidemenu&user_token={{ user_token }}&mid='+$(this).attr('rel')+'&val='+Mval,
+					type: "POST",
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['success']){
+							if(Mval)
+								$(M).find('i').removeClass('fa-eye-slash').addClass('fa-eye')
+							else
+								$(M).find('i').removeClass('fa-eye').addClass('fa-eye-slash')
+						}
+						
+					},
+					error: function(jqXHR, textStatus, errorThrown) 
+					{ 
+					}
+				});
+			
+			return false;
+		});
+
+	$(document).on('click','#btnDeleteTree', function(e) {
+			var id = $("#menuid").val();
+			var userId = $("#userID").val();
+			
+			$.ajax({
+					url: 'index.php?route=bytao/menu_user/deletemenu&user_token={{ user_token }}&id='+id+'&uid='+userId,
+					dataType: 'json',			
+					success: function(json) {
+						if(json['warning']){
+							alert(json['warning']);
+						}
+					
+						if(json['success']){
+							$('#list_'+id).remove();
+						}
+						
+						$('#cmodal').modal('hide');
+					
+					}
+				});
+		
+		});
+
+	$(document).on('click','.btnSave', function(e) {
+			e.preventDefault();
+			
+			parentName =   $(this).parents('form').attr('id');
+			uLang='';
+			$('.url-lang').each(function(){
+					uLang+= $(this).data('lang')+':'+$(this).val()+',';
+				});
+	
+			$('#menu-url').val(uLang);
+			var postData = $("#menu-form").serializeArray();
+			$.ajax({
+					url: 'index.php?route=bytao/menu_user/addnewmenu&user_token={{ user_token }}',
+					type: "POST",
+					data : postData,
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['tree']){
+							$('#tree-part .treeContainer').html(data['tree']);
+							$("ol.sortable").nestedSortable({
+									forcePlaceholderSize: true,
+									handle: 'div',
+									helper:	'clone',
+									items: 'li',
+									opacity: .6,
+									placeholder: 'placeholder',
+									revert: 250,
+									tabSize: 25,
+									tolerance: 'pointer',
+									toleranceElement: '> div',
+									maxLevels: 4,
+
+									isTree: true,
+									expandOnHover: 700,
+									startCollapsed: true
+								});
+								
+						}
+						
+						if(data['parent']){
+							$('[name=\'menu[parent_id]\']').find('option').remove();
+							$('[name=\'menu[parent_id]\']').html(data['parent']);
+							$(".treeContainer li.active").removeClass('active');
+						}
+						
+						//$("#menu-form").trigger("reset");
+						formReset();
+					},
+					error: function(jqXHR, textStatus, errorThrown) 
+					{ 
+					}
+				});
+			return false;
+		});
+
+	//-->
+</script>
+
+{{ footer }} 

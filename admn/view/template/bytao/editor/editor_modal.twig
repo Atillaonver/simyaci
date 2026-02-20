@@ -1,0 +1,405 @@
+<div id="pageModal2" class="modal">
+	<div id="filemanager" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					{{ heading_title }}
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="updatem" class="btn btn-primary" title="Save changes">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="settingModal" class="modal" data-crid="0">
+	<div id="settingmanager" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					{{ heading_row_title }}
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body" id="modal-body">
+
+				<div class="row">
+					<div class="col-md-6">
+						<table class="modal-padding-table">
+							<tr>
+								<td style="color:#ccc;">
+									Margin
+								</td>
+								<td>
+									<input type="text" name="mod-m-t" id="mod-m-t" title="Top" value=""/>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="text" title="Left"  name="mod-m-l" id="mod-m-l" value=""/>
+								</td>
+								<td>
+									<table class="modal-padding-table">
+										<tr>
+											<td>
+												Padding
+											</td>
+											<td>
+												<input type="text" name="mod-p-t" id="mod-p-t" title="Top" value=""/>
+											</td>
+											<td>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<input type="text" name="mod-p-l" id="mod-p-l" title="Left" value=""/>
+											</td>
+											<td>
+												<div>
+													Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sollicitudin finibus libero eget suscipit.
+												</div>
+											</td>
+											<td>
+												<input type="text" name="mod-p-r" id="mod-p-r" title="Right" value=""/>
+											</td>
+										</tr>
+										<tr>
+											<td>
+											</td>
+											<td>
+												<input type="text" name="mod-p-b" id="mod-p-b" title="bottom"  value=""/>
+											</td>
+											<td>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<input type="text" name="mod-m-r" id="mod-m-r" title="Right" value=""/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								</td>
+								<td>
+									<input type="text" name="mod-m-b"  id="mod-m-b" title="bottom"  value=""/>
+								</td>
+								<td>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-md-6">
+						<label>Tag ID</label> <input type="text" id="modal_row_tag_id" name="modal_row_tag_id" value="" style="width:100%;"/>
+						<input type="text" id="modal_col_tag_id" name="modal_row_tag_id" value="" style="width:100%;"/>
+						<label>Class</label><textarea id="modal_row_class" rows="10" name="modal_row_class" style="width:100%;"></textarea>
+						<textarea id="modal_col_class" rows="10" name="modal_col_class" style="width:100%;"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" id="updatem" class="btn btn-primary" title="Save changes">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div id="pageMainModal" class="modal">
+	<div id="filemanager" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ heading_page_title }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="row mb-3">
+
+					<label
+						class="col-sm-2 col-form-label {% if ctrl=="footer" %}hidden{% endif %}">{{ entry_himage }}
+					</label>
+					<div
+						class="col-sm-4 {% if ctrl=="footer" %}hidden{% endif %}">
+						<div class="card image">
+							<img src="{{ thumb }}" alt="" title="" id="thumb-hImage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>
+							<input type="hidden" name="hImage" value="{{ himage }}" id="input-hImage"/>
+							<div class="card-body">
+								<button type="button" data-oc-toggle="image" data-oc-target="input-hImage" data-oc-thumb="#thumb-hImage" class="btn btn-primary btn-sm btn-block">
+									<i class="fa-solid fa-pencil">
+									</i>{{ button_edit }}
+								</button>
+								<button type="button" data-oc-toggle="clear" data-oc-target="input-hImage" data-oc-thumb="#thumb-hImage" class="btn btn-warning btn-sm btn-block">
+									<i class="fa-regular fa-trash-can">
+									</i>{{ button_clear }}
+								</button>
+							</div>
+						</div>
+					</div>
+					<label class="col-sm-2 col-form-label">
+						{{ entry_fimage }}
+					</label>
+					<div class="col-sm-4">
+						<div class="card image">
+							<img src="{{ thumb }}" alt="" title="" id="thumb-fImage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>
+							<input type="hidden" name="fImage" value="{{ fimage }}" id="input-fImage"/>
+							<div class="card-body">
+								<button type="button" data-oc-toggle="image" data-oc-target="input-fImage" data-oc-thumb="#thumb-fImage" class="btn btn-primary btn-sm btn-block">
+									<i class="fa-solid fa-pencil">
+									</i>{{ button_edit }}
+								</button>
+								<button type="button" data-oc-toggle="clear" data-oc-target="input-fImage" data-oc-thumb="#thumb-fImage" class="btn btn-warning btn-sm btn-block">
+									<i class="fa-regular fa-trash-can">
+									</i>{{ button_clear }}
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label for="input-css" class="col-sm-2 col-form-label">
+						{{ entry_css }}
+					</label>
+					<div class="col-sm-10">
+						<textarea placeholder="{{ entry_css }}" id="input-css" style="width:100%;height:300px;" class="form-control">
+						</textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="updatepage" class="btn btn-primary" title="Save changes">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="widget-modal" class="modal">
+	<div id="widgetmanager" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					{{ heading_page_title }}
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="updatew" class="btn btn-primary" title="Save changes">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="module-modal" class="modal">
+	<div id="modulemanager" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					{{ heading_module_title }}
+				</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="modal-body-content">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="editModule" class="btn btn-primary" title="Save changes">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+<div id="ctModal" class="modal">
+	<div id="ctModalContainer" class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<ul class="nav nav-tabs" id="ctModalNavs">
+				<li class="nav-item" id="liTab-14"><a href="#ctTab-14" data-bs-toggle="tab" class="nav-link ">{{ tab_banner }}</a></li>
+				<li class="nav-item" id="liTab-13"><a href="#ctTab-13" data-bs-toggle="tab" class="nav-link ">{{ tab_social_address }}</a></li>
+				<li class="nav-item" id="liTab-12"><a href="#ctTab-12" data-bs-toggle="tab" class="nav-link ">{{ tab_url }}</a></li>
+				<li class="nav-item" id="liTab-9"><a href="#ctTab-9" data-bs-toggle="tab" class="nav-link ">{{ tab_ctrl }}</a></li>
+				<li class="nav-item" id="liTab-6"><a href="#ctTab-6" data-bs-toggle="tab" class="nav-link ">{{ tab_slider }}</a></li>
+				<li class="nav-item" id="liTab-7"><a href="#ctTab-7" data-bs-toggle="tab" class="nav-link ">{{ tab_carousel }}</a></li>
+				<li class="nav-item" id="liTab-15"><a href="#ctTab-15" data-bs-toggle="tab" class="nav-link ">{{ tab_sectioner }}</a></li>
+            	</ul>
+            
+				<button type="button" class="btn-close" data-bs-dismiss="modal">
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="tab-content" id="ctModalNavContents">
+					<div id="ctTab-6" class="tab-pane tab-pane-top">
+						<div class="tab-6-container"></div>
+					</div>
+					
+					<div id="ctTab-7" class="tab-pane tab-pane-top">
+						<div class="tab-7-container">
+							
+						</div>
+					</div>
+					
+					<div id="ctTab-9" class="tab-pane tab-pane-top">
+						<div class="tab-9-container">
+							
+						</div>
+					</div>
+					
+					<div id="ctTab-13" class="tab-pane tab-pane-top">
+						<div class="tab-13-container">
+							
+						</div>
+					</div>
+					
+					<div id="ctTab-14" class="tab-pane tab-pane-top">
+						<div class="tab-14-container">
+							
+						</div>
+					</div>
+					<div id="ctTab-15" class="tab-pane tab-pane-top">
+						<div class="tab-15-container">
+							
+						</div>
+					</div>
+					
+					<div id="ctTab-12" class="tab-pane tab-pane-top">
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label">
+								{{ entry_column }}
+							</label>
+							<div class="col-sm-10">
+								<select id="url-column" class="form-control">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+								</select>
+							</div>
+						</div>'
+						<div class="row mb-3">
+							<label for="input-urls" class="col-sm-2 col-form-label">
+								{{ entry_url }}
+							</label>
+							<div class="col-sm-6">
+								<input type="text" name="url" value="" placeholder="{{ entry_url }}" id="input-urls" class="form-control" autocomplete="off"/>
+								<ul id="autocompleteUrl" class="dropdown-menu">
+								</ul>
+							</div>
+							<div class="col-sm-1">
+								<label class="col-sm-2 col-form-label">{{ entry_target }}</label>
+							</div>	
+							<div class="col-sm-3">
+								<select id="url-target" class="form-control">
+									<option value="">default</option>
+									<option value="_blank">_blank</option>
+									
+								</select>
+							</div>	
+							
+						</div>
+						<div class="row mb-3">
+							<div class="link-col col1">
+								<ul class="link-col-ul"></ul>
+							</div>
+							<div class="link-col col2 hidden">
+								<ul class="link-col-ul"></ul>
+							</div>
+							<div class="link-col col3 hidden">
+								<ul class="link-col-ul"></ul>
+							</div>
+						</div>
+						
+					</div>
+					
+					
+				</div>
+			</div>
+			<div class="modal-footer">
+				<div class="tab-content" id="ctModalNavButtons">
+					<div id="ctTab-6-bottom" class="tab-pane tab-pane-bottom">
+							<button type="button" id="ctSave6" class="btn btn-primary" title="Save changes">
+							<i class="fa-solid fa-floppy-disk"></i>
+						</button>
+					</div>
+					
+					<div id="ctTab-7-bottom" class="tab-pane tab-pane-bottom">
+							<button type="button" id="ctSave7" class="btn btn-primary" title="Save changes">
+								<i class="fa-solid fa-floppy-disk"></i>
+							</button>
+					</div>
+					
+					<div id="ctTab-9-bottom" class="tab-pane tab-pane-bottom">
+							<button type="button" id="ctSave9" class="btn btn-primary" title="Save changes">
+							<i class="fa-solid fa-floppy-disk">
+							</i>
+						</button>
+					</div>
+					<div id="ctTab-12-bottom" class="tab-pane tab-pane-bottom">
+							<button type="button" id="updateUrlModal" class="btn btn-primary" title="Save changes">
+							<i class="fa-solid fa-floppy-disk">
+							</i>
+						</button>
+					</div>
+					
+					<div id="ctTab-13-bottom" class="tab-pane tab-pane-bottom">
+							<button type="button" id="ctSave" class="btn btn-primary" title="Save changes">
+								<i class="fa-solid fa-floppy-disk"></i>
+							</button>
+					</div>
+					
+					<div id="ctTab-14-bottom" class="tab-pane tab-pane-bottom">
+						<button type="button" id="ctSave14" class="btn btn-primary" title="Save changes">
+							<i class="fa-solid fa-floppy-disk"></i>
+						</button>
+					</div>
+					
+					<div id="ctTab-15-bottom" class="tab-pane tab-pane-bottom">
+						<button type="button" id="ctSave15" class="btn btn-primary" title="Save changes">
+							<i class="fa-solid fa-floppy-disk"></i>
+						</button>
+					</div>
+					
+					
+					
+				
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

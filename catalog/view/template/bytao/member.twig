@@ -1,0 +1,53 @@
+{{ header }}
+
+    <div class="head qua_page_title qua_page_title_great qua_image_bck qua_fixed qua_wht_txt" data-stellar-background-ratio="0.2" data-image="{{ HTTP_IMAGE }}catalog/masmana/hero-bg-green.png">
+
+
+      <!-- Over -->
+      <div class="qua_over" data-color="#000" data-opacity="0"></div>
+
+      <div class="container parent-height text-left">
+        <div class="row">
+          
+          <div class="col-md-12 text-center relative">
+            <h1 class="qua_h1_title">{{ heading_title }}</h1>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+<div id="bytao-award" class="container">
+  <div class="row">{{ column_left }}
+    {% if column_left and column_right %}
+    {% set class = 'col-sm-6' %}
+    {% elseif column_left or column_right %}
+    {% set class = 'col-sm-9' %}
+    {% else %}
+    {% set class = 'col-sm-12' %}
+    {% endif %}
+    
+    <div id="content" class="{{ class }}">{{ content_top }}
+      
+      {% for item in allitems %}
+      <div class="qua_portfolio_item col-md-3">
+      <a href="{{ item.bimage }}" class="lightbox">
+            <span class="qua_portfolio_item_cont">
+                <img src="{{ item.image }}" alt="{{ item.title }}">
+                <span class="qua_port_titles">
+                    <span class="qua_port_title">{{ item.title }}</span>
+                    <span class="qua_port_subtitle"></span>
+                </span>
+            </span>
+        </a>
+        {% if item.url %}
+        <a href="{{ item.url }}" target="_blank">{{ item.url }}</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+                        
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+
+{{ footer }}

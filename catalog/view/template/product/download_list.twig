@@ -1,0 +1,11 @@
+{% if downloads %}
+  {% for download in downloads %}
+    <table class="table table-striped table-bordered">
+      <tr>
+		  <td>
+		  <a href="{{ download.href }}">{{ download.name }}</a>
+        </td>
+      </tr>
+    </table>
+  {% endfor %}
+{% endif %}

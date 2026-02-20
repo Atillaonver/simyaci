@@ -1,0 +1,86 @@
+{% if items %}
+{% set urlTarget = 'target="_blank"' %}	
+<nav class="navbar-desctop visible-md visible-lg navbar">
+	<div class="container">
+		{% if logo %}
+		<a href="{{ home }}" class="brand js-target-scroll">
+			<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="positive"/>
+			{% if logo_negative %}
+			<img src="{{ logo_negative }}" title="{{ name }}" alt="{{ name }}" class="negative"/>
+			{% endif %}
+		</a>
+		{% endif %}
+				 
+		<ul class="navbar-desctop-menu ">
+			{% for item in items %}
+				{% if item.subs %}
+					{% if (item.login == '0' or (LOGN and item.login == '1')) %}
+					<li>
+						<a href="#" class="{{ item.class }}">
+							{{ item['title'] }}
+						</a>
+						{#% for children in item.sub|batch(item.sub|length / item.column|round(1, 'ceil')) %#}
+						<ul>
+							{% for child in item.subs %}
+							<li><a href="{{ child.href }}" class="{{ child.class }}" {% if child['target'] %}{{ urlTarget }}{% endif %}>{{ child['title'] }}</a></li>
+							{% endfor %}
+														
+						</ul>
+						{#% endfor %#}
+					</li>
+					{% endif %}
+				{% else %}
+					<li><a href="{{ item.href }}" class="{{ item.class }}" {% if item['target'] %}{{ urlTarget }}{% endif %}>{{ item.title }}</a></li>
+				{% endif %}
+			{% endfor %}
+			{{ lang }}			
+		</ul>
+	</div>
+</nav>
+<nav class="navbar-mobile navbar">
+	{% if logo %}
+	<a href="{{ home }}" class="brand js-target-scroll">
+		<img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="positive"/>
+		{% if logo_negative %}
+		<img src="{{ logo_negative }}" title="{{ name }}" alt="{{ name }}" class="negative"/>
+		{% endif %}
+	</a>
+	{% endif %}
+	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-mobile">
+		<span class="sr-only">
+			Toggle navigation
+		</span>
+		<span class="icon-bar">
+		</span>
+		<span class="icon-bar">
+		</span>
+		<span class="icon-bar">
+		</span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbar-mobile">
+		<ul class="navbar-nav-mobile ">
+			{% for item in items %}
+				{% if item.subs %}
+					<li>
+						<a href="#" class="{{ item.class }}">
+							{{ item['title'] }}
+						</a>
+						{#% for children in item.sub|batch(item.sub|length / item.column|round(1, 'ceil')) %#}
+						<ul>
+							{% for child in item.subs %}
+							<li><a href="{{ child.href }}" class="{{ child.class }}" {% if child['target'] %}{{ urlTarget }}{% endif %}>{{ child['title'] }}</a></li>
+							{% endfor %}
+														
+						</ul>
+						{#% endfor %#}
+					</li>
+				{% else %}
+					<li><a href="{{ item.href }}" class="{{ item.class }}" {% if item['target'] %}{{ urlTarget }}{% endif %}>{{ item.title }}</a></li>
+				{% endif %}
+			{% endfor %}
+			{{ lang }}	
+		</ul>
+	</div>
+</nav>
+{% endif %}

@@ -1,0 +1,101 @@
+{{ header }}
+<div id="page-container" class="w3-padding">
+	<div id="main" class="w3-row w3-content">
+		<h1 class="w3-center">
+			{{ heading_title }}
+		</h1>
+		{% if products %}
+		<div id="product-reviews">
+			{% for product in products %}
+				{% if product.name %}
+					<div class="product-review">
+						<div class="rev-sect-1">
+							<div class="w3-left">
+								{{ product['name'] }}
+							</div>
+							<div class="w3-right">
+
+							</div>
+						</div>
+						<div class="rev-sect-2">
+							<p>
+								{{ product.description }}
+							</p>
+						</div>
+						<div class="rev-sect-3">
+
+							{% if product.reviews %}
+							{% for review in product.reviews %}
+							<table class="w3-table">
+								<tr>
+									<td style="width: 50%;border-top:solid 1px #ccc;border-bottom:solid 1px #ccc;border-right:solid 1px #ccc;">
+										<strong>
+											{{ review['author'] }}
+										</strong>
+									</td>
+									<td style="width: 50%;border-top:solid 1px #ccc;border-bottom:solid 1px #ccc; text-align: right;">
+										{% for i in 1..5 %}
+										{% if review.rating < i %}
+										<span class="fa fa-stack">
+											<i class="fa fa-star-o fa-stack-1x">
+											</i>
+										</span>
+										{% else %}
+										<span class="fa fa-stack">
+											<i class="fa fa-star fa-stack-1x">
+											</i>
+											<i class="fa fa-star-o fa-stack-1x">
+											</i>
+										</span>
+										{% endif %}
+										{% endfor %}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<p>
+											{{ review['text'] }}
+										</p>
+									</td>
+								</tr>
+							</table>
+							{% endfor %}
+
+							<div class="text-right">
+								{{ pagination }}
+							</div>
+							{% else %}
+							<p>
+								{{ text_no_reviews }}
+							</p>
+							{% endif %}
+						</div>
+					</div>
+
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="w3-row">
+			<div class="col-sm-6 text-left">
+				{{ pagination }}
+			</div>
+			<div class="col-sm-6 text-right">
+				{{ results }}
+			</div>
+		</div>
+		{% endif %}
+
+		{% if not categories and not products %}
+		<p>{{ text_empty }}</p>
+		<div class="buttons">
+			<div class="pull-right">
+				<a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a>
+			</div>
+		</div>
+		{% endif %}
+
+
+
+	</div>
+</div>
+{{ footer }}

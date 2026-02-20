@@ -1,0 +1,434 @@
+{% set module_row = 0 %}
+
+<div class="tab-pane active" id="tab-menu{{ n }}">
+	<form id="form{{ n }}" nform="{{ n }}">
+		<div class="megamenu col-md-4">
+								
+			<div class="tree-megamenu">
+				<div class="buttons">
+									
+								
+					<input type="hidden" value="0" name="new"/>
+					<input type="hidden" value="0" name="menu[menu_group_id]"/>
+					<input type="hidden" value="{{ menu_id }}" name="menu[menu_id]"/></br></br>
+								
+								
+					<a class="btn btn-primary" title="{{ button_import_categories }}" onclick="$('#save_mode').val('import-categories');$('#form').submit();">{{ button_import_categories }}</a>
+					<a class="btn btn-danger" title="{{ button_delete_categories }}" data-toggle="modal" data-target=".deleteTree-modal-sm">{{ button_delete_categories}}</a>
+				</div><br/><br/>
+				<h4>{{ text_treemenu }}</h4>
+				<a class="btn btn-success btn-updatetree" name="serialize" id="serialize">{{ button_update_order }}</a>	
+				<div class="treeContainer" >
+					{% if tree %}
+					{{ tree }}
+					{% endif %}
+				</div>
+				<a class="btn btn-success btn-updatetree" name="serialize" id="serialize">{{ button_update_order }}</a>
+				<p class="note"><i>{{ text_explain_drapanddrop }}</i></p>
+			</div>
+
+		</div>
+
+		<div class="megamenu-form  col-md-8">
+			<div id="megamenu-form{{ n }}">
+				<h4>{{ entry_menu_information}}<span id="menuID"></span><div class="pull-right">
+						<a class="btn btn-primary btnSave" href="#"><i class="fa fa-save"></i> {{ button_save}}</a>
+						<a class="btn btn-danger btnCancel" title="{{ button_cancel }}" href="#" ><i class="fa fa-book"></i> {{ button_cancel }}</a> 
+				
+					</div></h4>
+												
+
+				<ul class="nav nav-tabs" id="language-{{ n }}">
+					{% for language in languages %}
+					<li>
+						<a href="#tab-language-{{ language.language_id }}" data-toggle="tab"><img src="{{ HTTPS_IMAGE }}{{ language.image }}" title="{{ language.name }}" /> {{ language.name }}</a>
+					</li>
+					{% endfor %}
+				</ul>
+	
+	
+				<div class="tab-content">
+					{% for language in languages %}
+					<div class="tab-pane" id="tab-language-{{ language.language_id }}">
+						<table class="table no-border">
+							<tr>
+								<td>{{ entry_menu_title }}</td>
+								<td>
+									<input class="form-control" name="menu_description[{{ language.language_id }}][title]" value="{% if menu_description[language.language_id]['title'] %}{{ language.language_id }}{{menu_description[language.language_id]['title']}}{% endif %}"/>
+								</td>
+							</tr>
+							<tr>
+								<td>{{ entry_description }}</td>
+								<td>
+									<textarea class="form-control" name="menu_description[{{ language.language_id }}][description]">{% if menu_description[language.language_id]['description'] %}{{ language.language_id }}{{menu_description[language.language_id]['description']}}{% endif %}</textarea>
+								</td>
+							</tr>
+						</table>
+					</div>
+					{% endfor %}
+				</div>
+
+				<h4>{{ entry_menu_type }}</h4>
+				<input type="hidden" name="menu[item]" value="{{ by_menu.item }}" />
+				<table class="table">
+					<tr>
+						<td class="col-sm-3">{{ entry_publish }}</td>
+				
+						<td class="col-sm-9">
+							<select class="form-control"type="list" name="menu[published]" >
+					
+								{% for key, val in yesno %}
+								<option value="{{ key }}" {% if key == by_menu.published %} selected="selected"{% endif %}>{{ val }}</option>
+								{% endfor %}
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="col-sm-3">{{ entry_type }}</td>
+				
+						<td class="col-sm-9">
+							<select class="form-control" name="menu[type]" id="megamenutype">
+								{% for mt, val in megamenutypes %}
+								<option value="{{ mt }}" {% if mt == by_menu.type %} selected="selected" {% endif %}>{{ val }}</option>
+								{% endfor %}
+							</select>
+						</td>
+					</tr>
+					<tr id="menutype-url" class="megamenutype">
+						<td class="col-sm-3">{{ entry_url }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu[url]" value="{{ by_menu.url }}" size="50"/>
+						</td>
+					</tr>
+					<tr id="menutype-category" class="megamenutype">
+						<td colspan="2">
+						<div class="row mb-3">
+			                <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_category }}</label>
+			                <div class="col-sm-10">
+			                  <input type="text" name="path" value="{{ path }}" placeholder="{{ entry_parent }}" id="input-parent" data-oc-target="autocomplete-parent" class="form-control" autocomplete="off"/>
+			                  <ul id="autocomplete-parent" class="dropdown-menu"></ul>
+			                  <input type="hidden" name="path_id" value="{{ parent_id }}" id="input-parent-id"/>
+			                  <div class="form-text">{{ text_explain_input_auto }}</div>
+			                  <div id="error-parent" class="invalid-feedback"></div>
+			                </div>
+			              </div>
+					
+						</td>
+					</tr>
+					<tr id="menutype-product" class="megamenutype">
+						<td class="col-sm-3">{{ entry_product }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu-product" value="{{ by_menu.megamenu-product }}" size="50"/>
+							<i>{{ text_explain_input_auto }}</i>
+						</td>
+					</tr>
+					<tr id="menutype-manufacturer" class="megamenutype">
+						<td class="col-sm-3">{{ entry_manufacturer }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu-manufacturer" value="{{ by_menu.megamenu-manufacturer }}" size="50"/>
+							<i>{{ text_explain_input_auto }}</i>
+						</td>
+					</tr>
+					<tr id="menutype-information" class="megamenutype">
+						<td class="col-sm-3">{{ entry_information }}</td>
+						<td class="col-sm-9">
+				
+							<select class="form-control" type="text" name="menu-information" id="megamenu-information">
+								{% for info in informations %}
+								<option value="{{ info.information_id }}"  {% if by_menu.megamenu-information == info.information_id %} selected="selected" {% endif %}>{{ info.title }}</option>
+								{% endfor %}
+							</select>
+						</td>
+					</tr>
+					<tr id="menutype-html" class="megamenutype">
+						<td class="col-sm-3">{{ entry_html }}</td>
+						<td class="col-sm-9">
+							<textarea type="text" name="menu[content_text]"  size="50">{{ by_menu.content_text }}</textarea>
+							<i>{{ text_explain_input_html }}</i>
+						</td>
+					</tr>
+				</table>	
+				<h4>{{ entry_menu_param }}</h4>	  
+				<table class="table">
+					<tr>
+						<td class="col-sm-3">{{ entry_parent_id }}</td>
+				
+						<td class="col-sm-9" id="menu-pos" >
+							{{ menus }}
+						</td>
+					</tr>
+					<tr>
+						<td class="col-sm-2 control-label">{{ entry_image }}</td>
+						<td class="col-sm-10">
+							<a href="" id="thumb-img" data-toggle="image" class="img-thumbnail">
+								<img src="{% if thumb %}{{ thumb }}{% else %}{{ placeholder }}{% endif %}" alt="" title="" data-placeholder="{{ placeholder }}" />
+							</a>
+							<input type="hidden" name="menu[image]" value="{{ by_menu.image }}" id="input-icon-menu" />
+						</td>
+					</tr>
+					<tr>
+						<td class="col-sm-3">{{ entry_menuclass }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu[menu_class]" value="{{ by_menu.menu_class }}"/>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="col-sm-3">{{ entry_badges }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu[badges]" value="{{ by_menu.badges }}"/>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="col-sm-3">{{ entry_showtitle }}</td>
+				
+						<td class="col-sm-9">
+							<select class="form-control" type="list" name="menu[show_title]" >
+								{% for key, val in yesno %}
+								<option value="{{ key }}" {% if key == by_menu.show_title %} selected="selected"{% endif %}>{{ val }}</option>
+								{% endfor %}
+							</select>
+						</td>
+					</tr>
+					<tr class="hiade">
+						<td class="col-sm-3">{{ entry_isgroup }}</td>
+				
+						<td class="col-sm-9">
+							<select class="form-control" type="list" name="menu[is_group]" value="">
+								{% for key, val in yesno %}
+								<option value="{{ key }}" {% if key == by_menu.is_group %} selected="selected"{% endif %}>{{ val }}</option>
+								{% endfor %}
+					
+							</select>
+							<i>{{ text_explain_group }}</i>
+						</td>
+					</tr>
+					<tr style="display:none">
+						<td class="col-sm-3">{{ entry_iscontent }}</td>
+						<td class="col-sm-9">
+							<select class="form-control" type="list" name="menu[is_content]">
+								{% for key, val in yesno %}
+								<option value="{{ key }}" {% if key == by_menu.is_content %} selected="selected"{% endif %}>{{ val }}</option>
+								{% endfor %}
+					
+							</select>
+						</td>
+					</tr>
+		
+					<tr class="hiade">
+						<td class="col-sm-3">{{ entry_columns }}</td>
+				
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu[colums]" value="{{ by_menu.colums }}"/>
+							<i>{{ text_explain_columns }}</i>
+						</td>
+					</tr>
+		
+		
+		 
+					<tr class="hide">
+						<td class="col-sm-3">{{ entry_detail_columns }}</td>
+				
+						<td class="col-sm-9">
+							<textarea type="text" name="menu[submenu_colum_width]" rows="5">{{ by_menu.submenu_colum_width }}</textarea>
+							<i>{{ text_explain_submenu_cols }}</i>
+						</td>
+					</tr>
+					<tr>
+						<td class="col-sm-3">{{ entry_sub_menutype }}</td>
+						<td class="col-sm-9">
+							<select class="form-control" name="menu[type_submenu]" id="megamenu-type_submenu">
+								{% for stype, text in submenutypes %}
+								<option value="{{ stype }}" {% if stype == by_menu.type_submenu %} selected="selected"{% endif %}>{{ text }}</option>
+								{% endfor %}
+							</select>
+							<i>{{ text_explain_submenu_type }}</i>
+						</td>
+					</tr>
+					<tr class="type_submenu" id="type_submenu-html" style="display:none;">
+						<td class="col-sm-3">{{ entry_submenu_content }}</td>
+						<td class="col-sm-9">
+							<textarea name="menu[submenu_content]" id="submenu_content">{{ by_menu.submenu_content }}</textarea>
+			
+						</td>
+					</tr>
+
+					<tr class="type_submenu" id="type_submenu-widget" style="display:none;">
+						<td class="col-sm-3">{{ entry_widget_id }}</td>
+						<td class="col-sm-9">
+							{% if widgets is iterable %}
+							<select class="form-control" name="menu[widget_id]">
+								{% for w, t in widgets %}
+								<option value="{{ t.id }}" {% if w == by_menu.widget_id %} selected="selected"{% endif %}>{{ t.name }}</option>
+								{% endfor %}
+							</select>
+							{% endif %}
+				
+						</td>
+					</tr>
+
+				</table>
+				<input type="hidden" name="menu[menu_group_id]" value="0"/>
+				<input type="hidden" name="menu[menu_id]" value="{{ currentID }}"/>
+			</div>
+
+		</div>
+	</form>
+</div>								
+								
+								
+<script type="text/javascript"><!--//
+	$(document).ready(function(){
+	
+			$("#form{{ n }} ol.sortable").nestedSortable({
+					forcePlaceholderSize: true,
+					handle: 'div',
+					helper:	'clone',
+					items: 'li',
+					opacity: .6,
+					placeholder: 'placeholder',
+					revert: 250,
+					tabSize: 25,
+					tolerance: 'pointer',
+					toleranceElement: '> div',
+					maxLevels: 4,
+
+					isTree: true,
+					expandOnHover: 700,
+					startCollapsed: true
+				});
+
+	
+			$("#form{{ n }} #type_submenu-"+$("#form{{ n }} #megamenu-type_submenu").val()).show();
+
+			$("#form{{ n }} #megamenu-type_submenu").change( function(){
+					$("#form{{ n }} .type_submenu").hide();
+					$("#form{{ n }} #type_submenu-"+$(this).val()).show();
+				} );
+
+
+			$('#form{{ n }} #submenu_content').summernote({
+					height: 300
+				});
+
+			$('#form{{ n }} menu[content_text]').summernote({
+					height: 300
+				});
+
+
+			$("#form{{ n }} .megamenutype").hide();
+
+			$("#form{{ n }} #megamenutype-"+ $("#megamenutype").val()).show();
+			$("#form{{ n }} #megamenutype").change( function(){
+					$("#form{{ n }} .megamenutype").hide();
+					$("#form{{ n }} #megamenutype-"+$(this).val()).show();
+				} );
+
+   
+
+			$('#form{{ n }} input[name=\'menu-manufacturer\']').autocomplete({
+					delay: 500,
+					source: function(request, response) {		
+						$.ajax({
+								url: 'index.php?route=catalog/manufacturer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request.term),
+								dataType: 'json',
+								success: function(json) {
+									json.unshift({
+											'manufacturer_id':  0,
+											'name':  '{{ text_none }}'
+										});
+				
+									response($.map(json, function(item) {
+												return {
+													label: item.name,
+													value: item.manufacturer_id
+												}
+											}));
+								}
+							});
+					},
+					select: function(event, ui) {
+						$('#form{{ n }} input[name=\'menu-manufacturer\']').val(ui.item.label);
+						$('#form{{ n }} input[name=\'menu[item]\']').val(ui.item.value);
+		
+						return false;
+					},
+					focus: function(event, ui) {
+						return false;
+					}
+				});
+
+			$("#form{{ n }} #megamenu-information").change( function(){ 
+					$('#form{{ n }} input[name=\'menu[item]\']').val($(this).val());
+				} );
+
+			$('#form{{ n }} input[name=\'menu-product\']').autocomplete({
+					delay: 500,
+					source: function(request, response) {		
+						$.ajax({
+								url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request.term),
+								dataType: 'json',
+								success: function(json) {
+									json.unshift({
+											'product_id':  0,
+											'name':  '{{ text_none }}'
+										});
+				
+									response($.map(json, function(item) {
+												return {
+													label: item.name,
+													value: item.product_id
+												}
+											}));
+								}
+							});
+					},
+					select: function(event, ui) {
+						$('#form{{ n }} input[name=\'menu-product\']').val(ui.item.label);
+						$('#form{{ n }} input[name=\'menu[item]\']').val(ui.item.value);
+		
+						return false;
+					},
+					focus: function(event, ui) {
+						return false;
+					}
+				});
+
+			$('#form{{ n }} input[name=\'path\']').autocomplete({
+					'source': function (request, response) {
+				        $.ajax({
+				            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+				            dataType: 'json',
+				            success: function (json) {
+				                response($.map(json, function (item) {
+				                    return {
+				                        label: item['name'],
+				                        value: item['category_id']
+				                    }
+				                }));
+				            }
+				        });
+				    },
+				    'select': function (item) {
+				    	$('#form{{ n }} input[name=\'path\']').val(item['label']);
+						$('#form{{ n }} input[name=\'menu[item]\']').val( item['value']);
+				    },
+					'focus': function(event, ui) {
+						return false;
+					}
+				});
+
+		});
+	//-->
+</script>	
+<script type="text/javascript"><!--
+$('#language-{{ n }} a:first').tab('show');
+
+//--></script>
+
+						
+							
+							
+							
+							

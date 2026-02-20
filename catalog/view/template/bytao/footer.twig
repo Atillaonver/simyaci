@@ -1,0 +1,57 @@
+<footer id="footer" class="footer" {% if css %}style="{{ css }}"{% endif %}>
+	{% if rows %}
+		{{ rows }}
+	{% else %}
+	<div class="container">
+		<div class="row-base row">
+			<div class="col-base text-left-md col-md-4">
+				{% if pages %}
+				{% for page in pages %}
+				{% if page.bottom == 1 %}
+				<li><a href="{{ page.href }}" data-type="{{ page.type }}" class="{% if page.type == 5 %} ajax {% endif %}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+			<div class="text-center-md col-base col-md-4">
+				{% if pages %}
+				{% for page in pages %}
+				{% if page.bottom == 2 %}
+				<li><a href="{{ page.href }}" data-type="{{ page.type }}" class="{% if page.type == 5 %} ajax {% endif %}">{{ page.title }}</a></li>
+				{% endif %}
+				{% endfor %}
+				{% endif %}
+			</div>
+			<div class="text-right-md col-base col-md-4">
+				{% for information in informations %}
+				<li><a href="{{ information.href }}">{{ information.title }}</a></li>
+				{% endfor %}
+			</div>
+			<div class="text-center-md col-base col-md-12">
+				<p>{{ powered }}</p>
+			</div>
+		</div>
+	</div>
+					
+	{% endif %}
+</footer>
+
+
+
+</div>
+
+{{ cookie }}
+
+{#
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f3c0339653147e1"></script>
+
+<script src="{{ bootstrap }}" type="text/javascript"></script>#}
+{% for script in fscripts %}
+	<script src="{{ script.href }}" type="text/javascript"></script>
+{% endfor %}
+<script>
+{{ scrpt_footer|html_entity_decode }}
+</script>
+{{ jqscript }}
+
+</body></html>

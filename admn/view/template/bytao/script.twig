@@ -1,0 +1,375 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<h1>
+				{{ heading_title }}
+			</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item">
+					<a href="{{ breadcrumb.href }}">
+						{{ breadcrumb.text }}
+					</a>
+				</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header">
+				<i class="fa-solid fa-list"></i>{{ text_edit }}
+			</div>
+			<div class="card-body">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-sm-12" id="yetkiler">
+
+							<div class="panel panel-default">
+								<h4 class="panel-heading">
+									{{ text_controllers }}
+								</h4>
+								<div class="panel-body">
+									<style>
+										#layouts
+										{
+											margin: 0;
+											padding: 0;
+										}
+										#layouts li
+										{
+											list-style-type: none;
+											height: 30px;
+											line-height: 30px;
+											cursor: pointer;
+											margin-bottom: 4px;
+											border: solid 1px #efefef;
+											padding: 0 15px;
+										}
+										.gray
+										{
+											background-color: gray;
+											color: #eeeeee;
+										}
+										.pagesa i
+										{
+											cursor: help !important;
+										}
+										
+										#layouts .gray.active {position: relative;}
+										#layouts .gray.active:before {
+											content: "\f044";
+										    font-family: FontAwesome;
+										    font-style: normal;
+										    font-weight: normal;
+										    text-decoration: inherit;
+										    color: #e5bfbf;
+										    font-size: 20px;
+										    position: absolute;
+										    top:0px;
+										    right: 3px;
+    										padding: 0px;
+										}
+										
+										#pages a.nav-link.active {
+										    color: red !important;
+										}
+										.nav-link.changed{ position: relative;}
+										
+										.nav-link.changed:before {
+											content: "\f0c7";
+										    font-family: FontAwesome;
+										    font-style: normal;
+										    font-weight: normal;
+										    text-decoration: inherit;
+										    color: #ff0000;
+										    font-size: 12px;
+										    position: absolute;
+										    top: -3px;
+										    right: -1px;
+    										padding: 0px;
+										}
+										textarea {text-align: left;}
+										.bolder{font-weight: bolder;}
+									</style>
+
+									<ul id="layouts">
+										{% set akey =  Scripts | first %}
+										{% for key,layout in Layouts %}
+										<li id="{{ layout.layout_id }}" data-name="{{ layout.name }}" data-id="{{ layout.layout_id }}" class="{% if layout.isop %} gray {% endif %}">
+											{{ layout.name }}
+										</li>
+										{% endfor %}
+									</ul>
+
+
+								</div>
+							</div>
+
+
+
+						</div>
+						<div class="col-lg-9 col-md-12">
+							<div class="panel-default">
+								<h4 class="panel-heading">
+									Kodlar
+								</h4>
+
+								<div class="clearfix">
+									<div class="theme-layout">
+										<ul class="nav nav-tabs" role="tablist" id="pages">
+										
+											
+											{% if all == '2' %}
+												<li class="nav-item"><a href="#page-0" data-bs-toggle="tab" class="nav-link active" data-li="0"><strong class="bolder">{{ txt_all_pages }}</strong></a></li>
+											{% endif %}
+											
+											{% for key,script in Scripts %}
+												<li class="nav-item"><a href="#page-{{ script.layout_id }}" data-bs-toggle="tab" class="nav-link {% if script.layout_id == '0' %} active {% endif %}" data-li="{{ script.layout_id }}">{% if not key  %}<strong class="bolder">{{ txt_all_pages }}</strong> {% else %}<i class="fa-solid fa-minus-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{ Layouts[script.layout_id].name }}{% endif %}</a></li>
+											{% endfor %}
+											
+										</ul>
+										<div class="tab-content" id="page-script">
+											{% if all == '2' %}
+											<div role="tabpanel" class="tab-pane active" id="page-0" data-li="0">
+												<form id="form-0" class="form-script">
+													<div class="form-group">
+														<label class="col-sm-2 control-label" for="input-head-0">{{ text_head }}</label>
+														<div class="col-sm-10">
+															<textarea name="head" id="input-head-0" rows="8" class="form-control"></textarea>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-2 control-label" for="input-body-header-0">{{ text_body_header }}</label>
+														<div class="col-sm-10">
+															<textarea name="body_header" id="input-body-header-0" rows="8" class="form-control"></textarea>
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="col-sm-2 control-label" for="input-body-footer-0">{{ text_body_footer }}</label>
+														<div class="col-sm-10">
+															<textarea name="body_footer" id="input-body-footer-0" rows="8" class="form-control"></textarea>
+														</div>
+													</div>
+													<div class="form-group">
+													<label class="col-sm-2 control-label" for="input-position-0">{{ text_position }}</label>
+													<div class="col-sm-10">
+														<select name="position" id="input-position-0"class="form-control">
+															<option value="header" {{ script.position=='header'?'selected="selected"' }}> Header scripts</option>
+															<option value="footer" {{ script.position=='footer'?'selected="selected"' }}> Footer scripts</option>
+														</select>
+													</div>
+												</div>
+													<div class="form-group">
+														<label class="col-sm-2 control-label"></label>
+														<div class="col-sm-10">
+															<input type="hidden" name="layout_id" value="0"/>
+	                    									<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+	                    								</div>
+	                    							</div>
+	                    						</form>	
+											</div>
+											
+											
+											{% endif %}
+											
+											{% for key,script in Scripts %}
+											<div role="tabpanel" class="tab-pane {% if script.layout_id == 0 %} active {% endif %}" id="page-{{ script.layout_id }}" data-li="{{ script.layout_id }}">
+												<form id="form-{{ script.layout_id }}" class="form-script">
+												<div class="form-group">
+													<label class="col-sm-2 control-label" for="input-head-{{ script.layout_id }}">{{ text_head }}</label>
+													<div class="col-sm-10">
+														<textarea name="head" id="input-head-{{ script.layout_id }}" rows="8" class="form-control">{{ script.head|e }}</textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-2 control-label" for="input-body-header-{{ script.layout_id }}">{{ text_body_header }}</label>
+													<div class="col-sm-10">
+														<textarea name="body_header" id="input-body-header-{{ script.layout_id }}" rows="8" class="form-control">{{ script.body_header|e }}</textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-2 control-label" for="input-body-footer-{{ script.layout_id }}">{{ text_body_footer }}</label>
+													<div class="col-sm-10">
+														<textarea name="body_footer" id="input-body-footer-{{ script.layout_id }}" rows="8" class="form-control">{{ script.body_footer|e }}</textarea>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-2 control-label" for="input-position-{{ script.layout_id }}">{{ text_position }}</label>
+													<div class="col-sm-10">
+														<select name="position" id="input-position-{{ script.layout_id }}"class="form-control">
+															<option value="header" {{ script.position=='header'?'selected="selected"' }}> Header scripts</option>
+															<option value="footer" {{ script.position=='footer'?'selected="selected"' }}> Footer scripts</option>
+														</select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label class="col-sm-2 control-label"></label>
+													<div class="col-sm-10">
+														<input type="hidden" name="layout_id" value="{{ script.layout_id }}"/>
+                    									<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+                    								</div>
+                    							</div>
+												</form>
+											</div>
+											{% endfor %}
+											
+											
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var trashId='';
+		var trashKey='';
+
+		$(document).delegate('#layouts li','click',function()
+			{
+				ID = $(this).attr('id');
+				if(!($(this).hasClass('gray')))
+				{
+					$('#pages li').removeClass('active');
+
+					uhtml='<li class="nav-item"><a href="#page-' + ID + '" data-bs-toggle="tab" class="nav-link" data-li="' + ID + '"><i class="fa-solid fa-minus-circle"></i>&nbsp;&nbsp;&nbsp;&nbsp;'+$(this).attr('data-name');+'</a></li>'
+					$('#pages').append(uhtml);
+					
+					chtml  = '<div role="tabpanel" class="tab-pane " id="page-'+ID+'" data-li="'+ID+'">';
+					chtml +='	<form id="form-'+ID+'" class="form-script">';
+					chtml +='	<div class="form-group">';
+					chtml +='		<label class="col-sm-2 control-label" for="input-head-'+ID+'">{{ text_head }}</label>';
+					chtml +='		<div class="col-sm-10">';
+					chtml +='		<textarea name="head" id="input-head-'+ID+'" rows="8" class="form-control"></textarea>';
+					chtml +='		</div>';
+					chtml +='	</div>';
+					chtml +='	<div class="form-group">';
+					chtml +='		<label class="col-sm-2 control-label" for="input-body-header-'+ID+'">{{ text_body_header }}</label>';
+					chtml +='		<div class="col-sm-10">';
+					chtml +='		<textarea name="body_header" id="input-body-header-'+ID+'" rows="8" class="form-control"></textarea>';
+					chtml +='		</div>';
+					chtml +='	</div>';
+					chtml +='	<div class="form-group">';
+					chtml +='		<label class="col-sm-2 control-label" for="input-body-footer-'+ID+'">{{ text_body_footer }}</label>';
+					chtml +='		<div class="col-sm-10">';
+					chtml +='		<textarea name="body_footer" id="input-body-footer-'+ID+'" rows="8" class="form-control"></textarea>';
+					chtml +='		</div>';
+					chtml +='	</div>';
+					chtml +='	<div class="form-group">';
+					chtml +='		<label class="col-sm-2 control-label" for="input-position-'+ID+'">{{ text_body_footer }}</label>';
+					chtml +='		<div class="col-sm-10">';
+					chtml +='		<select name="position" id="input-position-'+ID+'"class="form-control">';
+					chtml +='		<option value="header"> Header scripts</option>';
+					chtml +='		<option value="footer"> Footer scripts</option>';
+					chtml +='		</select>';
+					chtml +='		</div>';
+					chtml +='	</div>';
+					chtml += '  <div class="form-group">';
+					chtml += '  <label class="col-sm-2 control-label" for="input-body-footer-'+ID+'"></label>';
+					chtml +='		<div class="col-sm-10">';
+					chtml +='			<input type="hidden" name="layout_id" value="'+ID+'"/>';
+                    chtml += '    		<button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>';
+                    chtml += '  	</div>';
+                    chtml += '  </div>';
+					chtml +='	</form>';
+					chtml +='</div>';
+
+					$('#page-script').append(chtml);
+					$(this).addClass('gray');
+				}
+				$('#layouts .active').removeClass('active');
+				$('#pages a[href=\'#page-' + ID + '\']').tab('show');
+				$('#'+ID).addClass('active');
+
+			});
+
+		$(document).delegate('textarea','change',function(e)
+			{
+				ID = $(this).parents('.tab-pane').data('li');
+				$('#pages a[href=\'#page-' + ID + '\']').addClass('changed')
+			});
+			
+		$(document).delegate('#pages a','click',function(e)
+			{
+				ID = $(this).data('li');
+				$('#layouts .active').removeClass('active');
+				if(ID != 0){
+					$('#'+ID).addClass('active');
+				}
+			});
+		
+		$(document).delegate('.fa-minus-circle','click',function(e)
+			{
+				e.preventDefault();
+				
+				var ID = $(this).parent().data('li');
+				
+				if (confirm("{{ text_delete_confirm }}"))
+				{
+					$.ajax({
+						url: 'index.php?route=bytao/script.delete&user_token={{ user_token }}&layout_id=' + ID,
+						type: 'post',
+						dataType: 'json',
+						success: function(json) {
+							$('.alert-dismissible').remove();
+							
+							if (json['error']) {
+								alertDivided(json['error'],'danger');
+							}
+
+							if (json['success']) {
+								alertDivided(json['success'],'success');
+								$(this).parent().remove();
+								$('#' + ID ).removeClass('gray');
+								$('#layouts .active').removeClass('active');
+								$('#pages a[href=\'#page-' + ID + '\']').remove();
+								if($('#pages a').length){
+									$('#pages a:first').tab('show');
+									$('#'+$('#pages a:first').data('li')).addClass('active');
+								}
+								
+								
+							}
+						}
+					});
+				}
+				return false;
+			});
+		
+		$(document).on('submit','form', function (e) {
+    		e.preventDefault();
+    		formData = $(this).serialize();
+    		var Lid = $(this).parent().data('li');
+		    $.ajax({
+				url: '{{ save }}',
+				type: 'post',
+				data: formData,
+		        dataType: 'json',
+		        contentType: 'application/x-www-form-urlencoded',
+		        cache: false,
+		        processData: false,
+				success: function(json) {
+					$('.alert-dismissible').remove();
+					
+					if (json['error']) {
+						alertDivided(json['error'],'danger');
+					}
+
+					if (json['success']) {
+						alertDivided(json['success'],'success');
+						$('#pages a[href=\'#page-' + Lid + '\']').removeClass('changed');
+					}
+				}
+			});
+			return false;
+		});
+</script>
+
+</div>
+{{ footer }} 

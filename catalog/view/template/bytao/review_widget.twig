@@ -1,0 +1,14 @@
+<section id="review-widget">
+	<div class="w3-row w3-center">
+		<ul>
+		{% for item in items %}
+			<li>
+				{{ item.text }}
+				<img src="{{ item.thumb }}" alt"{{ item.name }}"/>
+			</li>
+		{% endfor %}
+		</ul>
+	</div>
+</section>
+
+

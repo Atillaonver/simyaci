@@ -1,0 +1,15 @@
+	<div class="w3-dropdown-hover w3-hide-small">
+    <button id="account-btn" class="w3-button" title="Notifications"><i class="fa fa-user"></i></button>     
+    <div class="w3-dropdown-content w3-card-4 w3-bar-block">
+      
+    {% if logged %}
+	<a href="{{ account }}" id="sidenav1" class="w3-bar-item w3-button">{{ text_account }}</a>
+	<a href="{{ edit }}" id="sidenav2" class="w3-bar-item w3-button">{{ text_edit }}</a>
+	<a href="{{ order }}" id="sidenav3" class="w3-bar-item w3-button">{{ text_order }}</a>
+	<a href="{{ logout }}" id="sidenav4" class="w3-bar-item w3-button">{{ text_logout }}</a>
+	{% else %}
+	<a href="{{ register }}"  id="sidenav1" class="w3-bar-item w3-button">{{ text_register }}</a>
+	<a href="{{ login }}" id="sidenav2"class="w3-bar-item w3-button">{{ text_login }}</a>
+	{% endif %}
+    </div>
+	</div>

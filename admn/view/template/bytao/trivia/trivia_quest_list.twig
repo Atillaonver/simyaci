@@ -1,0 +1,49 @@
+<form id="form-quest" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="quest">
+	<div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"></td>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{{ column_image }}</td>
+                  <td class="text-left">{{ column_name }}</td>
+                  <td class="text-left">{{ column_status }}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if items %}
+                {% for quest in items  %}
+                <tr data-id="{{ quest.quest_id }}" data-order="{{ trivia.sort_order }}">
+                	<td><!--<i class="fa-solid fa-up-down-left-right"></i>--></td>
+                  <td class="text-center">
+                  	
+                  	{% if quest.quest_id in selected|keys %}
+                    <input type="checkbox" name="selected[]" value="{{ quest.quest_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ quest.quest_id }}" />
+                    {% endif %}
+                    </td>
+                  <td class="text-start"><img src="{{ quest.thumb }}" alt="" class="list-img"/></td>  
+                  <td class="text-left">{{ quest.correct }}</td>
+                  <td class="text-left">{{ quest.status }}</td>
+                  <td class="text-right"><a href="{{ quest.edit }}" data-toggle="tooltip" title="DÜZENLE" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                {% endfor %}
+                {%  else %}
+                <tr>
+                  <td class="text-center" colspan="4">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+	<div class="row">
+		<div class="col-sm-6 text-start">
+			{{ not filter_all?pagination:'' }}
+		</div>
+		<div class="col-sm-6 text-end">
+			{{ results }}
+		</div>
+	</div>
+</form>

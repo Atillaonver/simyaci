@@ -1,0 +1,160 @@
+.imgcontainer
+{/*
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+*/}
+
+.w3-row-padding img
+{
+	margin-bottom: -9px;
+
+}
+.w3-wide
+{
+	letter-spacing: 10px;
+}
+.w3-hover-opacity
+{
+	cursor: pointer;
+}
+.w3-row-padding>.w3-third
+{
+	padding: 0 12px;
+}
+*
+{
+	box-sizing: border-box;
+}
+
+.row > .column
+{
+	padding: 0 16px;
+}
+
+.row:after
+{
+	content: "";
+	display: table;
+	clear: both;
+}
+
+.column
+{
+	float: left;
+	width: 25%;
+}
+
+
+
+.mySlides
+{
+	display: none;
+}
+
+.cursor
+{
+	cursor: pointer
+}
+.imgcontainer
+{
+	position: relative;
+	width: 100%;
+	padding: 10px;
+	cursor: pointer;
+}
+.imgcontainer .content
+{
+	position: absolute; /* Position the background text */
+	bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+	background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+	color: #f1f1f1; /* Grey text */
+	width: 100%; /* Full width */
+	padding: 20px;
+	opacity: 0;
+	line-height: 1.3em;
+}
+.numbertext
+{
+	color: #f2f2f2;
+	font-size: 12px;
+	padding: 8px 12px;
+	position: absolute;
+	top: 0;
+}
+
+img
+{
+	margin-bottom: -4px;
+}
+
+.caption-container
+{
+	text-align: center;
+	background-color: black;
+	padding: 2px 16px;
+	color: white;
+}
+
+.demo
+{
+	opacity: 0.6;
+}
+
+.active,
+.demo:hover
+{
+	opacity: 1;
+}
+
+img.hover-shadow
+{
+	transition: 0.3s
+}
+
+.hover-shadow:hover
+{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+}
+.imgcontainer:hover .image
+{
+	opacity: 0.3;
+}
+
+.imgcontainer:hover .content span
+{
+	display: block;
+}
+.imgcontainer:hover .content
+{
+	opacity: 1;
+}
+.art-code{
+	font-size: 18px;
+	font-weight: bolder;
+	color: red;
+}
+.fancybox-caption {
+   
+ border-top: 0px solid hsla(0,0%,100%,0); 
+}
+#wait{
+	display:none;width:69px;height:89px;border:none;position:absolute;top:50%;left:50%;padding:2px;
+}
+#moreBtn i {color: grey;}
+#moreBtn button {
+
+    border: none;
+    outline: none;
+    background-color: rgba(128, 128, 128, 0);
+    color: white;
+    cursor: pointer;
+    padding: 0px;
+    border-radius: 30px;
+    font-size: 50px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.fancybox-is-open .fancybox-bg {
+    opacity: .96;
+}

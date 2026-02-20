@@ -1,0 +1,66 @@
+{% if popupd %}
+<a id="fancyform" title="Wellcome" href="#popup_form">Try now</a>
+<div style="display:none; width:300px;">
+	<form id="popup_form" method="post" data-oc-toggle="ajax">
+	    	<p id="login_error">You must fill all required places</p>
+		<p>
+			<label for="login_name">Name: </label>
+			<input type="text" id="login_name" name="login_name" class="form-control" />
+		</p>
+		<p>
+			<label for="email">e-mail: </label>
+			<input type="email" id="email" name="email" class="form-control"  />
+		</p>
+		<p>
+			<input type="submit" value="Login" />
+		</p>
+		
+	</form>
+</div>
+
+
+<script type="text/javascript"><!--
+
+$("#fancyform").fancybox({
+	'scrolling'		: 'no',
+	'titleShow'		: false,
+	'onClosed'		: function() {
+	    $("#login_error").hide();
+	}
+});
+
+$("#login_form").bind("submit", function() {
+
+	if ($("#login_name").val().length < 1 || $("#email").val().length < 1) {
+	    $("#login_error").show();
+	    $.fancybox.resize();
+	    return false;
+	}
+
+	$.fancybox.showActivity();
+
+	$.ajax({
+		type		: "POST",
+		cache	: false,
+		url: 'index.php?route=bytao/popup.form',
+		data		: $(this).serializeArray(),
+		success: function(data) {
+			$.fancybox(data);
+		}
+	});
+
+	return false;
+});
+
+jQuery(document).ready(function() {
+	    
+    big_Image= '{{ popupd.image }}';
+    link_Image= '{{ popupd.link }}';
+    
+    $("#fancyform").trigger('click');
+
+
+});
+//--></script> 	
+
+{% endif %}

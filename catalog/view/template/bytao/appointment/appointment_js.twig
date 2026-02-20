@@ -1,0 +1,28 @@
+<script type="text/javascript"><!--
+$(document).on("click",'.day_num .empty', function (e) {
+	e.preventDefault();
+	if(!$(this).parent().hasClass('appoint ignored')){
+		if(!$(this).hasClass('selected')){
+			$('.appoint .selected').removeClass('selected');
+			$('#input-appointer').val($(this).data('app-id'));
+			$(this).addClass('selected');
+			$('#contunier').removeClass('hidden');
+		}else{
+			$('.appoint .selected').removeClass('selected');
+			$('#input-appointer').val('');
+			$(this).removeClass('selected');
+			$('#contunier').addClass('hidden');
+		}	
+	}	
+	
+});
+
+
+		
+		
+		
+		
+
+
+
+//--></script>

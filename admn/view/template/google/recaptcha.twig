@@ -1,0 +1,97 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+        <button type="submit" form="form-analytics" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-outline-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-outline-secondary"><i class="fas fa-reply"></i></a>
+        <a href="{{ support_link }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_support }}" class="btn btn-outline-warning"><i class="fas fa-life-ring"></i></a>
+      </div>
+    <h1>
+        {{ text_title }}
+        
+      </h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        
+        <form id="form-analytics" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label for="checkbox-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg">
+                <input name="recaptcha_google_status" value="1" class="form-check-input" type="checkbox" id="checkbox-status" {% if recaptcha_google_status %}checked="checked"{% endif %}>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="radio-type0" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+              <div class="btn-group" role="group" aria-label="">
+                <input type="radio" class="btn-check" value="0" name="recaptcha_google_type" id="radio-type-0" autocomplete="off" {% if recaptcha_google_type is null or recaptcha_google_type == 0 %}checked="checked"{% endif %}>
+                <label class="btn btn-outline-primary" for="radio-type-0"> V2 Görünmez</label>
+                
+                <input type="radio" class="btn-check" value="2" name="recaptcha_google_type" id="radio-type-2" autocomplete="off" {% if recaptcha_google_type == 2 %}checked="checked"{% endif %}>
+                <label class="btn btn-outline-primary" for="radio-type-2">V2 Onay</label>
+                
+                <input type="radio" class="btn-check" value="1" name="recaptcha_google_type" id="radio-type-1" autocomplete="off" {% if recaptcha_google_type == 1 %}checked="checked"{% endif %}>
+                <label class="btn btn-outline-primary" for="radio-type-1">S3</label>
+                
+                
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="input-secret-key" class="col-sm-2 col-form-label">{{ entry_recaptcha_google_secret_key }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="recaptcha_google_secret_key" value="{{ recaptcha_google_secret_key }}" placeholder="{{ entry_recaptcha_google_secret_key }}" id="input-secret-key" class="form-control"/>
+              
+            </div>
+          </div>
+         <div class="row mb-3">
+            <label for="input-site-key" class="col-sm-2 col-form-label">{{ entry_recaptcha_google_site_key }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="recaptcha_google_site_key" value="{{ recaptcha_google_site_key }}" placeholder="{{ entry_recaptcha_google_site_key }}" id="input-site-key" class="form-control"/>
+              
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label class="col-sm-2 col-form-label">{{ entry_captcha_page }}</label>
+            <div class="col-sm-10">
+              <div class="form-control" style="height: 150px; overflow: auto;">
+                {% set captcha_page_row = 0 %}
+                {% for captcha_page in captcha_pages %}
+                  <div class="form-check">
+                    <input type="checkbox" name="recaptcha_google_captcha_page[]" value="{{ captcha_page.value }}" id="input-captcha-{{ captcha_page_row }}" class="form-check-input"{% if captcha_page.value in recaptcha_google_captcha_page %} checked{% endif %}/> <label for="input-captcha-{{ captcha_page_row }}" class="form-check-label">{{ captcha_page.text }}</label>
+                  </div>
+                  {% set captcha_page_row = captcha_page_row + 1 %}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+         
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .form-switch .form-check-input {
+    cursor: pointer;
+  }
+  .form-switch .form-check-input:checked {
+    background-color: #32cd32;
+    border-color: #32cd32;
+  }
+</style>
+{{ footer }}

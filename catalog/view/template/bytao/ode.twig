@@ -1,0 +1,53 @@
+{{ header }}
+	<section class="breadcrumb_area"
+        style="">
+        <div class="container">
+            <div class="breadcrumb_content text-center">
+                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">{{ heading_title }}</h1>
+                
+            </div>
+        </div>
+    </section>
+    <section class="payment_testimonial_area">
+        <div class="container">
+            <div class="row payment_testimonial_info flex-row-reverse">
+                <div class="col-lg-7 d-flex align-items-center">
+                    <div class="testimonial_content">
+                        <div class="icon">,,</div>
+                        {% if allitems %}
+                        
+                        <p class="f_p f_size_20">“{{ allitems[0].description|html_entity_decode }}”</p>
+                        <div class="author f_600 f_p t_color f_size_20">{{ allitems[0].title }}</div>
+                        
+                        {% endif %}  
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="testimonial_img Cus_test_img">
+                        <img src="{{ allitems[0].image }}" alt="{{ allitems[0].title }}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="app_testimonial_area">
+        <div class="text_shadow" data-line="Feedback"></div>
+        <div class="container nav_container">
+            <div class="shap one"></div>
+            <div class="shap two"></div>
+            <div class="app_testimonial_slider owl-carousel">
+            {% if allitems %}
+            {% for item in allitems %}
+                <div class="app_testimonial_item text-center">
+                    <div class="author-img"><img src="{{ item.image }}" alt="{{ item.title }}"></div>
+                    <div class="author_info">
+                        <h6 class="f_p f_500 f_size_18 t_color3 mb-0">{{ item.title }}</h6>
+                    </div>
+                    <p class="f_400">{{ item.description|html_entity_decode }}</p>
+                </div>
+            {% endfor %}     
+            {% endif %}     
+            </div>
+        </div>
+    </section>
+{{ footer }}

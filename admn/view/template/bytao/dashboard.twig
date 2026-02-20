@@ -1,0 +1,37 @@
+
+<div class="row">
+	<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="tile tile-primary">
+		  <div class="tile-heading">Best sellers <span class="float-end"></span></div>
+		  <div class="tile-body">
+		  {% if pProducts %}
+	          {% for product in pProducts %}
+			  	<div class="list-prod-dash" title="{{ product.name }}">
+			  		<span class="over-img">{{ product.counter }}</span>
+			  		<img src="{{ product.image }}" alt="{{ product.model }}"/>
+			  		<span class="line">{{ product.model }}</span>
+			  		<span class="line">{{ product.total }}</span>
+			  	</div>
+			  {% endfor %}
+		  {% endif %}	
+		  </div>
+		  <div class="tile-footer"><a href="{{ sale }}">{{ text_view }}</a></div>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="tile tile-primary">
+		  <div class="tile-heading">Most visited <span class="float-end"></span></div>
+		  <div class="tile-body">
+		  {% if vProducts %}
+	          {% for product in vProducts %}
+			  	<div class="list-prod-dash">
+			  		<img src="{{ product.image }}" alt=""/>
+			  		<h4 class="most-product">{{ product.model }}</h4>
+			  	</div>
+			  {% endfor %}
+		  {% endif %}	
+		  </div>
+		  <div class="tile-footer"><a href="{{ sale }}">{{ text_view }}</a></div>
+		</div>
+	</div>
+</div>

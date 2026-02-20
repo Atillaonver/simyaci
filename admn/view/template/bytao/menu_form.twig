@@ -1,0 +1,405 @@
+<style>
+ul#language {margin-bottom: 0px;}
+#formside {border-left: solid 1px #dee2e6;padding-left: 0px;}
+#menuform h4 {padding-left: 5px;}
+.menu-url-img{display: inline-block;}
+</style>
+<!-- Menu Form-->
+
+<div class="tab-content" id="menu_form">
+<form id="menuform" >
+		<input type="hidden" value="{{ menu_group_id }}" name="menu[menu_group_id]"/>
+		<input type="hidden" value="{{ menu_id }}" name="menu[menu_id]"/>
+		<input type="hidden" value="{{ by_menu.item }}" name="menu[item]" id="menuitem" />
+				
+		<h4>{{ entry_menu_information}}<span id="menuID"></span><div class="float-end">
+				<a id="btnSave" class="btn btn-primary"><i class="fa fa-save"></i> {{ button_save}}</a>
+				<a id="btnCancel" class="btn btn-danger" title="{{ button_cancel }}" href="#" ><i class="fa fa-book"></i> {{ button_cancel }}</a> 
+				
+			</div></h4>
+												
+
+		<ul class="nav nav-tabs" id="language">
+			{% for language in languages %}
+                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image|lower }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+            {% endfor %}
+		</ul>
+	
+	
+		<div class="tab-content" style="padding-top: 30px;">
+	 	{% for language in languages %}
+                  <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
+                    <div class="row mb-3 required">
+                      <label class="col-sm-3 col-form-label">{{ entry_menu_title }}</label>
+                      <div class="col-sm-9">
+                      	<input class="form-control" name="menu_description[{{ language.language_id }}][title]" value="{% if menu_description[language.language_id]['title'] %}{{ language.language_id }}{{menu_description[language.language_id]['title']}}{% endif %}"/>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label class="col-sm-3 col-form-label">{{ entry_description }}</label>
+                      <div class="col-sm-9">
+                      	<textarea class="form-control" name="menu_description[{{ language.language_id }}][description]">{% if menu_description[language.language_id]['description'] %}{{ language.language_id }}{{menu_description[language.language_id]['description']}}{% endif %}</textarea>
+                      </div>
+                    </div>
+                   
+                  </div>
+        {% endfor %}
+		</div>
+		<div class="row mb-3">
+            <label class="col-sm-3 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-3">
+              
+              	<select name="menu[published]" class="form-control" >
+              		<option value="0">{{ text_no }}</option>
+              		<option value="1" {% if by_menu.published %} selected="select"{% endif %}>{{ text_yes }}</option>
+              	</select>
+               
+            </div>
+             <label for="input-show_title" class="col-sm-3 col-form-label">{{ entry_showtitle }}</label>
+            <div class="col-sm-3">
+            	<select name="menu[show_title]" class="form-control" >
+              		<option value="0">{{ text_no }}</option>
+              		<option value="1" {% if by_menu.show_title %} selected="select"{% endif %}>{{ text_yes }}</option>
+              	</select>
+            
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">{{ entry_login }}</label>
+            <div class="col-sm-9">
+              <div class="form-select">
+               <select class="form-control" name="menu[login]" id="menulogin">
+				 <option value="0" {% if by_menu.login == '0'  %} selected="selected" {% endif %}>{{ text_all }}</option>
+				 <option value="1" {% if by_menu.login == '1' %} selected="selected" {% endif %}>{{ text_logined }}</option>
+				 <option value="2" {% if by_menu.login == '2'   %} selected="selected" {% endif %}>{{ text_not_logined }}</option>
+				</select>
+              </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">{{ entry_type }}</label>
+            <div class="col-sm-9">
+              <div class="form-select">
+               <select class="form-control" name="menu[type]" id="menutype">
+						{% for mt, val in menutypes %}
+						<option value="{{ mt }}" {% if mt == by_menu.type %} selected="selected" {% endif %}>{{ val }}</option>
+						{% endfor %}
+					</select>
+              </div>
+            </div>
+        </div>
+        <div id="menutype-url" class="row mb-3 menutype">
+            <label for="input-status" class="col-sm-3 col-form-label">{{ entry_url }}</label>
+            <div class="col-sm-9">
+                {% for language in languages %}
+						<img src="{{ language.image|lower }}" title="{{ language.name }}" class="menu-url-img" style="width:30px;"/><input type="text" class="form-control" name="menu[url][{{ language.language_id }}]" id="urlLang{{ language.language_id }}" value="" size="50" style="display: inline-block;width: calc(100% - 32px);"/>
+                	{% endfor %}
+            </div>
+        </div>
+        <div id="menutype-category" class="row mb-3 menutype">
+            <label for="input-parent" class="col-sm-3 col-form-label">{{ entry_category }}</label>
+            <div class="col-sm-9">
+              <input type="text" name="path" value="{{ by_menu.megamenu-category }}" placeholder="{{ entry_parent }}" id="input-parent" data-oc-target="autocomplete-parent" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-parent" class="dropdown-menu"></ul>
+              <input type="hidden" name="path_id" value="{{ by_menu.item }}" id="input-parent-id"/>
+              <div class="form-text">{{ text_explain_input_auto }}</div>
+              <div id="error-parent" class="invalid-feedback"></div>
+            </div>
+        </div>  
+        <div id="menutype-product" class="row mb-3 menutype">
+            <label for="input-product" class="col-sm-3 col-form-label">{{ entry_product }}</label>
+            <div class="col-sm-9">
+            	<input type="text" class="form-control" name="menu-product" value="{{ by_menu.megamenu-product }}" size="50" placeholder="{{ entry_parent }}" id="input-product" data-oc-target="autocomplete-product" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-product" class="dropdown-menu"></ul>
+              <input type="hidden" name="product_id" value="{{ by_menu.item  }}" id="input-product-id"/>
+              <div id="error-parent" class="invalid-feedback"></div>
+              <div class="form-text">{{ text_explain_input_auto }}</div>
+            </div>
+        </div>  
+        <div id="menutype-manufacturer" class="row mb-3 menutype">
+            <label for="input-manufacturer" class="col-sm-3 col-form-label">{{ entry_manufacturer }}</label>
+            <div class="col-sm-9">
+            	<input type="text" class="form-control" name="menu-manufacturer" value="{{ by_menu.megamenu-manufacturer }}" size="50" placeholder="{{ entry_parent }}" id="input-manufacturer" data-oc-target="autocomplete-manufacturer" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-manufacturer" class="dropdown-menu"></ul>
+              <input type="hidden" name="manufacturer_id" value="{{ by_menu.item  }}" id="input-manufacturer-id"/>
+              <div class="form-text">{{ text_explain_input_auto }}</div>
+            </div>
+        </div>  
+        <div id="menutype-information" class="row mb-3 menutype">
+            <label class="col-sm-3 col-form-label">{{ entry_information }}</label>
+            <div class="col-sm-9">
+              <div class="form-select">
+               <select class="form-control" type="text" name="menu-information" id="menu-information">
+						{% for info in informations %}
+						<option value="{{ info.information_id }}"  {% if by_menu.megamenu-information == info.information_id %} selected="selected" {% endif %}>{{ info.title }}</option>
+						{% endfor %}
+					</select>
+              </div>
+            </div>
+        </div>
+        <div id="menutype-controller" class="row mb-3 menutype">
+            <label class="col-sm-3 col-form-label">{{ entry_controller }}</label>
+            <div class="col-sm-9">
+              <div class="form-select">
+               <select class="form-control" type="text" name="menu-controller" id="menu-controller">
+						{% for item in controllers %}
+						<option value="{{ item }}"  {% if by_menu.megamenu-controller == item %} selected="selected" {% endif %}>{{ item }}</option>
+						{% endfor %}
+					</select>
+              </div>
+            </div>
+        </div>
+        <div id="menutype-page" class="row mb-3 menutype">
+            <label class="col-sm-3 col-form-label">{{ entry_page }}</label>
+            <div class="col-sm-9">
+              <div class="form-select">
+               <select class="form-control" type="text" name="menu-page" id="menu-page">
+						{% for item in pages %}
+						<option value="{{ item.page_id }}"  {% if by_menu.megamenu-page_id == item.page_id %} selected="selected" {% endif %}>{{ item.title }}</option>
+						{% endfor %}
+					</select>
+              </div>
+            </div>
+        </div>
+        <div id="menutype-html" class="row mb-3 menutype">
+            <label class="col-sm-3 col-form-label">{{ entry_html }}</label>
+            <div class="col-sm-9">
+              <div class="form-select">
+               <textarea type="text" name="menu[content_text]"  size="50" class="form-control">{{ by_menu.content_text }}</textarea>
+               <i>{{ text_explain_input_html }}</i>
+              </div>
+            </div>
+        </div>  
+		
+		<div class="row mb-3 ">
+            <label class="col-sm-3 col-form-label">{{ entry_parent_id }}</label>
+            <div class="col-sm-9">
+              <div class="form-select" id="menu-pos" >
+					{{ menus }}
+              </div>
+            </div>
+        </div>
+		<div class="row mb-3 ">
+            <label class="col-sm-3 col-form-label">{{ entry_parent_class }}</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="menu[parent_class]" value="{{ by_menu.parent_class }}"/>
+            </div>
+        </div>
+        
+		<div class="row mb-3 ">
+            <label class="col-sm-3 col-form-label">{{ entry_image }}</label>
+            <div class="col-sm-9">
+              <div class="card image">
+                    <img src="{% if thumb %}{{ thumb }}{% else %}{{ placeholder }}{% endif %}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="menu[image]" value="{{ by_menu.image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-oc-toggle="image" data-oc-target="input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-oc-toggle="clear" data-oc-target="input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+            </div>
+        </div>
+		
+		<div class="row mb-3 ">
+            <label class="col-sm-3 col-form-label">{{ entry_menuclass }}</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="menu[menu_class]" value="{{ by_menu.menu_class }}"/>
+            </div>
+        </div>
+		<div class="row mb-3 ">
+            <label class="col-sm-3 col-form-label">{{ entry_badges }}</label>
+            <div class="col-sm-9">
+              <div class="form-select" >
+					<input type="text" class="form-control" name="menu[badges]" value="{{ by_menu.badges }}"/>
+              </div>
+            </div>
+        </div>
+		
+		<div class="row mb-3">
+            <label class="col-sm-3 col-form-label">{{ entry_isgroup }}</label>
+            <div class="col-sm-9">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="menu[is_group]" value="0"/> <input type="checkbox" name="menu[is_group]" value="1" id="input-is_group" class="form-check-input"{% if by_menu.is_group %} checked{% endif %}/>
+              </div>
+            </div>
+        </div>
+		<div class="row mb-3 hidden">
+            <label class="col-sm-3 col-form-label">{{ is_content }}</label>
+            <div class="col-sm-9">
+              <div class="form-check form-switch form-switch-lg">
+                <input type="hidden" name="menu[is_content]" value="0"/> <input type="checkbox" name="menu[is_content]" value="1" id="input-is_content" class="form-check-input"{% if by_menu.is_content %} checked{% endif %}/>
+              </div>
+            </div>
+        </div>
+		<div class="row mb-3 hidden">
+            <label class="col-sm-3 col-form-label">{{ entry_columns }}</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control" name="menu[colums]" value="{{ by_menu.colums }}"/>
+					<i>{{ text_explain_columns }}</i>
+            </div>
+        </div>
+        <div class="row mb-3 ">
+            <label class="col-sm-3 col-form-label">{{ entry_detail_columns }}</label>
+            <div class="col-sm-9">
+              <textarea type="text" name="menu[submenu_colum_width]" rows="5" class="form-control">{{ by_menu.submenu_colum_width }}</textarea>
+					<i>{{ text_explain_submenu_cols }}</i>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">{{ entry_sub_menutype }}</label>
+            <div class="col-sm-9">
+              <select class="form-control" name="menu[type_submenu]" id="menu-type_submenu">
+						{% for stype, text in submenutypes %}
+						<option value="{{ stype }}" {% if stype == by_menu.type_submenu %} selected="selected"{% endif %}>{{ text }}</option>
+						{% endfor %}
+					</select>
+					<i>{{ text_explain_submenu_type }}</i>
+            </div>
+        </div>
+        <div class="row mb-3 type_submenu hidden" id="type_submenu-html">
+            <label class="col-sm-3 col-form-label">{{ entry_submenu_content }}</label>
+            <div class="col-sm-9">
+              <textarea name="menu[submenu_content]" id="submenu_content" class="form-control">{{ by_menu.submenu_content }}</textarea>
+            </div>
+        </div>
+        <div class="row mb-3 type_submenu hidden" id="type_submenu-widget">
+            <label class="col-sm-3 col-form-label">{{ entry_widget_id }}</label>
+            <div class="col-sm-9">
+              {% if widgets is iterable %}
+					<select class="form-control" name="menu[widget_id]">
+						{% for w, t in widgets %}
+						<option value="{{ t.id }}" {% if w == by_menu.widget_id %} selected="selected"{% endif %}>{{ t.name }}</option>
+						{% endfor %}
+					</select>
+					{% endif %}
+            </div>
+        </div>
+        
+</form>
+</div>
+<script type="text/javascript"><!--
+
+
+$('#input-parent').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&limit=11&filter_name=' + encodeURIComponent(request.term),
+            dataType: 'json',
+            success: function (json) {
+                json.unshift({
+                    'name': '{{ text_none }}',
+                    'category_id': '0'
+                });
+                response($.map(json, function (item) {
+                    return {
+                        value: item['category_id'],
+                        label: item['name']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (event , ui ) {
+    	event.preventDefault();
+        $('#menuform input[name=\'path\']').val(ui.item.label);
+		$('#menuform input[name=\'menu[item]\']').val(ui.item.value);
+    }
+});
+
+// Manufacturer
+$('#input-manufacturer').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/manufacturer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                json.unshift({
+                    manufacturer_id: 0,
+                    name: '{{ text_none }}'
+                });
+
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['manufacturer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (event , ui ) {
+    	event.preventDefault();
+        $('#form{{ n }} input[name=\'menu-manufacturer\']').val(ui.item.label);
+		$('#form{{ n }} input[name=\'menu[item]\']').val(ui.item.value);
+    }
+});
+
+// Related
+$('#input-product').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&limit=9&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['product_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (event , ui ) {
+    	event.preventDefault();
+        $('#menuform input[name=\'menu-product\']').val(ui.item.label);
+		$('#menuform input[name=\'menu[item]\']').val(ui.item.value);
+    }
+});
+
+
+
+//-->
+</script>	
+
+
+
+
+
+
+
+
+			
+						
+<script type="text/javascript"><!--//
+$(document).ready(function(){
+	$("#menuform #type_submenu-"+$("#menuform #menu-type_submenu").val()).removeClass('hidden');
+
+	$("#menuform #menu-type_submenu").change( function(){
+		$("#menuform .type_submenu").addClass('hidden');
+		$("#menuform #type_submenu-"+$(this).val()).removeClass('hidden');
+	});
+
+	$("#menuform .menutype").addClass('hidden');
+
+	$("#menuform #menutype-"+ $("#menutype").val()).removeClass('hidden');
+	
+	$("#menuform #menutype").change( function(){
+		$("#menuform .menutype").addClass('hidden');
+		$("#menuform #menutype-"+$(this).val()).removeClass('hidden');
+	});
+		
+	$("#menuform #menutype").trigger('change')
+
+	$("#menuform #menu-information").change( function(){ 
+			$('#menuform input[name=\'menu[item]\']').val($(this).val());
+	});
+	
+	$("#menuform #menu-page").change( function(){ 
+			$('#menuform input[name=\'menu[item]\']').val($(this).val());
+	});
+
+			
+});
+//-->
+</script>	

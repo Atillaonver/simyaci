@@ -1,0 +1,18 @@
+{{ header }}
+<div class="layout">
+    <main class="main main-inner main-project" {% if himage %}style="background-image:url('{{ HTTP_IMAGE }}{{ himage }}');"{% endif %} data-stellar-background-ratio="0.4">
+      <div class="container">
+        <header class="main-header">
+          <h1>{{ heading_title }}</h1>
+        </header>
+      </div>
+    </main>
+  <div class="row">
+    <div id="content" class="col">
+      {{ text_message }}
+      <div class="d-inline-block pt-2 pd-2 w-100">
+        <div class="float-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      </div>
+      </div>
+    </div>
+{{ footer }}

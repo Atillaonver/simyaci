@@ -1,0 +1,83 @@
+{{ header }}
+<section class="breadcrumb_area">
+        <div class="container">
+            <div class="breadcrumb_content text-center">
+                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">{{ heading_title }}</h1>
+                <p class="f_400 w_color f_size_16 l_height26"></p>
+            </div>
+        </div>
+    </section>
+
+<section id="checkout-checkout"  class="checkout_area bg_color sec_pad">
+	<div class="container">
+      <div class="row">
+<form id="form-appointment" action="{{ checkout }}" method="post">
+
+	<div class="calendar">
+		<div class="header">
+			<div class="container-date">
+		
+				<a href="{{ lastM }}" class="btn-left btn btn-outline-light" data-oc-toggle="ajax_html" data-oc-target="appointment"><i class="ti-arrow-left"></i></a>
+				<div class="month-year text-center">{{ theday|date('F Y') }}</div>
+				
+				<a href="{{ nextM }}" class="btn-right btn btn-outline-light" data-oc-toggle="ajax_html" data-oc-target="appointment"> <i class="ti-arrow-right"></i> </a>
+			</div>
+		</div>
+		<div class="days">
+		{% for num,day in days %}
+			<div class="day_name">{{ day }}</div>
+		{% endfor %}
+		{% set daysInMonth = theday|date('t') %}
+		{% set toDay = today|date('d') %}
+		{% set toMonth = today|date('m') %}
+		{% set theMonth = theday|date('m') %}
+		{% set theYear = theday|date('Y') %}
+		{% set startDow = theday|date('F 1\\s\\t Y')|date('w') %}
+		{% set dow = startDow %}
+		<div class="weak">
+		{% for day in range(1,daysInMonth) %}
+				
+				{% if loop.first and startDow != 0 %}
+					{% for iday in range(1,startDow) %}
+					<div class="day_num ignore"></div>
+					{% endfor %}
+				{% endif %}
+				
+				<div class="day_num {{ day == toDay and toMonth==theMonth? 'today'  }}" data-date="{{theYear ~ '-' ~ theMonth ~ '-' ~ day }}" data-year="{{ theYear }}" data-month="{{theMonth }}" data-day="{{day }}">
+					<div class="day-container">
+						<span>{{ day }}</span>
+						<ul class="appoint {{ ( day < toDay ) and ( toMonth == theMonth )? 'ignored'  }}">
+									
+							{% if appointments[theYear ~ '-' ~ theMonth ~ '-' ~ day] %}
+								{% for tday in appointments[theYear ~ '-' ~ theMonth ~ '-' ~ day] %}
+									<li class="{{ tday.status?'':'empty' }}" data-app-id="{{ tday.appointment_id }}" data-date="{{ tday.date  }}" data-time="{{ tday.time }}"> {{ tday.time[:-3] }} </li>
+								{% endfor %}
+							{% else %}
+							{{ ( day < toDay ) and ( toMonth == theMonth )?'': '<span class="full">'~text_full~'</span>'  }}
+							{% endif %}
+						</ul>
+						
+					</div>
+				</div>
+				
+				{% if loop.last and dow != 6 %}
+					<div class="day_num ignore" data-span="{{ 6 - dow }}">&nbsp;</div>
+				{% endif %}
+				{% if dow == 6 %}
+					{% set dow = 0 %}
+				</div>
+				<div class="weak">
+				{% else %}
+					{% set dow = dow + 1 %}
+				{% endif %}
+			{% endfor %}
+			</div>
+		</div>
+		<input type="hidden" name="appointer" id="input-appointer">
+		<button type="submit" form="form-appointment" class="btn btn-primary big hidden" id="contunier">{{ button_continue }}</button>
+</form>
+	  </div>
+	</div>
+</section>
+{{ js }}
+{{ footer }}

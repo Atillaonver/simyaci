@@ -1,0 +1,82 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+	<div id="page-content" class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		
+		{% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
+			</div>
+			<div class="panel-body" >
+				<div class="row mb-3" >
+
+				<div class="col-sm-3">
+					{{ toolbar }}
+				</div>
+
+				<div class="col-sm-9">
+					<div class="heading">
+						<h3>{{ text_templates }}</h1>
+					</div>
+					<div class="toolbar clearfix">
+						{{ action_bar }}
+					</div>
+					<hr>	
+
+					<div class="content">
+						<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
+							<input type="hidden" name="action" id="action" value=""/>
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<td class="left" style="width:3%"></td>
+										<td class="left" style="width:4%">Id</td>
+										<td class="left" style="width:40%">
+										{{ column_name }}</td>
+										<td class="left" style="width:40%">
+										{{ column_lastchange }}</td>
+										<td class="right">{{ column_actions }}</td>
+									</tr>
+								</thead>
+								<tbody>
+									<?php if ($templates) { ?>
+									{% if templates %}
+										{% for key, template in templates %}
+											<tr>
+												<td><input type="checkbox" name="templates[]" id="template{{ key }}" value="{{ template.template_id }}"/></td>
+												<td>{{ template.template_id }}</td>
+												<td class="left">{{ template.name }}</td>
+												<td class="left">{% if template.date_modified %}{{ template.date_modified }}{% else %}{{ template.date_added }}{% endif %}</td>
+												<td class="right">
+												[ <a href="index.php?route=bytao/newsletter|template&id={{ template.template_id }}&user_token={{ user_token }}">{{ text_edit }}</a> ]</td>
+											</tr>
+										{% endfor %}
+									{% else %}
+									<tr>
+										<td class="center" colspan="5">{{ text_no_results }}</td>
+									</tr>
+									{% endif %}
+								</tbody>
+							</table>
+						</form>
+						<div class="pagination">{{ pagination }}</div>
+					</div>
+
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

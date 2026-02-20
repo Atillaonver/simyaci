@@ -1,0 +1,6 @@
+<ul>
+{% for tday in appointments %}
+		<li class="{{ tday.status?'':'empty' }}" data-app-id="{{ tday.appointment_id }}" data-date="{{ tday.date  }}" data-time="{{ tday.time }}"> {{ tday.time }} </li>
+{% endfor %}
+</ul>
+

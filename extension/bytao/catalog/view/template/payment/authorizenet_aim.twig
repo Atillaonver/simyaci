@@ -1,0 +1,103 @@
+<div id="pay-it">
+<span id="btn-cancel" class="hidden">
+	<span>Cancel</span><i class="fa fa-times-circle"></i>
+</span>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="Pay" id="button-pay" class="btn btn-primary" />
+    
+  </div>
+</div>
+<form id="payment" class="form-horizontal hidden">
+  <fieldset>
+    <legend>{{ text_credit_card }}</legend>
+    <div class="form-group required">
+      <div class="col-sm-12">
+        <input type="text" name="cc_owner" value="" placeholder="{{ entry_cc_owner }}" id="input-cc-owner" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <div class="col-sm-12">
+        <input type="text" name="cc_number" value="" placeholder="{{ entry_cc_number }}" id="input-cc-number" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-12 control-label" for="input-cc-expire-date">{{ entry_cc_expire_date }}</label>
+      <div class="w3-row">
+      <div class="w3-half">
+        <select name="cc_expire_date_month" id="input-cc-expire-date" class="form-control">
+          
+         {% for month in months %}
+          
+          <option value="{{ month.value }}">{{ month.text }}</option>
+          
+          {% endfor %}
+        
+        </select>
+      </div>
+      <div class="w3-half">
+        <select name="cc_expire_date_year" class="form-control">
+          
+         {% for year in year_expire %}
+          
+          <option value="{{ year.value }}">{{ year.text }}</option>
+          
+          {% endfor %}
+        
+        </select>
+      </div>
+      </div>
+    </div>
+    <div class="form-group required">
+      <div class="col-sm-12">
+        <input type="text" name="cc_cvv2" value="" placeholder="{{ entry_cc_cvv2 }}" id="input-cc-cvv2" class="form-control" />
+      </div>
+    </div>
+  </fieldset>
+</form>
+<div class="buttons hidden">
+  <div class="pull-right">
+    <button type="button" id="button-confirm" class="btn btn-primary">{{ button_confirm }}</button>
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/bytao/payment/authorizenet_aim.send&language={{ language }}',
+		type: 'post',
+		data: $('#payment input,#payment select'),
+		dataType: 'json',
+		cache: false,
+		beforeSend: function() {
+			$('#button-confirm').prop('disabled', true);
+        },
+        complete: function() {
+            $('#button-confirm').prop('disabled', true);
+        },
+		success: function(json) {
+			
+			if (json['error']) {
+				alert(json['error']);
+			}
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		}
+	});
+});
+
+$('#btn-cancel').on('click', function() {
+	$('#checkout-payment').removeClass('active');
+	$('#payment').addClass('hidden');
+	$('#pay-it div.buttons,#btn-cancel').toggleClass('hidden');
+});
+
+$('#button-pay').on('click',function() {
+	$('#checkout-payment').addClass('active');
+	$('#payment').removeClass('hidden');
+	$('#pay-it div.buttons,#btn-cancel').toggleClass('hidden');
+});
+
+//--></script>
+</div>

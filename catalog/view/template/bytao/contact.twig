@@ -1,0 +1,80 @@
+{{ header }}
+<div class="layout">
+    <main class="main main-inner main-project" {% if himage %}style="background-image:url('{{ HTTP_IMAGE }}{{ himage }}');"{% endif %} data-stellar-background-ratio="0.4">
+      <div class="container">
+        <header class="main-header">
+          <h1>{{ heading_title }}</h1>
+        </header>
+      </div>
+    </main>
+     <section id="qua_content" class="qua_content">
+
+
+        <section class="qua_section">
+            
+
+            <div class="qua_map">
+                
+                <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1505.9997455300372!2d29.083643057859582!3d40.98149197983228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sAtat%C3%BCrk%20Caddesi%2C%20Atat%C3%BCrk%20Cadde%20Konutlar%C4%B1%20No%3A43%20A-Blok%20Daire%3A6%20Sahray%C4%B1cedid%20Mh.%2034734%20Kad%C4%B1k%C3%B6y%20%C4%B0stanbul!5e0!3m2!1str!2str!4v1595556873725!5m2!1str!2str" style="border:0; height: 450px; width: 100%;" allowfullscreen></iframe>
+            </div>
+        
+        </section>
+       <section class="v-sperator"></section>
+        <section class="qua_section">
+            <div class="container text-center">
+                   
+
+                <div class="row">
+
+                    <div class="col-md-8 col-md-offset-2">
+                        <h2>{{ text_contact }}</h2>
+                        <form id="form-contact" action="{{ send }}" method="post" data-oc-toggle="ajax">
+				<fieldset>
+					<legend>{{ text_contact }}</legend>
+					<div class="row mb-3 required">
+						<label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="name" value="{{ name }}" id="input-name" class="form-control"/>
+							<div id="error-name" class="invalid-feedback"></div>
+						</div>
+					</div>
+					<div class="row mb-3 required">
+						<label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+						<div class="col-sm-10">
+							<input type="text" name="email" value="{{ email }}" id="input-email" class="form-control"/>
+							<div id="error-email" class="invalid-feedback"></div>
+						</div>
+					</div>
+					<div class="row mb-3 required">
+						<label for="input-enquiry" class="col-sm-2 col-form-label">{{ entry_enquiry }}</label>
+						<div class="col-sm-10">
+							<textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"></textarea>
+							<div id="error-enquiry" class="invalid-feedback"></div>
+						</div>
+					</div>
+					{{ captcha }}
+				</fieldset>
+				<div class="d-inline-block pt-2 pd-2 w-100">
+					<div class="text-end">
+						<button type="submit" class="btn">{{ button_submit }}</button>
+					</div>
+				</div>
+			</form>
+			
+                        
+                    </div>
+                   
+                </div>
+                
+
+            </div>
+           
+        </section>
+       <section class="v-sperator"></section>
+
+    </section>   
+    
+    
+   
+
+{{ footer }}

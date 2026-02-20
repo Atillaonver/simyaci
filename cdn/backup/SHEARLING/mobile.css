@@ -1,0 +1,93 @@
+/* SHEA Mobile */
+@media only screen 
+  and (max-width:813px)
+   and (orientation: portrait){
+            #mobile-menu{display:inline-block;}
+            #col-info {height: auto;min-height: auto;}
+            .m-hide{display:none;}
+           #search {position: unset;margin: 0; width: 100%; padding:0;margin:30px 0;}
+           #search-submit{margin-top: 10px;}
+           #search input {border: none;background-color: #efefef;}
+          .m-only,.t-m-only {display:block !important;}
+          .d-only {display:none !important;}
+          .l-p-c-m {margin: 30px 0;text-align: center;height: auto;}
+          .sticky-container{position:initial;}
+          .product-options {border-top: none; width: 100%;float: left;margin-top: 0px; padding-top: 0px;}
+          #prod-list-images{position:initial;margin-bottom: 20px;height:90vw;overflow:hidden;}
+          .p-l-i-c{position:relative;height: 100%;}
+          .p-l-i-ctrl {display:block;top: 50%;left: 50%;z-index: 3001;height: 100%;width: 100%;font-size: 50px;transform: translate(-50%,-7%); -ms-transform: translate(-50%,-50%);}
+          .p-l-i-ctrl .material-icons{font-size: 62px;color: #ccc;}
+          .prod-list-image,.p-l-i-ctrl{position:absolute;}
+          .p-l-i-z {display: inline-block;}
+          .hidden .p-l-i-z, .act-color .p-l-i-z {display: none;}
+          .act-color{display:none;}
+          #button-review {margin: 20px 0;}
+          .top-container{ height: 80px;}
+          #header-logo {margin-top:0px;}
+          .popup-content {max-width: 60%;}
+          .logo-pozitive{display:inline-block;}
+          .logo-negative{display:none;}  
+          .logo-pozitive { display: inline-block; margin-top: 15px;}
+          .w3-button ,.scrolled .w3-button{padding: 4px 11px;}
+          .padding {padding-left: 20px;padding-right: 20px;}
+          #page-container { margin-top: 100px;}
+          .li-row{display:initial;}
+          .row-2-1, .row-2-2,.row-4-1, .row-4-2, .row-4-3, .row-4-4,.row-3-1,.row-3-2,.row-3-3,.row-3-c1.t11, .row-3-c2.t12,.row-3-1, .row-3-2, .row-3-3, .row-3-c1, .row-3-c2, .row-3-c2.t11, .row-3-c1.t12 {width: 100%;}
+
+          .name > .product-name { font-size: 13pt !important;line-height: 17pt;font-weight: bold;}
+          #col-image, #col-info {width: 100%;display:block;float: none;position:unset;}
+          #col-info {padding:0;}
+          .popup-content {margin: auto; max-width: 90%;}
+          .secure-logos {margin: 50px 15px; padding: 0 30px;height: 65px;}
+           .cart-qnt,.cart-ttl{display:none !important}
+           .item-qnt,.item-ttl{display:block !important}
+           .inner-content {width: 98%;}
+           .col-label {width: 125px;}
+          .quantity-wrapper .wrapper .qty-up, .quantity-wrapper .wrapper .qty-down {font-size: 22px;}
+           .popup-camp-content{ max-width:90%;}
+          .popup-camp-content img{width:100%;}
+           #blckfrdy {line-height: 33px;	font-size: 15px;padding-top: 10px;}
+           #blckfrdy span{display:block;}
+           #ribbon {line-height: 33px;	font-size: 15px;padding-top: 10px;}
+           #ribbon span{display:block;}
+          .mobile .img-thumbnail {width: 80%;}
+           img.more-color {bottom: 10px;}
+           .product-box {margin-bottom: 130px;}
+           .desktop .l-p-c-m{padding: 1px 0 20px 0;}
+           .row-4-1.y25 .shea-btn{display:none;}
+           .master-slider-parent{ margin-bottom:10px;}
+           #product-reviews {width:94%;}
+     			#main {margin-top: 100px !important;}
+     			.col-right {padding: 0;padding-top: 50px;}
+     			.form-switch.form-switch-lg {margin-bottom: 20px;}
+     			#checkout-checkout #content {margin-top: 120px;}
+     		#pay-it #btn-cancel {display: none;}
+}
+@media only screen 
+  and (min-width:340px) 
+  and (max-width:1024px) 
+  and (orientation: portrait){
+          #mobile-menu{display:inline-block;}
+          #also-like-section .row-4-1,#viewed-section  .row-4-1 {width: 50%;}
+          .inner-content {width: 98%;}
+          .col-label {width: 150px;}
+}
+@media (min-width: 601px) and  (max-width:768px) and (orientation: portrait){
+  
+}
+@media (min-width:1025px) and (orientation: portrait){
+  
+}
+
+@media only screen and  (max-width:1100px) and (orientation: landscape){
+ 
+}
+
+@media only screen and  (max-width:1100px) and (orientation: portrait){
+  
+}
+
+
+@media  (max-width:1195px){
+  
+}

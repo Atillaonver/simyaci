@@ -1,0 +1,91 @@
+#col-image{
+	min-height:100vh;
+}
+.product-model{ font-size: 15px;font-weight:200;}
+.product-name h1{ font-size: 25px; font-weight:200; text-transform: uppercase;}
+.product-price{margin-top:20px;margin-bottom:20px;font-size: 25px !important;padding-top: 5px;}
+.product-price span{}
+.product-buttons {padding-bottom: 20px;}
+.product-colors {font-size: 15px;}
+.product-colors > span{}
+.product-sizes{font-size: 15px; line-height: 1em;}
+.product-sizes span{}
+.product-sizes span.sizes{border: solid 1px #fff;  cursor: pointer;}
+.product-sizes span.sizes.selected{border-color: red;}
+.product-sizes span.sizes:hover {background-color: #dedede;}
+
+.option-name {font-size: 15px; font-weight: normal;text-transform: uppercase;}
+
+.norm-price{font-size: 20px;}
+.new-price{color:red;font-size: 25px !important;}
+.old-price{text-decoration: line-through;}
+
+.hide{display:none;}
+.super{}
+
+
+#product-container .product-images li {list-style: none;float: left;width: 50%;padding: 5px;margin: 0px;}
+#col-info{padding: 0px 0 0 20px;}
+.colorbox-container{width: 800px;}
+	
+.product-name h1 {font-size: 20px;font-weight: normal;text-transform: uppercase;margin:0px;}
+.product-price {margin: 0px;}
+.product-price span {padding: 0px 20px 0px 0;}
+.product-colors .sizes,.option-name,.product-price, .new-price  {font-size: 15px;font-weight: normal;}
+.sizes {text-transform: uppercase !important;}
+
+.product-model,.product-name,.product-price,.product-colors,.product-sizes,.product-addition-info {height:50px;}
+.product-sizes span.sizes.no-qty {cursor: default;color:#fff;background-color: #000;}
+.product-sizes span{line-height: 50px;}
+.product-sizes{border-bottom: solid 1px #ccc;border-top: solid 1px #ccc;}
+.product-addition-info, .product-addition-info2 {font-size: 12px !important;font-weight: normal;padding-top:14px;line-height: 30px;vertical-align: middle;}
+.product-addition-info2:first-child{border-top: solid 1px #ccc;}
+.product-addition-info2{font-size: 15px;line-height: 50px;border-bottom: solid 1px #ccc;text-transform: uppercase;}
+.product-addition-info-next{height:50px;font-size: 12px !important;font-weight: normal;}
+
+.related{
+	padding-top: 50px;
+	display: block;
+	clear: both;
+	margin-top: 20px;
+}
+#related-product-orders li {
+	   display:inline-block;
+        *display:inline; /*IE7*/
+        *zoom:1; /*IE7*/
+
+        margin-right:10px;
+       list-style-type: none;
+      
+}
+#related-product-orders{
+	width:100%;
+    
+    height:350px;
+    text-align:center;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+.related-h{
+	margin-top: 50px;
+	padding-left: 100px;
+	padding-right: 100px;
+	border-bottom: solid 1px #ccc;
+}
+.clearfix {
+    overflow: auto;
+}
+
+#super-image{display: none;height: 100%;width:100%; position: fixed;z-index: 999;top:0;left:0;overflow: hide;background-color: #fff;}
+#zoom-panel {height: auto; width:100vw; position: absolute; top:0px; left:0px;}
+#zoom-panel img {width:100%;}
+
+@media (max-width:600px){
+	#product-container {margin-top: 90px;}
+	.product-images li{width:100% !important;}
+	.col-info{padding-left: 20px;}
+	.colorbox-container{width: 100vw;}
+	
+}
+
+/*cursor: url("https://static.serpil.com.tr/image/tools/superzoom_close.cur"), pointer;*/

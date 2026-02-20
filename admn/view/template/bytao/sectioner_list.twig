@@ -1,0 +1,44 @@
+<form method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="sectioner" id="form-sectioner">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+          <td class="text-left">{{ column_image }}</td>
+          <td class="text-left">{{ column_title }}</td>
+          <td class="text-left">{{ column_status }}</td>
+          <td class="text-right">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if items %}
+        {% for item in items  %}
+        <tr>
+          <td class="text-center">
+          	
+          	{% if item.item_id in selected|keys %}
+            <input type="checkbox" name="selected[]" value="{{ item.item_id }}" checked="checked" />
+            {% else %}
+            <input type="checkbox" name="selected[]" value="{{ item.item_id }}" />
+            {% endif %}
+            </td>
+          <td class="text-start"><img src="{{ item.thumb }}" alt="" class="list-img"/></td>    
+          <td class="text-left">{{ item.title }}</td>
+          <td class="text-left">{{ item.status }}</td>
+          <td class="text-right"><a href="{{ item.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+        </tr>
+        {% endfor %}
+        {%  else %}
+        <tr>
+          <td class="text-center" colspan="4">{{ text_no_results }}</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</form>
+<div class="row">
+  <div class="col-sm-6 text-left">{{ pagination }}</div>
+  <div class="col-sm-6 text-right">{{ results }}</div>
+</div>
+      

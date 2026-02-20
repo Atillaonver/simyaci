@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>{{ title }}</title>
+	<base href="{{ base }}"/>
+	
+	{% if icon %}
+		<link href="{{ icon }}" rel="icon" />
+	{% else %}
+		<link href="favicon.ico" rel="icon" />
+	{% endif %}
+	
+	{% if description %}
+	<meta name="description" content="{{ description }}"/>
+	{% endif %}
+	
+	{% if keywords %}
+	<meta name="keywords" content="{{ keywords }}"/>
+	{% endif %}
+ 
+	{#
+	<script src="{{ jquery }}" type="text/javascript"></script>
+	<link href="{{ bootstrap }}" type="text/css" rel="stylesheet" media="screen"/>#}
+	<link href="{{ icons }}" type="text/css" rel="stylesheet"/>
+  	<script src="cdn/js/jquery.min.js"></script>
+  	<script src="cdn/js/bytao.js?v2"></script>
+	<link href="assets/css/style.css?v=97" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+  
+	{% for style in styles %}
+	<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}"/>
+	{% endfor %}
+	
+	{{ css }}
+	
+	{% for script in scripts %}
+	<script src="{{ script.href }}" type="text/javascript"></script>
+	{% endfor %}
+	
+	{% for link in links %}
+	<link href="{{ link.href }}" rel="{{ link.rel }}"/>
+	{% endfor %}
+	
+	{{ analytic }}
+	
+	{% for analytic in analytics %}
+    	{{ analytic }}
+  	{% endfor %}
+  
+	{{ scrpt_head }}
+	
+</head>
+<body class="{{ class }} {{ lang }} {{ device }}" moved="">
+<div class="loader"></div>
+<header id="top" class="header-home">  
+	{{ menu }}
+</header>
+<div class="layout">
+	

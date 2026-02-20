@@ -1,0 +1,200 @@
+<div class="row mb-3">
+    <label class="col-sm-2 col-form-label" for="input-width">{{ entry_widget_type }}</label>
+    <div class="col-sm-10">
+     <select id="control-type" class="form-control fItem" oldval="{{ type }}">
+     	<option value="1" {% if type == "1" %} selected="selected" {% endif %}>Selected</option>
+    	<option value="2" {% if type == "2" %} selected="selected" {% endif %}>Latest </option> 
+    	<option value="3" {% if type == "3" %} selected="selected" {% endif %}>Specials </option>
+    	<option value="4" {% if type == "4" %} selected="selected" {% endif %}>Categories</option>  
+    	<option value="5" {% if type == "5" %} selected="selected" {% endif %}>Homepage Products</option>  
+	</select>
+	
+    </div>
+</div>
+
+<div class="row mb-3 if s2 s3 s4 {{ type in 2..4 ? 'notH':'' }}">
+    <label class="col-sm-2 col-form-label" for="input-width">{{ entry_item_pieces }}</label>
+    <div class="col-sm-10">
+    	<input id="piece-item" class="form-control fItem" placeholder="{{ entry_item_pieces }}" value="{{ pieces?pieces:'1' }}" type="number"/>
+    	<div class="form-text if s4 {{ type=='4' ? 'notH':'' }} ">{{ help_category_piece }}</div>
+    </div>
+    
+</div>
+
+<div class="row mb-3 if s2 s3 s4 {{ type in 2..4 ? 'notH':'' }}">
+    <label class="col-sm-2 col-form-label" for="input-width">{{ entry_item_cols }}</label>
+    <div class="col-sm-10">
+    	<input id="piece-row" class="form-control fItem" placeholder="{{ entry_item_cols }}" value="{{ cols?cols:'3' }}" type="text"/>
+    	<div class="form-text if s4 {{ type=='4' ? 'notH':'' }} ">{{ help_category_cols }}</div>
+    </div>
+    
+</div>
+
+<div class="row mb-3 s4 if {{ type=='4'?'notH':'' }}">
+	<label class="col-sm-2 col-form-label">{{ entry_category }}</label>
+	<div class="col-sm-10">
+	  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" data-oc-target="autocomplete-category" class="form-control" autocomplete="off"/>
+	  <ul id="autocomplete-category" class="dropdown-menu"></ul>
+	  <div class="input-group">
+	    <div class="form-control p-0" style="height: 150px; overflow: auto;">
+	      <table id="category" class="table table-sm m-0">
+	        <tbody>
+	          {% for category in categories %}
+		          {% if category.category_id %}
+		            <tr id="category-{{ category.category_id }}">
+		              <td>{{ category.name }}<input type="hidden" name="category[]" value="{{ category.category_id }}" class="fItem"  /></td>
+		              <td class="text-end"><button type="button" class="btn remove btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+		            </tr>
+		          {% endif %}
+	          {% endfor %}
+	        </tbody>
+	      </table>
+	    </div>
+	  </div>
+	  <div class="form-text">{{ help_category }}</div>
+	</div>
+</div>
+        
+<div class="row mb-3 s1 if {{ type=='1' ? 'notH' :'' }}">
+	<label class="col-sm-2 col-form-label">{{ entry_selected }}</label>
+	<div class="col-sm-10">
+	  <input type="text" value="" placeholder="{{ entry_selected }}" id="input-selected" data-oc-target="autocomplete-selected" class="form-control" autocomplete="off"/>
+	  <ul id="autocomplete-selected" class="dropdown-menu"></ul>
+	  <div class="input-group">
+	    <div class="form-control p-0" style="height: 150px; overflow: auto;">
+	      <table id="selected" class="table table-sm m-0">
+	        <tbody>
+	          {% for selected in selecteds %}
+	            <tr id="selected-{{ selected.product_id }}">
+	              <td>{{ selected.name }}<input type="hidden" name="selected[]" value="{{ selected.product_id }}" class="fItem"/></td>
+	              <td class="text-end"><button type="button" class="btn remove btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+	            </tr>
+	          {% endfor %}
+	        </tbody>
+	      </table>
+	    </div>
+	    
+	  </div>
+	  <div class="form-text">{{ help_selected }}</div>
+	</div>
+</div>
+ 
+        
+<script type="text/javascript"><!--
+$(document).ready(function(e){
+	
+	$('#control-type').trigger('change');
+});
+
+$(document).on('change','#control-type',function(e){
+	e.preventDefault();
+	ci = $(this).val();
+	CI = $(this).attr('oldval');
+	
+	if(ci != CI){
+		$(this).attr('oldval',ci);
+		$('.notH tbody').html('');
+		$('.if').removeClass('notH');
+		$('.s'+ci).addClass('notH')
+	} 
+});
+
+$(document).on('input','#input-category',function(e){
+		e.preventDefault();
+			$.ajax({
+		            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_status=1&filter_name=' + encodeURIComponent($(this).val()),
+		            dataType: 'json',
+		            beforeSend: function () {
+			            $('#autocomplete-loading').remove();
+                		$('#autocomplete-category').prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+                		$('#autocomplete-category').addClass('show');
+			        },
+			        complete: function () {
+			            
+			        },
+		            success: function (json) {
+	            		var html = '';
+					    var i = 0, j = 0;
+					    if (json.length) {
+					        for (i = 0; i < json.length; i++) {
+					        	html += '<li><a href="' + json[i]['category_id'] + '" class="dropdown-item">' + json[i]['name'] + '</a></li>';
+					        }
+					    }
+    					$('#autocomplete-category').html(html);
+			        }
+		        });
+		}).on('focusout', function (e) {
+                if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
+                    $('#autocomplete-category').removeClass('show');
+                }
+            });
+            
+$(document).on('input','#input-selected',function(e){
+		e.preventDefault();
+		$.ajax({
+            url: 'index.php?route=catalog/product.autocomplete&user_token={{ user_token }}&filter_status=1&filter_name=' + encodeURIComponent($(this).val()),
+            dataType: 'json',
+            beforeSend: function () {
+	            $('#autocomplete-loading').remove();
+        		$('#autocomplete-selected').prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+        		$('#autocomplete-selected').addClass('show');
+	        },
+	        complete: function () {
+	            
+	        },
+            success: function (json) {
+        		var html = '';
+			    var i = 0, j = 0;
+			    if (json.length) {
+			        for (i = 0; i < json.length; i++) {
+			        	html += '<li><a href="' + json[i]['product_id'] + '" class="dropdown-item">' + json[i]['name'] + '</a></li>';
+			        }
+			    }
+			$('#autocomplete-selected').html(html);
+	        }
+        });
+}).on('focusout', function (e) {
+        if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
+            $('#autocomplete-selected').removeClass('show');
+        }
+});
+
+$('#autocomplete-category').on("click", "a", function (e) {
+    e.preventDefault();
+	var tLabel = $(this).html();
+	var tLink = $(this).attr('href');
+	
+	 $('#category-' + tLink).remove();
+
+        html = '<tr id="product-category-' + tLink + '">';
+        html += '  <td><span class="label">' + tLabel + '</span><input type="hidden" name="category[]" value="' + tLink + '" class="fItem"/></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+
+        $('#category tbody').append(html);
+		$('#autocomplete-category').removeClass('show');
+		$('#input-category').html('')
+});            
+
+$('#autocomplete-selected').on("click", "a", function (e) {
+    e.preventDefault();
+	var tLabel = $(this).html();
+	var tLink = $(this).attr('href');
+	
+	 $('#selected-' + tLink).remove();
+
+        html = '<tr id="selected-' + tLink + '">';
+        html += '  <td><span class="label">' + tLabel + '</span><input type="hidden" name="selected[]" value="' + tLink + '" class="fItem"/></td>';
+        html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+
+        $('#selected tbody').append(html);
+		$('#autocomplete-selected').removeClass('show');
+		$('#input-selected').html('')
+});            
+
+//--></script>
+
+        
+
+      

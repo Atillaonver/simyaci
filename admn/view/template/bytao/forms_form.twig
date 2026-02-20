@@ -1,0 +1,881 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+				<button type="submit" form="form-forms" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light">
+					<i class="fa-solid fa-reply">
+					</i>
+				</a>
+			</div>
+			<h1>
+				{{ heading_title }}
+			</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item">
+					<a href="{{ breadcrumb.href }}">
+						{{ breadcrumb.text }}
+					</a>
+				</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header">
+				<i class="fa-solid fa-pencil">
+				</i>{{ text_form }}
+			</div>
+			<div class="card-body">
+				<form id="form-forms" action="{{ save }}" method="post">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a href="#tab-general" data-bs-toggle="tab" class="nav-link active">
+								{{ tab_general }}
+							</a>
+						</li>
+
+						<li class="nav-item">
+							<a href="#tab-design" data-bs-toggle="tab" class="nav-link">
+								{{ tab_design }}
+							</a>
+						</li>
+					</ul>
+					<div class="tab-content">
+						<div id="tab-general" class="tab-pane tab-pane-top active">
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label">
+									{{ entry_status }}
+								</label>
+								<div class="col-sm-1">
+									<div class="form-check form-switch form-switch-lg">
+										<input type="hidden" name="status" value="0"/>
+										<input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+									</div>
+								</div>
+
+								<label for="input-sort-order" class="col-sm-2 col-form-label">
+									{{ entry_sort_order }}
+								</label>
+								<div class="col-sm-1">
+									<input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+								</div>
+							</div>
+							<ul class="nav nav-tabs">
+								{% for language in languages %}
+								<li class="nav-item">
+									<a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}">
+										<img src="{{ language.image|lower }}" title="{{ language.name }}"/> {{ language.name }}
+									</a>
+								</li>
+								{% endfor %}
+							</ul>
+							<div class="tab-content">
+								{% for language in languages %}
+								<div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
+									<div class="mb-3 form-floating offset-sm-2">
+										<input type="text" name="forms_description[{{ language.language_id }}][header]" value="{{ forms_description[language.language_id] ? forms_description[language.language_id].header }}" placeholder="{{ entry_header }}" id="input-title-{{ language.language_id }}" class="form-control"/>
+										<label for="input-header-{{ language.language_id }}" class="col-sm-2 col-form-label">
+											{{ entry_header }}
+										</label>
+									</div>
+								
+									<div class="mb-3 form-floating offset-sm-2">
+										<input type="text" name="forms_description[{{ language.language_id }}][title]" value="{{ forms_description[language.language_id] ? forms_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control" required/>
+										<label for="input-title-{{ language.language_id }}" class="col-sm-2 col-form-label">
+											{{ entry_title }}
+										</label>
+										<div id="error-title-{{ language.language_id }}" class="invalid-feedback">
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+										<div class="col-sm-10">
+											<div id="input-description-{{ language.language_id }}">
+												<textarea name="forms_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" data-toggle="summernote" class="form-control">{{ forms_description[language.language_id] ? forms_description[language.language_id].description }}</textarea>
+											</div>
+										</div>
+									</div>
+								
+									<div class="row mb-3 ">
+										<label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_form_data }}</label>
+										<div class="col-sm-9">
+											<div id="input-dataform-{{ language.language_id }}" class="data-contents" data-language-id="{{ language.language_id }}" data-language-code="{{ language.code }}">
+												<ul id="sortable{{ language.language_id }}" data-language-id="{{ language.language_id }}" class="sortable">
+											{% if forms_description[language.language_id].formdata %}
+		{% for key,FORMDATA in forms_description[language.language_id].formdata %}
+
+		<li class="byLi sortable-li w100y">
+			<div class="li-header">
+				<button class="li-trash btn btn-danger"><i class="fa-solid fa-eraser"></i></button>
+				<span class="handle">
+				{% if FORMDATA.type=='1' %}
+				<i class="fa-solid fa-heading"></i>
+				{% endif %}
+				
+				{% if FORMDATA.type=='2' %}
+				<i class="fa-solid fa-font"></i>
+				{% endif %}
+				
+				{% if FORMDATA.type=='3' %}
+				<i class="fa-solid fa-i-cursor"></i>
+				{% endif %}
+				
+				{% if FORMDATA.type=='4' %}
+				<i class="fa-regular fa-square-check"></i>
+				{% endif %}
+				
+				{% if FORMDATA.type=='5' %}
+				<i class="fa-regular fa-circle-dot"></i>
+				{% endif %}
+				{% if FORMDATA.type=='6' %}
+				<i class="fa-solid fa-list"></i>
+				{% endif %}
+				
+				</span>
+				<a href="#" class="btn btn-outline-dark copy-move"><i class="fa-solid fa-arrow-right"></i></a>
+				<input type="hidden" name="type" value="{{ FORMDATA.type }}"/>
+				
+			</div>
+			<div class="li-body">
+				{% if FORMDATA.type=='1' %}
+				<textarea name="" class="form-control level1" data-toggle="summernote-100" >{{ FORMDATA.content }}</textarea>
+				{% endif %}
+
+				{% if FORMDATA.type=='2' %}
+				<textarea name="" class="form-control level1" data-toggle="summernote-120">{{ FORMDATA.content }}</textarea>
+				{% endif %}
+
+				{% if FORMDATA.type=='3' %}
+				<div class="row mb-3">
+					<div class="form-check  text-end w-auto form-switch form-switch-lg">
+						<input type="checkbox" data-bs-toggle="tooltip" title="{{ text_required }}" name="" value="1" class="form-check-input"{% if FORMDATA.required %} checked{% endif %}/>
+					</div>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_label" value="{{ FORMDATA.data_label }}"  placeholder="{{ entry_form_data_label }}">
+					<label for="data_label">{{ entry_form_data_label }} - {{ FORMDATA.data_label }}</label>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_name" value="{{ FORMDATA.data_name }}"  placeholder="{{ entry_form_data_name }}">
+					<label for="data_label">{{ entry_form_data_name }}</label>
+				</div>
+				{% endif %}
+
+				{% if FORMDATA.type=='4' %}
+				<div class="row mb-3">
+					<div class="form-check  text-end w-auto form-switch form-switch-lg">
+						<input type="checkbox" data-bs-toggle="tooltip" title="{{ text_required }}" name="required" value="1" class="form-check-input"{% if FORMDATA.required %} checked{% endif %}/>
+					</div>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_label" value="{{ FORMDATA.data_label }}"  placeholder="{{ entry_form_data_label }}">
+					<label for="data_label">{{ entry_form_data_label }}</label>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_name" value="{{ FORMDATA.data_name }}"  placeholder="{{ entry_form_data_name }}">
+					<label for="data_label">{{ entry_form_data_name }}</label>
+				</div>
+				{% endif %}
+
+				{% if FORMDATA.type=='5' %}
+				<div class="row mb-3">
+					<div class="form-check  text-end w-auto form-switch form-switch-lg">
+						<input type="checkbox" data-bs-toggle="tooltip" title="{{ text_required }}" name="" value="1" class="form-check-input"{% if FORMDATA.required %} checked{% endif %}/>
+					</div>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_label" value="{{ FORMDATA.data_label }}"  placeholder="{{ entry_form_data_label }}">
+					<label for="data_label">{{ entry_form_data_label }}</label>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_name" value="{{ FORMDATA.data_name }}"  placeholder="{{ entry_form_data_name }}">
+					<label for="data_label">{{ entry_form_data_name }}</label>
+				</div>
+
+				{% if FORMDATA.values %}
+				<div class="radio-values">
+					{% for ikey,cValue in FORMDATA.values %}
+					<div class="row g-3 value-item level2">
+						<div class="col-md-6">
+							<div class="form-floating">
+								<input type="text" class="form-control" id="data_value_label" placeholder="{{ text_value }}" value="{{ cValue.data_value_label }}">
+								<label for="data_value_label">{{ entry_form_data_value_label }}</label>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-floating">
+								<input type="text" class="form-control" id="data_value_value" placeholder="{{ text_value }}" value="{{ cValue.data_value_value }}">
+								<label for="data_value_value">{{ entry_form_data_value_value }}</label>
+							</div>
+						</div>
+						<div class="col-md-1 data-value-controls">
+							<button type="button" class="btn btn-light">
+								<i class="fa-solid {{ loop.last?'fa-circle-plus':'fa-circle-minus' }}"></i>
+							</button>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% endif %}
+
+				{% endif %}
+				
+				{% if FORMDATA.type=='6' %}
+				<div class="row mb-3">
+					<div class="form-check  text-end w-auto form-switch form-switch-lg">
+						<input type="checkbox" data-bs-toggle="tooltip" title="{{ text_required }}" name="" value="1" class="form-check-input"{% if FORMDATA.required %} checked{% endif %}/>
+					</div>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_label" value="{{ FORMDATA.data_label }}"  placeholder="{{ entry_form_data_label }}">
+					<label for="data_label">{{ entry_form_data_label }}</label>
+				</div>
+				<div class="form-floating mb-3 level1">
+					<input type="text" class="form-control" id="data_name" value="{{ FORMDATA.data_name }}"  placeholder="{{ entry_form_data_name }}">
+					<label for="data_label">{{ entry_form_data_name }}</label>
+				</div>
+
+				{% if FORMDATA.values %}
+				<div class="list-values">
+					{% for ikey,cValue in FORMDATA.values %}
+					<div class="row g-3 value-item level2">
+						<div class="col-md-6">
+							<div class="form-floating ">
+								<input type="text" class="form-control" id="data_value_label" placeholder="{{ text_value }}" value="{{ cValue.data_value_label }}">
+								<label for="data_value_label">{{ entry_form_data_value_label }}</label>
+							</div>
+						</div>
+						<div class="col-md-5">
+							<div class="form-floating">
+								<input type="text" class="form-control" id="data_value_value" placeholder="{{ text_value }}" value="{{ cValue.data_value_value }}">
+								<label for="data_value_value">{{ entry_form_data_value_value }}</label>
+							</div>
+						</div>
+						<div class="col-md-1 data-value-controls">
+							<button type="button" class="btn btn-light">
+								<i class="fa-solid {{ loop.last?'fa-circle-plus':'fa-circle-minus' }}"></i>
+							</button>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				{% endif %}
+
+				{% endif %}
+				
+			</div>
+			<div class="li-footer">
+			</div>
+		</li>
+
+
+		{% endfor %}
+		{% endif %}
+												</ul>
+
+												</div>
+											</div>
+										<div class="col-sm-1 dataform-btn-container" >
+											
+											<div class="dataform-btns" id="dataform-{{ language.language_id }}-buttons" data-language-id="{{ language.language_id }}">
+												<span>
+													<button data-type="1" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="{{ text_add_header }}">
+														<i class="fa-solid fa-heading"></i>
+													</button>
+												</span>
+												<span>
+													<button data-type="2"  class="btn btn-outline-dark" data-bs-toggle="tooltip" title="{{ text_add_text }}">
+														<i class="fa-solid fa-font"></i>
+													</button>
+												</span>
+												<span>
+													<button data-type="3" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="{{ text_add_input }}">
+														<i class="fa-solid fa-i-cursor"></i>
+													</button>
+												</span>
+												<span>
+													<button data-type="4" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="{{ text_add_check }}">
+														<i class="fa-regular fa-square-check"></i>
+													</button>
+												</span>
+												<span>
+													<button data-type="5" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="{{ text_add_radio }}">
+														<i class="fa-regular fa-circle-dot"></i>
+													</button>
+												</span>
+												<span>
+													<button data-type="6" class="btn btn-outline-dark" data-bs-toggle="tooltip" title="{{ text_add_select }}">
+														<i class="fa-solid fa-list"></i>
+													</button>
+												</span>
+											</div>
+											
+										</div>
+									</div>
+
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label">SEO</label>
+										<div class="col-sm-10">
+											<ul class="nav nav-tabs" id="meta">
+												<li class="nav-item">
+													<a href="#tab-meta-title-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link required">{{ entry_meta_title }}<i class="{{ forms_description[language.language_id].meta_title ? 'fa-solid': 'fa-regular' }} fa-circle"></i></a>
+												</li>
+												<li class="nav-item">
+													<a href="#tab-meta-description-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link">{{ entry_meta_description }}<i class="{{ forms_description[language.language_id].meta_description ? 'fa-solid': 'fa-regular' }} fa-circle"></i></a>
+												</li>
+												<li class="nav-item">
+													<a href="#tab-meta-keyword-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link">{{ entry_meta_keyword }}<i class="{{ forms_description[language.language_id].meta_keyword ? 'fa-solid': 'fa-regular' }} fa-circle"></i></a>
+												</li>
+												<li class="nav-item">
+													<a href="#tab-meta-seo-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link active">
+														{{ entry_seo_url }}
+														<i class="{{ forms_seo_url[language.language_id] ? 'fa-solid': 'fa-regular' }} fa-circle">
+														</i>
+													</a>
+												</li>
+											</ul>
+											<div class="tab-content">
+												<div class="tab-pane" id="tab-meta-title-{{ language.language_id }}">
+													<div class="form-floating mb-3">
+														<input type="text" name="forms_description[{{ language.language_id }}][meta_title]" value="{{ forms_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+														<label for="input-meta-title-{{ language.language_id }}">{{ entry_meta_title }}</label>
+														<div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback">
+														</div>
+													</div>
+												</div>
+												<div class="tab-pane " id="tab-meta-description-{{ language.language_id }}">
+													<div class="form-floating mb-3">
+														<textarea name="forms_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ forms_description[language.language_id].meta_description }}</textarea>
+														<label for="input-meta-description-{{ language.language_id }}">{{ entry_meta_description }}</label>
+
+													</div>
+												</div>
+												<div class="tab-pane " id="tab-meta-keyword-{{ language.language_id }}">
+													<div class="form-floating mb-3">
+														<textarea name="forms_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ forms_description[language.language_id].meta_keyword }}</textarea>
+														<label for="input-meta-keyword-{{ language.language_id }}">{{ entry_meta_keyword }}</label>
+
+													</div>
+												</div>
+												<div class="tab-pane active" id="tab-meta-seo-{{ language.language_id }}">
+													<div class="input-group mb-3">
+														<div class="input-group-text">
+															<img src="{{ language.image|lower }}" title="{{ language.name }}" style="margin-right:10px;"/>{{ url }}</div>
+														<div class="form-floating">
+															<input type="text" name="forms_seo_url[{{ language.language_id }}]" value="{{ forms_seo_url[language.language_id] }}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ language.language_id }}" class="form-control input-seo-url" style="padding-left: 1px;"/>
+															<label for="input-keyword-{{ language.language_id }}">
+																{{ entry_keyword }}
+															</label>
+														</div>
+														<div id="error-keyword-{{ language.language_id }}" class="invalid-feedback">
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div id="tab-design" class="tab-pane tab-pane-top">
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label">
+									{{ entry_bimage }}
+								</label>
+								<div class="col-sm-10">
+									<div class="card image">
+										<img src="{{ bthumb }}" alt="" title="" id="thumb-bimage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="bimage" value="{{ bimage }}" id="input-bimage"/>
+										<div class="card-body">
+											<button type="button" data-oc-toggle="image" data-oc-target="input-bimage" data-oc-thumb="#thumb-bimage" class="btn btn-primary btn-sm btn-block">
+												<i class="fa-solid fa-pencil">
+												</i>{{ button_edit }}
+											</button>
+											<button type="button" data-oc-toggle="clear" data-oc-target="input-bimage" data-oc-thumb="#thumb-bimage" class="btn btn-warning btn-sm btn-block">
+												<i class="fa-regular fa-trash-can">
+												</i>{{ button_clear }}
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label">
+									{{ entry_timage }}
+								</label>
+								<div class="col-sm-10">
+									<div class="card image">
+										<img src="{{ tthumb }}" alt="" title="" id="thumb-timage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="timage" value="{{ timage }}" id="input-timage"/>
+										<div class="card-body">
+											<button type="button" data-oc-toggle="image" data-oc-target="input-timage" data-oc-thumb="#thumb-timage" class="btn btn-primary btn-sm btn-block">
+												<i class="fa-solid fa-pencil">
+												</i>{{ button_edit }}
+											</button>
+											<button type="button" data-oc-toggle="clear" data-oc-target="input-timage" data-oc-thumb="#thumb-timage" class="btn btn-warning btn-sm btn-block">
+												<i class="fa-regular fa-trash-can">
+												</i>{{ button_clear }}
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<label class="col-sm-2 col-form-label">
+									{{ entry_fimage }}
+								</label>
+								<div class="col-sm-10">
+									<div class="card image">
+										<img src="{{ fthumb }}" alt="" title="" id="thumb-fimage" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="fimage" value="{{ fimage }}" id="input-timage"/>
+										<div class="card-body">
+											<button type="button" data-oc-toggle="image" data-oc-target="input-fimage" data-oc-thumb="#thumb-fimage" class="btn btn-primary btn-sm btn-block">
+												<i class="fa-solid fa-pencil">
+												</i>{{ button_edit }}
+											</button>
+											<button type="button" data-oc-toggle="clear" data-oc-target="input-timage" data-oc-thumb="#thumb-fimage" class="btn btn-warning btn-sm btn-block">
+												<i class="fa-regular fa-trash-can">
+												</i>{{ button_clear }}
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="table-responsive hidden">
+								<table class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<td class="text-start">
+												{{ entry_store }}
+											</td>
+											<td class="text-start">
+												{{ entry_layout }}
+											</td>
+										</tr>
+									</thead>
+									<tbody>
+										{% for store in stores %}
+										<tr>
+											<td class="text-start">
+												{{ store.name }}
+											</td>
+											<td class="text-start">
+												<select name="forms_layout[{{ store.store_id }}]" class="form-select">
+													<option value="">
+													</option>
+													{% for layout in layouts %}
+													<option
+														value="{{ layout.layout_id }}"{% if forms_layout[store.store_id] and forms_layout[store.store_id] == layout.layout_id %} selected{% endif %}>{{ layout.name }}
+													</option>
+													{% endfor %}
+												</select>
+											</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<input type="hidden" name="forms_id" value="{{ forms_id }}" id="input-forms-id"/>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript"><!--
+$(function(){
+  $('.sortable').resize(function(e){
+  	if($(this).closest('.mb-3').find('.dataform-btn-container').height()<$(this).height()){
+  		$(this).closest('.mb-3').find('.dataform-btn-container').height($(this).height()+'px')
+  	}
+  });
+
+  $('.sortable').resize();
+});
+
+$(".sortable").sortable({
+	placeholder: ".sortable-li",
+	item:'li',
+	handle: ".handle",
+	helper:	'clone',
+	containment: "parent",
+	axis: "y",
+	cursor: "move",
+	forcePlaceholderSize: true,
+	opacity: 0.01
+});
+
+
+function addFormDiv(){
+	var BB = document.createElement('li');
+	$(BB).addClass('byLi sortable-li w100y');
+	$(BB).html('<div class="li-header"><button class="li-trash btn btn-danger"><i class="fa-solid fa-eraser"></i></button><span class="handle"></span><a href="#" class="btn btn-outline-dark copy-move"><i class="fa-solid fa-arrow-right"></i></a><input type="hidden" name="" value=""/></div>');
+	$(BB).append('<div class="li-body"></div>');
+	$(BB).append('<div class="li-footer"></div>');
+	return BB;	
+}
+
+function itemValueHtml(){
+	html  ='<div class="row g-3 value-item level2">';
+	html +='	<div class="col-md-6">';
+	html +='		<div class="form-floating ">';
+	html +='			<input type="text" class="form-control" id="data_value_label" placeholder="{{ text_value }}" value="">';
+	html +='			<label for="data_value_label">{{ entry_form_data_value_label }}</label>';
+	html +='		</div>';
+	html +='	</div>';
+	html +='	<div class="col-md-5">';
+	html +='		<div class="form-floating">';
+	html +='			<input type="text" class="form-control" id="data_value_value" placeholder="{{ text_value }}" value="">';
+	html +='			<label for="data_value_value">{{ entry_form_data_value_value }}</label>';
+	html +='		</div>';
+	html +='	</div>';
+	html +='	<div class="col-md-1 data-value-controls">';
+	html +='		<button type="button" class="btn btn-light"><i class="fa-solid fa-circle-plus"></i></button>';
+	html +='	</div>';
+	html +='</div>';
+	return 	html;			
+}
+
+$(document).on('click','a.copy-move',function(e){
+	e.preventDefault();	
+	var THIS =$(this);
+	var parent = $(this).closest('.byLi');
+	var LID = $(this).closest('.sortable').data('language-id');
+	$('.sortable').each(function(){
+		if($(this).find(THIS).length){
+			//
+		}else{
+			$(this).append($(parent).clone());
+		}
+	});
+	
+});
+
+$(document).on('click','.li-trash.btn',function(e){
+	e.preventDefault();	
+	var parent = $(this).closest('.byLi');
+	Backdrop('{{ text_confirm_remove }}','remove',parent);
+	
+});
+
+$(document).on('click','.data-value-controls button',function(e){
+	e.preventDefault();	
+	var ii = $(this).children('i');
+	var parent = $(this).closest('.value-item');
+	if($(ii).hasClass('fa-circle-plus')){
+		Item = $(parent).clone();
+		$(Item).find('.level2').removeClass('level2');
+		$(Item).addClass('level2');
+		$(parent).parent().append(Item)
+		$(ii).removeClass('fa-circle-plus').addClass('fa-circle-minus')
+	} else if ($(ii).hasClass('fa-circle-minus')){
+		Backdrop('{{ text_confirm_remove }}','remove',parent);
+	}
+	
+});
+
+$(document).on('click','.dataform-btns button',function(e){
+	e.preventDefault();	
+	var LID = $(this).closest('.dataform-btns').data('language-id');
+	var dType = $(this).data('type');
+	var BB = addFormDiv();
+	var liBody = $(BB).find('.li-body');
+	var DIV = document.createElement('div');
+	var Txt = document.createElement('textarea');
+	
+	$(BB).find('.handle').append($(this).children('i').clone())
+	$(BB).data('language-id',LID);
+	$(BB).data('type',dType);
+	$(BB).find('.li-header [type="hidden"]').val(dType)
+	switch(dType){
+		case 1:// Headers
+			{
+				$(Txt).addClass('form-control level1').attr('data-toggle','summernote-100');
+				$(liBody).append(Txt);
+				$(Txt).summernote({
+				height: 80,
+				focus:true,
+				toolbar: [
+					['font', ['bold','italic', 'underline']]
+				]
+				});
+			}
+			break;
+		case 2:// Text
+			{
+				$(Txt).addClass('form-control level1').attr('data-toggle','summernote-120');
+				$(liBody).append(Txt);
+				$(Txt).summernote({
+				height: 120,
+				focus:true,
+				toolbar: [
+					['font', ['bold','italic', 'underline']]
+				]
+				});
+			}
+			break;
+		case 3:// İnput
+			{
+				Div_label = $(DIV).clone();
+				Div_name = $(DIV).clone();
+				
+				$(Div_label).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_label"  placeholder="{{ entry_form_data_label }}"><label for="data_label">{{ entry_form_data_label }}</label>')
+				$(Div_name).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_name"  placeholder="{{ entry_form_data_name }}"><label for="data_name">{{ entry_form_data_name }}</label>')
+				$(liBody).append(Div_label).append(Div_name);
+			}
+			break;
+		case 4:// Check
+			{
+				Div_label = $(DIV).clone();
+				Div_name = $(DIV).clone();
+				$(Div_label).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_label" placeholder="{{ entry_form_data_label }}"><label for="data_label">{{ entry_form_data_label }}</label>')
+				$(Div_name).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_name" placeholder="{{ entry_form_data_name }}"><label for="data_name">{{ entry_form_data_name }}</label>')
+				$(liBody).append(Div_label).append(Div_name);
+			}
+			break;
+		case 5:// radio
+			{
+				Div_label = $(DIV).clone();
+				Div_name = $(DIV).clone();
+				Div_value = $(DIV).clone();
+				
+				$(Div_value).addClass('radio-values').append(itemValueHtml());
+				
+				$(Div_label).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_label" placeholder="{{ entry_form_data_label }}"><label for="floating-data-label">{{ entry_form_data_label }}</label>')
+				$(Div_name).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_name" placeholder="{{ entry_form_data_name }}"><label for="floating-data-name">{{ entry_form_data_name }}</label>')
+				$(liBody).append(Div_label).append(Div_name).append(Div_value);
+			}
+			break;
+		case 6:// list
+			{
+				Div_label = $(DIV).clone();
+				Div_name = $(DIV).clone();
+				Div_value = $(DIV).clone();
+				
+				$(Div_value).addClass('list-values').append(itemValueHtml());
+				
+				$(Div_label).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_label" placeholder="{{ entry_form_data_label }}"><label for="data_label">{{ entry_form_data_label }}</label>')
+				$(Div_name).addClass('form-floating mb-3 level1').append('<input type="text" class="form-control" id="data_name" placeholder="{{ entry_form_data_name }}"><label for="data_name">{{ entry_form_data_name }}</label>')
+				$(liBody).append(Div_label).append(Div_name).append(Div_value);
+			}
+			break;
+		default:	
+	}
+	if($(BB).length){ $("#sortable"+LID).append($(BB));}
+	$('.sortable').resize();
+	
+});
+
+
+
+$(document).ready(function(){
+		$('#input-bottom').click(function(){
+				if($('#input-bottom').prop('checked')){
+					if($('.bottom-position').hasClass('hidden'))
+					{
+						$('.bottom-position').removeClass('hidden');
+					}
+				}else
+				{
+					$('.bottom-position').addClass('hidden');
+				}
+			});
+
+		$('#bottom-position').change(function(){
+				$('#input-bottom').val($(this).val())
+			});
+		$('[data-toggle="summernote-120"]').summernote({
+			height: 120,
+			focus:true,
+			toolbar: [
+				['font', ['bold','italic', 'underline']]
+			],
+			callbacks: {
+			  onFocus: function (contents) {
+			    if($(this).summernote('isEmpty')){
+			      $(this).html(''); 
+			    }
+			  }
+			}
+		});	
+		
+		$('[data-toggle="summernote-100"]').summernote({
+			height: 100,
+			focus:true,
+			toolbar: [
+				['font', ['bold','italic', 'underline']]
+			],
+			callbacks: {
+			  onFocus: function (contents) {
+			    if($(this).summernote('isEmpty')){
+			      $(this).html(''); 
+			    }
+			  }
+			}
+		});	
+
+});
+
+$(document).on('submit', '#form-forms', function (e) {
+    e.preventDefault();
+
+    var element = this;
+    var form = e.target;
+    var action = $(form).attr('action');
+
+    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
+        var button = e.originalEvent.submitter;
+    } else {
+        var button = '';
+    }
+
+    var formaction = $(button).attr('formaction');
+
+    if (formaction !== undefined) {
+        action = formaction;
+    }
+
+    var method = $(form).attr('method');
+
+    if (method === undefined) {
+        method = 'post';
+    }
+
+    var enctype = $(element).attr('enctype');
+
+    if (enctype === undefined) {
+        enctype = 'application/x-www-form-urlencoded';
+    }
+	$('.data-contents > ul.sortable').each(function(ind,elm){
+		var UL  =  $(this);
+		var LID = $(this).data('language-id');
+		
+		$(UL).children().each(function(indx,elm){
+			ULI=$(this);
+			
+			$(ULI).find('.li-header [type="hidden"]').attr('name','forms_description['+LID+'][formdata]['+indx+'][type]')
+			
+			$(ULI).find('textarea.level1').each(function(indz,elem){
+				$(this).attr('name','forms_description['+LID+'][formdata]['+indx+'][content]');
+			});
+			
+			$(ULI).find('.form-check-input').each(function(indz,elem){
+				$(this).attr('name','forms_description['+LID+'][formdata]['+indx+'][required]');
+			});
+			
+			$(ULI).find('.level1 > input').each(function(indz,elem){
+				NAME = $(this).attr('id');
+				$(this).attr('name','forms_description['+LID+'][formdata]['+indx+']['+NAME+']');
+			});
+			
+			$(ULI).find('.level2').each(function(indz,elem){
+				ULIN=$(this);
+				$(ULIN).find('input').each(function(_indx,elem){
+					NAME = $(this).attr('id');
+					$(this).attr('name','forms_description['+LID+'][formdata]['+indx+'][values]['+indz+']['+NAME+']');
+				});
+			});
+		})
+	})
+	
+	
+
+
+    $.ajax({
+        url: action.replaceAll('&amp;', '&'),
+        type: method,
+        data: $(form).serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(button).button('loading');
+        },
+        complete: function () {
+            $(button).button('reset');
+        },
+        success: function (json) {
+            $('.taberr').remove();
+            $('.alert-dismissible').remove();
+            $(element).find('.is-invalid').removeClass('is-invalid');
+            $(element).find('.invalid-feedback').removeClass('d-block');
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+			
+
+            if (typeof json['error'] == 'string') {
+            	if (json['error']['warning']) {
+                	 alertDivided(json['error']['warning'],'warning');
+            	}
+            }
+
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                	alertDivided(json['error']['warning'],'warning');
+                }
+				
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                    
+                    tabN = $('#input-' + key.replaceAll('_', '-')).closest('.tab-pane').attr('id');
+                    
+                    if(!$("a[href='#"+tabN+"']").find('.taberr').length){
+						$("a[href='#"+tabN+"']").css('position','relative').append('<span class="taberr">!</span>');
+					}
+                }
+            }
+
+			if (json['refresh']) {
+            	location = location;
+            }
+
+            if (json['success']) {
+                alertDivided(json['success'],'success');
+                var url = $(form).attr('data-oc-load');
+                var target = $(form).attr('data-oc-target');
+
+                if (url !== undefined && target !== undefined) {
+                    $('#'+target).load(url, function() {
+					  	var goTO = $(form).attr('data-oc-go');
+		                if (goTO !== undefined) {
+			                $('html, body').animate({
+			                    scrollTop: $("#"+goTO).offset().top
+			                }, 1000);
+						}
+					});
+                }
+            }
+			
+			
+            if (json['set']) {
+            	for (key in json['set']) {
+            		$('#'+key).val(json['set'][key])
+	            }
+            }
+
+            // Replace any form values that correspond to form names.
+            for (key in json) {
+                $(element).find('[name=\'' + key + '\']').val(json[key]);
+            }
+        }
+    });
+});
+
+
+
+//--></script>
+
+{{ footer }} 

@@ -1,0 +1,96 @@
+{{ header }}
+
+<section class="breadcrumb_area">
+    <img class="breadcrumb_shap" src="image/cache/catalog/homeopathy-clinic/pages/banner_bg-136x136.png" alt="">
+    <div class="container">
+        <div class="breadcrumb_content text-center">
+            <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">{{ heading_title }}</h1>
+            <p class="f_400 w_color f_size_16 l_height26"></p>
+        </div>
+    </div>
+</section>
+
+<section class="sign_in_area bg_color sec_pad">	
+	<div class="container">
+		<span class="d-block p_20 text-end f_size_16">{{ toDate }}</span>
+      {{ description }}
+      
+      {% if formData %}
+      <form action="{{ action }}" class="login-form mt_60" id="form-forms" method="post" data-oc-toggle="ajax" >
+      	<input type="hidden" name="forms_id" value="{{ forms_id }}" />
+      {% for key,FORMDATA in formData %}
+	      	{% if FORMDATA.type=='1' %}
+	      	{# Header #}
+	      		<h2 class="f_p f_700 f_size_40 t_color3 mb_20">{{ FORMDATA.content ? FORMDATA.content|html_entity_decode :'' }}</h2>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='2' %}
+	      	{# Paragraph #}
+	      		 <p class="f_p f_400 f_size_15">{{ FORMDATA.content ? FORMDATA.content|html_entity_decode :''  }}</p>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='3' %}
+	      	{# input text #}
+	      	<div class="form-group text_box{% if FORMDATA.required %} required{% endif %}">
+                <label class="f_p text_c f_400">{{ FORMDATA.data_label }}</label>
+                <input type="text" name="{{ FORMDATA.data_name }}" value="{{ customer[FORMDATA.data_name] }}" />
+                {% if FORMDATA.required %}
+                <input type="hidden" name="required[]" value="{{ FORMDATA.data_name }}" />
+                <div id="error-{{ FORMDATA.data_name }}" class="invalid-feedback"></div>
+                {% endif %}
+            </div>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='4' %}
+	      	<div class="form-group text_box {% if FORMDATA.required %} required{% endif %}">
+                <label class="f_p text_c f_400">{{ FORMDATA.data_label }}</label>
+                <input type="checkbox" name="{{ FORMDATA.data_name }}" value="" />
+                {% if FORMDATA.required %}
+                <input type="hidden" name="required[]" value="{{ FORMDATA.data_name }}" />
+                <div id="error-{{ FORMDATA.data_name }}" class="invalid-feedback"></div>
+                {% endif %}
+            </div>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='5' %}
+	      	<div class="form-group text_box {% if FORMDATA.required %} required{% endif %}">
+                <label class="f_p text_c f_400">{{ FORMDATA.data_label }}</label>
+                {% if FORMDATA.values %}
+                	<select name="{{ FORMDATA.data_name }}">
+	                {% for ikey,cValue in FORMDATA.values %}
+	                	<input type="radio" name="{{ FORMDATA.data_name }}" value="{{ cValue }}" />
+	                {% endfor %}
+	                </select>
+                {% endif %}
+                
+                
+                <div id="error-{{ FORMDATA.data_name }}" class="invalid-feedback"></div>
+            </div>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='6' %}
+	      	<div class="form-group text_box {% if FORMDATA.required %} required{% endif %}">
+                <label class="f_p text_c f_400">{{ FORMDATA.data_label }}</label>
+                {% if FORMDATA.values %}
+                	<select name="{{ FORMDATA.data_name }}">
+	                {% for ikey,cValue in FORMDATA.values %}
+	                	<option value="{{ cValue }}" >{{ ikey }}</option>
+	                {% endfor %}
+	                </select>
+                {% endif %}
+                {% if FORMDATA.required %}
+                <input type="hidden" name="required[]" value="{{ FORMDATA.data_name }}" />
+                <div id="error-{{ FORMDATA.data_name }}" class="invalid-feedback"></div>
+                {% endif %}
+            </div>
+	      	{% endif %}
+      {% endfor %}
+       <div class="form-group text_box">
+       		<button type="submit" class="btn-primary">{{ text_submit }}</button>
+       </div> 
+      </form>
+      {% endif %}
+      </div>
+</section>      
+
+{{ footer }}

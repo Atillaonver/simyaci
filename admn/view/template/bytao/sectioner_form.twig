@@ -1,0 +1,418 @@
+{{ header }}
+{{ column_left }}
+{% set image_row = 0 %}
+
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+				<button type="submit" form="form-sectioner" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary">
+					<i class="fa-solid fa-floppy-disk">
+					</i>
+				</button>
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light">
+					<i class="fa-solid fa-reply">
+					</i>
+				</a>
+			</div>
+			<h1>
+				{{ heading_title }}
+			</h1>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="card">
+			<div class="card-header">
+				<i class="fa-solid fa-pencil">
+				</i>{{ text_form }}
+			</div>
+			<div class="card-body">
+				<form id="form-sectioner" action="{{ save }}" method="post" data-oc-toggle="ajax">
+					<div class="tab-content">
+						<div class="row mb-3 required">
+							<label class="col-sm-2 control-label" for="input-name">
+								{{ entry_name }}
+							</label>
+							<div class="col-sm-10">
+								<input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label">{{ entry_image }}</label>
+							<div class="col-sm-10">
+								<div class="card image">
+									<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+									<div class="card-body">
+										<button type="button" data-oc-toggle="image" data-oc-target="input-image" data-oc-thumb="thumb-image" class="btn btn-primary btn-sm btn-block">
+											<i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+										<button type="button" data-oc-toggle="clear" data-oc-target="input-image" data-oc-thumb="thumb-image" class="btn btn-warning btn-sm btn-block">
+											<i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-2 control-label" for="input-width">
+								{{ entry_width }}
+							</label>
+							<div class="col-sm-10">
+								<input type="text" name="width" value="{{ width }}" placeholder="{{ entry_width }}" id="input-width" class="form-control" />
+
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-2 control-label" for="input-height">
+								{{ entry_height }}
+							</label>
+							<div class="col-sm-10">
+								<input type="text" name="height" value="{{ height }}" placeholder="{{ entry_height }}" id="input-height" class="form-control" />
+
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-2 col-form-label" for="input-status">
+								{{ entry_status }}
+							</label>
+							<div class="col-sm-10">
+								<div class="form-check form-switch form-switch-lg">
+									<input type="hidden" name="status" value="0"/>
+									<input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+								</div>
+							</div>
+						</div>
+						<div class="row mb-3">
+							<label class="col-sm-2 col-label" for="input-content">
+								{{ entry_content }}
+							</label>
+							<div class="col-sm-10">
+								<textarea name="content" id="input-content" placeholder="{{ entry_content }}" data-toggle="summernote" class="form-control">{{ content? content }}</textarea>
+							</div>
+							
+						</div>
+					</div>
+					<input type="hidden" name="sectioner_id" value="{{ sectioner_id??sectioner_id }}" id="input-sectionerid" />
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+$(document).on( 'click','#add-images', function(e)
+	{
+		addImage();
+	});
+//--></script>
+
+<script type="text/javascript"><!--
+$('#clear-cache').on('click',function()
+	{
+		var form = $('#form-sectioner');
+		$.ajax(
+			{
+				url: 'index.php?route=bytao/sectioner.clearcache&user_token={{ user_token }}',
+				cache: false,
+				data: form.serialize(),
+				type: 'post',
+				dataType: 'json',
+				beforeSend: function()
+				{
+					$( "html" ).addClass( "loading" );
+				},
+				success: function(json)
+				{
+					$( "html" ).removeClass( "loading" );
+					if(json['success'])
+					{
+						alert("Cache cleared");
+					}
+					if(json['error'])
+					{
+
+						alert(json['error']);
+					}
+
+				},
+				error: function(data, errorThrown)
+				{
+					$( "html" ).removeClass( "loading" );
+					$( ".container-fluid > .panel" ).before( '<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> '+errorThrown+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>' );
+				}
+			});
+	});
+//--></script>
+
+<script type="text/javascript"><!--
+
+
+$(document).ready(function()
+	{
+		$(document).delegate('#button-sellect', 'click', function(e)
+			{
+
+				$.ajax(
+					{
+						url: 'index.php?route=common/filemanager.multisel&token={{ token }}',
+						type: 'post',
+						dataType: 'json',
+						data: $('input[name^=\'path\']:checked'),
+						beforeSend: function()
+						{
+							$('#button-delete').prop('disabled', true);
+						},
+						complete: function()
+						{
+							$('#button-delete').prop('disabled', false);
+						},
+						success: function(json)
+						{
+							if (json['error'])
+							{
+								alert(json['error']);
+							}
+
+							if (json['images'])
+							{
+
+								$.each(json['images'], function(i, item)
+									{
+										addImages( item.path,item.thumb );
+									})
+							}
+						},
+						error: function(xhr, ajaxOptions, thrownError)
+						{
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+
+				$('.popover').remove();
+				$('#modal-image').modal('hide');
+			});
+
+	});
+
+//--></script>
+
+
+<script type="text/javascript"><!--
+var selectedOne = 0;
+$(document).delegate('a.thumbnail', 'click', function(e)
+	{
+		e.preventDefault();
+		if($(this).data('path'))
+		{
+			if(selectedOne==0)
+			{
+				addImages($(this).data('path'),$(this).data('thumb'));
+			}
+
+			$('.popover').remove();
+			$('#modal-image').modal('hide');
+		}
+
+		return false;
+	});
+//--></script>
+
+<script type="text/javascript"><!--
+$(document).ready(function ()
+	{
+		sortable();
+	});
+
+function sortable()
+{
+	$('#images').sortable(
+		{
+			containerSelector: 'table',
+			itemPath: '> tr',
+			itemSelector: 'tr.sort',
+			handle: '.sort-selector > i',
+			placeholder: '<tr><td colspan="7"><div class="gallery-placeholder"></div> </td></tr>',
+			pullPlaceholder:'true',
+			onDrop:function ($item, container, _super, event)
+			{
+				$item.removeClass("dragged").removeAttr("style")
+				$("body").removeClass("dragging")
+				updatesort();
+
+			}
+		});
+	{% for language in languages %}
+			$( "#sortable-{{ language.language_id }}" ).sortable(
+				{
+					dropOnEmpty: false,
+					connectWith: "ul",
+					handle: '.sort-selector > i',
+					pullPlaceholder:'true',
+					placeholder: "ui-state-highlight",
+					onDrop:function ($item, container, _super, event)
+					{
+						$item.removeClass("dragged").removeAttr("style")
+						$("body").removeClass("dragging")
+						updatesort();
+					}
+				});
+				
+			$( "#sortable{{ language.language_id }}" ).disableSelection();
+	{% endfor %}
+
+	$( "#images" ).disableSelection();
+}
+
+function updatesort()
+{
+	sayac=0;
+	$( ".sort-order" ).each(function( )
+		{
+			sayac++;
+			$( this ).val(sayac);
+		});
+}
+//--></script>
+
+<script type="text/javascript"><!--
+
+function addLayer(imageRow)
+{
+	languageID = $('.l-tab.active').data('lid');
+	layerRow = $('#sub-images-'+languageID+'-'+imageRow+' tr').length
+
+	html  = '<tr id="image-row-'+languageID+'-'+imageRow+'-'+layerRow+ '">';
+	html += '  <td class="text-left sub">';
+	html += '<div class="position-div"><table class="position-table table-striped table-bordered">';
+	html += '<tr><td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="1" checked="checked" /></td>';
+	html += '<td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="2" /></td>';
+	html += '<td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="3" /></td></tr>';
+	html += '<tr><td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="4" /></td>';
+	html += '<td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="5" /></td>';
+	html += '<td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="6" /></td></tr>';
+	html += '<tr><td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="7" /></td>';
+	html += '<td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="8" /></td>';
+	html += '<td><input type="radio" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][position]" value="9" /></td></tr>';
+	html += '              		</table></div>';
+	html += '    <div class="input-group">';
+	html += '      <span class="input-group-addon"><img src="{{  HTTP_IMAGE }}flags/{{ language.image }}" title="{{ language.name }}" /></span><input type="text" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][title]" value="" placeholder="{{ entry_title }}" class="form-control" />';
+	html += '    </div>';
+	html += '  </td>';
+	html += '  <td class="text-left"><input type="text" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" />';
+	html += '<textarea name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][sectioner_style]" placeholder="{{ entry_sectioner_style }}" class="form-control" ></textarea></td>';
+	html += '  <td class="text-left">';
+	html += '	<div class="card image">';
+	html += '<img src="{{ placeholder }}" alt="" title="" id="thumb-mobile-image-' +languageID+'-' + imageRow +'-'+layerRow +'" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>';
+	html += '<input type="hidden" name="sectioner_image[' +languageID+'][' + imageRow + '][sub][' + layerRow + '][image]" value="" id="input-mobile-image-' +languageID+'-' + imageRow +'-'+layerRow +'"/>';
+	html += '<div class="card-body">';
+	html += '<button type="button" data-oc-toggle="image" data-oc-target="input-mobile-image-' +languageID+'-' + imageRow +'-'+layerRow +'" data-oc-thumb="thumb-mobile-image-' +languageID+'-' + imageRow +'-'+layerRow +'" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i>{{ button_edit }}</button>';
+	html += '<button type="button" data-oc-toggle="clear" data-oc-target="input-mobile-image-' +languageID+'-' + imageRow +'-'+layerRow +'" data-oc-thumb="thumb-mobile-image-' +languageID+'-' + imageRow +'-'+layerRow +'" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i>{{ button_clear }}</button>';
+	html += '</div>';
+	html += '</div>';
+	html += '</td>';
+	html += '  <td class="text-left action-td"><input type="hidden" name="sectioner_image[' + imageRow + '][sub][' + layerRow + '][sort_order]" value=""/><button type="button" onclick="$(\'#image-row' + imageRow +'-'+layerRow +'\').remove();$(\'.tooltip\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '</tr>';
+
+	$('#sub-layer-' +languageID+'-'+imageRow+'> tbody').append(html);
+
+}
+//--></script>
+<script type="text/javascript"><!--
+
+var image_row = {{ image_row }};
+
+function addImage()
+{
+	languageID = $('.l-tab.active').data('lid');
+	
+	
+	html   = '<li id="image-row-' +languageID+'-'+ image_row + '" class="sort-item">';
+	html  += '	<div class="row">';
+	html  += '	<div class="sort-selector col-1">';
+	html  += '		<i class="fa fa-arrows"></i>';
+	html  += '	</div>';
+	html  += '	<div class="input-container col-4">';
+	html  += '		<input type="hidden" name="sectioner_image[' +languageID+'][' + image_row + '][type]" value="0"/>';
+	html  += '		<label>{{ entry_title }}</label>';
+	html  += '		<input type="text" name="sectioner_image[' +languageID+'][' + image_row + '][description]" value="" placeholder="{{ language.name }} {{ entry_title }}" class="form-control" />';
+	html  += '		<label>{{ entry_link }}</label>';
+	html  += '		<input type="text" name="sectioner_image[' +languageID+'][' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" />';
+	html  += '		<label>{{ entry_class }}</label>';
+	html  += '		<input type="text" name="sectioner_image[' +languageID+'][' + image_row + '][sectioner_parent_class]" value="" placeholder="{{ entry_sectioner_parent_class }}" class="form-control" />';
+	html  += '	</div>';
+	html  += '	<div class="image-container col-6">';
+	html  += '		<div class="row">';
+	html  += '			<label class="col-sm-2 col-form-label">{{ entry_image }}</label>';
+	html  += '			<div class="col-sm-4">';
+	html  += '				<div class="card image">';
+	html  += '					<img src="{{ placeholder }}" alt="" title="" id="thumb-image-' +languageID+'-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>'; 
+	html  += '		<input type="hidden" name="sectioner_image[' +languageID+'][' + image_row + '][image]" value="" id="input-image-' +languageID+'-' + image_row + '"/>';
+	html  += '					<div class="card-body">';
+	html  += '						<button type="button" data-oc-toggle="image" data-oc-target="input-image-' +languageID+'-' + image_row + '" data-oc-thumb="thumb-image-' +languageID+'-' + image_row + '" class="btn btn-primary btn-sm btn-block">';
+	html  += '							<i class="fa-solid fa-pencil"></i>{{ button_edit }}</button>';
+	html  += '						<button type="button" data-oc-toggle="clear" data-oc-target="input-image-' +languageID+'-' + image_row + '" data-oc-thumb="thumb-image-' +languageID+'-' + image_row + '" class="btn btn-warning btn-sm btn-block">';
+	html  += '							<i class="fa-regular fa-trash-can"></i>{{ button_clear }}</button>';
+	html  += '					</div>';
+	html  += '				</div>';
+	html  += '			</div>';
+	html  += '			<label class="col-sm-2 col-form-label">{{ entry_mobile_image }}</label>';
+	html  += '			<div class="col-sm-4">';
+	html  += '				<div class="card image">';
+	html  += '					<img src="{{ placeholder }}" alt="" title="" id="thumb-mobile-image-' +languageID+'-' + image_row + '" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/>'; 
+	html  += '		<input type="hidden" name="sectioner_image[' +languageID+'][' + image_row + '][mobile_image]" value="" id="input-mobile-image-' +languageID+'-' + image_row + '"/>';
+	html  += '					<div class="card-body">';
+	html  += '						<button type="button" data-oc-toggle="image" data-oc-target="input-mobile-image-' +languageID+'-' + image_row + '" data-oc-thumb="thumb-mobile-image-' +languageID+'-' + image_row + '" class="btn btn-primary btn-sm btn-block">';
+	html  += '							<i class="fa-solid fa-pencil"></i>{{ button_edit }}';
+	html  += '						</button>';
+	html  += '						<button type="button" data-oc-toggle="clear" data-oc-target="input-mobile-image-' +languageID+'-' + image_row + '" data-oc-thumb="thumb-mobile-image-' +languageID+'-' + image_row + '" class="btn btn-warning btn-sm btn-block">';
+	html  += '							<i class="fa-regular fa-trash-can"></i>{{ button_clear }}</button>';
+	html  += '					</div>';
+	html  += '				</div>';
+	html  += '			</div>';
+	html  += '		</div>';
+	html  += '	</div>';
+	html  += '	<div class="action-container col-1">';
+	html  += '		<button type="button" id="add-sub-layer-' +languageID+'-' + image_row + '" onclick="addLayer(' + image_row + ');" data-toggle="images" title="{{ button_sectioner_add }}" class="btn btn-success add-sub">';
+	html  += '			<i class="fa fa-plus"></i>';
+	html  += '		</button>';
+	html  += '		<button type="button" onclick="$(\'#image-row-' +languageID+'-' + image_row  + '\').remove();$(\'.tooltip\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger remove-item">';
+	html  += '			<i class="fa fa-minus-circle"></i>';
+	html  += '		</button>';
+	html  += '	</div>';
+	html  += '	</div>';
+	html  += '	<table class="table table-borderless" id="sub-layer-' +languageID+'-' + image_row  + '"><tbody></tbody></table>';
+	html  += '</li>';
+
+
+	$('#sortable-'+languageID).append(html);
+	image_row++;
+}
+
+function addImages(Ipath,Ithumb)
+{
+	if(Ipath=='')
+	{
+		Ipath='{{ placeholder }}';
+	}
+
+	html  = '<tr id="image-row' + image_row + '">';
+	html += '  <td class="text-left">';
+	{%  for language in languages %}
+	html += '    <div class="input-group">';
+	html += '      <span class="input-group-addon"><img src="{{  HTTP_IMAGE }}flags/{{ language.image }}" title="{{ language.name }}" /></span><input type="text" name="sectioner_image[' + image_row + '][sectioner_image_description][{{ language.language_id }}][title]" value="" placeholder="{{ entry_title }}" class="form-control" />';
+	html += '    </div>';
+	{%  endfor %}
+	html += '  </td>';
+	html += '  <td class="text-left"><input type="text" name="sectioner_image[' + image_row + '][link]" value="" placeholder="{{ entry_link }}" class="form-control" /></td>';
+	html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="' + Ithumb + '" alt="" title="" data-placeholder="' + Ipath + '" /></a><input type="hidden" name="sectioner_image[' + image_row + '][image]" value="' + Ipath + '" id="input-image' + image_row + '" /></td>';
+	html += '  <td class="text-left"><a href="" id="thumb-mobile-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="' + Ithumb + '" alt="" title="" data-placeholder="' + Ipath + '" /></a><input type="hidden" name="sectioner_image[' + image_row + '][mobile_image]" value="' + Ipath + '" id="input-mobile_image' + image_row + '" /></td>';
+	html += '  <td class="text-right"><input type="text" name="sectioner_image[' + image_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();$(\'.tooltip\').remove();" data-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+	html += '</tr>';
+
+	$('#images tbody').append(html);
+
+	image_row++;
+}
+
+//--></script>
+</div>
+{{ footer }}

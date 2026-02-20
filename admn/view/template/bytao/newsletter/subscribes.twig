@@ -1,0 +1,108 @@
+	<div id="page-content" class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		
+		{% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_subscribes }}</h3>
+			</div>
+			<div class="panel-body" >
+				
+
+	  <div class="content">
+		<form action="{{ action }}" method="post" data-oc-toggle="ajax" id="form">
+		  <input type="hidden" name="action" id="action" value=""/>
+		  <table class="table table-bordered table-hover">
+			<thead>
+			  <tr>
+				<td class="text-start"><input class="form-control" type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);"></td>
+				
+				<td class="text-start">{% if sort == 'customer_group_id' %}
+				  <a href="{{ sort_customer_group_id }}" class="{{ order|lower }}"><i class="fa-solid fa-shop" title="Corporate/Retailer"></i>/<i class="fa-solid fa-user-tag" title="User/Retail"></i>/<i class="fa-solid fa-person-circle-question" title="Guest Shoper"></i></a>
+				  {% else %}
+				  <a href="{{ sort_customer_group_id }}"><i class="fa-solid fa-shop" title="Corporate/Retailer"></i>/<i class="fa-solid fa-user-tag" title="User/Retail"></i>/<i class="fa-solid fa-person-circle-question" title="Guest Shoper"></i></a>
+				  {% endif %}</td>
+				<td class="text-start">{% if sort == 'name' %}
+				  <a href="{{ sort_name }}" class="{{ order|lower }}" data-target="#newsletter-container" data-oc-toggle="ajax">{{ column_name }}</a>
+				  {% else %}
+				  <a href="{{ sort_name }}" data-target="#newsletter-container" data-oc-toggle="ajax">{{ column_name }}</a>
+				  {% endif %}</td>
+				<td class="text-start">{% if sort == 'email' %}
+				  <a href="{{ sort_email }}" class="{{ order|lower }}" data-target="#newsletter-container" data-oc-toggle="ajax" >{{ column_email }}</a>
+				  {% else %}
+				  <a href="{{ sort_email }}" data-target="#newsletter-container" data-oc-toggle="ajax">{{ column_email }}</a>
+				  {% endif %}</td>
+				
+				<td class="text-end">{% if sort == 's.action' %}
+				  <a href="{{ sort_subscribe }}" class="{{ order|lower }}" data-target="#newsletter-container" data-oc-toggle="ajax">{{ column_subscribe }}</a>
+				  {% else %}
+				  <a href="{{ sort_subscribe }}" data-target="#newsletter-container" data-oc-toggle="ajax">{{ column_subscribe }}</a>
+				  {% endif %}</td>
+				<td class="text-end">{{ column_action }}</td>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr class="filter">
+				<td>&nbsp;</td>
+				<td><input class="form-control" type="text" name="filter_customer_group_id" value="{{ filter_customer_group_id }}" /></td>
+				<td><input class="form-control" type="text" name="filter_name" value="{{ filter_name }}" /></td>
+				<td><input class="form-control" type="text" name="filter_email" value="{{ filter_email }}" /></td>
+				<td align="right"><select class="form-control" name="filter_action">
+					<option value=""></option>
+					{% if filter_action == "1" %}
+					<option value="1" selected="selected">{{ text_yes }}</option>
+					{% else %}
+					<option value="1">{{ text_yes }}</option>
+					{% endif %}
+					{% if filter_action == "0" %}
+					<option value="0" selected="selected">{{ text_no }}</option>
+					{% else %}
+					<option value="0">{{ text_no }}</option>
+					{% endif %}
+				  </select></td>
+				<td align="right"><a onclick="filter();" class="btn btn-warning">{{ button_filter }}</a></td>
+			  </tr>
+			  {% if subscribes %}
+				{% for subsribe in subscribes %}
+			  <tr>
+				<td><input type="checkbox" value="{{ subsribe.subscribe_id }}" name="selected[]"></td>
+				<td class="text-start">
+					{% if subsribe.customer_group_id ==2 %}
+                	<i class="fa-solid fa-shop" title="Corporate/Retailer"></i>
+                	{% elseif subsribe.customer_group_id == 1 and subsribe.customer_id > 0 %}
+                	<i class="fa-solid fa-user-tag" title="User/Retail"></i>
+                	{% else %}
+                	<i class="fa-solid fa-person-circle-question" title="Guest Shoper"></i>
+                	{% endif %}
+				</td>
+				<td class="text-start">{{ subsribe.name }}</td>
+				<td class="text-start">{{ subsribe.email }}</td>
+				<td class="text-end">{{ subsribe.subscribe }}</td>
+				<td class="text-end">{% for action in subsribe.action %} [ <a href="{{ action.href }}">{{ action.text }}</a> ]{% endfor %}</td>
+			  </tr>
+			  {% endfor %}
+				  	
+			  {% else %}
+			  <tr>
+				<td class="center" colspan="5">{{ text_no_results }}</td>
+			  </tr>
+			  {% endif %}
+			</tbody>
+		  </table>
+		</form>
+		<div class="pagination" data-target="#newsletter-container" data-oc-toggle="ajaxpaginate">{{ pagination }}</div>
+	  </div>
+
+				</div>
+			</div>
+		</div>
+

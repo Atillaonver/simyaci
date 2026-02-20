@@ -1,0 +1,202 @@
+
+<div id="modal-list-order" class="modal">
+  <div id="filemanager" class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ title }} </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+			<div class="tab-pane active" id="tab-{{ cat_id }}">
+				<form method="post" id="ajaxform{{ cat_id }}" class="form-horizontal">
+					<div id="list-preview" class="">
+						<div class="preview-container" id="preview-container"></div>
+						<div class="preview-management">
+							<span class="view-controls"><a href="#" class="by_control-set-view v1" data-cells="1" data-cells-mask="12" title="1/1"></a><a href="#" class="by_control-set-view v9" data-cells="9" data-cells-mask="12" title="1/2"></a><a class="by_control-set-view v2" href="#" data-cells="2" data-cells-mask="12" title="1/2"></a><a href="#" class="by_control-set-view  v3" data-cells="3" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v4" data-cells="4" data-cells-mask="12" title="1/3"></a><a class="by_control-set-view v5" href="#" data-cells="5" data-cells-mask="12" title="1/3"></a><a class="by_control-set-view v6" href="#" data-cells="6" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v7" data-cells="7" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v8" data-cells="8" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v10" data-cells="10" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v11" data-cells="11" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v12" data-cells="12" data-cells-mask="12" title="1/3"></a></span>
+						</div>
+					</div>
+					
+						<div id="sortDiv" class="sortDiv">
+							<input type="hidden" name="cat_id" id="cat_id" value="{{ cat_id }}" />
+							<input type="hidden" name="typ" id="typ" value="{{ typ }}" />
+						    <ol id="productsort" class='productsort'>
+					            {% for product in products %}
+					            	 <li id="{{ product.product_id }}">
+					            	 	<div class="">
+					            	 		
+					            	 		<div class="box-relative">
+					            	 			<span class="sort-span-move float-start box-absolute">
+					            	 				<i class="fa fa-arrows-alt" title="Drag Drop"></i>
+					            	 			</span>
+					            	 			
+					                	 		<span class="sort-span-dot float-end {% if product.status ==1 %}green{% else %}red{% endif %} box-absolute">
+					                	 			<i class="fa fa-circle" title="{% if product.status == 1 %}Enabled{% else %}Disabled{% endif %}"></i>
+					                	 		</span>
+					            	 		</div>
+					            	 	</div>
+					            	 	<div >
+					            	 		<div class="float-left">
+					            	 			{% if product.image %}
+							                    <img src="{{ product.image }}" alt="" title="{{ product.name }}" class="img-thumbnail" />
+							                    {% endif %}
+					            	 		</div>
+					            	 	</div>
+					            	 	<div>
+					            	 		<div class="float-right">
+					            	 			{{ product.model }}
+					            	 		</div>
+					            	 		
+					            	 	</div>
+					               </li>
+					            {% endfor %}
+					        </ol>
+						</div>     
+				</form>
+    		</div>
+	</div>
+
+		<script>
+
+		function readyAll(){
+				$( ".portlet" ).find( ".portlet-header" ).addClass( "ui-widget-header ui-corner-all" );
+				$.ajax({
+				    url: 'index.php?route=catalog/category.preview&user_token={{ user_token }}&filter_category={{ cat_id }}&filter_item={{ typ }}',
+				    dataType: 'json',	
+				    success: function(nHtml) {
+				        $( "#preview-container" ).html(nHtml['v']);
+				        $('.preview-management .by_active').removeClass('.by_active');
+				        $('.view-controls .v'+nHtml['s'])
+				    }
+				});
+		}
+		
+		$('.enabled a').on('click', function(e) {
+			return false;
+		});
+
+		$('.lock').on('click', function(e) {
+			e.preventDefault();
+			if($('.lock i').hasClass('fa-lock')){
+				$('.lock i').removeClass('fa-lock').addClass('fa-unlock');
+				$('.view-controls').removeClass('disabled');
+			}else{
+				$('.lock i').removeClass('fa-unlock').addClass('fa-lock');
+				$('.view-controls').addClass('disabled');
+				
+			}
+		});
+
+		$('.view-controls a').on('click', function(e) {
+			e.preventDefault();
+			$('.view-controls a').removeClass('by_active');
+		});
+		
+		$('.by_control-set-view').on('click', function(e) {
+			e.preventDefault();
+			
+			if($('.sort-order-content.active').length>0){
+				nCells=$(this).attr('data-cells');
+				cRow = $('.sort-order-content.active').attr('data-row');
+				cCells=$('.sort-order-content.active').attr('data-cells');
+				tRow = $('.sort-order-content').length;
+				if(nCells != cCells){
+					$('.by_control-set-view').removeClass('by_active');
+					$(this).addClass('by_active');			
+					$.ajax({
+						method: "POST",
+						url: 'index.php?route=catalog/category.preview&user_token={{ user_token }}&filter_category={{ cat_id }}&filter_item={{ typ }}',
+						data: {trow:tRow, row:cRow, cells: nCells},
+					    dataType: 'json',
+					    beforeSend: function( xhr ) {
+						   // xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
+						},
+					    success: function(nHtml) {
+					        $( "#preview-container" ).html(nHtml['v']);
+					    },
+					    error: function(data){
+					        alert("fail");
+					    }
+					});
+				}
+			}else{
+				alert('secili satır bulunmuyor!!')
+			}
+			
+			return false;
+		});
+		
+		$(document).delegate('.sort-order-content','click', function(e) {
+			$('.sort-order-content').removeClass('active');
+			$(this).addClass('active')
+			$('.by_control-set-view').removeClass('by_active');
+			$(".view-controls").find("[data-cells='" + $(this).data('cells') + "']").addClass('by_active');;
+		});
+
+		$(document).ready(function(){
+			var group = $("#productsort").sortable({
+				group : 'limited_drop_targets',
+				handle: 'i.fa-arrows-alt',
+				containment: 'parent',
+				appendTo: 'parent',
+				scroll: true,
+				helper: 'clone',
+				revert: true,
+				tolerance: 10,
+				distance: 10,
+			  	onDragStart:function ($item, container, _super, event) {
+					  $("li").removeClass('moved');
+					  if(!container.options.drop)
+				      $item.clone().insertAfter($item);
+				    _super($item, container);
+				},
+				stop: function (item, container, _super, event){
+					sortedIDs = group.sortable( "toArray" );
+					$('.close').hide();
+					$('.process').show();
+					$(item).addClass('moved');
+					
+					$.ajax({
+						url: 'index.php?route=bytao/common.sortorder&user_token={{ user_token }}&filter_category={{ cat_id }}&filter_item={{ typ }}',
+						data:{serials: sortedIDs},
+						type: "POST",
+						dataType: 'json',			
+						success: function(json) {
+							$('.close').show();
+							$('.process').hide();
+							if($('.sort-order-content.active').length>0){
+								cRow = $('.sort-order-content.active').data('row');
+							}else{
+								$('.sort-order-content:first').addClass('active');
+								cRow =1;
+							}
+							$.ajax({
+								method: "POST",
+								url: 'index.php?route=catalog/category.preview&user_token={{ user_token }}&filter_category={{ cat_id }}&filter_item={{ typ }}',
+								data: {cellrow:cRow},
+							    dataType: 'json',
+							    success: function(nHtml) {
+							        $( "#preview-container" ).html(nHtml['v']);
+							        var $s = $('#preview-container');
+							        
+							        if($('.sort-order-content.active').length>0){
+										var optionTop = $s.find('.sort-order-content.active').offset().top;
+									    var selectTop = $s.offset().top;
+									    $s.scrollTop($s.scrollTop() + (optionTop - selectTop));
+									}
+							    }
+							});
+						}
+					});
+				},
+				serialize: function (parent, children, isContainer) 		{
+					return isContainer ? children.join() : parent.attr('id');
+					}
+			});
+			readyAll();
+		});
+		</script>      
+
+</div>
+    </div>
+  </div>
+

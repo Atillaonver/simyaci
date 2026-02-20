@@ -1,0 +1,11 @@
+.action-tr{vertical-align: top !important;width:20px;}
+.action-td{vertical-align: bottom !important;text-align: right; width:20px;}
+.action-td button{border-radius:20px;}
+.sort-selector{vertical-align: top !important;cursor: move;width:20px;}
+.sort-selector:hover{background-color: #ff8a8a !important;}
+.sort-number{vertical-align: top !important;width:30px;}
+.placeholder{border: 1px solid #dad55e;	background: #fffa90;color: #777620;	height: 110px !important;}
+.sub-table{border: none;background-color: initial !important;}
+.td-img,.td-link,.td-title{	width:300px;}
+.position-div{float:left;width: 50px;margin-right: 50px;}
+.sub{padding-left: 50px !important;}

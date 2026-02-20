@@ -1,0 +1,152 @@
+{{ header }}
+<section class="breadcrumb_area">
+        <div class="container">
+            <div class="breadcrumb_content text-center">
+                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">{{ heading_title }}</h1>
+                <p class="f_400 w_color f_size_16 l_height26"></p>
+            </div>
+        </div>
+    </section>
+
+<section class="checkout_area bg_color sec_pad">
+        <div class="container">
+          <div class="row">
+            <div class="col text-center">
+              <div id='product-component-1740821153422'></div>
+              </div>  
+          </div>
+        </div>
+</section>  
+
+
+<script type="text/javascript">
+/*<![CDATA[*/
+(function () {
+  var scriptURL = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+  if (window.ShopifyBuy) {
+    if (window.ShopifyBuy.UI) {
+      ShopifyBuyInit();
+    } else {
+      loadScript();
+    }
+  } else {
+    loadScript();
+  }
+  function loadScript() {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = scriptURL;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(script);
+    script.onload = ShopifyBuyInit;
+  }
+  function ShopifyBuyInit() {
+    var client = ShopifyBuy.buildClient({
+      domain: 'wmgi74-m3.myshopify.com',
+      storefrontAccessToken: '110bfe875348664489f71d01c6213399',
+    });
+    ShopifyBuy.UI.onReady(client).then(function (ui) {
+      ui.createComponent('product', {
+        id: '15035838070944',
+        node: document.getElementById('product-component-1740821153422'),
+        moneyFormat: '%24%7B%7Bamount%7D%7D',
+        options: {
+  "product": {
+    "styles": {
+      "product": {
+        "@media (min-width: 601px)": {
+          "max-width": "calc(25% - 20px)",
+          "margin-left": "20px",
+          "margin-bottom": "50px"
+        }
+      },
+      "button": {
+        ":hover": {
+          "background-color": "#72ab55"
+        },
+        "background-color": "#7fbe5e",
+        ":focus": {
+          "background-color": "#72ab55"
+        }
+      }
+    },
+    "text": {
+      "button": "{{ button_cart }}"
+    }
+  },
+  "productSet": {
+    "styles": {
+      "products": {
+        "@media (min-width: 601px)": {
+          "margin-left": "-20px"
+        }
+      }
+    }
+  },
+  "modalProduct": {
+    "contents": {
+      "img": false,
+      "imgWithCarousel": true,
+      "button": false,
+      "buttonWithQuantity": true
+    },
+    "styles": {
+      "product": {
+        "@media (min-width: 601px)": {
+          "max-width": "100%",
+          "margin-left": "0px",
+          "margin-bottom": "0px"
+        }
+      },
+      "button": {
+        ":hover": {
+          "background-color": "#72ab55"
+        },
+        "background-color": "#7fbe5e",
+        ":focus": {
+          "background-color": "#72ab55"
+        }
+      }
+    },
+    "text": {
+      "button": "{{ button_cart }}"
+    }
+  },
+  "option": {},
+  "cart": {
+    "styles": {
+      "button": {
+        ":hover": {
+          "background-color": "#72ab55"
+        },
+        "background-color": "#7fbe5e",
+        ":focus": {
+          "background-color": "#72ab55"
+        }
+      }
+    },
+    "text": {
+      "total": "Subtotal",
+      "button": "{{ button_checkout }}"
+    }
+  },
+  "toggle": {
+    "styles": {
+      "toggle": {
+        "background-color": "#7fbe5e",
+        ":hover": {
+          "background-color": "#72ab55"
+        },
+        ":focus": {
+          "background-color": "#72ab55"
+        }
+      }
+    }
+  }
+},
+      });
+    });
+  }
+})();
+/*]]>*/
+</script>
+{{ footer }}

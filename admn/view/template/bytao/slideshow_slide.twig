@@ -1,0 +1,2031 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end minbuttons">
+				
+				
+				<a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+				
+				
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="panel panel-default">
+			<div class="panel-body">
+        
+				
+          	
+					<div id="tab-slides">
+          	
+						
+						<ul class="nav nav-tabs" id="allLang">
+							{% for language in languages %}
+							<li data-id="{{ language.language_id }}" class="nav-item"><a href="#tab-lang-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link {% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}" /> {{ language.name }} </a></li>
+							{% endfor %}
+						</ul>
+          		
+						<div class="tab-content">
+							{% for language in languages %}
+							<div id="tab-lang-{{ language.language_id }}" class="tab-pane slide-lang {% if loop.first %} active{% endif %}" data-lid="{{ language.language_id }}">
+				
+								{# Slaytlar #}
+								<div class="group-sliders clearfix" id="group-sliders-{{ language.language_id }}">
+									<div class="new-slider-item active" data-id="0" id="slider-item-0">
+										<a href="#" class="slider-new"></a>
+										<div>{{ text_create_new }}</div>
+									</div>
+	    							
+									
+									{#% for slider in slides[language.language_id] %}
+									
+									<div class="slider-item {% if slider.layerslider_id == slider_id %}active{% endif %}" data-id="{{ slider.layerslider_id }}" id="slider-item-{{ slider.layerslider_id }}" >
+										<a class="image" href="#" data-layer_id="{{ slider.layerslider_id }}">
+											<img class="slayt-img-responsive" src="{{ slider.image }}" height="86"/>
+										</a>
+										<a  title="{{ text_clone_this }}" class="slider-clone" href="#" data-layer_id="{{ slider.layerslider_id }}"><span>{{ button_clone }}</span></a>
+										<a  title="{{ text_delete_this }}" class="slider-delete" href="#" data-layer_id="{{ slider.layerslider_id }}"><span>{{ button_delete }}</span></a>
+										<a  title="{{ text_change_this }}" class="slider-change-language" href="#" data-layer_id="{{ slider.layerslider_id }}"><span>{{ button_change }}</span></a>
+
+										<a class="slider-status{% if not slider.status %} slider-status-off {% endif %}" href="#" data-layer_id="{{ slider.layerslider_id }}"><span>{{ text_status }}</span></a>
+										<div>{{ slider.title }}</div>
+									</div>	
+									
+									{% endfor % #}
+								</div>
+								
+								
+								
+								<div class="clearfix"></div>
+{# ********************Slayt form *****************#}								
+								<div id="saccordion{{ language.language_id }}">	
+								<div class="card">
+    <div class="card-header" id="heading{{ language.language_id }}">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#scollapse{{ language.language_id }}" aria-expanded="true" aria-controls="scollapse{{ language.language_id }}">
+          {{ slider_title?slider_title:'Yeni' }}
+        </button>
+      </h5>
+    </div>
+
+    <div id="scollapse{{ language.language_id }}" class="scollapse show" aria-labelledby="heading{{ language.language_id }}" data-parent="#saccordion{{ language.language_id }}">
+      <div class="card-body">
+       <form action="" method="post" id="slayt-form-{{ language.language_id }}">
+									<div id="slider-warning" class=""></div>
+									<input type="hidden" id="slider_group_id-{{ language.language_id }}" name="slider_group_id" value="{{ slideshow_id }}"/>
+									<input type="hidden" id="slider_id-{{ language.language_id }}" name="slider_id" value="{{ slider_id }}" data-def="0"/>
+									<input type="hidden" id="slider_image_{{ language.language_id }}" name="slider_image" value="{{ slider_image }}" data-def="{{ slider_image_src }}">
+									<input type="hidden" name="slider_language_id" value="{{ language.language_id }}" data-def="{{ language.language_id }}">
+									<div class="slider-params-wrap">
+										<div class="slider-params row">
+											<fieldset class="col-md-6">
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-4 col-form-label">{{ Title }}</label>
+													<div class="col-sm-8">
+														<input class="form-control" type="text" name="slider_title" id="slider_title-{{ language.language_id }}" size="100" value="{{ slider_title }}" data-def="">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-4 col-form-label">{{ Status }}</label>
+													<div class="col-sm-8">
+														<div class="input-group">
+															<div class="form-check form-switch form-switch-lg">
+																<input type="hidden" name="slider_status" value="0"/>
+																<input type="checkbox" name="slider_status" value="1" id="input-slayt-status-{{ language.language_id }}" class="form-check-input"{% if params.slider_status %} checked="checked"{% endif %}/>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-4 col-form-label">Link Aktif</label>
+													<div class="col-sm-1">
+														<div class="input-group">
+															<div class="form-check form-switch form-switch-lg">
+																<input type="hidden" name="slider_enable_link" value="0"/>
+																<input type="checkbox" name="slider_enable_link" value="1" id="input-link-status" class="form-check-input inGroup"{% if params.slider_enable_link %} checked="checked"{% endif %} ms-elem="slider_enable_link_group-{{ language.language_id }}" />
+															</div>
+														</div>
+													</div>
+													<div class="col-md-7 {% if not params.slider_enable_link %} hidden{% endif %}" id="slider_enable_link_group-{{ language.language_id }}">
+														<input class="form-control" type="text" name="slider_link" id="slider_link-{{ language.language_id }}" placeholder="LINK" value="{{ params.slider_link }}"  data-def="">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-4 col-form-label">{{ Transition }}</label>
+													<div class="col-sm-8">
+														
+														<select class="form-control" name="slider_transition" id="slider_transition-{{ language.language_id }}" data-def="notransition">
+															{% for key,value in slider_defaults.transtions %}
+															<option value="{{ key }}">{{ value }}</option>
+															{% endfor %}
+															
+														</select>	
+													</div>
+												</div>	
+												
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-4 col-form-label">Yuva Tutarı</label>
+													<div class="col-sm-8">
+														<input class="form-control" type="text" name="slider_slot" id="slider_slot-{{ language.language_id }}" value="{{ params.slider_slot }}"  data-def="">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label class="col-sm-4 col-form-label">Geçiş Rotasyonu</label>
+													<div class="col-sm-8">
+														<input class="form-control" type="text" name="slider_rotation" id="slider_rotation-{{ language.language_id }}" value="{{ params.slider_rotation }}"  data-def="0">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label class="col-sm-4 col-form-label">Geçiş süresi</label>
+													<div class="col-sm-8">
+														<input class="form-control" type="text" name="slider_duration" id="slider_duration-{{ language.language_id }}" value="{{ params.slider_duration }}"  data-def="0">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label class="col-sm-4 col-form-label">{{ Delay }}</label>
+													<div class="col-sm-8">
+														<input class="form-control" type="text" name="slider_delay" id="slider_delay-{{ language.language_id }}" value="{{ params.slider_delay }}"  data-def="300">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label class="col-sm-4 col-form-label">Use Video</label>
+													<div class="col-sm-8">
+														<select class="form-control" name="slider_usevideo" id="slider_usevideo-{{ language.language_id }}" data-def="0">
+															{% for key,value in usevideo %}
+															<option value="{{ key }}" {% if key == params['slider_usevideo'] %} selected="selected" {% endif %} >{{ value }}</option>
+															{% endfor %}
+														</select>
+													</div>
+												</div>
+												
+												<div class="row mb-3" id="slider_usevideo_group-{{ language.language_id }}">
+													<label for="input-link" class="col-sm-4 col-form-label">Video ID</label>
+													<div class="col-sm-4">
+														<input class="form-control" type="text" name="slider_videoid" id="slider_videoid-{{ language.language_id }}" value="{{ params.slider_videoid }}" data-def="">
+													</div>
+												</div>
+												
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-4 col-form-label">Auto Start</label>
+													<div class="col-sm-8">
+														<div class="input-group">
+															<div class="form-check form-switch form-switch-lg">
+																<input type="hidden" name="slider_videoplay" value="0"/>
+																<input type="checkbox" name="slider_videoplay" value="1" id="input-status" class="form-check-input"{% if params.slider_videoplay %} checked="checked"{% endif %} />
+															</div>
+														</div>
+													</div>
+												</div>
+															
+															
+															
+											</fieldset>
+											<fieldset class="col-md-6">
+												<div class="row mb-3">
+													<label for="input-link" class="col-sm-2 col-form-label">Thumbnail</label>
+													<div class="col-sm-10">
+														<div class="card image">
+															<img src="{{ placeholder }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="slider_thumbnail" value="{{ params.slider_thumbnail }}" id="input-image"/>
+															<div class="card-body">
+																<button type="button" data-oc-toggle="image" data-oc-target="input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+																<button type="button" data-oc-toggle="clear" data-oc-target="input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+															</div>
+														</div>
+													</div>
+												</div>
+							                    
+							                  
+															
+											</fieldset>
+															
+										</div>
+									</div>
+								</form>
+      </div>
+    </div>
+  </div>	
+  </div>	
+
+
+								<div class="clearfix"></div>
+						
+								<div id="layer-manager"> </div> 
+								<div class="layers-wrapper" id="layer-toolbar-{{ language.language_id }}">
+								
+{# *******************Layer form ******************#}
+									<form action="{{ laction }}" method="post" enctype="multipart/form-data"  id="layer-form-{{ language.language_id }}">
+										<input type="hidden" id="layer_id-{{ language.language_id }}" name="layer_id" value=""  data-def="0"/>
+										<input type="hidden" id="layer_content-{{ language.language_id }}" name="layer_content" value=""  data-def=""/>
+										<input type="hidden" id="layer_type-{{ language.language_id }}" name="layer_type" value=""  data-def=""/>
+										<input type="hidden" id="layer_image_{{ language.language_id }}" name="layer_image" value=""  data-def=""/>
+										<div class="slider-layers clearfix" >
+											<div class="layer-top-controls">
+											<div class="device-view">
+											<a href="#" data-bs-toggle="tooltip" title="Change Background Picture" class="btn btn-success add-image btn-update-slider"><i class="fa-regular fa-images"></i></a> 
+											<button device="1" class="btn-device-large active"></button>
+											<button device="2" class="btn-device-laptop" disabled="disabled"></button>
+											<button device="3" class="btn-device-tablet" disabled="disabled"></button>
+											<button device="4" class="btn-device-mobile" disabled="disabled"></button></div>
+											<div class="position-view">
+												<div id="pos-view-1" sizeId="1" class="pos-view">
+												<span>Laocation
+												<span>Width:<input class="" placeholder="px"  type="text" name="layer_width" data-def="0"></span>
+												<span>Top:<input class="" placeholder="px"  type="text" attr="top" name="layer_top" data-def="0"></span>
+												<span>Left:<input class="" placeholder="px"  type="text" attr="left" name="layer_left" data-def="1"></span></span>
+												<span class="d-none d-md-inline d-lg-inline">FONT <i class="fa-solid fa-caret-down fa-fw"></i></span>
+												<ul class="dropdown-menu dropdown-menu-end " data-bs-popper="static">
+												<li><span>Size:<input class="" placeholder="px" type="text" attr="font-size" name="layer_fontsize" data-def="0"></span></li>
+												</ul>
+												<span>
+													
+													<span>Weight:<select name="layer_fontweight" data-def="normal" attr="font-weight" ><option value="normal">Normal</option><option value="bold">Bold</option><option value="bolder">Bolder</option><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option></select>
+													
+													<span>Line Height:<input class="" placeholder="px" type="text" attr="line-height" name="layer_lineheight" data-def="0"></span>
+													<span>Color:<input class="" placeholder="#000" type="text" attr="color" name="layer_fontcolor" placeholder="" data-def="0"></span>
+												</span>
+												</span>
+												</div>
+												<div id="pos-view-2" sizeId="2" class="pos-view">
+												<span>Location
+												<span>Width:<input class="" placeholder="px"  type="text" name="layer_pos_2_width" data-def="0"></span>
+												<span>Üst:<input class="" placeholder="px"  type="text" attr="top" name="layer_pos_2_top" data-def="0"></span>
+												<span>Sol:<input class="" placeholder="px"  type="text" attr="left" name="layer_pos_2_left" data-def="1"></span></span>
+												<span>FONT
+													<span>Size:<input class="" placeholder="px" type="text" attr="font-size" name="layer_pos_2_size" data-def="0"></span>
+													<span>Ağırlık:<select name="layer_pos_2_weight" data-def="normal" attr="font-weight" ><option value="normal">Normal</option><option value="bold">Bold</option><option value="bolder">Bolder</option><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option></select>
+													
+													<span>S.Yük:<input class="" placeholder="px" type="text" attr="line-height" name="layer_pos_2_lheight" data-def="0"></span>
+													<span>Renk:<input class="" placeholder="#000" type="text" attr="color" name="layer_pos_2_color" placeholder="" data-def="0"></span>
+												</span>
+												</span>
+												</div>	
+												<div id="pos-view-3" sizeId="3" class="pos-view">
+												<span>KONUM
+												<span>Genişlik:<input class="" placeholder="px"  type="text" name="layer_pos_3_width" data-def="0"></span>
+												<span>Üst:<input class="" placeholder="px"  type="text" attr="top" name="layer_pos_3_top" data-def="0"></span>
+												<span>Sol:<input class="" placeholder="px"  type="text" attr="left" name="layer_pos_3_left" data-def="1"></span></span>
+												<span>FONT
+													<span>Size:<input class="" placeholder="px" type="text" attr="font-size" name="layer_pos_3_size" data-def="0"></span>
+													<span>Ağırlık:<select name="layer_pos_3_weight" data-def="normal" attr="font-weight" ><option value="normal">Normal</option><option value="bold">Bold</option><option value="bolder">Bolder</option><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option></select>
+													
+													<span>S.Yük:<input class="" placeholder="px" type="text" attr="line-height" name="layer_pos_3_lheight" data-def="0"></span>
+													<span>Renk:<input class="" placeholder="#000" type="text" attr="color" name="layer_pos_3_color" placeholder="" data-def="0"></span>
+												</span>
+												</span>
+												</div>	
+												<div id="pos-view-4" sizeId="4" class="pos-view">
+												<span>KONUM
+												<span>Genişlik:<input class="" placeholder="px"  type="text" name="layer_pos_4_width" data-def="0"></span>
+												<span>Üst:<input class="" placeholder="px"  type="text" attr="top" name="layer_pos_4_top" data-def="0"></span>
+												<span>Sol:<input class="" placeholder="px"  type="text" attr="left" name="layer_pos_4_left" data-def="1"></span></span>
+												<span>FONT
+													<span>Size:<input class="" placeholder="px" type="text" attr="font-size" name="layer_pos_4_size" data-def="0"></span>
+													<span>Ağırlık:<select name="layer_pos_4_weight" data-def="normal" attr="font-weight" ><option value="normal">Normal</option><option value="bold">Bold</option><option value="bolder">Bolder</option><option value="100">100</option><option value="200">200</option><option value="300">300</option><option value="400">400</option><option value="500">500</option><option value="600">600</option><option value="700">700</option><option value="800">800</option><option value="900">900</option></select>
+													
+													<span>S.Yük:<input class="" placeholder="px" type="text" attr="line-height" name="layer_pos_4_lheight" data-def="0"></span>
+													<span>Renk:<input class="" placeholder="#000" type="text" attr="color" name="layer_pos_4_color" placeholder="" data-def="0"></span>
+												</span>
+												</span>
+												</div>	
+															
+											</div>
+											<div class="button-view">
+												<a href="#" data-bs-toggle="tooltip" title="Add Picture Layer" class="btn btn-light add-image">+<i class="fa-solid fa-image"></i></a> 
+												<a href="#" data-bs-toggle="tooltip" title="Add Text Layer" class="btn btn-light add-text">+<i class="fa-solid fa-spell-check"></i></a> 
+												<a href="#" data-bs-toggle="tooltip" title="Add Video Layer" class="btn btn-light ">+<i class="fa-solid fa-clapperboard"></i></a>
+												<span class="btn-sperator"></span>
+												<a href="#" data-bs-toggle="tooltip" title="Delete Selected Layer" class="btn btn-danger delete-layer"><i class="fa-solid fa-trash-can"></i></a>
+												<span class="btn-sperator"></span>
+												<a href="#" data-bs-toggle="tooltip" title="{{ text_preview_this_slider }}" class="btn btn-warning preview-layer"><i class="fa-solid fa-eye"></i></a>
+												
+												<span class="btn-sperator"></span>
+												
+				
+				<button type="submit" form="form-show" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary" id="save-button"><i class="fa-solid fa-floppy-disk"></i></button>
+				
+												
+												
+												
+											</div>
+											</div>
+											
+											<div class="layer-editor-wrap" style="width:{{ sliderWidth }}px;height:{{ sliderHeight }}px">
+												
+												<div class="simage" id="simage-{{ language.language_id }}">
+													<img id="slider_image_src_{{ language.language_id }}" src="{{ slider_image_src }}">
+												</div>
+												<div class="layer-editor" id="layer-editor-{{ language.language_id }}" style="width:{{ sliderWidth }}px;height:{{ sliderHeight }}px">
+												</div>
+											</div>
+											
+											
+											
+											<div class="layer-form" id="layer-form-content-{{ language.language_id }}">
+												<a href="#" id="opener"><i class="fa fa-arrow-circle-right"></i></a>
+												
+												<div class="row">
+													
+													<fieldset>
+														<legend><span id="layername-{{ language.language_id }}"></span>Katman İçeriğini Düzenle</legend>
+														<div class="row mb-3">
+															<label class="col-sm-2 col-form-label">class Style</label>
+															<div class="col-sm-5">
+																<input class="form-control" type="text" name="layer_class" id="input-layer-class-{{ language.language_id }}" readonly data-def="{% if layer_styles[0] %} {{ layer_styles[0]}} {% endif %}"/>
+															</div>
+															<div class="col-sm-4 clsstyl">
+																<div class="input-group">
+																	<div class="btn-group" dropdown>
+																		<button type="button" class="btn btn-success dropdown-toggle">
+																			{{ text_select_style }}<span class="caret"></span>
+																		</button>
+																		<ul class="dropdown-menu layer-style-list">
+																			{% set group = slider_defaults.layer_styles %}
+																			{% for item in group %}
+																			<li class="layer-style-item">
+																				<a href="#" ms-class="{{ item }}" event-prevent-default>{{ item }}</a>
+																				<div class="layer-style-preview">
+																					<span class="tp-caption {{ item }}">Layer Style</span>
+																				</div>
+																			</li>
+																			{% endfor %}
+																		</ul>
+																	</div>
+																	<button type="button" class="btn btn-danger btn-clear-style">{{ button_clear }}</button>
+																</div>
+															</div>
+														</div>
+														
+														<div class="row mb-3">
+															<label class="col-sm-2 col-form-label">{{ Text }}</label>
+															<div class="col-sm-10">
+																<textarea class="form-control layer_caption" rows="3" name="layer_caption" id="input-slider-caption-{{ language.language_id }}" data-for="caption-layer"  data-def="" ></textarea>
+															</div>
+														</div>
+									                    
+														<div class="row mb-3">
+															<label class="col-sm-2 col-form-label">Link Durumu</label>
+															<div class="col-sm-10">
+																<div class="input-group">
+																	<div class="form-check form-switch form-switch-lg">
+																		<input type="hidden" name="layer_linkstatus" value="0"/>
+																		<input type="checkbox" name="layer_linkstatus" value="1" id="input-status-layer-class-{{ language.language_id }}" class="form-check-input inGroup"{% if params.layer_linkstatus %} checked="checked"{% endif %} ms-elem="layer_link_group-{{ language.language_id }}"/>
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="row mb-3" id="layer_link_group-{{ language.language_id }}">
+															<label class="col-sm-2 col-form-label">Link</label>
+															<div class="col-sm-8">
+																<input type="text" class="form-control" name="layer_link" id="input-layer-link-{{ language.language_id }}" data-for="layer-link"  data-def="" />
+															</div>
+															<div class="col-sm-2">
+																<select class="form-control" name="layer_linktarget"  data-def="_self">
+																	<option {% if params.layer_linktarget=='_self' %}selected="selected"{% endif %} value="_self">Self</option>
+																	<option {% if params.layer_linktarget=='_blank' %}selected="selected"{% endif %} value="_blank">Blank</option>
+																</select>
+															</div>
+															
+														</div>
+									                    
+									                    <div class="row mb-3" >
+															<div>
+																
+															</div>	
+																	<div class="row mb-3">
+																		<label class="col-sm-2 col-form-label">Pozisyon</label>
+																		<div class="col-sm-5">
+																<table>
+																	<tr>
+																		<td>
+																			<table class="layer-align-table" tib="1">
+																				<tbody>
+																					<tr>
+																						<td><span data-h="left" data-v="top"></span></td>
+																						<td><span data-h="center" data-v="top"></span></td>
+																						<td><span data-h="right" data-v="top"></span></td>
+																					</tr>
+																					<tr>
+																						<td><span data-h="left" data-v="middle"></span></td>
+																						<td><span data-h="center" data-v="middle"></span></td>
+																						<td><span data-h="right" data-v="middle"></span></td>
+																					</tr>
+																					<tr>
+																						<td><span data-h="left" data-v="bottom"></span></td>
+																						<td><span data-h="center" data-v="bottom"></span></td>
+																						<td><span data-h="right" data-v="bottom"></span></td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</td>
+																		<td>
+																			<button type="button" class="btn btn-danger btn-clear-pos" style="margin-left: 10px;"><i class="fa  fa-outdent"></i></button>
+																		</td>
+																	</tr>
+																</table>
+																<input type="hidden" id="layer_vpos{{ language.language_id }}" name="layer_vpos" value="" data-def="top">
+																<input type="hidden" id="layer_hpos{{ language.language_id }}" name="layer_hpos" value="" data-def="left">
+															</div>
+															
+														</div>
+														
+									                    		
+									                    	
+									                    </div>
+									                    
+														
+													</fieldset>
+
+													<fieldset>
+														<legend>Sahne Giriş/Çıkış</legend>
+											
+														<div class="row mb-3">
+															
+															<div class="col-sm-12">
+																<div class="layer-index">
+																	<div class="layer-wrap">
+																		<div class="t-start">0ms</div>
+																		<div class="t-end">0ms</div>
+																		<div class="layer-timing" id="timeline-{{ language.language_id }}"></div>
+																	</div>
+																	<div class="clearfix"></div>
+														
+																	<div class="input-time left">
+																		<input type="text" id="layer_start_time-{{ language.language_id }}" class="start-time" name="layer_starttime" size="3" value="0"/>
+																	</div>
+																	<span class="layer-index-caption">Zaman Çizgisi</span>
+																	<div class="input-time right">
+																		<input type="text" id="layer_end_time-{{ language.language_id }}" class="end-time"  name="layer_endtime" size="3" value="0"/>
+																	</div>
+														
+																</div>
+												
+															</div>
+												
+														</div>
+														
+														<div class="row mb-3">
+															<label class="col-sm-2"></label>
+															<div class="col-sm-5 text-center">GİRİŞ</div>
+															<div class="col-sm-5 text-center">ÇIKIŞ</div>
+														</div>
+														<div class="row mb-3">
+															<label class="col-sm-2">{{ Animation }}</label>
+															<div class="col-sm-5 text-center">
+																<select class="form-control" name="layer_start_animation"  data-def="randomrotate">
+																	<option selected="selected"  value="auto">--</option>
+																	{% for key,value in slider_defaults.start_animation %}
+																	<option value="{{ key }}">{{ value }}</option>
+																	{% endfor %}
+																</select>
+															</div>
+															<div class="col-sm-5 text-center">
+																<select class="form-control" name="layer_end_animation"  data-def="randomrotateout">
+																	<option value="auto">--</option>
+																	<option value=""> Fade out</option>
+																	{% for key,value in slider_defaults.end_animation %}
+																	<option value="{{ key }}">{{ value }}</option>
+																	{% endfor %}
+																</select>
+															</div>
+														</div>
+														<div class="row mb-3">
+															<label class="col-sm-2">{{ Easing }}</label>
+															<div class="col-sm-5 text-center">
+																<select class="form-control" name="layer_start_easing"  data-def="easeOutBack">
+																	<option value="nothing">--</option>
+																	{% for key,value in slider_defaults.easies %}
+																	<option value="{{ key }}">{{ value }}</option>
+																	{% endfor %}
+																</select>
+															</div>
+															<div class="col-sm-5 text-center">
+																<select class="form-control" name="layer_end_easing"  data-def="Linear.easeNone">
+																	<option value="nothing">--</option>
+																	{% for key,value in slider_defaults.easies %}
+																	<option value="{{ key }}">{{ value }}</option>
+																	{% endfor %}
+																</select>	
+															</div>
+														</div>
+														
+														<div class="row mb-3">
+															<label class="col-sm-2">{{ Speed }}</label>
+															<div class="col-sm-5 text-center"><input class="form-control" name="layer_start_speed" type="text" data-def="300"></div>
+															<div class="col-sm-5 text-center"><input class="form-control" name="layer_end_speed" type="text" data-def="300"></div>
+														</div>
+											
+													</fieldset>
+												</div>
+											</div>
+											
+											<div class="slider-foot">
+												<div id="tools" class="layer-collection-wrapper">
+													<div class="flex-control"><i class="btn fa fa-floppy-o btn-save-slider"></i><i class="btn fa fa-trash i-delete"></i></div>
+													<div class="flex-control"><i class="btn fa fa-plus"></i><i class="btn btn-create fa fa-video-camera" data-action="add-video"></i><i class="btn btn-create fa fa-picture-o" data-action="add-image"></i><i class="btn btn-create fa fa-font" data-action="add-text"></i></div>
+													<div class="flex-control"><i class="btn fa fa-th"></i></div>
+													<div class="layer-collection" id="layer-collection-{{ language.language_id }}"></div>	
+												</div>
+											</div>
+
+										</div>
+									</form>
+
+								</div>
+          		
+							</div>
+							{% endfor %}
+						</div>
+					</div>
+				
+        
+			</div>
+		</div>
+	</div>
+	
+
+  
+</div>
+
+<div id="modalWindow" class="modal">
+	<div id="filemanager" class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ heading_title }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body" id="modalBody">></div>
+			<div class="modal-footer">
+				<button type="button" id="btnSave" class="btn btn-primary" title="Save changes"><i class="fa fa-floppy-o"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="dialog-video-manage" class="modal">
+	<div id="videomanager" class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Video Yöneticisi</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<table class="table">
+					<tr>
+						<td>{{ video_type }}</td>
+						<td>
+							<select class="form-control" name="layer_video_type" id="layer_video_type">
+								<option value="youtube">Youtube</option>
+								<option value="vimeo">Vimeo</option>
+							</select>	
+						</td>
+					</tr>
+					<tr>
+						<td>Video ID</td>
+						<td><input class="form-control" name="layer_video_id" type="text" id="dialog_video_id">
+							<p>örneğin youtube: <b>VA770wpLX-Q</b> ve vimeo: <b>17631561</b> </p>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<label>{{ Height }}</label>
+							<input class="form-control" name="layer_video_height" type="text" value="200">
+							<label>{{ Width }}</label>
+							<input class="form-control" name="layer_video_width" type="text" value="300">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input type="hidden" name="layer_video_thumb" id="layer_video_thumb">
+							<div class="buttons">
+								<a class="btn btn-primary layer-find-video">Video bul</a>
+								<a class="btn btn-success layer-apply-video" id="apply_this_video" style="display:none;">Bu Videoyu Kullan</a>
+							</div>
+						</td>
+					</tr>	
+				</table>
+				<div id="video-preview"></div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="apply_this_video" class="btn btn-primary" title="Bu videoyu kullan"><i class="fa fa-floppy-o"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+											
+<div id="previewModal" class="modal">
+	<div id="filemanager" class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">{{ text_preview_sliders_in_group }}</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body"></div>
+			<div class="modal-footer">
+				<button type="button" id="btnSave" class="btn btn-primary" title="Save changes"><i class="fa fa-floppy-o"></i></button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript"><!--
+
+	var confirm_delete="{{ text_confirm_delete }}";
+	var clone_this="{{ text_clone_this }}";
+	var delete_this="{{ text_delete_this }}";
+	var delete_text="{{ button_delete }}";
+	var clone_text="{{ button_clone }}";
+	var status_text="{{ text_status }}";
+	var noselected_text="{{ text_noselected }}";
+	var placeholder="{{ placeholder }}";
+	var sSrc="{{ slider_image_src }}";
+	var tHeight ="{{ thumbHeight }}"
+	var img_url ="{{ img_url }}";
+	var h_edit="{{ text_edit_slider }}";
+	var h_creat = "{{ text_create_new }}"
+	//-->
+</script> 
+
+<script type="text/javascript">
+	;!function(e){e.fn.classes=function(t){var n=[];e.each(this,function(e,t){var r=t.className.split(/\s+/);for(var i in r){var s=r[i];if(-1===n.indexOf(s)){n.push(s)}}});if("function"===typeof t){for(var r in n){t(n[r])}}return n}}(jQuery);
+
+	var byS = {
+		ajaxURL:'index.php?route=bytao/slideshow.ajaxGet&user_token={{ user_token}}',
+		lId:0, // language_id,
+		state:false,
+		data : null,
+		Layers : null,
+		slideshowId:{{ slideshow_id }}, 
+		currentLayer : null,
+		currentSlide:0,
+		currentDevice:1,
+		activeLayer:0,
+		maxId:0,
+		countItem : 0,
+		delayTime : 9000,
+		siteURL : '',
+		'setOP':function(OPT){
+			
+			htmlE = '<div id="langModal" class="modal">';
+			htmlE += '	<div id="filemanager" class="modal-dialog modal-lg">';
+			htmlE += '		<div class="modal-content">';
+			htmlE += '		  <div class="modal-header">';
+			htmlE += '		    <h5 class="modal-title">{{ heading_title }}</h5>';
+			htmlE += '		    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>';
+			htmlE += '		  </div>';
+			htmlE += '		  <div class="modal-body">';
+			htmlE += '		  <ul>';
+			{% for language in languages %}
+			htmlE += '				<li id="L{{ language.language_id }}" lid="{{ language.language_id }}" class="{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}" /> {{ language.name }}</li>';
+			{% endfor %}
+			htmlE += '		  </ul>';
+			htmlE += '		  </div>';
+			htmlE += '		  <div class="modal-footer">';
+			htmlE += '		  <input type="hidden" id="moveSlaytId" value="">';
+			htmlE += '    		<button type="button" id="updateL" class="btn btn-primary" title="Save changes"><i class="fa fa-floppy-o"></i></button>';
+			htmlE += '		  </div>';
+			htmlE += '		</div>';
+			htmlE += '	</div>';
+			htmlE += '</div>';
+			
+			$('body').append(htmlE)
+			
+			byS.lId =  $('.slide-lang.active').data('lid');
+			$('body').append('<div class="hidden" id="arr"></div>')
+			
+			if(OPT['lId']) byS.lId = OPT['lId'];
+			
+			$(document).on('click','.layer-style-item a',function(e){
+					e.preventDefault();
+					tClass = $(this).attr('ms-class');
+					$('#input-layer-class-'+byS.lId).val(tClass);
+					byS.currentLayer.addClass( tClass );
+					$(this).parents('.btn-group').removeClass('open');
+					byS.storeCurrentLayerData(); 
+					return false;
+				});
+		
+			$(document).on('click','.btn-create',function(e){
+					byS.maxId ++ ;
+					var layer = byS.createLayer( $(this).attr("data-action"), null, byS.maxId );
+				})
+		
+			$(document).on('click','.btn-delete',function(e){
+					//$(this).data('action')
+					byS.deleteCurrentLayer();
+				});
+		
+			$(document).on('click','.layer-delete',function(e){
+					byS.deleteCurrentLayer();
+				});
+			
+			$(document).on('click','.slider-change-language',function(e){
+					e.preventDefault();
+					$('#moveSlaytId').val($(this).parent().data('id'))
+					$('#langModal ul li').removeClass('active');
+					$('#langModal [lid="'+byS.lId+'"]').addClass('active');
+					$('#langModal').modal('show');
+			});
+			
+			$(document).on('click','#langModal li',function(e){
+					$('#langModal ul li').removeClass('active');
+					$(this).addClass('active');
+			});
+			
+			$(document).on('click','#updateL',function(e){
+					lang = $('#langModal li.active').attr('lid');
+					layerId = $('#moveSlaytId').val();
+					$.ajax({
+						url: 'index.php?route=bytao/slideshow.movelang&layer_id='+layerId+'&lang='+lang+'&user_token={{ user_token }}' ,
+						dataType: 'json',
+						success: function(resp) {
+							if(resp['error']){
+								alert(resp['error']);
+							}else{
+								$('#slider-item-'+layerId).appendTo('#group-sliders-'+lang)
+								$('#group-sliders-'+lang).removeClass('active');	
+							}
+							$('#langModal').modal('hide');
+						}	
+					});
+					
+					
+			});
+			
+			$(document).on('click','.slider-clone',function(e){
+					e.preventDefault();
+					byS.lId =  $('.slide-lang.active').data('lid');
+					if($('#group-sliders-'+byS.lId+' .slider-item.active').length>0){
+						layerId=$(this).data('layer_id');
+						$.ajax({
+								url: 'index.php?route=bytao/slideshow.lyclone&layer_id='+layerId+'&lang='+byS.lId+'&user_token={{ user_token }}',
+								dataType: 'json',
+								success: function(resp) {
+									if(resp['error']){
+										alert(resp['error']);
+									}
+									if( resp['newlayer'] ){
+										$('#group-sliders-'+byS.lId+' .new-slider-item').after('<div class="slider-item" data-id="'+resp['newlayer'] +'" id="slider-item-'+resp['newlayer'] + '" > <a class="image" href="#" data-layer_id="'+resp['newlayer'] +'"><img class="slayt-img-responsive" src="'+resp['thumbnail'] +'" height="86"/></a><a  title="'+clone_this+'" class="slider-clone" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+clone_text+'</span></a><a  title="'+delete_this+'" class="slider-delete" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+delete_text+'</span></a><a class="slider-status" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+status_text+'</span></a><div>'+resp['slider_title']+'</div></div>');
+										byS.newSlide();
+									}
+								}	
+							});
+					}
+					else
+					{
+						alert(noselected_text)
+					}
+
+				});
+		
+			$(document).on('click','.slider-top-clone',function(e){
+					e.preventDefault();
+					if($('#group-sliders-'+byS.lId+' .slider-item.active').length>0){
+						layerId = byS.currentSlide;
+						$.ajax({
+								url: 'index.php?route=bytao/slideshow.lyclone&layer_id='+layerId+'&lang='+byS.lId+'&user_token=' + getURLVar('user_token'),
+								dataType: 'json',
+								success: function(resp) {
+									if(resp['error']){
+										alert(resp['error']);
+									}
+									if( resp['newlayer'] ){
+										$('#group-sliders-'+byS.lId+' .new-slider-item').after('<div class="slider-item" data-id="'+resp['newlayer'] +'" id="slider-item-'+resp['newlayer'] + '" > <a class="image" href="#" data-layer_id="'+resp['newlayer'] +'"><img class="slayt-img-responsive" src="'+resp['thumbnail'] +'" height="86"/></a><a  title="'+clone_this+'" class="slider-clone" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+clone_text+'</span></a><a  title="'+delete_this+'" class="slider-delete" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+delete_text+'</span></a><a class="slider-status" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+status_text+'</span></a><div>'+resp['slider_title']+'</div></div>');
+										byS.newSlide();
+									}
+								}	
+							});
+					}
+					else
+					{
+						alert(noselected_text)
+					}
+			
+				})
+		
+			//slayt background image change
+			$(document).on('click','.btn-update-slider',function(e){
+					e.preventDefault();
+					byS.lId =  $('.slide-lang.active').data('lid');
+			
+					$('#modal-image').remove();
+					$.ajax({
+							url: 'index.php?route=common/filemanager&user_token={{ user_token }}&target=slider_image_'+byS.lId+ '&simage=slider_image_src_'+byS.lId,
+							dataType: 'html',
+							success: function(html) {
+								$('body').append(html);
+								var element = document.querySelector('#modal-image');
+								var modal = new bootstrap.Modal(element);
+								modal.show();
+							}	
+						});
+				})
+		
+			//image layer change image
+			$(document).on('click','.btn-change-img',function(e){
+					layerID = $(this).parents('.draggable-item').attr('lid')
+					$('#img_slayerID'+layerID).replaceWith('<img src="" alt="" id="img_slayerID'+layerID + '" />');
+					byS.showDialogImage(layerID);
+				})
+			
+			//videomanager
+			$(document).on('click','.btn-change-video',function(e){
+					$("#dialog-video-manage").show();	
+					byS.processDialogVideo('');
+				})
+			
+			$(document).on('click','.layer-find-video',function (){
+					if( $(this).parents('#videomanager').find("#dialog_video_id").val() ){
+						byS.processDialogVideo( $(this).parents('#videomanager').find("#dialog_video_id").val() );	
+					}
+					else {  
+						$("#video-preview").html( '<div class="error">Could not find any thing</div>' );
+					}
+		    	
+				});
+		
+			$(document).on('click','.btn-save-slider',function(e){
+					byS.submitForm();
+				});
+		
+			$(document).on('click','.btn-preview-slider',function(e){
+			
+					$('#previewModal .modal-dialog').css('width',1170);
+					var a = $( '<span class="glyphicon glyphicon-refresh"></span><iframe frameborder="0" scrolling="no" src="'+$(this).attr('href')+'" style="width:100%;height:500px; display:none"/>'  );
+					$('#previewModal .modal-body').html( a );
+				
+					$('#previewModal').modal('show');
+					$('#previewModal').attr('rel', $(this).attr('rel') );
+					$(a).load( function(){  
+							$('#previewModal .modal-body .glyphicon-refresh').hide();
+							$('#previewModal .modal-body iframe').show();
+						});
+					return false;
+				});
+		
+			$(document).on('click','.slider-item .image',function(e){
+					e.preventDefault();
+					byS.getSlide($(this).data('layer_id'));
+			
+				});
+		
+			$(document).on('click','.slider-new',function(e){
+					e.preventDefault();
+					$(this).parent().addClass('active');
+					byS.newSlide();
+				});
+			
+			$(document).on('click','.onetime',function(e){
+				/*$.ajax({
+					url: byS.ajaxURL,
+					type: 'post',
+					data: 't=U' ,
+					dataType: 'json',
+					success: function(JSON) {
+						if(JSON['reload']){
+							location=location;
+						}
+					}
+				});*/
+			});
+				
+			$(document).on('click','.slider-status',function(e){
+					e.preventDefault();
+					var status=0;
+					if($(this).hasClass('slider-status-off')){
+						$(this).removeClass('slider-status-off');
+						status=1;
+					}else{
+						$(this).addClass('slider-status-off');
+					}
+					var layerID = $(this).parent().data('id');
+					
+					$.ajax({
+							url: 'index.php?route=bytao/slideshow.savestatus&layer_id='+layerID+'&status='+status+'&user_token=' + getURLVar('user_token'),
+							dataType: 'json',
+							success: function(RES) {
+								if(layerID == byS.currentSlide){
+									if(status){
+										$('#input-slayt-status-'+byS.lId).prop( "checked", true );
+									}else{
+										$('#input-slayt-status-'+byS.lId).prop( "checked", false );
+									}
+								}
+						
+							}	
+						});
+						
+						
+				});
+
+			$(document).on('click','.inGroup',function(e){
+					if($( this ).prop( "checked" )){
+						$('#'+$(this).attr('ms-elem')).show();
+					}else{
+						$('#'+$(this).attr('ms-elem')).hide();
+					}
+				});
+		
+			$(document).on('click','.slider-delete',function(e){
+					e.preventDefault();
+					var layerId=$(this).data('layer_id');
+			
+					if(confirm(confirm_delete)){
+				
+						$.ajax({
+								url: 'index.php?route=bytao/slideshow.lydelete&layer_id='+layerId+'&user_token={{ user_token }}',
+								dataType: 'json',
+								success: function(RES) {
+									if(RES['success']){
+										if($('#slider-item-'+RES['success']).hasClass('active')){
+											$('#slider-item-'+RES['success']).remove();
+											byS.newSlide();
+										}else{
+											$('#slider-item-'+RES['success']).remove();
+										}
+							
+							
+									}
+								}	
+							});
+					}
+				});
+		
+			$(document).on('slidechange','.layer-active .slider-timing', function(e){
+					byS.storeCurrentLayerData(); 
+				}); 
+		
+			$(document).on('click', ".btn-clear-pos",function(){
+					byS.lId =  $('.slide-lang.active').data('lid');
+					if(byS.currentLayer){
+						byS.currentLayer.removeClass('pos'+$('.layer-align-table .active').data('h')+$('.layer-align-table .active').data('v'))
+						$('#layer-form-'+ byS.lId +' [name="layer_pos_v"]' ).val( 'top');
+						$('#layer-form-'+ byS.lId +' [name="layer_pos_h"]' ).val( 'left');
+						
+						$('.layer-align-table .active').removeClass('active');
+						byS.currentLayer.css( 'left','1px');
+						byS.currentLayer.css( 'top','1px');
+						posId = $('.pos-view.active .layer-align-table','#layer-form-'+byS.lId ).attr('tib');
+						$( '[name="layer_top"]','#layer-form-'+byS.lId ).val(1);
+						$( '[name="layer_left"]','#layer-form-'+byS.lId ).val(1);
+						
+						byS.storeCurrentLayerData();
+					}
+				});
+		
+			$(document).on('click',".layer-align-table span", function(){
+					if(!$(this).hasClass('active')){
+						$(this).parents('.layer-align-table').find('.active').removeClass('active');
+						$(this).addClass('active');
+						
+						posId = $(this).parents('.layer-align-table').attr('tib');
+						var dataH = $(this).attr('data-h');
+						var dataV = $(this).attr('data-v');
+						var AddClss = 'pos-'+dataH+'-'+dataV;
+						
+						$('#slider-editor-'+byS.lId+' .layer-active').addClass(AddClss);
+						$('#layer_hpos'+byS.lId).val(dataH)
+						$('#layer_vpos'+byS.lId).val(dataV)
+						
+						byS.setPosition(1,1,dataH,dataV,byS.currentLayer,'changePosition');
+						byS.storeCurrentLayerData(); 
+					}
+				
+				});
+		
+			$(document).on('click',".btn-clear-style", function(){
+					byS.lId =  $('.slide-lang.active').data('lid');	
+					$("#layer-editor-" + byS.lId+" .draggable-item.layer-active").removeClass($('#input-layer-class-'+byS.lId).val());
+					$('#input-layer-class-'+byS.lId).val('');
+					//$("#layer-editor-" + byS.lId+".draggable-item.layer-active").classes(function(c) {});
+			
+					byS.storeCurrentLayerData(); 
+				});	
+		
+			$(document).on('click',".layer-index .status", function(){	
+					if($(this).find('i').hasClass('fa-eye')){
+						$(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+						byS.currentLayer.hide();
+					}else{
+						$(this).find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+						byS.currentLayer.show();
+					}
+				});	
+		
+			$(document).on('change keyup paste',".fon input", function(){
+				//alert($(this).attr('name'));
+			});
+			
+			$(document).on('change keyup paste',".layer_caption", function(){
+					dataFor=$(this).attr('data-for');	
+					$( '[name="layer_caption"]','#layer-form-'+ byS.lId ).val($(this).val());
+					$("#layer-editor-" + byS.lId+" .layer-active  ."+dataFor).html($(this).val());
+					byS.storeCurrentLayerData();
+			});	
+
+			$(document).on('shown.bs.tab','#languagetabs a[data-toggle="tab"]', function (e) {
+					byS.lId =  $('.slide-lang.active').data('lid');
+				});
+				
+			$("#layer-editor-" + byS.lId).attr('data-icount',$("#layer-editor-" + byS.lId+".draggable-item").length);
+		
+			$('#timeline-'+ byS.lId).parent().find('.t-end').html(byS.delayTime+'ms');
+		
+			$('#timeline-'+ byS.lId).slider( {range: true,min: 0,max: byS.delayTime,values: [ 0 , byS.delayTime   ],	
+					slide: function( event, ui ) {
+						$('#layer_start_time').val(ui.values[ 0 ])
+						$('#layer_end_time').val(ui.values[ 1 ])
+					}
+				} ); 
+		}
+		,
+		'getSlide': function(slide_id){
+			
+			byS.lId =  $('.slide-lang.active').data('lid');
+			var slideshowId =  $('#slideshow_id').val();
+			$.ajax({
+					url: byS.ajaxURL,
+					type: 'post',
+					data: 'slideshow_id=' + slideshowId + '&slide_id=' + slide_id + '&t=s&a=g&lang=' + byS.lId ,
+					dataType: 'json',
+					success: function(j) {
+						byS.currentSlide = slide_id;
+						byS.getCurrentSlideCount(slide_id);
+						var list  = j['params'] ;
+						if( list ) {
+							byS.deleteLayers();
+							$.each(list, function (key, sValue) {
+					   
+									switch(key){
+										case 'slide_title':
+												$('#heading'+byS.lId).find('button').html(sValue);
+												$('#'+key+'-'+byS.lId).val(sValue);
+												break;
+										case 'slide_group_id':
+											layersliderGroupId = $('#slideshow_id').val();
+											$('#'+key+'-'+byS.lId).val(layersliderGroupId);
+											break;
+										
+										case 'slider_status':
+												if(sValue=='1'){
+													$('input[type="checkbox"][name="'+key+'"]' ).prop( "checked", true );
+												}else{
+													$('input[type="checkbox"][name="'+key+'"]' ).prop( "checked", false );
+												}
+												break;
+										case 'slider_enable_link':
+											if(sValue=='1'){
+													$('input[type="checkbox"][name="'+key+'"]' ).prop( "checked", true );
+												}else{
+													$('input[type="checkbox"][name="'+key+'"]' ).prop( "checked", false );
+												}
+												break;
+										case 'slider_videoplay':
+												if(sValue=='1'){
+													$('input[type="checkbox"][name="'+key+'"]' ).prop( "checked", true );
+												}else{
+													$('input[type="checkbox"][name="'+key+'"]' ).prop( "checked", false );
+												}
+												break;
+										case 'slider_thumbnail':
+												$('#'+key+'-'+byS.lId).val(sValue);
+												if(sValue!=''){
+													$('#'+key+'-'+byS.lId).parents('.image').find('img').attr('src',img_url+sValue)
+												}else{
+													$('#'+key+'-'+byS.lId).parents('.image').find('img').attr('src',placeholder);
+												}
+												break;
+										case 'slider_image':
+												$('#'+key+'_'+byS.lId).val(sValue);
+												if(sValue!=''){
+													$('#slider_image_src_'+byS.lId).attr('src',img_url + sValue)
+												}
+												break;
+										default:
+												$('#'+key+'-'+byS.lId).val(sValue);
+									}
+					   
+								});
+						}
+						$('.bytao-switch-btn input[type=checkbox]').each(function(e){
+								if($( this ).prop( "checked" )){
+									$('#'+$(this).attr('ms-elem')).show();
+								}else{
+									$('#'+$(this).attr('ms-elem')).hide();
+								}
+							});
+						$('#tab-lang-' + byS.lId + ' .slider-top-clone ').removeClass('hidden');
+						$('#group-sliders-' + byS.lId + ' > div.active ').removeClass('active');
+						$('#group-sliders-' + byS.lId + ' > #slider-item-'+slide_id).addClass('active');
+						byS.createList(j['layers'])
+					}
+				});
+		}
+		,
+		'getSlideshowSlides': function(slideshow_id){
+			$.ajax({
+					url: byS.ajaxURL,
+					type: 'post',
+					data: 'slideshow_id=' + slideshow_id + '&t=G' ,
+					dataType: 'json',
+					success: function(JSON) {
+						if(JSON['slides']){
+							$('#allLang li').each(function(ind,elm){
+								LiD = $(this).data('id');
+								if(JSON['slides'][LiD]){
+									$('#group-sliders-'+LiD+' .new-slider-item').after(JSON['slides'][LiD])
+								}
+							});
+						}
+					}
+				});
+		}
+		,
+		'newSlide':function(){
+			byS.lId =  $('.slide-lang.active').data('lid');
+			if(!$('#tab-lang-'+byS.lId+' .slider-top-clone ').hasClass('hidden')){
+				$('#tab-lang-'+byS.lId+' .slider-top-clone ').addClass('hidden');
+			}
+			byS.deleteLayers();
+			
+			$('[data-def]').each(function(){
+					$(this).val($(this).data('def'));
+				});
+		
+			$('[data-def-src]').each(function(){
+					$(this).attr('src',$(this).data('def-src'));
+				});
+		
+		
+			$('#group-sliders-'+byS.lId+' .slider-item.active').removeClass('active');
+			$('#slider_image_src_'+byS.lId).attr('src',sSrc);
+			sliderSort();
+		
+			byS.countItem=0;
+			byS.maxId=0;
+			byS.createDefaultLayerData();
+		}
+		,
+		'createList' : function( layers  ){
+			byS.state = false;
+			var layer = '';
+			
+			// Silinecek unutma
+			if( layers ) {
+				$.each( layers, function(i, jslayer ){
+						byS.maxId++;
+						var type = jslayer['layer_type']?'add-'+jslayer['layer_type']:'add-text';
+						layer = byS.createLayer( type, jslayer , byS.maxId );
+						
+					});
+			}
+			byS.setDevice(1);
+			byS.state = true;
+		}
+		,
+		'createLayer' : function( type, data, slayerID ){
+
+			var layer = $('<div class="draggable-item tp-caption" data-form=""><div class="caption-layer"></div></div>');
+			layer.attr('id','slayerID'+ slayerID ); 
+			layer.attr('lid',slayerID ); 
+
+			var ilayer = $('<div class="layer-index"></div>').attr("id","i-"+layer.attr("id"));
+			ilayer.append( '<span class="status"><i class="fa fa-fw fa-eye"></i></span>' );
+			ilayer.append( '<span class="i-no">'+($(".draggable-item",$("#layer-editor-" + byS.lId)).length+1)+'</span>' );
+			ilayer.append( '<span class="layer-index-caption"></span>' );
+			ilayer.append( '<div class="item-ranger"><div class="item-range" data-str="0" data-stp="'+byS.delayTime+'"></div></div>' );
+
+			switch( type ){
+				case 'add-text': 
+					byS.addLayerText( layer , ilayer, "Text " + slayerID );
+					break;
+				case 'add-video': 
+					byS.addLayerVideo( layer , ilayer, "Video " + slayerID  );
+					break;
+				case 'add-image': 
+					byS.addLayerImage(layer , ilayer,  "Image " + slayerID );
+					break;	
+			}
+	 	 	
+	 	 	
+			$("#layer_id-"+byS.lId).val(slayerID );
+	 			 		
+			byS.setCurrentLayerActive(layer);	
+	 		
+			$(layer).draggable({ containment: ".layer-editor-"+ byS.lId,
+					//handle: ".handle",
+					drag:function(){
+						byS.setCurrentLayerActive( layer );
+						byS.updatePosition( layer.css('left'), layer.css("top") );
+					},
+					create:function(){
+						byS.createDefaultLayerData( layer, data );
+					}
+				});
+	    	
+			$('input,select,textarea', '#layer-form-'+ byS.lId ).change( function(){
+					console.log(' form change')
+				  
+					if( $(this).attr('name') =='layer_pos_'+byS.currentDevice +'_top' || $(this).attr('name') == 'layer_pos_'+byS.currentDevice +'_left' ) {  
+					
+						byS.currentLayer.css( { top:$('#layer-form-'+ byS.lId+' [name="layer_pos_'+byS.currentDevice +'_top"]','#layer-form-'+ byS.lId ).val()+"px",			
+								left:$('#layer-form-'+ byS.lId+' [name="layer_pos_'+byS.currentDevice +'_left"]','#layer-form-'+ byS.lId ).val()+"px"				
+							});	
+					}
+					if( $(this).attr('name') =='layer_start_time') {  
+						$('#timeline-'+byS.lId).slider( 'values',0,$(this).val() );
+						$('#layer-collection-'+byS.lId+' .layer-active .item-range').data('str',$(this).val());
+						byS.rangeSlider()
+					}
+					if( $(this).attr('name') =='layer_end_time') {  
+						$('#timeline-'+byS.lId).slider( 'values',1,$(this).val() );
+						$('#layer-collection-'+byS.lId+' .layer-active .item-range').data('stp',$(this).val());
+						byS.rangeSlider()
+					}
+					
+					if( $(this).attr('attr') =='top') {
+						byS.currentLayer.css( 'left',$(this).val()+'px');
+					}
+					if( $(this).attr('attr') =='top') {
+						byS.currentLayer.css( 'top',$(this).val()+'px');
+					} 
+					if( $(this).attr('attr') =='font-size') {
+						byS.currentLayer.css( 'font-size',$(this).val()+'px');
+					}  
+					
+					if( $(this).attr('attr') =='color') {
+						byS.currentLayer.css( 'color',$(this).val());
+					}
+					
+					if( $(this).attr('attr') =='font-weight') {
+						byS.currentLayer.css( 'font-weight',$(this).val());
+					}  
+					byS.storeCurrentLayerData();  
+				});
+			
+			$('#input-layer-caption-'+ byS.lId, '#layer-form-' + byS.lId ).keypress( function(){  
+					setTimeout(function ()
+						{ 
+							$(".caption-layer",byS.currentLayer).html( $('#input-slider-caption-'+ byS.lId).val()  );
+							$('.layer-index-caption',"#i-"+byS.currentLayer.attr("id") ).text( $(".caption-layer",byS.currentLayer).text() );	
+				 	
+						}, 6);
+				});
+
+			layer.click( function() { 
+					byS.setCurrentLayerActive( layer );	 
+				});
+	 		
+			$("#i-"+layer.attr("id") ).click( function(){
+					if( byS.currentLayer != null ){
+						byS.storeCurrentLayerData();
+					}
+					byS.setCurrentLayerActive(layer); 
+				});
+	 		
+			if(type == "add-image" && data==null){
+				byS.showDialogImage(layer.attr('lid'));
+			}	
+	 		
+		}
+		,
+		'createDefaultLayerData' : function( layer, data ){
+			byS.lId =  $('.slide-lang.active').data('lid');
+			var _left = 1;
+			var _top  = 1;
+			var _vertical = 'top';
+			var _horizontal = 'left';
+			
+			if( data != null && data ) { 
+				
+				$.each( data , function(key, valu){	
+						switch(key){
+							case 'layer_caption':
+								valu = valu.replace( /_ASM_/,'&' );
+								$( '[name="'+key+'"]','#layer-form-'+byS.lId ).val(valu);
+								break;
+							case 'layer_linkstatus':
+								$('[name="'+key+'"]','#layer-form-'+byS.lId ).val(valu);
+								if(valu=='1'){
+									$( 'input[type="checkbox"][name="layer_linkstatus"]' ).prop( "checked", true );
+								}else{
+									$( 'input[type="checkbox"][name="layer_linkstatus"]' ).prop( "checked", false );
+								}
+								break;
+							default:
+								$( '[name="'+key+'"]','#layer-form-'+byS.lId ).val(  valu );
+						}
+						
+						
+					} ); 
+
+				if(  data['layer_type'] == 'image' ){
+					var thumb = 'img_'+byS.currentLayer.attr('id');
+					var src = img_url+data['layer_image'];
+					$('#' + thumb).replaceWith('<img src="' + src + '" alt="" id="' + thumb + '" />');
+				}
+			
+				if(  data['layer_type'] == 'video' ){
+					var thumb = 'video-'+byS.currentLayer.attr('id');
+					var src = data['layer_video_thumb'];
+					$(".content-sample",byS.currentLayer).html( '<img height="'+data['layer_video_height']+'" width="'+data['layer_video_width']+'" src="'+src+'"/>');
+				}
+			
+				if(  data['layer_type'] == 'text' ){
+					byS.currentLayer.addClass(  data['layer_class'] );
+				}
+
+				$(layer).addClass('pos-'+data['layer_hpos']+'-'+data['layer_vpos']);
+				
+				$('[data-h="'+data['layer_hpos']+'"][data-v="'+data['layer_vpos']+'"]').addClass('active');
+				if(data['layer_hpos']){_horizontal = data['layer_hpos']}	
+				if(data['layer_vpos']){_vertical = data['layer_vpos']}
+				if(data['layer_left']){_left = data['layer_left']}
+				if(data['layer_top']){_top = data['layer_top']}
+				
+				data['layer_caption'] = data['layer_caption'].replace(/_ASM_/,'&');
+		 
+				$(".caption-layer",byS.currentLayer).html( data['layer_caption'] );
+				$(".layer-index-caption", '#i-slayerID'+data['layer_id']).text( $(".caption-layer",byS.currentLayer).text()  );
+
+ 			
+				$('#timeline-'+ byS.lId).slider( "values", 0, data['layer_starttime'])
+				$('#timeline-'+ byS.lId).slider( "values", 1, data['layer_endtime'] )
+				
+				byS.currentLayer = layer;
+				$(byS.currentLayer).css({"left": data['layer_left']+'px', "top": data['layer_top']+'px'});
+			}
+			else 
+			{
+				$('#layer-form-'+byS.lId+' [name="layer_caption"]').val(  $(".caption-layer",layer).html() );
+				$('#layer-form-'+byS.lId+' [name="layer_left"]').val(1);
+				$('#layer-form-'+byS.lId+' [name="layer_top"]' ).val(1);
+				$('#layer-form-'+byS.lId+' [name="layer_class"]').val('');
+				$('#layer-form-'+byS.lId+' [name="layer_startspeed"]' ).val(350);
+				$('#layer-form-'+byS.lId+' [name="layer_starttime"]' ).val(0);
+				$('#layer-form-'+byS.lId+' [name="layer_endtime"]' ).val(byS.delayTime );
+				$('#layer-form-'+byS.lId+' [name="layer_endspeed"]').val(300);
+				$('#layer-form-'+byS.lId+' [name="layer_endanimation"]').val('auto');
+				$('#layer-form-'+byS.lId+' [name="layer_endeasing"]' ).val('nothing');
+				$('#layer-form-'+byS.lId+' [name="layer_content"]').val('no_image.png');
+				$('#timeline-'+ byS.lId).slider( "values", 0,0)
+				$('#timeline-'+ byS.lId).slider( "values", 1, byS.delayTime )
+				$('#layer-form-'+byS.lId+' .pos-view').removeClass('active');
+				$('[data-h="left"][data-v="top"]').addClass('active');
+			}
+			
+	 		$('#pos-view'+byS.lId+' li:first-child a').addClass('active')
+	 		$('#layer-form-'+byS.lId+' .pos-view:first-child').addClass('active show')
+	 		
+			$('.bytao-switch-btn input[type=checkbox]').each(function(e){
+					if($( this ).prop( "checked" )){
+						$('#'+$(this).attr('ms-elem')).show();
+					}else{
+						$('#'+$(this).attr('ms-elem')).hide();
+					}
+				});
+			
+			if(layer){
+				byS.setPosition( _left, _top,_horizontal,_vertical,layer,'createDefaultLayerData');
+			}
+	 		
+	 		
+	 		
+			byS.storeCurrentLayerData();
+			byS.rangeSlider();
+		}
+		,		
+		'addLayerText' : function( layer, ilayer , caption ){  
+			layer.addClass('layer-text');
+			$(".caption-layer",layer ).html( caption );
+			$("#layer-editor-" + byS.lId ).append( layer );
+			$("#layer_type-"+byS.lId).val('text');
+			$("#layer-collection-" + byS.lId ).append( ilayer );
+			$(".layer-index-caption", ilayer).html( caption );
+		}
+		,
+		'addLayerVideo' : function( layer, ilayer , caption ){
+			layer.addClass('layer-content');
+			$(".caption-layer",layer ).html( caption );
+			$("#layer-editor-" + byS.lId ).append( layer );
+
+			$("#layer-collection-" + byS.lId ).append( ilayer ); $(".layer-index-caption", ilayer).html( caption );
+		
+			$("#layer_type-"+byS.lId).val('video');
+			layer.append( '<div class="layer_video" id="'+'video-'+layer.attr('id')+'"><div class="content-sample"></div></div><div class="btn-change-video">Chang Video</div>' );
+
+		}
+		,
+		'addLayerImage' : function( layer, ilayer , caption ){
+			layer.addClass('layer-content');
+			$(".caption-layer",layer ).html( caption );
+			layer.append( '<div class="layer_image" id="'+'img_'+layer.attr('id')+'"><div class="content-sample"></div></div><div class="btn-change-img">Change Image</div>' );
+
+			$("#layer-editor-" + byS.lId ).append( layer );
+			$("#layer-collection-" + byS.lId ).append( ilayer ); $(".layer-index-caption", ilayer).html( caption );
+		
+			$("#layer_type-"+byS.lId).val('image');
+			$("#layer_content-"+byS.lId).val('');
+			// show input form
+		
+		}
+		,	
+		'updatePosition' : function( left, top ){
+			
+			eW	 = $('[name="slider[width]"]').val();
+			eH	 = $('[name="slider[height]"]').val();
+			
+			hVal = $('[name="layer_hpos"]','#layer-form-'+byS.lId ).val();
+			vVal = $('[name="layer_vpos"]','#layer-form-'+byS.lId ).val();	
+			aH	 = $('.layer-active','#layer-editor-'+byS.lId).height();
+			aW	 = $('.layer-active','#layer-editor-'+byS.lId).width();
+			var H = parseInt(eH - aH);
+			var W = parseInt(eW - aW);
+			
+			if(hVal == 'left'){W = 0;}
+			if(hVal == 'center'){W = parseInt(eW/2);}
+			if(hVal == 'right'){W = parseInt(W);}
+			
+			if(vVal == 'top'){ H= 0;}
+			if(vVal == 'middle'){H = parseInt(H/2);}
+			if(vVal == 'bottom'){H = parseInt(eH - aH);}
+			
+			_left = parseInt(left) ;
+			_top =  parseInt(top) ;	
+			
+			//$('.layer-active','#layer-editor-'+byS.lId).css({"left": _left, "top": _top});
+		
+			$( '[name="layer_top"]','#layer-form-'+ byS.lId ).val(parseInt(_top) );
+			$( '[name="layer_left"]','#layer-form-'+ byS.lId ).val(parseInt(_left) );
+
+			byS.storeCurrentLayerData();
+		}
+		,
+		'setPosition' : function(left,top,hVal,vVal,layer,FROM){
+			$('[name="layer_top"]','#layer-form-'+ byS.lId ).val(parseInt(top) );
+			$('[name="layer_left"]','#layer-form-'+ byS.lId ).val(parseInt(left) );
+			
+			var eW	 = $('[name="slider[width]"]').val();
+			var eH	 = $('[name="slider[height]"]').val();
+			var aH	 = $(layer).height();
+			var aW	 = $(layer).width();
+			
+			var H = parseInt(eH - aH);
+			var W = parseInt(eW - aW);
+			
+			if(hVal == 'left'){W = 0;}
+			if(hVal == 'center'){W = parseInt(eW/2);}
+			if(hVal == 'right'){W = parseInt(W);}
+			
+			if(vVal == 'top'){ H= 0;}
+			if(vVal == 'middle'){H = parseInt(H/2);}
+			if(vVal == 'bottom'){H = parseInt(eH - aH);}
+			
+			if(left>0){
+				_left = W + parseInt(left);	
+			}else if(left<0){
+				_left = W - parseInt(left * -1);
+			}else{
+				_left = W ;
+			}
+			
+			if(top>0){
+				_top = H + parseInt(top);	
+			}else if(top<0){
+				_top = H - parseInt(top * -1);
+			}else{
+				_top = H ;
+			}
+			
+			//$(layer).css({"left": _left +'px',"top": _top + 'px'});
+			//$('.layer-active','#layer-editor-'+byS.lId).css({"left": _left, "top": _top});
+			//$('.layer-active','#layer-editor-'+byS.lId).css({"left": left, "top": top});
+			$(layer).css({"left": left, "top": top});
+			
+			
+		}
+		,
+		'deleteAction': function(action){
+			switch(action){
+				case 'delete-layer':
+				byS.deleteCurrentLayer();
+				break;
+				case 'delete-slider':
+				byS.deleteCurrentSlider();
+				break;
+			
+			}
+		}
+		,
+		'deleteCurrentSlider': function(){
+			
+			if( byS.currentLayer ){
+				byS.currentLayer.data( "form", null );
+				$( "#i-"+byS.currentLayer.attr("id") ).remove();
+				$(".draggable-item",$('#layer-editor-'+byS.lId)).remove();
+				$(".layer-index",$('#layer-collection-'+byS.lId)).remove();
+				byS.newSlide();
+			}
+		}
+		,
+		'deleteCurrentLayer': function(){
+			
+			if( byS.currentLayer ){
+				byS.currentLayer.data( "form", null );
+				$( "#i-"+byS.currentLayer.attr("id") ).remove();
+				$(".draggable-item.layer-active",$('#layer-editor-'+byS.lId)).remove();
+				$(".layer-index.layer-active",$('#layer-collection-'+byS.lId)).remove();
+				
+				if( $('.draggable-item',$('#layer-editor-'+byS.lId)).length <= 0 ) {
+					$('#dialog').remove();
+					$('#dialog-video').hide();
+				}
+			}
+		}
+		,
+		'deleteLayers': function(){
+			$('#layer-editor-'+byS.lId).empty();
+			$('#layer-collection-'+byS.lId).empty();
+			if( byS.currentLayer ) byS.currentLayer.data( "form", null );	
+		}
+		,
+		'showDialogImage' : function( thumb ){ // image layer change
+			byS.currentLayer
+			
+			$('#img_slayerID'+thumb).replaceWith('<img src="" alt="" id="img_slayerID'+thumb + '" />');
+			$('#modal-image').remove();
+			$.ajax({
+					url: 'index.php?route=common/filemanager&user_token={{ user_token }}&target=layer_image_' + byS.lId +'&simage=img_slayerID'+thumb ,
+					dataType: 'html',
+					success: function(html) {
+						$('body').append(html);
+						var element = document.querySelector('#modal-image');
+						var modal = new bootstrap.Modal(element);
+						modal.show();
+					}
+				});
+		}
+		,
+		'processDialogVideo' : function( videoID ){
+			byS.currentLayer
+			
+			if( videoID !="" ) {
+ 				
+				if( $("#layer_video_type").val() == 'vimeo' ) {
+					$.getJSON('http://www.vimeo.com/api/v2/video/' + videoID + '.json?callback=?', {format: "json"}, function(data) {
+					
+							$this.showVideoPreview( data[0].title, data[0].description, data[0].thumbnail_large );
+						});
+				}else {
+					$.getJSON('http://gdata.youtube.com/feeds/api/videos/'+videoID+'?v=2&alt=jsonc',function(data,status,xhr){ 
+							$this.showVideoPreview( data.data.title, data.data.description, data.data.thumbnail.hqDefault )
+						});
+				}
+			}
+		}
+		,
+		'showVideoPreview': function( title, description, image ){
+			
+			if( title ){
+				var html = '';
+				html += '<div class="video-title">'+title+'</div>';	
+				html += '<img src="'+image+'">';
+				html += '<div class="video-description">'+description+'</div>';	
+				$("#layer_video_thumb").val(image);	
+				$("#video-preview").html( html );
+				$("#apply_this_video").show();
+			}else {
+				$("#video-preview").html( '<div class="error">Could not find any thing</div>' );
+			}
+		}
+		,
+		'setCurrentLayerActive' : function ( layer ){
+			if(byS.activeLayer != $(layer).attr('lid')){
+				if(byS.state) byS.updateLayerDataForm();
+				$("#layer-editor-"+byS.lId+" .draggable-item").removeClass("layer-active");
+				$(".layer-index","#layer-collection-"+byS.lId).removeClass("layer-active");
+				$('#i-'+layer.attr("id") ).addClass("layer-active");
+				$( layer ).addClass("layer-active");
+				byS.activeLayer = $(layer).attr('lid');
+				byS.currentLayer = layer;
+				byS.showLayerForm( layer );	
+				byS.rangeSlider();
+			}
+		}
+		,
+		'setDevice':function (aDev){
+			byS.currentDevice = $('#layer-form-'+byS.lId+' .device-view > .active').attr('device');
+			$('#layer-form-'+byS.lId+' .pos-view').hide();	
+			$('#layer-form-'+byS.lId+' #pos-view-'+aDev).show();
+			$('#layer-form-'+byS.lId+' .draggable-item').each(function(){
+				byS.setCurrentLayerActive( $(this));	
+			});
+		}
+		,
+		'showLayerForm': function( layer ){
+			var $currentLayer = byS.currentLayer;
+			if( $currentLayer.data("form") ){ 
+				$.each( $currentLayer.data("form"), function(_, kv) {
+					
+						switch(kv.name){
+							case 'layer_linkstatus':
+								if(kv.value=='1'){
+									$( 'input[type="checkbox"][name="layer_linkstatus"]' ).prop( "checked", true );
+									$('#layer_link_group'+ byS.lId).show();
+								}else{
+									$( 'input[type="checkbox"][name="layer_linkstatus"]' ).prop( "checked", false );
+									$('#layer_link_group'+ byS.lId).hide();
+								}
+								break;
+								
+							case 'layer_image':
+								if($('.tp-caption.layer-active').find('.caption-layer').length){
+									iId = $('.tp-caption.layer-active').find('.caption-layer').attr('id');
+									$('#img-'+iId).replaceWith('<img src="' +img_url+kv.value+ '" alt="" id="img_'+iId+'" />');
+								}
+								$('#layer-form-'+ byS.lId +' [name="'+kv.name+'"]' ).val( kv.value );
+								break;
+							case 'layer_type':
+								if(kv.value=='text'){
+									$('#layer-form-'+ byS.lId +' .font').removeClass('hidden');
+								}else{
+									$('#layer-form-'+ byS.lId +' .font' ).addClass('hidden');
+								}
+							case 'layer_hpos':
+								if(kv.value){
+									$('#layer-form-'+ byS.lId +' [name="'+kv.name+'"]' ).val( kv.value );
+								}else{
+									$('#layer-form-'+ byS.lId +' [name="'+kv.name+'"]' ).val( 'left' );
+								}
+								break;
+							case 'layer_vpos':
+								if(kv.value){
+									$('#layer-form-'+ byS.lId +' [name="'+kv.name+'"]' ).val( kv.value );
+								}else{
+									$('#layer-form-'+ byS.lId +' [name="'+kv.name+'"]' ).val( 'top' );
+								}
+								break;
+							default:
+								$('#layer-form-'+ byS.lId +' [name="'+kv.name+'"]' ).val( kv.value );
+						}
+						
+						switch(kv.name){
+							case 'layer_width':
+								if(kv.value){
+									$(layer).css('width',kv.value+'px');
+								}else{
+									$(layer).css('width','unset');
+								}
+								
+								break;
+							case 'layer_fontsize':
+								$(layer).css('font-size',kv.value+'px');
+								break;
+							case 'layer_fontcolor':
+								$(layer).css('color',kv.value);
+								break;
+							case 'layer_pos_fontweight':
+								$(layer).css('font-weight',kv.value);
+								break;
+							case 'layer_lineheight':
+								$(layer).css('line-height',kv.value+'px');
+								break;
+						}
+				} ); 
+			}
+			 
+			$('#timeline-'+ byS.lId).slider( "values", 0,$('#layer_starttime-'+ byS.lId).val() )
+			$('#timeline-'+ byS.lId).slider( "values", 1,$('#layer_endtime-'+ byS.lId).val() )
+			$('.inGroup').each(function(e){
+					if($( this ).prop( "checked" )){
+						$('#'+$(this).attr('ms-elem')).show();
+					}else{
+						$('#'+$(this).attr('ms-elem')).hide();
+					}
+			});
+			
+			$('#layer-form-'+byS.lId+' .pos-view').removeClass('active show');
+				
+			hVal = $('[name="layer_hpos"]','#layer-form-'+byS.lId ).val();
+			vVal = $('[name="layer_vpos"]','#layer-form-'+byS.lId ).val();	
+			
+			$('.layer-align-table .active').removeClass('active');
+			$('[data-h="'+hVal+'"][data-v="'+vVal+'"]','#layer-form-'+byS.lId+' .layer-align-table').addClass('active');
+			
+	 		byS.setPosition($('[name="layer_left"]','#layer-form-'+byS.lId ).val(),$('[name="layer_top"]','#layer-form-'+byS.lId ).val(),hVal,vVal,byS.currentLayer,'showlayer');
+	 		
+			$('.layer-form').show();
+		}
+		,
+		'storeCurrentLayerData':function(){
+			byS.state = false; 
+			byS.currentLayer.data("form", $('#layer-form-'+ byS.lId ).serializeArray() );
+	 		
+		}
+		,
+		'rangeSlider':function(){
+			var crpn = byS.delayTime / 154;
+			var iStart =  parseInt($('#timeline-'+ byS.lId).slider( "values", 0 ));
+			var iStop =  parseInt($('#timeline-'+ byS.lId).slider( "values", 1 ));
+			var iWidth =parseInt((iStop - iStart)*154/ byS.delayTime) ; 
+			
+			$('#layer-collection-'+byS.lId+' .layer-active .item-range').css({'left':parseInt(iStart*154/byS.delayTime)+'px','width':+iWidth+'px'});
+		}
+		,
+		'updateLayerDataForm':function(){
+			if($("#layer-editor-"+byS.lId+" .draggable-item.layer-active").length){
+				byS.currentLayer.data("form", $('#layer-form-'+ byS.lId ).serializeArray() );
+			}
+		}
+		,
+		'getCurrentSlideCount':function(SlideID){
+			if($('#arr .A'+byS.lId).find('.'+SlideID).length>0){
+				byS.countItem = $('#arr .A'+byS.lId).find('.'+SlideID).data('countItem');	
+			
+			}else{
+				if($('#arr .A'+byS.lId).length>0){
+					$('#arr .A'+byS.lId).append('<div class="'+SlideID+'"></div>');
+				}else{
+					$('#arr').append('<div class="A'+byS.lId+'"><div class="'+SlideID+'"></div></div>');
+				}
+				$('#arr .A'+byS.lId).find('.'+SlideID).data('countItem',0);
+				byS.countItem =0;
+			
+			}
+		}
+		,
+		'submitForm' : function(){
+			byS.lId =  $('.slide-lang.active').data('lid');
+			layerSliderId = $("#slider_id-"+ byS.lId).val();
+			if(!layerSliderId){	layerSliderId=0;}
+			var data =[];
+			var i = 0;
+			var params = "slider_id="+layerSliderId+"&"+$("#slayt-form-"+ byS.lId).serialize()+"&";
+			var times = '';
+			 
+			$("#layer-editor-"+ byS.lId +" .draggable-item" ).each( function(){
+					var param = '';
+					$.each($(this).data("form"), function(_,e ) {
+							if( $(this).attr('name').indexOf('layer_time') ==-1 ){
+								if( e.name == 'layer_caption' ){
+									e.value = e.value.replace(/\&/,'_ASM_');
+								}  
+								param += 'layers['+i+']['+e.name+']='+e.value+'&';
+							}
+						});
+					params += 	param+"&";
+					i++
+				});
+			 
+			$(".input-time input", $("#slayt-form-"+ byS.lId) ).each( function(i,e){
+					params +=$(e).attr('name')+"="+$(e).val()+"&";
+				}); 
+			params +="th="+tHeight;
+			$.ajax({
+					url: $("#layer-form-"+ byS.lId).attr('action'),
+					dataType: 'JSON',
+					data: params,
+					type: 'POST',
+					success: function(resp) {
+						if( resp['error'] ){
+							$('#alerter .modal-body').addClass('alert-danger').html('<i class="fa-solid alert-dismissible"></i> '+resp['error']);
+							$('#alerter').modal('show');
+						}
+				 		  
+						if(resp['newlayer'])
+						{
+							$('#group-sliders-'+byS.lId+' .slider-item.active').removeClass('active');
+							$('#group-sliders-'+byS.lId+' .new-slider-item').after('<div class="slider-item" data-id="'+resp['newlayer'] +'" id="slider-item-'+resp['newlayer'] + '" > <a class="image" href="#" data-layer_id="'+resp['newlayer'] +'"><img class="img-responsive" src="'+resp['thumbnail'] +'" height="86"/></a><a  title="'+clone_this+'" class="slider-clone" href="#" data-layer_id="'+resp['slider_id'] +'"><span>'+clone_text+'</span></a><a  title="'+delete_this+'" class="slider-delete" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+delete_text+'</span></a><a class="slider-status" href="#" data-layer_id="'+resp['newlayer'] +'"><span>'+status_text+'</span></a><div>'+resp['slider_title']+'</div></div>');
+							uL = resp['newlayer'] ;
+							if(resp['slider_status'] == 0 ){
+								$('#slider-item-'+uL+' .slider-status').addClass('slider-status-off');	
+							}else{
+								$('#slider-item-'+uL+' .slider-status').removeClass('slider-status-off');	
+							}
+							alert(resp['text_added_slider']);
+						}
+				 		  
+						if(resp['updatelayer'])
+						{
+							uL = resp['slider_id'] ;
+							$('#slider-item-'+uL).data('id',resp['updatelayer']);
+							$('#slider-item-'+uL+' [data-id]').data('id',resp['updatelayer']);
+							$('#slider-item-'+uL+' img').attr('src',resp['thumbnail']);
+							$('#slider-item-'+uL+' div').html(resp['slider_title']);
+								
+							if(resp['slider_status']==0 ){
+								$('#slider-item-'+uL+' .slider-status').addClass('slider-status-off');	
+							}else{
+								$('#slider-item-'+uL+' .slider-status').removeClass('slider-status-off');	
+							}
+							$('#alerter .modal-body').addClass('alert-danger').html('<i class="fa-solid alert-dismissible"></i> '+resp['text_updated_slider']);
+							$('#alerter').modal('show');
+						}
+					}
+				});
+				
+		}
+		
+	}
+
+
+</script>
+  
+<script type="text/javascript"><!--
+	byS.setOP({'lId':$('#languagetabs > li:first').data('lid')});	
+	
+	
+	
+	function removeColorClasses(objId,str)
+	{
+		elem = document.getElementById(objId)
+		for (let className of Array.from(elem.classList))
+		if (className.startsWith(str))
+		elem.classList.remove(className);
+	}
+			
+	function alignActiveLayer(h,v){
+		byS.lId =  $('.slide-lang.active').data('lid');
+		removeColorClasses($("#slider-editor-"+byS.lId+" .layer-active").attr('id'),"pos");
+		$('#slider-editor-'+byS.lId+' .layer-active').addClass('pos'+h+v);
+		$('#layer-form-'+byS.lId+' [name="layer_pos"]').val(h+','+v);
+		
+	}
+
+
+	$(document).on('click','.caption-layer a',function(e){
+		e.preventDefault();
+		return false;
+	});
+	
+	$(document).on('click','.slide-lang.active .dropdown-toggle',function(){
+			if($(this).parent().hasClass('open')){
+				$(this).parent().removeClass('open');
+			}else{
+				$(this).parent().addClass('open');
+			}
+	});
+	
+	$(document).on('click','.device-view > button',function(e){
+		e.preventDefault();
+		byS.lId =  $('.slide-lang.active').data('lid');
+		if(!$(this).hasClass('active')){
+			$('#layer-form-'+byS.lId+' .device-view > button').removeClass('active');
+			$(this).addClass('active');
+			byS.setDevice($(this).attr('device'));
+		}
+	});
+		
+	$(".flex-control").each(function(e){
+			tWidth = $(this).find('i').length;
+			$(this).animate({marginRight:'-'+( tWidth * 32) + 'px'},100)
+		});	
+		
+	$(".flex-control,.layer-collection").mouseenter(function(){
+			$(this).animate({marginRight:'0px'},100,function(){
+				$(this).removeClass('smalled')
+			})
+		});
+
+	$(".flex-control").mouseleave(function() {
+			tWidth=$(this).width();
+			$(this).animate({marginRight:'-'+( tWidth - 32) + 'px'},100,function(){
+				$(this).addClass('smalled');
+			})
+		});
+	$(".layer-collection").each(function(e){
+			tWidth = $(this).find('i').length;
+			$(this).animate({marginRight:'-'+( tWidth * 30) + 'px'},100)
+		});	
+	
+	$(".layer-collection").mouseleave(function() {
+			tWidth=$(this).width();
+			$(this).animate({marginRight:'-'+( tWidth - 52) + 'px'},100,function(){
+				$(this).addClass('smalled');
+			})
+		});
+		
+	$('#top-tabs').on('click', '.nav-item > a', function (e) {
+		e.preventDefault();
+		if($(this).attr('href')=='#tab-slides'){
+			$('.minbuttons').addClass('hidden');
+		}else{
+			$('.minbuttons').removeClass('hidden');
+		}
+	});		
+	
+	$(document).on('click', '[data-ms-toggle=\'tab\']', function (e) {
+		e.preventDefault();
+	    var element = this;
+	    	$(element).parent().parent().find('.ms-tablink.active').removeClass('active');
+	    	$(element).addClass('active');
+	    var tElement = $($(element).attr('href'));
+	    
+		$(tElement).parent().find('.tab-pane').removeClass('active');
+	    $(tElement).addClass('active show');
+	});	
+	
+	$(document).on('click', '[data-toggle="collapse"]', function (e) {
+		$($(this).data('target')).toggleClass('show');
+	});
+	
+	$(document).on('click', '#opener', function (e) {
+		e.preventDefault();
+		if($(this).find('i').hasClass('fa-arrow-circle-right')){
+			$('#layer-form-content-'+byS.lId).animate({left:'0px'},400,function(){
+				$('#layer-form-content-'+byS.lId+' #opener i').removeClass('fa-arrow-circle-right').addClass('fa-arrow-circle-left');
+			});
+		}else{
+			$('#layer-form-content-'+byS.lId).animate({left:'-52%'},400,function(){
+				$('#layer-form-content-'+byS.lId+' #opener i').removeClass('fa-arrow-circle-left').addClass('fa-arrow-circle-right');
+			});
+		}
+	
+		return false;
+	});	
+	
+	
+	
+	$( document ).ready( function(){
+		slideshowId = $('#slideshow_id').val();
+		byS.getSlideshowSlides(slideshowId)
+	});
+	
+	$( document ).ready( function(){
+		
+		$('.scollapse').collapse();
+		
+		
+		var SURLIMAGE = 'index.php?user_token={{ user_token }}';
+		var SURL = '{{ HTTP_CATALOG }}';
+		{% for language in languages %}
+			$('#timeline-{{ language.language_id }}').slider({
+					range: true,
+					min: 0,
+					max: byS.delayTime,
+					values: [ 0,  byS.delayTime ],
+					slide: function( event, ui ) {
+						$('#layer_start_time-{{ language.language_id }}').val( ui.values[ 0 ] );
+						$('#layer_end_time-{{ language.language_id }}').val( ui.values[ 1 ] );
+						$('#layer-collection-'+byS.lId+' .layer-active .item-range').data('str',ui.values[ 0 ]);
+						$('#layer-collection-'+byS.lId+' .layer-active .item-range').data('stp',ui.values[ 1 ]);
+	        
+						byS.rangeSlider()
+					}
+				});
+		{% endfor %}
+		
+		sliderSort()
+		$('.inGroup').each(function(e){
+			if($( this ).prop( "checked" )){
+				$('#'+$(this).attr('ms-elem')).show();
+			}else{
+				$('#'+$(this).attr('ms-elem')).hide();
+			}
+		});
+			
+								
+		});
+		
+	function sliderSort(){
+		{% for language in languages %}
+		$("#group-sliders-{{ language.language_id }}").sortable({ 
+				accept:"#group-sliders-{{ language.language_id }} .slider-item",
+				update:function() {   
+					var ids = $( "#group-sliders-{{ language.language_id }} .slider-item" );
+					var params = '';
+					var j=1;
+					$.each( ids, function(i,e){
+							params += 'id['+$(e).attr('id').replace("slider_","")+']='+(j++)+"&";
+						});
+					$.ajax({
+							url:'index.php?route=bytao/slideshow.savepos&user_token={{ user_token }}',
+							data: params,
+							type:'POST'
+						});
+				} 
+			});
+		
+		$("#group-sliders-{{ language.language_id }}" ).disableSelection();
+		{% endfor %}
+	}
+
+	
+	//-->
+</script> 
+
+{{ footer }} 

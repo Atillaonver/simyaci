@@ -1,0 +1,92 @@
+{{ header }}{{ column_left }}
+<div id="content">
+   <div class="page-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+        <button type="submit" form="form-faq" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-faq">
+          <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general"  data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+            	<div class="row mb-3">
+	                <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+	                <div class="col-sm-10">
+	                  <div class="form-check form-switch form-switch-lg">
+	                    <input type="hidden" name="status" value="0"/>
+	                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+	                  </div>
+	                </div>
+	              </div>
+            	
+              <ul class="nav nav-tabs" id="language">
+                {% for language in languages %}
+                <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image|lower }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+              {% for language in languages %}
+                <div class="tab-pane lan {% if loop.first %} active{% endif %}" id="language-{{ language.language_id }}" lid="{{ language.language_id }}">
+                
+                  <div class="row mb-3 required">
+                      <label for="input-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_question }}</label>
+                      <div class="col-sm-10">
+                       <textarea name="faq_description[{{ language.language_id }}][question]" placeholder="{{ entry_description }}" id="input-question{{ language.language_id }}" class="form-control">{{ faq_description[language.language_id] ? faq_description[language.language_id].question }}</textarea> 
+                       {% if error_question[language.language_id] %}
+                      <div class="text-danger">{{ error_question[language.language_id] }}</div>
+                      {% endif %}
+                      </div>
+                 </div>
+                 
+                 <div class="row mb-3 required">
+                      <label for="input-ansver-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_ansver }}</label>
+                      <div class="col-sm-10">
+                       <textarea name="faq_description[{{ language.language_id }}][ansver]" placeholder="{{ entry_description }}" id="input-ansver{{ language.language_id }}" data-toggle="summernote"  class="form-control">{{ faq_description[language.language_id] ? faq_description[language.language_id].ansver }}</textarea>
+                      {% if error_ansver[language.language_id] %}
+                      <div class="text-danger">{{ error_ansver[language.language_id] }}</div>
+                      {% endif %}
+                      </div>
+                 </div>
+                 <div class="row mb-3">
+	                <label class="col-sm-2 col-form-label">{{ entry_image }}</label>
+	                <div class="col-sm-10">
+	                  <div class="card image">
+	                    <img src="{{ faq_description[language.language_id] ? faq_description[language.language_id].thumb:placeholder }}" alt="" title="" id="thumb-image-{{ language.language_id }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="faq_description[{{ language.language_id }}][image]" value="{{ faq_description[language.language_id] ? faq_description[language.language_id].image  }}" id="input-image-{{ language.language_id }}"/>
+	                    <div class="card-body">
+	                      <button type="button" data-oc-toggle="image" data-oc-target="input-image-{{ language.language_id }}" data-oc-thumb="thumb-image-{{ language.language_id }}" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+	                      <button type="button" data-oc-toggle="clear" data-oc-target="input-image-{{ language.language_id }}" data-oc-thumb="thumb-image-{{ language.language_id }}" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+	                    </div>
+	                  </div>
+	                </div>
+	              </div>
+	              
+                </div>
+                {% endfor %}</div>
+            </div>
+          </div>
+          <input type="hidden" name="faq_id" value="{{ faq_id }}" id="input-faq-id"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>  
+  <script type="text/javascript"><!--
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
+//--></script>
+{{ footer }} 

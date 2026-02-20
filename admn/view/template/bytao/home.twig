@@ -1,0 +1,213 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+        <button type="submit" form="form-home" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a>
+        <span class="ctrl-control-seperator"></span>
+        <button id="tool-image" data-oc-toggle="image" class="btn btn-light"><i class="fa-solid fa-images"></i></button>
+        </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+   <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-home" action="{{ save }}" method="post" enctype="multipart/form-data">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            {% if store_id %}
+            <li class="nav-item"><a href="#tab-setting" data-bs-toggle="tab" class="nav-link">{{ tab_setting }}</a></li>
+            {% endif  %}
+          </ul>
+         <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <ul class="nav nav-tabs" id="language">
+                {% for language in languages %}
+                <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image|lower }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+              	{% for language in languages %}
+                <div class="tab-pane lan {% if loop.first %} active{% endif %}" id="language-{{ language.language_id }}" lid="{{ language.language_id }}">
+                	<div class="row mb-3 required">
+                      <label for="input-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_title }}</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="home_description[{{ language.language_id }}][title]" value="{{ home_description[language.language_id] ? home_description[language.language_id].title }}" placeholder="{{ entry_title }}" id="input-title-{{ language.language_id }}" class="form-control"/>
+                        <div id="error-title-{{ language.language_id }}" class="invalid-feedback"></div>
+                      </div>
+                    </div>
+                	
+                	<div class="row mb-3 required">
+                      <label class="col-sm-2 col-form-label">{{ entry_description }}</label>
+                      <div class="col-sm-10">
+                       {% for languageid , editor in editors %}
+                    	{% if languageid == language.language_id %}
+                       		{{ editor | html_entity_decode }}
+                    	{% endif %}    
+                    {% endfor %}    
+                       <div id="hidden-form" class="hidden"></div>
+                      </div>
+                    </div>
+                  
+                    
+                    <div class="row mb-3">
+									<label class="col-sm-2 col-form-label"> SEO </label>
+									<div class="col-sm-10">
+										<ul class="nav nav-tabs" id="meta">
+											<li class="nav-item">
+												<a href="#tab-meta-title-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link required active">
+													{{ entry_meta_title }}
+													<i class="{{ home_description[language.language_id].meta_title ? 'fa-solid': 'fa-regular' }} fa-circle">
+													</i>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a href="#tab-meta-description-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link">
+													{{ entry_meta_description }}
+													<i class="{{ home_description[language.language_id].meta_description ? 'fa-solid': 'fa-regular' }} fa-circle">
+													</i>
+												</a>
+											</li>
+											<li class="nav-item">
+												<a href="#tab-meta-keyword-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link">
+													{{ entry_meta_keyword }}
+													<i class="{{ home_description[language.language_id].meta_keyword ? 'fa-solid': 'fa-regular' }} fa-circle">
+													</i>
+												</a>
+											</li>
+											
+										</ul>
+										<div class="tab-content">
+											<div class="tab-pane active" id="tab-meta-title-{{ language.language_id }}">
+												<div class="row mb-3">
+													<div>
+														<input type="text" name="home_description[{{ language.language_id }}][meta_title]" value="{{ home_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+														<div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane " id="tab-meta-description-{{ language.language_id }}">
+												<div class="row mb-3">
+													<div class="col-sm-12">
+														<textarea name="home_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ home_description[language.language_id].meta_description }}</textarea>
+													</div>
+												</div>
+											</div>
+											<div class="tab-pane " id="tab-meta-keyword-{{ language.language_id }}">
+												<div class="row mb-3">
+													<div class="col-sm-12">
+														<textarea name="home_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ home_description[language.language_id].meta_keyword }}</textarea>
+													</div>
+												</div>
+											</div>
+											
+
+										</div>
+									</div>
+								</div>
+
+                    
+                    
+                </div>
+                {% endfor %}
+               </div>
+            </div>
+            {% if store_id %}
+          	<div class="tab-pane" id="tab-setting">
+          		 <div class="row mb-3 required">
+                <label for="input-address" class="col-sm-2 col-form-label">{{ entry_address }}</label>
+                <div class="col-sm-10">
+                  <textarea name="config_address" rows="5" placeholder="{{ entry_address }}" id="input-address" class="form-control">{{ config_address }}</textarea>
+                  <div id="error-address" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-geocode" class="col-sm-2 col-form-label">{{ entry_geocode }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_geocode" value="{{ config_geocode }}" placeholder="{{ entry_geocode }}" id="input-geocode" class="form-control"/>
+                  <div class="form-text">{{ help_geocode }}</div>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-email" class="col-sm-2 col-form-label">{{ entry_email }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_email" value="{{ config_email }}" placeholder="{{ entry_email }}" id="input-email" class="form-control"/>
+                  <div id="error-email" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 ">
+                <label for="input-fax" class="col-sm-2 col-form-label">{{ entry_fax }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_telephone" value="{{ config_fax }}" placeholder="{{ entry_fax }}" id="input-fax" class="form-control"/>
+                  <div id="error-fax" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 ">
+                <label for="input-gsm" class="col-sm-2 col-form-label">{{ entry_gsm }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_telephone" value="{{ config_gsm }}" placeholder="{{ entry_gsm }}" id="input-gsm" class="form-control"/>
+                  <div id="error-gsm" class="invalid-feedback"></div>
+                </div>
+              </div>
+              <div class="row mb-3 required">
+                <label for="input-telephone" class="col-sm-2 col-form-label">{{ entry_telephone }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_telephone" value="{{ config_telephone }}" placeholder="{{ entry_telephone }}" id="input-telephone" class="form-control"/>
+                  <div id="error-telephone" class="invalid-feedback"></div>
+                </div>
+              </div>
+          	</div>
+          	{% endif  %}
+          </div>
+        </form>
+     </div>
+    </div>
+  </div>
+ </div> 
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script type="text/javascript" src="view/bytao/js/summernote/summernote.js"></script>
+  <link href="view/bytao/js/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/bytao/js/summernote/summernote-image-attributes.js"></script> 
+  
+  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet"/>
+	<link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet"/>
+	<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+	<script type="text/javascript" src="view/javascript/codemirror/mode/xml.js"></script>
+	<script type="text/javascript" src="view/javascript/codemirror/mode/htmlmixed.js"></script>
+		
+  
+  
+  <script type="text/javascript"><!--
+$(document).ready(function(){
+		$('#input-bottom').click(function(){
+			if($('#input-bottom').prop('checked')){
+				if($('.bottom-position').hasClass('hidden')){
+					$('.bottom-position').removeClass('hidden');
+				}
+			}else{
+				$('.bottom-position').addClass('hidden');
+			}
+		});
+		
+		$('#bottom-position').change(function(){
+			$('#input-bottom').val($(this).val())
+		});
+		
+});
+
+//--></script>
+<!-- editor JS -->
+{{ editJS|html_entity_decode }}
+{{ modals|html_entity_decode  }}
+
+{{ footer }} 

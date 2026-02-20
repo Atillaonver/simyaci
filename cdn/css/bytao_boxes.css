@@ -1,0 +1,110 @@
+#bytao-boxes{
+	
+}
+
+.byRowF{
+	padding: 0px !important;
+	margin: 0px !important;
+}
+.byRowF .col-xs-6, .byRowF .col-sm-6,.byRowF .col-md-6, .byRowF .col-lg-6 ,.byRowF .col-xs-3, .byRowF .col-sm-3,.byRowF .col-md-3, .byRowF .col-lg-3,.byRowF .col-xs-12, .byRowF .col-sm-12,.byRowF .col-md-12, .byRowF .col-lg-12{
+	padding: 0px !important;
+}
+
+.byRowF img {
+	
+}
+.byRowF h2 {
+		color: #fff;
+		font-family: 'Dosis', sans-serif;
+		font-weight: 200; 
+	}
+.byRowF h3 {
+	color: #fff;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200; 
+}
+.byRowF h4 {
+	color: #fff;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 500; 
+	text-align: center;
+}
+
+	
+.byRowF .left-middle{
+	position: absolute;
+  top: 50%;
+  left: 5%;
+  -webkit-transform: translate(-50%, -50%);
+}
+.byRowF .left-top{
+	position: absolute;
+  top: 5%;
+  left: 5%;
+  -webkit-transform: translate(-50%, -50%);
+}
+.byRowF .right-middle{
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  -webkit-transform: translate(-50%, -50%);
+}
+.byRowF .right-top{
+  position: absolute;
+  top: 20%;
+  right: 10%;
+  -webkit-transform: translate(-10%, -10%);
+}
+
+.sayz1{	font-size: 100px;line-height: 100px;}
+.sayz2{	font-size: 75px;line-height: 75px;}
+.sayz3{	font-size: 50px;line-height: 50px;}
+.sayz4{	font-size: 30px;line-height: 30px;}
+.sayz5{	font-size: 20px;line-height: 20px;}
+.sayz6{	font-size: 15px;line-height: 15px;}
+.sayz6{	font-size: 10px;line-height: 10px;}
+
+
+.pLeft-Top { position: absolute; top: 10px; left: 50px;}
+.pLeft-Top h2 {	text-align: start; padding-left: 10px;	}
+
+
+.pCenter-Top{position: absolute; top: 10px; left: 50%;}
+
+.pRight-Top{position: absolute;top: 10px; right: 50px;}
+.pRight-Top h2 {text-align: end;padding-right: 10px;}
+.pRight-Top h3 {text-align: end;padding-right: 10px;}	
+
+
+.pLeft-Midle{ position: absolute; top: 50%; left: 50px;}
+.pLeft-Midle h2 {text-align: start; padding-right: 10px;}
+.pLeft-Midle h3 {text-align: start;padding-right: 10px;}	
+.pLeft-Midle h4 {text-align: start;padding-right: 10px;}	
+
+.pCenter-Midle{	position: absolute;top: 45%;left: 40%;}
+.pCenter-Midle h2 {text-align: center; padding-right: 10px;}
+.pCenter-Midle h3 {text-align: center;padding-right: 10px;}	
+
+.pRight-Midle{position: absolute; top: 50%; right: 50px;font-family: 'Open Sans', sans;color: white;font-size: 23px;}
+.pRight-Midle h2 {text-align: end; padding-right: 10px;}
+.pRight-Midle h3 {text-align: end;padding-right: 10px;}	
+
+
+.pLeft-Bottom{position: absolute; top: 80%; left: 50px;}
+.pCenter-Bottom{position: absolute; top: 80%; left: 50%;}
+.pRight-Bottom{position: absolute; top: 80%; right: 50px;}
+
+
+.byRowF input[type="text"]{
+  color: #212121;
+  border-color: #222;
+  background-color: #fff;
+  position: relative;
+  display: inline-block;
+  width:230px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 10px 15px;
+  border: 1px solidtransparent;
+}

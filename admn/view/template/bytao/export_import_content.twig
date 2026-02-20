@@ -1,0 +1,71 @@
+<!-- EXPORT IMPORT CONTENT  -->
+<div class="card">
+      <div class="card-header"><i class="fa-solid fa-list"></i>{{ params.pcount }} Item/s
+      		
+      </div>
+      <div class="card-body">
+      	<div class="row">
+      		<div class="col-md-2 ">
+      			<div class="form-check form-switch float-end">
+					  <label class="form-check-label" for="CheckAll">Check All</label>
+					  <input class="form-check-input" type="checkbox"  id="CheckAll">
+				</div>
+      		</div>
+      		<div class="col-md-10"></div>
+	      	<div class="col-md-2" id="checkTab">
+	   		{% for key,title in params.titles %}
+	      		{% if key != 'img' %}
+	      		<div class="form-check form-switch">
+				  <input data-cls="{{ key }}" class="form-check-input" type="checkbox" name="check[]" value="{{ title }}" id="Check{{ loop.index }}" {{ loop.index=='2'?'disabled':'' }}>
+				  <label class="form-check-label" for="Check{{ loop.index }}">{{ title }}</label>
+				</div>
+				{% endif %}
+			{% endfor %}
+			</div>
+			<div class="col-md-10 table-responsive" id="dataTab">
+				<table class="table table-bordered">
+	  				<thead class="table-dark">
+	  					<tr>
+	  						{% for key,title in params.titles %}
+	  						<th class="{{ key }}">
+	  						{% if key=='img' %}
+	  						<i class="fa-solid fa-camera"></i>
+	  						{% else %}
+	  						{{ title }}
+	  						{% endif %}
+	  						</th>
+	  						{% endfor %}
+	  					</tr>
+	  				</thead>
+	  				<tbody>
+					{% set striped = false  %}
+					{% for ROW in params.cell %}
+					{% set product_id = ROW['product-id']  %}
+					{% if product_id != ''  %}
+						{% set striped = striped?false:true %}
+					{% endif %}
+						<tr class="{{ striped?'striped':'' }}">
+						{% for key,COL in ROW %}
+						<td class="{{ key }}">
+							{% if key=='img' %}
+								{% if COL=='1' %}
+								<i class="fa-regular fa-folder-open"></i>
+								{% else %}
+								<i class="fa-solid fa-folder"></i>
+								{% endif %}
+							{% else %}
+								{{ COL }}
+							{% endif %}
+						</td>
+						{% endfor %}
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			
+			</div>
+		</div>
+      </div>
+</div>
+
+

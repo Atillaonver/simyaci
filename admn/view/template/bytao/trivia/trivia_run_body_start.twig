@@ -1,0 +1,46 @@
+<div class="start-1 row">
+	<div class="col-md-6 h100 centered">
+		<img src="{{ URL_IMAGE }}{{ session.image }}" class="img-height-responsive"/>
+	</div>
+	<div class="col-md-6 h100 centered prel">
+		{% if trivia %}
+			<div class="baslik next">
+				<img src="{{ trivia }}" alt="trivia" />
+			</div>
+		{% else %}
+			<h1 class="baslik next">
+				TRIVIA
+			</h1>
+		{% endif %}
+		
+		{% if logo %}
+			<div class="logo">
+				<img src="{{ logo }}" alt="logo" />
+			</div>
+		{% endif %}
+		
+		{{ QR ? QR : '' }}
+		
+		{% if sponsor %}
+			<div class="sponsor">
+				<img src="{{ sponsor }}" alt="sponsor" />
+			</div>
+		{% endif %}
+		
+		<div class="web">
+			bugunnelerizledim.com
+		</div>
+
+		<div class="foot bttm row">
+			<div class="col-md-3">
+			</div>
+			<div class="col-md-6 centered counter">
+			</div>
+			<div class="col-md-3">
+				<span class="btn-left by-btn" data-by-toggle="ajax" data-by-href="index.php?route=bytao/trivia|start&user_token={{ user_token ~ '&trivia_id=' ~ trivia_id }}">
+					<i class="arrow arrow-right"></i>					
+				</span>
+			</div>
+		</div>
+	</div>
+</div>

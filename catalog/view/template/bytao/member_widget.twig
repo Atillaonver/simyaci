@@ -1,0 +1,22 @@
+ {% if witems %}
+ <div class="sec_title text-center wow fadeInUp" data-wow-delay="0.3s"
+                style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+	<h2 class="f_p f_size_30 l_height50 f_600 t_color">
+		{{ title }}
+	</h2>
+</div>
+<div class="partner_logo_area_four">
+	<div class="row partner_info">
+		
+		{% for item in witems %}
+
+		<div class="logo_item">
+			<a href="{{ item.url?item.url:'#' }}">
+				<img src="{{ item.image?item.image:placeholder }}" alt="{{ item.title?item.title:'img' }}">
+			</a>
+		</div>
+		{% endfor %}
+
+	</div>
+</div>
+{% endif %}

@@ -1,0 +1,217 @@
+{% set randID = random( 20, 100 ) %}
+
+{% if not sliderParams.show_navigator %}	
+	{% set hide_navigator_after = 0 %}
+{% else %}
+	{% set hide_navigator_after = sliderParams.hide_navigator_after %}	
+{% endif %}	
+
+{% if sliderParams.fullwidth %}	
+	{% set class = sliderParams.fullwidth %}	
+{% else %}
+	{% set class = 'boxed' %}	
+{% endif %}	
+
+{% set fullwidth = 'boxed' %}	
+
+
+<div class="rev_slider_wrapper">
+	<div id="rev_slider" rnd="{{ randID }}" class="rev_slider {{ sliderParams.fullwidth }}banner">
+		<ul>
+		{% for slider in sliders %}
+		
+			{% if slider.params.slider_link %}	
+				{% set link = slider.params.slider_link %}	
+			{% endif %}
+		
+			{% if slider.params.slider_delay %}	
+				{% set sliderDelay = slider.params.slider_delay  %}	
+			{% endif %}
+		
+			<li data-transition="{{ slider.params.slider_transition }}" 
+				data-masterspeed="{{ slider.params.slider_duration }}" 
+				data-fsmasterspeed="{{ slider.params.slider_duration }}"
+				{% if link %} 
+				data-link="{{ slider.params.slider_link }}"	
+				{% endif %}	
+
+				data-delay="{{ slider.params.slider_delay }}"	
+				data-duration="{{ slider.params.slider_delay }}"	
+				data-slotamount="{{ slider.params.slider_slot }}" 
+				data-thumb="{{ slider.thumbnail }}">
+				{% if slider.params.slider_usevideo == youtube or slider.params.slider_usevideo == vimeo  %}
+						{% if slider.params.slider_usevideo == youtube  %}
+							{% set vurl = 'http://www.youtube.com/embed/' ~ slider.params.slider_videoid ~ '/'  %}	
+						{% else %}	
+							{% set vurl = 'http://player.vimeo.com/video/' ~ slider.params.slider_videoid ~ '/'  %}	
+						{% endif %}
+						<div class="caption fade fullscreenvideo" data-autoplay="true" data-x="0" data-y="0" data-speed="500" data-start="10" data-easing="easeOutBack"><iframe src="{{ vurl }}?title=0&amp;byline=0&amp;portrait=0;api=1" width="100%" height="100%"></iframe></div>
+						
+				{% elseif slider.main_image  %}
+					<img src="{{ slider.main_image }}"  alt="" 
+					data-bgposition="center center" 
+					data-bgfit="cover" 
+					data-bgrepeat="no-repeat"
+					data-bgparallax="15" 
+					class="rev-slidebg">
+				{% endif %}
+				
+				{% for layer in slider.layers %}
+					{% set type = layer.layer_type  %}	
+					{% set endeffect = ''  %}	
+					{% set starteffect = ''  %}	
+					
+					{% if layer.layer_start_time %}
+						{% set starteffect = ' data-start="' ~ layer.layer_start_time ~ '" data-startspeed="' ~ layer.layer_startspeed ~ '"'  %}
+						{% if layer.layer_start_easing %}
+							{% set starteffect = starteffect ~ ' data-starteasing="' ~ layer.layer_end_easing ~ '"'  %}
+						{% endif %}	
+					{% endif %}
+					
+					{% if layer.layer_endtime %}
+						{% set endeffect = ' data-end="' ~ layer.layer_endtime ~ '" data-endspeed="' ~ layer.layer_endspeed ~ '"'  %}
+						{% if layer.layer_endeasing %}
+							{% set endeffect = endeffect ~ ' data-endeasing="' ~ layer.layer_endeasing ~ '"'  %}
+						{% endif %}	
+					{% endif %}
+					
+					
+					{% if type == 'text'  %}
+					<div class="by-caption by-resizeme {{ layer.layer_class }}"
+				     data-type="{{ layer.layer_type }}"
+					 data-x="{{ layer.layer_pos_h }}"
+					 data-y="{{ layer.layer_pos_v }}"
+					 data-hoffset="['{{ layer.layer_pos_left }}']"
+	                 data-voffset="['{{ layer.layer_pos_top }}']"
+	                 
+	                 data-width="['{{ layer.layer_pos_width }}']"
+	                 data-height="none"
+				     data-fontsize="['{{ layer.layer_pos_size }}']"
+	                 data-fontweight="['{{ layer.layer_pos_weight }}']"
+	                 data-color="['{{ layer.layer_pos_color }}']"
+	                 data-lineheight="['{{ layer.layer_pos_lheight }}']"
+
+					 data-speed="{{ layer.layer_start_speed }}"
+					 data-start="{{ layer.time_start }}"
+					 data-easing="{{ layer.layer_easing }}"{{ endeffect }} 
+		             data-splitin="none"
+		             data-splitout="none"
+		             data-responsive_offset="on"
+		             data-basealign="slide"
+		             data-elementdelay="0.05"
+	                 data-whitespace="normal"
+				     data-transform_idle="o:1;"
+	                 data-transform_in="x:[105%];z:0;rX:45deg;rY:0deg;rZ:90deg;sX:1;sY:1;skX:0;skY:0;s:{{ layer.layer_start_sppeed?layer.layer_start_speed:'1000' }};e:{{ layer.layer_start_easing?layer.layer_start_easing:'nothing' }};"
+        			 data-transform_out="y:[100%];s:{{ layer.layer_end_sppeed?layer.layer_end_speed:'1000' }};e:{{ layer.layer_end_easing?layer.layer_end_easing:'nothing' }};s:{{ layer.layer_end_sppeed?layer.layer_end_speed:'1000' }};e:{{ layer.layer_end_easing?layer.layer_end_easing:'nothing' }};"
+        			 {% if layer.layer_link_status %}
+        			 data-actions='[{"event": "click","action": "simplelink","{{ layer.layer_link_target }}": "_self","url": "{{ layer.layer_link }}"}]'
+        			 {% endif %}            
+        			 data-frames='[{"delay": 500, "speed": 300, "from": "opacity: 0", "to": "opacity: 1"},{"delay": "wait", "speed": 300, "to": "opacity: 0"}]'
+				     >{{ layer.layer_caption|html_entity_decode }}</div>
+					
+					{% elseif type == 'image'  %}
+					<div class="by-caption by-resizeme {{ layer.layer_class }}"
+				     data-type="{{ layer.layer_type }}"
+					 data-x="{{ layer.layer_pos_v }}"
+					 data-y="{{ layer.layer_pos_h }}"
+					 data-hoffset="['{{ layer.layer_pos_left }}']"
+	                 data-voffset="['{{ layer.layer_pos_top }}']"
+	                 data-width="['{{ layer.layer_pos_width }}']"
+	                 data-height="auto"
+	                 {% if layer.layer_link_status %}
+        			 data-actions='[{"event": "click","action": "simplelink","{{ layer.layer_link_target }}": "_self","url": "{{ layer.layer_link }}"}]'
+        			 {% endif %} 
+	                 data-frames='[{"delay": 500, "speed": 300, "from": "opacity: 0", "to": "opacity: 1"},{"delay": "wait", "speed": 300, "to": "opacity: 0"}]'
+				><img src="{{ url }}image/{{ layer.layer_image }}" alt=""></div>
+					
+					{% elseif type == 'video'  %}
+					<div class="by-caption by-resizeme by-videolayer {{ layer.layer_class }}"
+ 				     data-type="video"
+				     data-ytid="{{ layer.layer_video_id }}"
+				     data-videowidth="1270"
+				     data-videoheight="720"
+				     data-autoplay="off"
+				     data-videocontrols="controls"
+				     data-nextslideatend="true"
+				     data-forcerewind="on"
+				     data-videoloop="loopandnoslidestop"
+				     data-videoattributes="version=3&enablejsapi=1&html5=1&hd=1&wmode=opaque&showinfo=0&rel=0&origin=http://192.168.0.5;"
+				     data-type="{{ layer.layer_type }}"
+					 data-x="{{ layer.layer_pos_h }}"
+					 data-y="{{ layer.layer_pos_v }}"
+					 data-hoffset="['{{ layer.layer_pos_left }}']"
+	                 data-voffset="['{{ layer.layer_pos_top }}']"
+	                 data-width="['{{ layer.layer_pos_width }}']"
+	                 data-height="auto"
+				     data-basealign="slide"
+				     data-frames='[{"delay": 500, "speed": 300, "from": "opacity: 0", "to": "opacity: 1"},{"delay": "wait", "speed": 300, "to": "opacity: 0"}]'
+				     >
+					<div>
+					{% endif %}
+				{% endfor %}
+				
+			</li>	
+		{% endfor %}
+		</ul>	
+	</div>
+</div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {	
+	if (typeof $.fn.revolution !== 'undefined') {
+	      $("#rev_slider").revolution({
+	        sliderType:"standard",
+			sliderLayout:"{{ sliderParams.fullwidth }}",
+			dottedOverlay:"none",
+			delay:{{ sliderParams.delay }},
+			navigation: {
+				  keyboardNavigation:"off",
+				  keyboard_direction: "horizontal",
+				  onHoverStop:"{% if sliderParams.stop_on_hover %}on{% else %}off {% endif %}",
+				  touch:{
+				    touchenabled:"on",
+				    swipe_threshold: 75,
+				    swipe_min_touches: 1,
+				    swipe_direction: "horizontal",
+				    drag_block_vertical: true
+				  }
+			},
+			viewPort: {
+				  enable:true,
+				  outof:"pause",
+				  visible_area:"100%"
+			},
+			//responsiveLevels:[2048,1750,1192],
+			//gridwidth:[1180,1180,980],
+			//gridheight:[550],
+			responsiveLevels: [1240, 1024, 778, 480, 375],
+			gridwidth:[2048, 1024, 778, 480],
+			gridheight:[1180, 768, 960, 720],
+			visibilityLevels:[1240, 1024, 1024, 480, 375],
+
+			lazyType:"none",
+			shadow:0,
+			spinner:"off",
+			stopLoop:"on",
+			stopAfterLoops:0,
+			shuffle:"{% if sliderParams.shuffle_mode %}on{% else %}off {% endif %}",
+			autoHeight:"on",
+			fullScreenAlignForce:"off",
+			fullScreenOffsetContainer: "",
+			fullScreenOffset: "",
+			disableProgressBar:"on",
+			hideThumbsOnMobile:"off",
+			hideSliderAtLimit:0,
+			hideCaptionAtLimit:0,
+			hideAllCaptionAtLilmit:0,
+			debugMode:false,
+			fallbacks: {
+				  simplifyAll:"off",
+				  nextSlideOnWindowFocus:"off",
+				  disableFocusListener:false,
+			}
+	      });
+    }
+  });
+			</script>

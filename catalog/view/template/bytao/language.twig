@@ -1,0 +1,17 @@
+{% if languages|length > 1 %}
+<li class="lang">
+	{% for language in languages %}
+		{% if code == language.code %}
+        <a href="#"  title="{{ language.name }}">{{ language.scode }}</a>
+        {% endif %}
+      {% endfor %}
+	
+	<ul>
+      {% for language in languages %}
+      	{% if not code == language.code %}
+        <li><a href="{{ language.href }}" title="{{ language.name }}">{{ language.scode }}</a></li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+</li>
+{% endif %}

@@ -1,0 +1,210 @@
+<div style="width: 680px;">
+	<div style="text-align:center;width:100%;">
+		{% if store_url %}
+		<a href="{{ store_url }}" title="{{ store }}">
+			<img src="{{ logo }}" alt="{{ store }}" style="margin:auto;margin-bottom: 20px; border: none;height:70px;width:auto;"/>
+		</a>
+		{% endif %}
+	</div>
+	
+	<p style="margin-top: 0px; margin-bottom: 20px;">
+		Dear Customer,
+		<br>
+		<br>
+		Thank you for placing your order with
+		<a href="{{ store_url }}" target="_blank">
+			{{ store }}
+		</a>. Your order is now being processed. You can check your order status from the following link.<br>
+	</p>
+	<p style="margin-top: 0px; margin-bottom: 20px;">
+		{{ text_link }}
+	</p>
+	<p style="margin-top: 0px; margin-bottom: 20px;">
+		<a href="{{ link }}">
+			{{ link }}
+		</a>
+	</p>
+	<br><br>
+	<p style="margin-top: 0px; margin-bottom: 20px;">
+		An additional email will be sent with your tracking information when your order is shipped. If you have any questions please email us at
+		<a href="mailto:service@astonleather.com" target="_blank">
+			service@astonleather.com
+		</a>. To contact us about your order, please call 1-888-278-6611 or send us an email.
+		<br><br>Sincerely,<br>Aston Customer Service<br>
+	</p>
+	<table style="width: 100%;">
+		<tr>
+			<th colspan="2" style="text-align: center;">
+				{{ text_order_detail }}
+			</th>
+		</tr>
+
+		<tr>
+			<td>
+				<b>
+					{{ text_order_id }}
+				</b> {{ order_id }}
+				<br/>
+				<b>
+					{{ text_order_key }}
+				</b> {{ order_key}}
+				<br/>
+				<b>
+					{{ text_date_added }}
+				</b> {{ date_added }}
+				<br/>
+				<b>
+					{{ text_payment_method }}
+				</b> {{ payment_method }}
+				<br/>
+				<b>
+					{{ text_shipping_method }}
+				</b> {{ shipping_method }}
+			</td>
+			<td>
+				<b>
+					{{ text_email }}
+				</b>{{ email }}
+				<br/>
+				<b>
+					{{ text_telephone }}
+				</b>{{ telephone }}
+				<br/>
+				<b>
+					{{ text_ip }}
+				</b>{{ ip }}
+				<br/>
+				<b>
+					{{ text_order_status }}
+				</b>{{ order_status }}
+				<br/>
+			</td>
+		</tr>
+
+		{% if comment %}
+		<tr>
+			<td colspan="2">
+				{{ text_instruction }}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				{{ comment }}
+			</td>
+		</tr>
+		{% endif %}
+		<tr>
+			<td>
+				{{ text_payment_address }}
+			</td>
+			<td>
+				{{ text_shipping_address }}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{ payment_address }}
+			</td>
+			<td>
+				{{ shipping_address }}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<table style="border-collapse: collapse; width: 100%; border-top: 1px solid #DDDDDD; border-left: 1px solid #DDDDDD; margin-bottom: 20px;">
+					<thead>
+						<tr>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">
+								{{ text_product }}
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: left; padding: 7px; color: #222222;">
+								{{ text_model }}
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: right; padding: 7px; color: #222222;">
+								{{ text_quantity }}
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: right; padding: 7px; color: #222222;">
+								{{ text_price }}
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; background-color: #EFEFEF; font-weight: bold; text-align: right; padding: 7px; color: #222222;">
+								{{ text_total }}
+							</td>
+						</tr>
+					</thead>
+					<tbody>
+						{% for product in products %}
+						<tr>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+								<img src="{{ product.thumb }}" alt="{{ product.name }}" />
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+								{{ product.name }}
+								{% for option in product.option %}
+								<br/>
+								&nbsp;
+								<small>
+									- {{ option.name }}: {{ option.value }}
+								</small>{% endfor %}
+							</td>
+							<td style="font-size: 12px; border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+								{{ product.model }}
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								{{ product.quantity }}
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								{{ product.price }}
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								{{ product.total }}
+							</td>
+						</tr>
+						{% endfor %}
+						{% for voucher in vouchers %}
+						<tr>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+								{{ voucher.description }}
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: left; padding: 7px;">
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								1
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								{{ voucher.amount }}
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								{{ voucher.amount }}
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						{% for total in totals %}
+						<tr>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;" colspan="5">
+								<b>
+									{{ total.title }}:
+								</b>
+							</td>
+							<td style="font-size: 12px;	border-right: 1px solid #DDDDDD; border-bottom: 1px solid #DDDDDD; text-align: right; padding: 7px;">
+								{{ total.text }}
+							</td>
+						</tr>
+						{% endfor %}
+					</tfoot>
+				</table>
+
+
+
+			</td>
+		</tr>
+
+
+	</table>
+
+	<p style="margin-top: 0px; margin-bottom: 20px;">
+	</p>
+</div>

@@ -1,0 +1,456 @@
+{{ header }}
+<section class="breadcrumb parallax margbot30">
+</section>
+<section class="tovar_details padbot70">
+	<div class="container">
+		<div class="row">
+			<div id="sidebar" class="col-lg-3 hidden-sm hidden-md padbot50">
+				{{ column_left }}
+			</div>
+			<div class="col-lg-9 col-md-12  col-sm-12 tovar_details_wrapper clearfix">
+
+				<div class="clearfix padbot40 " id="product">
+					<div class="tovar_view_title hidden-lg hidden-md hidden-sm hidden-xs">
+						{{ heading_title }}
+					</div>
+					<div class="tovar_view_fotos clearfix">
+						<div id="gallery_01f" class="thumbs">
+							{% if thumb or images %}
+								{% if thumb %}
+								<div id="zoomdiv" class="">
+									<img id="zoom_03f" src="{{ thumb }}" data-zoom-image="{{ popup }}"  alt="{{ heading_title }}" />
+								</div>
+								{% endif %}
+
+							{% if images %}
+								{% for image in images %}
+										{% if color == image.color_id %}
+										<a href="#" class="elevatezoom-gallery {% if not loop.first %} active{% endif %}" data-update="" data-image="{{ image.thumb }}" data-zoom-image="{{ image.popup }}">
+											<img src="{{ image.thumb }}" alt="{{ heading_title }}">
+										</a>
+										{% endif %}
+								<a href="{{ image.popup }}" title="{{ heading_title }}">
+									<img src="{{ image.thumb }}" title="{{ heading_title }}" alt="{{ heading_title }}" class="img-thumbnail"/>
+								</a>&nbsp;
+								{% endfor %}
+							{% endif %}
+						</div>
+						<script>
+							$(document).ready(function ()
+								{
+									var width = $(window).width(), height = $(window).height();
+									if (width < 320)
+									{
+										$("#zoom_03f").elevateZoom({zoomType: 'inner',responsive:true, containLensZoom: true, gallery:'gallery_01f', cursor: 'pointer', galleryActiveClass: 'active'});
+
+									} else
+									{
+										$("#zoom_03f").elevateZoom({responsive:true, zoomType: 'inner',zoomWindowWidth:380,zoomWindowHeight:380	, containLensZoom: true, gallery:'gallery_01f', cursor: 'pointer', galleryActiveClass: 'active'});
+									}
+									$("#zoom_03f").bind("click", function(e) { var ez = $('#zoom_03f').data('elevateZoom');	$.fancybox(ez.getGalleryList()); return false; });
+								});
+						</script>
+						<div class="tovar_view_description">
+							<div class="tovar_view_title">
+								{{ heading_title }}
+							</div>
+							<div class="clearfix tovar_brend_price">
+								<div class="clearfix tovar_brend_price">
+									<div class="tovar_view_price">
+										<div class="row">
+											<div class="col-lg-7 col-md-7 col-sm-7">
+												<span class="product-price-market">
+													RETAIL PRICE:
+													<span>
+														{{ our_price}}
+													</span>
+												</span>
+												{% if not special %}
+													<span class="product-price-special">
+														OUR PRICE:
+														<span>
+															{{ price }}
+														</span>
+													</span>
+
+												{% else %}
+													<span class="product-price-old">
+														OUR PRICE:
+														<span>
+															{{ price }}
+														</span>
+													</span>
+													<span class="product-price-new">
+														{{ sale?'SALE  PRICE:' }} {{ clearance?'CLEARANCE' }}
+														<span>
+															{{ special }}
+														</span>
+													</span>
+												{% endif %}
+
+												{% if points %}
+													{{ text_points }} {{ points }}
+												{% endif %}
+												
+												{% if discounts %}
+													{% for discount in discounts %}
+														{{ discount.quantity }}{{ text_discount }}{{ discount.price }}
+													{% endfor %}
+												{% endif %}
+											</div>
+											<div class="col-lg-2 col-md-2 hidden-sm">
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-5">
+												{% if newarriwals %}
+												<span class="itype label_new">
+												</span>
+												{% endif %}
+												{% if clearance %}
+												<span class="itype label_clearance">
+												</span>
+												{% endif %}
+												{% if sale %}
+												<span class="itype label_sale">
+												</span>
+												{% endif %}
+												{% if best %}
+												<span class="itype">
+												</span>
+												{% endif %}
+												{% if gift %}
+												<span class="itype">
+												</span>
+												{% endif %}
+												{% if sdiscount %}
+												<span class="isale">
+													{{ sdiscount }}
+												</span>
+												{% endif %}
+											</div>
+
+										</div>
+
+
+									</div>
+								</div>
+								{% if description %}
+								<p class="">
+									{{ description }}
+								</p>
+								{% else %}
+								<p class="">
+									{{ heading_title }}
+								</p>
+								{% endif %}
+
+								{% if description_alt %}
+								<p class="">
+									{{ description_alt }}
+								</p>
+								{% endif %}
+
+								{% if bullets %}
+								<ul class="">
+									{% for bullet in bullets %}
+									{% if bullet|trim  %}
+									<li>
+										{{ bullet }}
+									</li>
+									{% endif %}
+									{% endfor %}
+								</ul>
+								{% endif %}
+								<form id="form-product">
+									<div class="tovar_color_select selectcolor">
+										<p>
+											Select color
+										</p>
+										{% if options %}
+										{% for option in options %}
+										{% if option.type == 'radio' %}
+										<input type="hidden" name="option[{{ option.product_option_id }}]" id="colorsel" value="{{ color }}" />
+										{% for option_value in option.product_option_value %}
+										<div class="activeclrs">
+											<a class="{{ color==option_value.option_value_id?'active' }}" value="{{ option_value.product_option_value_id }}" href="javascript:void(0);">
+												{% if option_value.min %}
+												<img src="{{ option_value.min }}" alt="{{ option_value.name }}"/>
+												{% endif %}
+												{% if images[option_value.option_value_id]  %}
+												<img src="{{ images[option_value.option_value_id][0].mini }}" alt="{{ option_value.name }}"/>
+												{% endif %}
+											</a>{{ option_value.name }}
+											{% if option_value.price %}
+											({{ option_value.price_prefix }}{{ option_value.price }})
+											{% endif %}
+										</div>
+										{% endfor %}
+										<div id="error-option-{{ option.product_option_id }}" class="invalid-feedback">
+										</div>
+										{% endif %}
+										{% endfor %}
+										{% endif %}
+									</div>
+									<div class="clearfix">
+									</div>
+									<div class="tovar_size_select selectsize">
+										<div class="clearfix">
+											{% if xSize %}
+											<p class="pull-left">
+												Select SIZE
+											</p>
+											{% endif %}
+											<a class="lather-information" href="{{ measurement }}>" title="Size Chart">
+												How to measure!
+											</a>
+											<span>
+												{% if size_chart_id %}
+												<a class="lather-information" href="{{ size_chart_id }}" title="Size Chart">
+													Size Chart
+												</a>
+												{% endif %}
+											</span>
+										</div>
+
+
+										{% if options %}
+											{% for option in options %}
+												{% if option.type == 'select' %}
+													<input type="hidden" name="option[{{ option.product_option_id }}]" id="sizefit" value="{{ size }}" />
+													{% for option_value in option.product_option_value %}
+														<a class="sizeclss size{{ option_value.name}} {{ size and size==option_value.product_option_value_id ? 'active' }}" value="{{ option_value.product_option_value_id }}" href="javascript:void(0);" >
+															{{ option_value.name }}
+														</a>
+
+														{% if option_value.price %}
+															({{ option_value.price_prefix }}{{ option_value.price }})
+														{% endif %}
+													{% endfor %}
+													<div id="error-option-{{ option.product_option_id }}" class="invalid-feedback"></div>
+												{% endif %}
+											{% endfor %}
+										{% endif %}
+										
+										
+									</div>
+									<div class="tovar_view_btn">
+										<select class="basic" name="quantity" id="quantity">
+											<option
+												value="1" {{ (quantity and quantity == '1') ? 'selected="selected"' }}>1
+											</option>
+											<option
+												value="2" {{ (quantity and quantity == '2') ? 'selected="selected"' }}>2
+											</option>
+											<option
+												value="3" {{ (quantity and quantity == '3') ? 'selected="selected"' }}>3
+											</option>
+											<option
+												value="4" {{ (quantity and quantity == '4') ? 'selected="selected"' }}>4
+											</option>
+											<option
+												value="5" {{ (quantity and quantity == '5') ? 'selected="selected"' }}>5
+											</option>
+											<option
+												value="6" {{ (quantity and quantity == '6') ? 'selected="selected"' }}>6
+											</option>
+											<option
+												value="7" {{ (quantity and quantity == '7') ? 'selected="selected"' }}>7
+											</option>
+										</select>
+										<button class="add_lovelist" type="submit" formaction="{{ add_to_wishlist }}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_wishlist }}">
+											<i class="fa-solid fa-heart">
+											</i>
+										</button>
+										<button class="add_bag" type="submit" formaction="{{ add_to_cart}}" data-bs-toggle="tooltip" class="btn btn-light" title="{{ button_cart }}">
+											<i class="fa-solid fa-arrow-right-arrow-left">
+											</i>Add to bag
+										</button>
+									</div>
+									<input type="hidden" name="product_id" value="{{ product_id }}"/>
+								</form>
+							</div>
+
+							<div class="tovar_shared clearfix">
+								<p>
+									Share item with friends
+								</p>
+								<div class="addthis_toolbox addthis_default_style">
+									<a href="https://www.addthis.com/bookmark.php?v=250&amp;username=xa-4bff782568a14e48" class="addthis_button_compact at300m">
+										<span class="at-icon-wrapper">
+											<i class="fa fa-share-alt-square">
+											</i>
+										</span>
+									</a>
+
+									<a class="addthis_button_facebook at300b" title="Facebook" href="#">
+										<span class="at-icon-wrapper">
+											<i class="fa fa-facebook">
+											</i>
+										</span>
+									</a>
+									<a class="addthis_button_google at300b" target="_blank" title="Google Bookmark" href="#">
+										<span class="at-icon-wrapper" >
+											<i class="fa fa-google-plus">
+											</i>
+										</span>
+									</a>
+									<a class="addthis_button_tumblr at300b" target="_blank" title="tumblr" href="#">
+										<span class="at-icon-wrapper" >
+											<i class="fa fa-tumblr">
+											</i>
+										</span>
+									</a>
+									<a class="addthis_button_linkedin at300b" target="_blank" title="linkedin" href="#">
+										<span class="at-icon-wrapper" >
+											<i class="fa fa-linkedin">
+											</i>
+										</span>
+									</a>
+									<a class="addthis_button_twitter at300b" title="Tweet" href="#">
+										<span class="at-icon-wrapper" >
+											<i class="fa fa-twitter">
+											</i>
+										</span>
+									</a>
+									<div class="atclear">
+									</div>
+								</div>
+								<script type="text/javascript" src="https://s7.addthis.com/js/250/addthis_widget.js#username=xa-4bff782568a14e48">
+								</script>
+							</div>
+						</div>
+
+						<div class="tovar_information">
+							<ul class="tabs clearfix">
+								<li class="nav-item">
+									<a href="#tab-description" data-bs-toggle="tab" class="nav-link active">
+										{{ tab_description }}
+									</a>
+								</li>
+								{% if attribute_groups %}
+								<li class="nav-item">
+									<a href="#tab-specification" data-bs-toggle="tab" class="nav-link">
+										{{ tab_attribute }}
+									</a>
+								</li>
+								{% endif %}
+								{% if review_status %}
+								<li class="nav-item">
+									<a href="#tab-review" data-bs-toggle="tab" class="nav-link">
+										{{ tab_review }}
+									</a>
+								</li>
+								{% endif %}
+							</ul>
+							<div class="tab-content">
+
+								<div id="tab-description" class="tab-pane fade show active mb-4">
+									{{ description }}
+								</div>
+								{% if attribute_groups %}
+								<div id="tab-specification" class="tab-pane fade">
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											{% for attribute_group in attribute_groups %}
+											<thead>
+												<tr>
+													<td colspan="2">
+														<strong>
+															{{ attribute_group.name }}
+														</strong>
+													</td>
+												</tr>
+											</thead>
+											<tbody>
+												{% for attribute in attribute_group.attribute %}
+												<tr>
+													<td>
+														{{ attribute.name }}
+													</td>
+													<td>
+														{{ attribute.text }}
+													</td>
+												</tr>
+												{% endfor %}
+											</tbody>
+											{% endfor %}
+										</table>
+									</div>
+								</div>
+								{% endif %}
+								{% if review_status %}
+								<div id="tab-review" class="tab-pane fade mb-4">
+									{{ review }}
+								</div>
+								{% endif %}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="new_arrivals padbot50">
+	<div class="container">
+		<h2>
+			new arrivals
+		</h2>
+		<div class="jcarousel-wrapper">
+			<div class="jCarousel_pagination">
+				<a href="javascript:void(0);" class="jcarousel-control-prev" >
+					<i class="fa fa-angle-left">
+					</i>
+				</a>
+				<a href="javascript:void(0);" class="jcarousel-control-next" >
+					<i class="fa fa-angle-right">
+					</i>
+				</a>
+			</div>
+
+			<div class="jcarousel">
+				<ul>
+					{% if products %}
+						{% for product in products %}
+						<div class="col">
+							{{ product }}
+						</div>
+						{% endfor %}
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
+
+{% if tags %}
+<p>
+	{{ text_tags }}
+	{% for i in 0..(tags|length - 1) %}
+	<a href="{{ tags[i].href }}">
+		{{ tags[i].tag }}
+	</a>{% if not loop.end %},{% endif %}
+	{% endfor %}
+</p>
+{% endif %}
+
+<script type="text/javascript"><!--
+$(".lather-information").click(function()
+	{
+		$.fancybox.open(
+			{
+				href : $(this).attr('href'),
+				type : 'iframe',
+				padding: 0,
+				width	: 900,
+				height	: 495
+			});
+	});
+
+move = function(urlHref)
+{
+	location = urlHref+'&quantity='+$('#quantity').val()+'&size='+$('#sizefit').val();
+};
+
+//--></script>
+{{ footer }}

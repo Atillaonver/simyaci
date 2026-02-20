@@ -1,0 +1,88 @@
+
+
+<form id="form-module" action="{{ save }}" method="post" data-oc-toggle="ajax" data-oc-target="newsletter-container" data-oc-load="{{ back }}">
+<input type="hidden" name="module[newsletter_module_id]" id="newsletter_module_id" value="{{ newsletter_module_id?newsletter_module_id : 0 }}"/>
+<div class="row">
+	<div class="col-lg-2 mb-3">
+		<ul class="nav nav-pills nav-stacked nav-modules">
+			{% if extensions %}
+				{% for extension in extensions  %}
+					<li {{ extension.newsletter_module_id == newsletter_module_id ? 'class="active"'  }}><a href="{{ extension.href }}" data-target="#newsletter-container" data-oc-toggle="ajax"><i class="fa fa-minus-circle"></i> {{ extension.name }}</a></li>
+				{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+	<div class="col-lg-10">
+		<div class="clearfix">
+			<button type="submit" form="form-module" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+			
+			{% if newsletter_module_id %}
+			<a onclick="confirm('Are you sure?') ? location.href='{{ delete }}' : false;" data-bs-toggle="tooltip" title="{{ text_delete_module }}" class="btn btn-danger" data-original-title="Delete"><i class="fa-regular fa-trash-can"></i></a>
+			 <a href="{{ back }}" data-target="#newsletter-container" data-oc-toggle="ajax" data-bs-toggle="tooltip" title="{{ text_clear_form }}" class="btn btn-default" ><i class="fa-regular fa-file"></i></a>
+			{% endif %}
+		</div>
+		<hr>
+		<div class="tab-content" id="tab-content-newsletter">
+			<div class="tab-pane active" id="tab-module-newsletter">
+				<div class="row mb-3">
+	                <label class="col-sm-2 col-form-label">{{ entry_status }}</label>
+	                <div class="col-sm-10">
+	                  <div class="form-check form-switch form-switch-lg">
+	                    <input type="hidden" name="module[status]" value="0"/>
+	                    <input type="checkbox" name="module[status]" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+	                  </div>
+	                </div>
+	            </div>
+				<div class="row mb-3">
+	                <label class="col-sm-2 col-form-label">{{ entry_module_name }}</label>
+	                <div class="col-sm-10">
+	                	<input class="form-control" type="text" placeholder="{{ entry_module_name }}" value="{{ name }}" name="module[name]" />
+	                </div>
+	            </div>
+	            <div class="row mb-3">
+	                <label class="col-sm-2 col-form-label">{{ text_display_mode }}</label>
+	                <div class="col-sm-10">
+	                	<select name="module[display_mode]" class="form-control">
+							{% for key, val in modes  %}
+							<option {{ display_mode == key ? 'selected="selected"' }} value="{{ key }}">{{ val }}</option>
+							{% endfor  %}
+						</select>
+	                </div>
+	            </div>
+				<ul class="nav nav-tabs">
+	                {% for language in languages %}
+	                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+	                {% endfor %}
+	            </ul>
+				<div class="tab-content">
+                {% for language in languages %}
+	                <div id="language-{{ language.language_id }}"  class="tab-pane{% if loop.first %} active{% endif %}">
+	                  	<div class="row mb-3">
+	                      <label for="description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+	                      <div class="col-sm-10">
+	                        <textarea id="description-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" name="module_description[{{ language.language_id }}][description]" class="form-control">{{ description[language.language_id]['description'] }}</textarea>
+	                        
+	                      </div>
+	                    </div>
+						<div class="row mb-3">
+		                      <label for="social-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_social_icon }}</label>
+		                      <div class="col-sm-10">
+		                        <textarea id="social-{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" name="module_description[{{ language.language_id }}][social]"  class="form-control">{{ description[language.language_id]['social'] }}</textarea>
+								<span class="help">{{ about_entry_social_icon }}</span>
+		                        
+		                      </div>
+		                </div>
+					</div>
+				{% endfor  %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+				
+<script type="text/javascript"><!--
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
+//--></script>

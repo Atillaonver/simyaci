@@ -1,0 +1,51 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end" id="top-buttons"><a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+				<button type="submit" form="form-prod" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<ul class="nav nav-tabs" id="prod-manage">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            {% if user==1 %}
+            <li class="nav-item"><a href="#tab-settings" data-bs-toggle="tab" class="nav-link">{{ tab_settings }}</a></li>
+            {% endif %}
+        </ul>    
+        <div class="tab-content">
+            <div id="tab-general" class="tab-pane card active">
+				<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+				<div id="prod" class="card-body">{{ list }}</div>
+			</div>
+			{% if user==1 %}
+			<div id="tab-settings" class="tab-pane card">
+				<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_setting }}</div>
+				<div id="settings" class="card-body">{{ setting }}</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+<script type="text/javascript"><!--
+$('#prod').on('click', 'thead a, .pagination a', function (e) {
+    e.preventDefault();
+    $('#prod').load(this.href);
+});
+$('#prod-manage').on('click', 'a', function (e) {
+    if($(this).attr('href')=='#tab-general'){
+    	$('#top-buttons').removeClass('hidden');
+    }else{
+    	if(!$('#top-buttons').hasClass('hidden')){$('#top-buttons').addClass('hidden')}
+    }
+});
+//--></script>
+{{ footer }}

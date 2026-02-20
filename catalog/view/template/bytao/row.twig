@@ -1,0 +1,8 @@
+
+<div class="block {{ ROW.row_class ? ROW.row_class : '' }}" {{ ROW.image?' data-image="' ~ HTTPS_IMAGE ~ ROW.image ~ '"':'' }} id="{{ ROW.row_tag_id ? ROW.row_tag_id : 'row'~ROW.row_ind }}" >
+	{% if ROW.row_data['has_container'] %}<div class="{{ ROW.cr }}">{% endif %}
+	
+	{{ ROW.row_content }}
+	
+	{% if ROW.row_data['has_container'] %}</div>{% endif %}
+</div>

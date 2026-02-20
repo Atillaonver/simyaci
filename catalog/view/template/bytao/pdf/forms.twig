@@ -1,0 +1,70 @@
+{% if formData %}
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody>
+    <tr>
+      <td align="left" valign="top">
+        {% if (store['config_logo']) %}
+          <a href="{{ order['store_url'] }}">
+            <img alt="" src="{{ store['config_logo'] }}" />
+          </a>
+        {% endif %}
+        {% if (store['config_title']) %}
+          <div><a href="{{ order['store_url'] }}"><b>{{ store['config_title'] }}</b></a></div>
+        {% endif %}
+        <br />
+        {{ dateAdded }}
+      </td>
+      <td align="right" valign="top">
+      	{{ title }}<br />
+        <b style="font-size: 120%;">{% if (order['store_url']) %}<a href="{{ order['store_url'] }}" style="text-decoration:none; color:#000000" target="_blank">{{ store['config_name'] }}</a>{% else %}{{ store['config_name'] }}{% endif %}</b>
+        
+        {% if (store['config_email']) %}
+          <br /><a href="mailto:{{ store['config_email'] }}" style="text-decoration:none; color:#000000" target="_blank">{{ store['config_email'] }}</a>
+        {% endif %}
+      </td>
+    </tr>
+    </tbody>
+  </table>	
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <tbody>
+    <tr>
+    <td>
+      {% for key,FORMDATA in formData %}
+	      	{% if FORMDATA.type=='1' %}
+	      		<h2>{{ FORMDATA.content ? FORMDATA.content|html_entity_decode :'' }}</h2>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='2' %}
+	      		<p>{{ FORMDATA.content ? FORMDATA.content|html_entity_decode :''  }}</p>
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='3' %}
+		      	
+	                {{ FORMDATA.data_label|html_entity_decode }}:{{ formValue[FORMDATA.data_name]|html_entity_decode }}<br />
+	            
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='4' %}
+		      	
+	                {{ FORMDATA.data_label|html_entity_decode }}:{{ formValue[FORMDATA.data_name]|html_entity_decode }}<br />
+	            
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='5' %}
+		      	
+	                {{ FORMDATA.data_label|html_entity_decode }}:{{ formValue[FORMDATA.data_name]|html_entity_decode }}<br />
+	            
+	      	{% endif %}
+	      	
+	      	{% if FORMDATA.type=='6' %}
+		      	{{ FORMDATA.data_label|html_entity_decode }}:{{ formValue[FORMDATA.data_name]|html_entity_decode }}<br />
+	      	{% endif %}
+      {% endfor %}
+     
+ </td>
+    </tr>
+    </tbody>
+  </table>	
+<br />
+{% endif %}
+ 

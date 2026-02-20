@@ -1,0 +1,100 @@
+{% if iGroups|length > 0 %}
+<style>
+.productsort li {height: 178px;}
+#sortDiv {height: 453px;}
+span.not{font-size: 10px;font-weight: lighter;}
+</style>
+
+<ul class="nav nav-tabs">
+	{% for iGroup in iGroups %}
+            <li><a href="#tab-group-{{ iGroup.id }}" data-toggle="tab">{{ iGroup.title }}</a></li>
+    {% endfor %}       
+</ul>
+
+<div class="tab-content">
+	{% for iGroup in iGroups %}
+	<div class="tab-pane" id="tab-group-{{ iGroup.id }}">
+	<form method="post" id="ajaxform{{ iGroup.id }}" class="form-horizontal ajaxform">
+		<div id="sortDiv" class="sortDiv">
+		<input type="hidden" name="{{ iGroup.name }}" id="{{ iGroup.id }}" value="{{ iGroup.id }}" />
+		{% set items = iGroup.items %}
+		{% if items|length > 0 %}
+	               	<ol id="itemsort{{ iGroup.id }}" class='itemsort'>
+	               	{% for item in items %}
+	                	 <li id="{{ item.item_id }}">
+	                	 	<div class="">
+	                	 		<div class="">
+	                	 			<span class="sort-span-move pull-left">
+	                	 				<i class="fa fa-arrows-alt" title="Drag Drop"></i>
+	                	 			</span>
+	                	 			{% if item.status %}
+		                	 			<span class="sort-span-dot pull-right green"><i class="fa fa-circle" title="Enabled"></i></span>
+		                	 		{% else %}
+		                	 			<span class="sort-span-dot pull-right red"><i class="fa fa-circle" title="Disabled"></i></span>
+		                	 		{% endif %}
+	                	 		</div>
+	                	 	</div>
+	                	 	<div >
+	                	 		<div class="pull-left">
+	                	 			{% if item.image %}
+				                    <img src="{{ item.image }}" alt="" title="{{ item.title }}" class="img-thumbnail" />
+				                    {% endif %}
+	                	 		</div>
+	                	 	</div>
+	                	 	<div>
+	                	 		<div class="pull-left">
+	                	 			{{ item.title }}
+	                	 		</div>
+	                	 	</div>
+	                   </li>
+	                 	{% endfor %}
+	                 </ol>
+	                {% endif %}
+	        
+		</div>     
+	</form>
+    </div>
+	{% endfor %}
+</div>
+
+<script>
+$(document).ready(function(){
+{% for iGroup in iGroups %}
+	var group{{ iGroup.id }} = $("#productsort{{ iGroup.id }}").sortable({
+			group{{ iGroup.id }} : 'limited_drop_targets',
+			handle: 'i.fa-arrows-alt',
+			containment: 'parent',
+			appendTo: 'parent',
+			scroll: true,
+			helper: 'clone',
+			revert: true,
+			tolerance: 10,
+			distance: 10,
+		  	onDragStart:function ($item, container, _super, event) {
+			  $("li").removeClass('moved');
+			  if(!container.options.drop)
+		      $item.clone().insertAfter($item);
+		    _super($item, container);
+			},
+			update: function( event, ui ) {
+				sortedIDs = $("#itemsort{{ iGroup.id }}").sortable( "toArray" );
+				$('.close').hide();
+				$('.process').show();
+				$.ajax({
+					url: 'index.php?route=bytao/product/sortorder&user_token={{ user_token }}&serial='+sortedIDs+'&cat_id={{ iGroup.id }}',
+					dataType: 'json',			
+					success: function(json) {
+						$('.close').show();
+						$('.process').hide();
+					}
+				});
+			},
+			serialize: function (parent, children, isContainer) 		{
+				return isContainer ? children.join() : parent.attr('id');
+				}
+		});
+		$(group{{ iGroup.id }}).disableSelection();
+{% endfor %}
+});
+</script> 
+{% endif %}

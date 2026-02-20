@@ -1,0 +1,608 @@
+{{ header }}{{ column_left }}
+<div id="content">
+<div class="page-header">
+	<div class="container-fluid">
+		<div class="pull-right">
+			{#<button type="submit" form="form-static_page" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+			<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div> #}
+		<h1>{{ heading_title }}</h1>
+		
+	</div>
+</div>
+<div class="container-fluid">
+	{% if error_warning %}
+	<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
+	{% endif %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">{{ text_form }}</h3>
+		</div>
+		<div class="panel-body">
+			<div class="tab-content">
+				<div class="tab-pane active" id="manage-menus">
+					
+					<ul class="nav nav-tabs" id="menuGroups">
+						{% for menu_group in menu_groups %}
+						<li class="nav-item"><a href="#tab-group{{ menu_group }}" data-bs-toggle="tab" class="nav-link gmember{% if loop.first %} active{% endif %}" tab="{{ menu_group }}" > <i class="fa fa-minus-circle btnDelTab" tab="{{ menu_group }}"></i> Menu {{ menu_group }}</a></li>
+						{% endfor %}
+						
+						<li  class="addMenuGroup nav-item"><a href="javascript:void(0);" data-bs-toggle="tab" class="nav-link"> <i class="fa fa-plus-circle"></i> </a></li>
+						
+					</ul>
+					
+				</div>
+			</div>
+			<div class="row">
+				<div id="treeside" class="col-md-4"></div>
+				<div id="formside" class="col-md-8"></div>
+       			
+			</div>
+		</div>
+	</div>
+</div>
+  
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">{{ text_preview_on_live_site }}</h4>
+			</div>
+			<div class="modal-body">
+         	
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ text_close }}</button>
+			</div>
+		</div> 
+	</div> 
+</div>
+
+<div id="cmodal" class="modal">
+	<div id="widgetmanager" class="modal-dialog modal-lg">
+		<div class="modal-content">
+			  <div class="modal-header">
+			    <h5 class="modal-title">{{ message_delete_category }}</h5>
+			    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			  </div>
+			  <div class="modal-body"></div>
+			  <div class="modal-footer">
+			  	<input id="menuid" type="hidden" name="menuid" value="0"/>
+	    		<button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>
+				<button type="button" class="btn btn-primary" id="btnDeleteTree">{{ button_remove }}</button>
+			  </div>
+			</div>
+		</div>
+</div>
+
+
+<div id="dmodal" class="modal fade deleteMenu-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				{{ message_delete }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>
+				<button type="button" class="btn btn-primary" id="btnDeleteMenu">{{ button_remove }}</button>
+			</div>
+			<input class="menu-id" type="hidden" name="menuid" value="0"/>
+		</div>
+	</div>
+</div>
+  
+  
+<script type="text/javascript"><!--
+	$(document).on('click','.quickedit', function(e) {
+			e.preventDefault();
+	 
+			formId = $(this).parents('form').attr('id');
+			$(".treeContainer li.active").removeClass('active');
+			$(this).parent().parent().addClass('active');
+	
+			$.ajax({
+					url: 'index.php?route=bytao/menu.getmenu&user_token={{ user_token }}&mid='+$(this).attr('rel'),
+					type: "POST",
+       
+					success:function(data, textStatus, jqXHR) 
+					{
+						
+						if(data['menu']){
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].menu_id);
+							$("#menuform").find("[name=\'new\']").val(data['menu'].menu_group_id);
+							$("#menuform").find("[name=\'menu[menu_id]\']").val(data['menu'].menu_id);
+							$("#menuform").find("[name=\'menu[menu_group_id]\']").val(data['menu'].menu_group_id);
+							$("#menuform").find("[name=\'menu[badges]\']").val(data['menu'].badges);
+							$("#menuform").find("[name=\'menu[colums]\']").val(data['menu'].colums);
+							$("#menuform").find("[name=\'menu[content_text]\']").val(data['menu'].content_text);
+							$("#menuform").find("[name=\'menu[image]\']").val(data['menu'].image);
+
+							if(data['menu'].is_content){
+								$("#menuform").find("[name=\'menu[is_content]\']").prop("checked", true )
+							}else{
+								$("#menuform").find("[name=\'menu[is_content]\']").prop("checked", false )
+							}
+							if(data['menu'].is_group){
+								$("#menuform").find("[name=\'menu[is_group]\']").prop("checked", true )
+							}else{
+								$("#menuform").find("[name=\'menu[is_group]\']").prop("checked", false )
+							}
+							
+							$("#menuform").find("[name=\'menu[menu_class]\']").val(data['menu'].menu_class);
+							
+							$("#menuform").find("[name=\'menu[parent_class]\']").val(data['menu'].parent_class);
+							
+							$("#menuform").find("[name=\'menu[parent_id]\']").val(data['menu'].parent_id);
+							
+							$("#menuform").find("[name=\'menu[published]\']").val(data['menu'].published)
+							/*if(data['menu'].published){
+								$("#menuform").find("[name=\'menu[published]\']").prop("checked", true )
+							}else{
+								$("#menuform").find("[name=\'menu[published]\']").prop("checked", false )
+							}*/
+							$("#menuform").find("[name=\'menu[show_title]\']").val(data['menu'].show_title)
+							/*if(data['menu'].show_title){
+								$("#menuform").find("[name=\'menu[show_title]\']").prop("checked", true )
+							}else{
+								$("#menuform").find("[name=\'menu[show_title]\']").prop("checked", false )
+							}*/
+							
+							$("#menuform").find("[name=\'menu[submenu_colum_width]\']").val(data['menu'].submenu_colum_width);
+							$("#menuform").find("[name=\'menu[submenu_colum_height]\']").val(data['menu'].submenu_colum_height);
+							$("#menuform").find("[name=\'menu[submenu_content]\']").val(data['menu'].submenu_content);
+							$("#menuform").find("[name=\'menu[type]\']").val(data['menu'].type);
+							$("#menuform").find("[name=\'menu[login]\']").val(data['menu'].login);
+							$("#menuform").find("[name=\'menu[type_submenu]\']").val(data['menu'].type_submenu);
+							$("#menuform").find("[name=\'path\']").val(data['menu']["menu-category"]);
+							
+							$("#menuform").find("[name=\'menu-information\']").val(data['menu']["menu-information"]);
+							$("#menuform").find("[name=\'menu-page\']").val(data['menu']["menu-page"]);
+							$("#menuform").find("[name=\'menu-page-group\']").val(data['menu']["menu-page-group"]);
+							$("#menuform").find("[name=\'menu-manufacturer\']").val(data['menu']["menu-manufacturer"]);
+							$("#menuform").find("[name=\'menu-product\']").val(data['menu']["menu-product"]);
+							$("#menuform").find("[name=\'menu-controller\']").val(data['menu']["menu-controller"]);
+							$("#menuform").find("[name=\'item\']").val(data['menu']["item"]);
+							
+							
+							{% for language in languages %}
+							$("#menuform").find("#urlLang{{ language.language_id }}").val(data['menu'].urlLang{{ language.language_id }});
+							{% endfor %}
+							$("#menuform").find("[name=\'menu[widget_id]\']").val(data['menu'].widget_id);
+							/*$("#menuform").find("[name=\'menu_id\']").val(data['menu'].colum_width);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].column_width);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].item);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].left);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].level);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].level_depth);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].menu_id);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].position);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].position_type);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].privacy);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].right);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].show_sub);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].status);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].submenu_width);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].target);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].description);
+							$("#menuform").find("[name=\'menu_id\']").val(data['menu'].width);*/
+							
+							
+							$(".menutype").addClass('hidden')
+							$("#menutype-"+ $("#menutype").val()).removeClass('hidden')
+							$("#menutype").trigger('change');
+						}
+		  
+						if(data['menu_description']){
+							{% for language in languages %}
+							$('#menuform [name=\'menu_description[{{ language.language_id }}][title]\']').val(data['menu_description'][{{ language.language_id }}].title);
+							$('#menuform [name=\'menu_description[{{ language.language_id }}][description]\']').val(data['menu_description'][{{ language.language_id }}].description);
+							{% endfor %}
+							$("#menuform #language a:first").tab('show');
+
+						}
+						
+						if(data['menus']){
+							$("#menuform").find('#menu-pos').html(data['menus']);
+						}
+						if(data['no_image']){
+		  	
+						}
+						if(data['thumb']){
+		  	
+						}
+						if(data['mId']){
+							$("#menuform").find('#menuID').html(' ID: '+data['mId']);
+						}
+						
+          
+					}
+				});
+		});
+	
+	$(document).on('click','#btnCancel', function(e) {
+			e.preventDefault();
+			$("#menuform").trigger("reset");
+			$("[name=\'menu[menu_group_id]\']").val($('#menuGroups > .active > a').attr('tab'));
+			$("[name=\'menu[menu_id]\'").val(0);
+	  		$(".treeContainer li.active").removeClass("active");
+	  		formReset();
+	  		
+	
+			
+		});
+
+	$(document).on('click', '.btnDelTab',function(e) {
+			e.preventDefault();
+	
+			tabN = $(this).attr('tab');
+			
+			$('.deleteMenu-modal-sm').modal('toggle');
+
+		});
+
+	$(document).on('click','.quickdel', function(e) {
+			$('#cmodal .modal-body').html( "{{ message_delete }}" );
+			$('#cmodal').modal('show');
+			var id = $(this).attr("rel").replace("id_","");
+			$("#menuid").attr('pform',$(this).parents('form').attr('nform'));
+			$("#menuid").val(id);
+		});
+
+	$(document).on('click','#btnDeleteTree', function(e) {
+
+			var id = $("#menuid").val();
+			
+			$.ajax({
+					url: 'index.php?route=bytao/menu.deletemenu&user_token={{ user_token }}&id='+id,
+					dataType: 'json',			
+					success: function(json) {
+						if(json['warning']){
+							alert(json['warning']);
+						}
+					
+						if(json['success']){
+							$('#list_'+id).remove();
+						}
+						
+						$('#cmodal').modal('hide');
+					
+					}
+				});
+		
+		});
+
+	$(document).on('click','#btnDeleteMenu', function(e) {
+			menuId = $('.deleteMenu-modal-sm .menu-id').val();
+			menuGroupId = $('#manage-menus > ul >li.active > a').attr('tab');
+			if($('ol.sortable li').length>0){
+				$.ajax({
+					url: 'index.php?route=bytao/menu.deletemenu&user_token={{ user_token }}&mid='+menuId+'&mgid='+menuGroupId,
+					dataType: 'json',			
+					success: function(json) {
+						if(json['success']){
+							$('[tab=\''+json['mid']+'\']').parent().remove();
+							$('#tab-menu'+denMenuId).remove();
+							$('#manage-menus > ul a:first').tab('show');
+							$('.deleteMenu-modal-sm').modal('hide');
+						}
+					}
+				});
+				
+			}else{
+				$('[tab=\''+json['mid']+'\']').parent().remove();
+				$('#manage-menus > ul a:first').tab('show');
+				$('#manage-menus > ul a:first').trigger('click');
+			}
+			
+			
+			
+		
+		});
+
+	$(document).on('click','#btnSave', function(e) {
+			e.preventDefault();
+			
+			parentName =   $(this).parents('form').attr('id');
+			uLang='';
+			$('.url-lang').each(function(){
+					uLang+= $(this).data('lang')+':'+$(this).val()+',';
+				});
+	
+			$('#menu-url').val(uLang);
+	
+	
+			var postData = $("#"+parentName).serializeArray();
+ 
+    
+			$.ajax({
+					url: 'index.php?route=bytao/menu.addnewmenu&user_token={{ user_token }}',
+					type: "POST",
+					data : postData,
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['tree']){
+							$('#treeside .treeContainer').html(data['tree']);
+							
+							$("ol.sortable").nestedSortable({
+									forcePlaceholderSize: true,
+									handle: 'div',
+									helper:	'clone',
+									items: 'li',
+									opacity: .6,
+									placeholder: 'placeholder',
+									revert: 250,
+									tabSize: 25,
+									tolerance: 'pointer',
+									toleranceElement: '> div',
+									maxLevels: 4,
+
+									isTree: true,
+									expandOnHover: 700,
+									startCollapsed: true
+								});
+								
+						}
+						
+						if(data['parent']){
+							/*$('[name=\'menu[parent_id]\']').find('option').remove();
+							$('[name=\'menu[parent_id]\']').html(data['parent']);
+							*/
+							$('[name=\'menu[parent_id]\']').remove();
+							$('#menu-pos').html(data['parent']);
+							$('[name=\'menu[parent_id]\']').val("0").change();
+							
+							$(".treeContainer li.active").removeClass('active');
+						}
+						
+						$("#menuform").trigger("reset");
+						formReset();
+					}
+				});
+
+		});
+
+	//-->
+</script>
+
+<script type="text/javascript"><!--//
+var ActiveTab 
+$(document).on('click','.gmember', function (e) {
+		e.preventDefault();
+		var taby = $(this).attr("tab"); 
+		if(ActiveTab != taby){
+			ActiveTab = taby;
+			
+			$.ajax({
+				url: 'index.php?route=bytao/menu.loadmenugroup&user_token={{ user_token }}&t='+ActiveTab,
+				dataType: 'json',			
+				success: function(json) {
+					if(json['tree']){
+						$('#treeside').html(json['tree']);
+						$("ol.sortable").nestedSortable({
+								forcePlaceholderSize: true,
+								handle: 'div',
+								helper:	'clone',
+								items: 'li',
+								opacity: .6,
+								placeholder: 'placeholder',
+								revert: 250,
+								tabSize: 25,
+								tolerance: 'pointer',
+								toleranceElement: '> div',
+								maxLevels: 4,
+
+								isTree: true,
+								expandOnHover: 700,
+								startCollapsed: true
+							});
+					}
+					
+					if(json['form']){
+						$('#formside').html(json['form']);
+					}
+				}
+			});
+		}
+	  
+	 
+	});
+	
+$(document).ready(function(){
+	
+	ActiveTab = $('#menuGroups a:first').attr('tab');
+	$('#manage-menus > ul a:first').trigger('click');
+	
+	$.ajax({
+		url: 'index.php?route=bytao/menu.loadmenugroup&user_token={{ user_token }}&t='+ActiveTab,
+		dataType: 'json',			
+		success: function(json) {
+			if(json['tree']){
+				$('#treeside').html(json['tree']);
+				$("ol.sortable").nestedSortable({
+						forcePlaceholderSize: true,
+						handle: 'div',
+						helper:	'clone',
+						items: 'li',
+						opacity: .6,
+						placeholder: 'placeholder',
+						revert: 250,
+						tabSize: 25,
+						tolerance: 'pointer',
+						toleranceElement: '> div',
+						maxLevels: 4,
+
+						isTree: true,
+						expandOnHover: 700,
+						startCollapsed: true
+					});
+			}
+			
+			if(json['form']){
+				$('#formside').html(json['form']);
+			}
+		}
+	});
+	
+	$("#menuform #megamenu-type_submenu").change( function(){} );
+			
+});
+
+	//-->
+</script>
+
+
+<script type="text/javascript"><!--
+
+	$('.addMenuGroup').click(function(){
+		
+			$.ajax({
+				async : false,
+				type: 'POST',
+				dataType:'json',
+				url: 'index.php?route=bytao/menu.getMenuGroupOrder&user_token={{ user_token }}',
+				success : function (json) {
+					if(json['menu_group_id']){
+						$('#manage-menus > ul > li.addMenuGroup a').removeClass('active');
+						$('#manage-menus > ul > li.addMenuGroup').before('<li class="nav-item"><a href="#tab-group'+ json['menu_group_id'] +'" data-bs-toggle="tab" tab="'+ json['menu_group_id'] +'" class="nav-link gmember active"><i class="fa fa-minus-circle btnDelTab" tab="'+ json['menu_group_id'] +'" data-target=".deleteMenu-modal-sm"></i> Menu '+ json['menu_group_id'] +'</li>');
+		
+						//$('#manage-menus > ul a[href=\'#tab-menu' + json['menu_group_id'] + '\']').tab('show');
+						$('a[tab="' + json['menu_group_id'] + '"]').trigger('click');
+			
+					}
+					
+					
+				}
+				});
+			
+		});
+
+	//-->
+</script>
+
+<script type="text/javascript"><!--	
+
+	$('body').delegate('#serialize, .btn-updatetree','click', function(e) {
+			var tid = $('#menuGroups a:first').attr('tab');
+			var serialized = $('ol.sortable').nestedSortable('serialize');
+			$.ajax({
+					async : false,
+					type: 'POST',
+					dataType:'json',
+					url: 'index.php?route=bytao/menu.updatetree&user_token={{ user_token }}&menu_group_id='+tid,
+					data : serialized, 
+					success : function (r) {
+				
+				
+						if ($('#msg-tree').length > 0 ) {
+							$("#page-content").remove('#msg-tree');
+						} else {
+							var html = "<div id='msg-tree' class='alert alert-success'><i class='fa fa-check-circle'></i>{{ text_success_update_tree }}<button type='button' class='close' data-dismiss='alert'>×</button></div>";
+							$("#ajaxloading").before(html);
+							//Scroll up
+					
+						}
+						if(r['parent']){
+							$('#menuform [name=\'menu[parent_id]\']').remove();
+							$('#menu-pos').html(r['parent']);
+						}
+						
+					}
+		   		
+			
+				});
+		});
+
+	//-->
+</script>
+
+<script type="text/javascript"><!--	
+function formReset(){
+	$('#menuID').html(' {{ text_new }} ');
+	$('#menuform [name=\'menu[colums]\']').val('1');
+	$("#menuform .menutype").addClass('hidden');
+	$("#menuform #menutype-"+ $("#menutype").val()).removeClass('hidden');;
+	$("#menutype").trigger('change');
+}
+	
+	
+	
+	$("#menutype").change( function(){
+			$("#menuform .menutype").addClass('hidden');
+			$("#menuform #menutype-"+$(this).val()).removeClass('hidden');
+	} );
+
+	//-->
+</script>
+
+<script type="text/javascript"><!--
+	
+	
+	$('#menus').bind('change', function () {
+			url = 'index.php?route=bytao/menu&user_token={{ user_token }}';
+			var sid = $('#pavstores').val();
+			var mid = $(this).val();
+			if (mid) {
+				url += '&menu_id=' + encodeURIComponent(mid)+'&store_id=' + encodeURIComponent(sid);
+			}
+			window.location = url;
+		});
+
+
+	// Cookies tab
+	$('#grouptabs a').click( function(){
+			$.cookie("menuactived_tab", $(this).attr("href") );
+		});
+
+	if($.cookie("menuactived_tab") !="undefined"){
+		$('#grouptabs a').each( function(){
+				if( $(this).attr("href") ==  $.cookie("menuactived_tab")){
+					$(this).click();
+					return ;
+				}
+			});
+	}
+
+	// Modal Link guide
+	$("#btn-guide").click( function(){
+			$('#myModal .modal-dialog').css('width',980);
+			var a = $( '<span class="glyphicon glyphicon-refresh"></span><iframe frameborder="0" scrolling="no" src="'+$(this).attr('href')+'" style="width:100%;height:900px; display:none"/>'  );
+			$('#myModal .modal-body').html( a );
+			
+			$('#myModal').modal();
+			$('#myModal').attr('rel', $(this).attr('rel') );
+			$(a).load( function(){  
+					$('#myModal .modal-body .glyphicon-refresh').hide();
+					$('#myModal .modal-body iframe').show();
+				} );
+			return false;
+		});
+
+	// Modal Create widget
+	$(".btn-modal").click( function(){ 
+			$('#myModal .modal-dialog').css('width',980);
+			var a = $( '<span class="glyphicon glyphicon-refresh"></span><iframe frameborder="0" scrolling="no" src="'+$(this).attr('href')+'" style="width:100%;height:900px; display:none"/>'  );
+			$('#myModal .modal-body').html( a );
+			
+			$('#myModal').modal( );
+			$('#myModal').attr('rel', $(this).attr('rel') );
+			$(a).load( function(){  
+					$('#myModal .modal-body .glyphicon-refresh').hide();
+					$('#myModal .modal-body iframe').show();
+				});
+
+			return false;
+		});
+	
+	$('#myModal').on('hidden.bs.modal', function () { 
+			if( $(this).attr('rel') == 'refresh-page' ){
+				window.parent.location.reload();
+			}
+		});
+
+	//-->
+</script>
+   
+</div>
+{{ footer }} 

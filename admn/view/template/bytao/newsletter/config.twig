@@ -1,0 +1,126 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+	<div id="page-content" class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		
+		{% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
+			</div>
+			<div class="panel-body" >
+				<div class="row mb-3" >
+
+				<div class="col-sm-3">
+					{{ toolbar }}
+				</div>
+
+				<div class="col-sm-9">
+					<div class="heading">
+						<h3>{{ entry_mail_settings }}</h1>
+					</div>
+					<div class="toolbar">{{ action_bar }}</div>
+
+
+					<div class="content">
+						<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
+							<table class="table"> 
+								<tr>
+									<td class="col-sm-4">{{ entry_use_custom_email_config }}</td>
+									<td class="col-sm-8">
+										{# $checked = (isset($general['custom_email_config']) && $general['custom_email_config'] == 1)?'checked="checked"':''; #}
+										<select class="form-control" style="width:35%" name="bytaonewsletter_config[custom_email_config]">
+											{% if general.custom_email_config %}
+											<option value="1" selected="selected">{{ text_yes }}</option>
+											<option value="0">{{ text_no }}</option>
+											{% else %}
+											<option value="1">{{ text_yes }}</option>
+											<option value="0" selected="selected">{{ text_no }}</option>
+											{% endif %}
+										</select>
+									</td>
+								</tr>
+				
+								<tr>
+									<td class="col-sm-4">{{ entry_mail_protocal }}</td>
+									<td class="col-sm-8">
+										<select class="form-control" style="width:35%" name="bytaonewsletter_config[protocal]">
+											{% if mail_protocals %}
+												{% for key, val in mail_protocals %}
+													{% if general.protocal and key == general.protocal %}
+													<option value="{{ key }}" selected="selected">{{ val }}</option>
+													{% else %}
+													<option value="{{ key }}">{{ val }}</option>
+													{% endif %}
+												{% endfor %}
+											{% endif %}
+													
+										</select><br/>
+										<p>{{ help_mail_protocal }}</p>
+									</td>
+								</tr>
+								<tr>
+									<td class="col-sm-4">{{ entry_mail_address }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:55%" type="text" name="bytaonewsletter_config[email]" value="{{ general.email }}"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="col-sm-4">{{ entry_smtp_host }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:55%" type="text" name="bytaonewsletter_config[smtp_host]" value="{{ general.smtp_host }}"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="col-sm-4">{{ entry_smtp_username }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:55%" type="text" name="bytaonewsletter_config[smtp_username]" value="{{ general.smtp_username }}"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="col-sm-4">{{ entry_smtp_password }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:55%" type="text" name="bytaonewsletter_config[smtp_password]" value="{{ general.smtp_password }}"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="col-sm-4">{{ entry_smtp_port }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:55%" type="text" name="bytaonewsletter_config[smtp_port]" value="{{ general.smtp_port }}"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="col-sm-4">{{ entry_smtp_timeout }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:55%" type="text" name="bytaonewsletter_config[smtp_timeout]" placeholder="5" value="{{ general.smtp_timeout }}"/>
+									</td>
+								</tr>
+					
+								<tr>
+									<td class="col-sm-4">{{ entry_retries_count }}</td>
+									<td class="col-sm-8">
+										<input class="form-control" style="width:15%" type="text" name="bytaonewsletter_config[retries_count]" placeholder="3" value="{{ general.retries_count }}"/>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

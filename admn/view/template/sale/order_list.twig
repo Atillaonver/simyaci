@@ -1,0 +1,142 @@
+<form id="form-order" method="post" enctype="application/x-www-form-urlencoded" data-load="{{ action }}">
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+      	{% if filter_all %}
+      	<tr>
+      		<th class="text-end" colspan="16">{{ results }}</th>
+      	</tr>
+      	{% endif %}
+        <tr>
+          <td class="text-center" style="width: 1px;"><input type="checkbox" onclick="$('input[name*=\'selected\']').trigger('click');" class="form-check-input"/></td>
+          <td class="text-start" style="width: 10px;"><a href="{{ sort_customer_group_id }}"{% if sort == 'o.customer_group_id' %} class="{{ order|lower }}"{% endif %}>{{ column_customer_group }}</a></td>
+          <td class="text-center" data-bs-toggle="tooltip" title="Coupon" ><i class="fa-regular fa-envelope"></i></td>
+          <td class="text-end"><a href="{{ sort_order }}"{% if sort == 'o.order_key' %} class="{{ order|lower }}"{% endif %}>{{ column_order_id }}</a></td>
+          
+          <td class="text-start d-none d-lg-table-cell"><a href="{{ sort_date_added }}"{% if sort == 'o.date_added' %} class="{{ order|lower }}"{% endif %}>{{ column_date_added }}</a></td>
+          <td class="text-start">{{ column_risk }}</td>
+          <td class="text-start"><a href="{{ sort_customer }}"{% if sort == 'customer' %} class="{{ order|lower }}"{% endif %}>{{ column_customer }}</a></td>
+          <td class="text-start"><a href="{{ sort_status }}"{% if sort == 'order_status' %} class="{{ order|lower }}"{% endif %}>{{ column_status }}</a></td>
+          <td class="text-end"><a href="{{ sort_total }}"{% if sort == 'o.total' %} class="{{ order|lower }}"{% endif %}>{{ column_total }}</a></td>
+          <td class="text-end d-none d-lg-table-cell">{{ column_tax }}</td>
+          <td class="text-end d-none d-lg-table-cell">{{ column_cargo }}</td>
+          <td class="text-center"><a href="{{ sort_payment_method }}"{% if sort == 'o.payment_method' %} class="{{ order|lower }}"{% endif %}>{{ column_payment_method }}</a></td>
+          <td class="text-center">{{ column_device }}</td>
+          <td class="text-center d-none d-lg-table-cell">{{ column_from }}</td>
+          <td class="text-center d-none d-lg-table-cell">{{ column_key }}</td>
+          
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if orders %}
+          {% for order in orders %}
+            <tr class="{{ order.risk>4 and order.risk<20? 'risky' }}{{ order.risk>20? 'xrisky' }}">
+            <td class="text-center"><input type="checkbox" name="selected[]" value="{{ order.order_id }}" class="form-check-input"/>
+                <input type="hidden" name="shipping_method[]" value="{% if order.shipping_method %}1{{ else }}0{% endif %}"/></td>
+              <td class="text-start group">
+              		{% if order.customer_group_id ==2 %}
+                	<i class="fa-solid fa-shop" title="Corporate/Retailer"></i>
+                	{% elseif order.customer_group_id == 1 and order.customer_id > 0 %}
+                	<i class="fa-solid fa-user-tag" title="User/Retail"></i>
+                	{% else %}
+                	<i class="fa-solid fa-person-circle-question" title="Guest Shoper"></i>
+                	{% endif %}
+              </td>
+              
+              <td class="text-center"><a href="{{ order.modal }}" data-oc-toggle="ajax-modal" data-bs-toggle="tooltip" title="{{ order.mail?'Coupon Sended':'Send a Coupon' }}" class="btn btn-default"><i class="{{ order.mail?'fa-solid fa-envelope-circle-check':'fa-regular fa-envelope' }}"></i></a>
+              </td>
+              
+              
+              <td class="text-end">{{ order.order_key?order.order_key:order.order_id }}</td>
+              
+              <td class="text-start d-none d-lg-table-cell">{{ order.date_added }}</td>
+              <td class="text-start risk {{ order.risk<4? 'good' }}{{ order.risk>4 and order.risk<20? 'risky' }}{{ order.risk>20? 'xrisky' }}">{{ order.risk }}</td>
+              <td class="text-start">{{ order.customer }}</td>
+              <td class="text-start"><label>{{ order.order_status }}</label></td>
+              <td class="text-end">{{ order.total }}</td>
+              <td class="text-end d-none d-lg-table-cell">{{ order.tax }}</td>
+              <td class="text-end d-none d-lg-table-cell">{{ order.cargo }}</td>
+              <td class="text-center paymen-method">
+              
+              {% if order.payment_method['code'] %}
+              		
+              		{% if order.payment_method['code'] == 'corp.corp' %}
+              			<i class="fa-solid fa-money-check" title="RETAILER CREDIT"></i>
+              		{% endif %}
+              		
+              		{% if order.payment_method['code'] == 'pp_express.pp_express' %}
+              			<i class="fa-brands fa-cc-paypal" title="PayPal Website Payment"></i>
+              		{% endif %}
+              		
+              		{% if order.payment_method['code'] == 'authorizenet_aim.authorizenet_aim' %}
+              			<i class="fa-regular fa-credit-card" title="Authorize.Net"></i>
+              		{% endif %}
+              				
+              		{% if order.payment_method['code'] == 'bank_transfer.bank_transfer' %}
+              			<i class="fa-solid fa-money-bill-transfer"></i>
+              		{% endif %}	
+              		
+              {% else %}
+	              	{% if order.payment_code == 'authorizenet_aim' %}
+	                  	<i class="fa-regular fa-credit-card" title="Authorize.Net"></i>
+	                {% elseif order.payment_code == 'pp_express' %}
+	                  	<i class="fa-brands fa-cc-paypal" title="PayPal Website Payment"></i>
+	                {% elseif order.payment_method == 'corp' %}
+	                  	<i class="fa-solid fa-money-check" title="RETAILER CREDIT"></i>
+	                {% elseif order.payment_method == '' %}
+	                  	<i class="fa-solid fa-money-check" title="RETAILER CREDIT"></i>
+	                {% endif %}	
+              {% endif %}
+              
+              	
+              </td>
+              <td class="text-center device">
+              	{% if order.device == '1' %}
+              	<i class="fa-solid fa-computer" title="DESKTOP"></i>
+              	{% elseif order.device == '2' %}
+              	<i class="fa-solid fa-mobile-screen" title="MOBILE"></i>
+              	{% elseif order.device == '3' %}
+              	<i class="fa-solid fa-tablet-button" title="TABLET"></i>
+              	{% else %}
+              	<i class="fa-solid fa-circle-question" title="UNKNOWN"></i>
+              	{% endif %}
+              </td>
+              <td class="text-center d-none d-lg-table-cell">{{ order.request_url }}</td>
+              <td class="text-center d-none d-lg-table-cell">{{ order.request_key }}</td>
+
+              <td class="text-end">
+              	<div class="btn-group">
+                    <a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-primary"><i class="fa-solid fa-eye"></i></a>
+                    {#
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"><i class="fa-solid fa-caret-down"></i></button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                    {%  if order.customer %}
+                  	<a href="{{ product.variant }}" data-bs-toggle="modal"  class="dropdown-item"><i class="fa-regular fa-envelope"></i></a>
+                  	{%  endif %}
+                    </div> #}
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          <tr>
+            <th class="text-end" colspan="8"><strong>{{ column_total }}</strong></th>
+            <td class="text-center">{{ total_total }}</td>
+            <td class="text-center d-none d-lg-table-cell">{{ total_tax }}</td>
+            <td class="text-center d-none d-lg-table-cell">{{ total_cargo }}</td>
+            <td class="text-right" colspan="5"></td>
+          </tr>
+          
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="10">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 text-start">{{ pagination }}</div>
+    <div class="col-sm-6 text-end">{{ results }}</div>
+  </div>
+</form>

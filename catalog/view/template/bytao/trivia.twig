@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{%  if icon %}
+<link href="{{ icon }}" rel="icon" />
+{%  endif %}
+
+<script src="cdn/js/trivia/jquery-1.12.4.min.js" type="text/javascript"></script>
+<link href="cdn/css/trivia/library/bootstrap.min.css" rel="stylesheet">
+<link href="cdn/css/trivia/trivia.css?v53" rel="stylesheet">
+<script>
+	var onl;
+	var onAir;
+	var onAirTime =1500;
+	var allWait = false;
+	var q = {{ quest ? quest : 0 }};
+	var ansQ = {{ ansq ? ansq : 0 }};
+	var sess = '{{ sess ? sess : 0 }}';
+	var sM = '{{ mail }}';
+	var sId = {{ session_id }};
+	var cId = {{ client_id }};
+	var tvId = {{ trivia_id }};
+	var qTime = {{ time ? time :0 }};
+	var crr;
+	var tCount=0;
+	var tCnt;
+</script>
+<script src="cdn/js/trivia/trivia.js?v16" type="text/javascript"></script>
+<style>
+	body {               
+  overscroll-behavior: contain;
+}
+</style>
+</head>
+<body class="bytao-trivia-home">
+	<div id="page">
+	<div class="row">
+	<div class="loged-container">
+		<div class="tri-header">
+			<table width="100%" height="100%">
+				<tr>
+					<td align="center" valign="middle"><img src="{{ HTTP_IMAGE }}{{ trivia }}" title="{{ name }}" alt="{{ name }}" /></td>
+				</tr>
+			</table>
+		</div>
+		<div class="tri-body qu wait">
+			<div class="q-container">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 red-color border-red boxed"><span> yarışmacı no</span></div>
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 red-back boxed"><span id="so">{{ so? so : '' }}</span></div>
+			</div>
+			<div class="opts">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 opt" data-opt="a"><div>A</div></div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 opt" data-opt="b"><div>B</div></div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 opt" data-opt="c"><div>C</div></div>
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 opt" data-opt="d"><div>D</div></div>
+				</div>
+			</div>
+			<div class="row ">
+				<div id="ans" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 red-color boxed border-red"><span> CEVAP <span>{{ ansq and (ansq not = '0') ? ansq : '' }}</span>  </span></div>
+				<div id="sndr" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 boxed red-back"><span> GÖNDER </span></div>
+			</div>
+			</div>
+		</div>
+		<div id="result"></div>
+		<div class="tri-footer centered">
+			<table width="100%" height="100%">
+				<tr>
+					<td align="center" valign="middle"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" /></td>
+				</tr>
+			</table>
+			
+		</div>
+	</div>	
+	</div>
+<script>
+	$(document).ready(function(){
+		
+		$('.opt').on('click',function(){
+			if(!$('.tri-body').hasClass('wait')){
+				$('.opt').removeClass('active');
+				$(this).addClass('active');
+			}
+		});
+		
+		$('#sndr').on('click',function(){
+			if(!$('.tri-body').hasClass('wait')&& ($('.opt.active').length>0)){
+				ans = $('.opt.active').data('opt');
+				$('.tri-body').addClass('wait');
+				clearInterval(onl);
+				$.ajax({
+					url: 'index.php?route=bytao/trivia|araf&cid='+cId+'&sm='+sM+'&tvsid='+sId+'&tvid='+tvId+'&quest='+q+'&ans='+ans+'&tm='+tCount,
+					type: "POST",
+					contentType: "application/json",
+    				//data: {trackDetails:jsonObject},
+    				dataType: "json",
+					success: function(json){
+						
+						if(json['crr']){
+							if(!allWait){crr++;}
+						}
+						
+						if(json['err']){
+							$('.tri-body').removeClass('wait');
+						}/*else{
+							$('.opt.active').removeClass('active')
+							clearInterval(onAir);
+							tCount=0;
+						}*/
+						
+						if(json['success']){
+							$('.opt.active').removeClass('active')
+							clearInterval(onAir);
+							tCount=0;
+						}
+						online();
+					}
+			});	
+			
+			}
+		});
+		
+		online();
+	});
+</script>
+	
+	</div>
+
+</body>
+</html>

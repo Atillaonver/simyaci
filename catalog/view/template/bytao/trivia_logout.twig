@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html dir="{{ direction }}" lang="{{ lang }}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<base href="{{ base }}" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{%  if icon %}
+<link href="{{ icon }}" rel="icon" />
+{%  endif %}
+
+<script src="cdn/js/trivia/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script src="cdn/js/trivia/trivia.js?v33" type="text/javascript"></script>
+<link href="cdn/css/trivia/library/bootstrap.min.css" rel="stylesheet">
+<link href="cdn/css/trivia/trivia.css?v53" rel="stylesheet">
+
+{%  for link in links %}
+<link href="{{ link.href }}" rel="{{ link.rel }}" />
+{%  endfor %}
+
+{%  for style in styles %}
+<link href="{{ style.href }}" type="text/css" rel="{{ style.rel }}" media="{{ style.media }}" />
+{%  endfor %}
+
+</head>
+<body class="bytao-trivia-logout">
+	<div class="unloged-login-container">
+		<div class="login-header centered">
+			<table width="100%" height="100%">
+				<tr>
+					<td align="center" valign="middle"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" /></td>
+				</tr>
+			</table>
+		</div>
+		<div class="login-container color-red  centered">
+			<table width="100%" height="100%">
+				<tr>
+					<td align="center" valign="middle">
+			<p class="size2 padding2"> Aktif Oturum Bulunmamaktadır</p>
+			<p class="size2 padding2"> BUGÜNNELERIZLEDIM
+instagram hesabından
+bizi izlemeye devam edin
+lütfen.</p>
+		<a href="https://www.instagram.com/bugunnelerizledim/" class="takip"> TAKİP ET </a>
+		</td>
+		</tr>
+			</table>
+		</div>
+		<div class="login-footer centered">
+			<table width="100%" height="100%">
+				<tr>
+					<td align="center" valign="middle"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

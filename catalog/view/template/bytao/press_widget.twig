@@ -1,0 +1,20 @@
+{% if items %}
+{% for item in items %}
+    <div class="col-sm-6 portfolio_item br ux mb-30">
+        <div class="portfolio_img">
+            <img src="{{ item.thumb }}" alt="">
+            <div class="hover_content">
+                <a href="{{ item.image }}" class="img_popup leaf"><i
+                        class="ti-plus"></i></a>
+                <div class="portfolio-description leaf">
+                    <a href="work-default.html" class="portfolio-title">
+                        <h3 class="f_500 f_size_20 f_p">{{ item.title }}</h3>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %} 
+{{ pagination }}
+{% endif %} 

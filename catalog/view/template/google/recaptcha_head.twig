@@ -1,0 +1,12 @@
+<script>
+        var onSubmit = function(token) {
+          console.log('success!');
+        };
+
+        var onloadCallback = function() {
+          grecaptcha.render('submit', {
+            'sitekey' : '{{ site_key }}',
+            'callback' : onSubmit
+          });
+        };
+</script>

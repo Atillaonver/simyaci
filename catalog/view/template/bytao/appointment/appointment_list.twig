@@ -1,0 +1,76 @@
+{{ header }}
+<section class="breadcrumb_area" style="">
+        <div class="container">
+            <div class="breadcrumb_content text-center">
+                <h1 class="f_p f_700 f_size_50 w_color l_height50 mb_20">{{ heading_title }}</h1>
+                <p class="f_400 w_color f_size_16 l_height26"></p>
+            </div>
+        </div>
+    </section>
+ <section class="faq_area bg_color sec_pad" id="bytao-appointment" >
+        <div class="container">
+        	<div class="row mb_30 justify-content-center">
+                    
+                    <div class=" col-4 align-self-center">
+                    	<form method="post" data-oc-toggle="ajax" data-oc-redirect="{{ checkout }}">
+                        <div class="s_pricing-item">
+                            <img class="shape_img" src="img/saas/price_line2.png" alt="">
+                            <div class="tag_label">{{ text_consultation }}</div>
+                            <div class="s_price_icon p_icon2">
+                                <i class="flaticon-lightbulb"></i>
+                            </div>
+                            <h5 class="f_p f_600 f_size_20 t_color mb-0 mt_40">{{ product.name }}</h5>
+                            <p class="f_p f_400">{{ product.model }}</p>
+                            <div class="price f_size_40 f_p f_700">${{ product.price|number_format(2) }}</div>
+                            <p class="f_p f_400">{{ product.description|html_entity_decode }}</p>
+                            <button type="submit" formaction="{{ add_to_cart }}" class="btn btn-primary">{{ text_appointment }}</button>
+                        </div>
+                        <input type="hidden" name="product_id" value="{{ product.product_id }}"/>
+    					<input type="hidden" name="quantity" value="1"/>
+						</form>
+                    </div>
+                    
+                </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3 class="f_p f_size_22 f_500 t_color3 mb_20 mt_100">{{ text_list }}</h3>
+                    {% if appointments %}
+                    <div id="accordion">
+                    	{% for appointment in appointments %}
+                                <div class="card">
+                                    <div class="card-header" id="heading{{ appointment.id }}">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-bs-toggle="collapse"
+                                                data-bs-target="#collapse{{ appointment.id }}" aria-expanded="false"
+                                                aria-controls="collapse{{ appointment.id }}">
+                                                {{ appointment.date_added }}<i class="ti-plus"></i><i class="ti-minus"></i>
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div id="collapse{{ appointment.id }}" class="collapse" aria-labelledby="heading{{ appointment.id }}"
+                                        data-bs-parent="#accordion">
+                                        <div class="card-body">
+                                            Explain
+                                        </div>
+                                    </div>
+                                </div>
+                        {% endfor %}       
+                    </div>
+                	<div class="row mb-3">
+			          <div class="col-sm-6 text-start">{{ pagination }}</div>
+			          <div class="col-sm-6 text-end">{{ results }}</div>
+			        </div>
+			        {% else %}
+				        <p>{{ text_no_results }}</p>
+				    {% endif %}
+                </div>
+                <div class="col-lg-4 pr_50">
+                {{ column_right }}
+                </div>
+            </div>
+            
+	        <div class="text-end"><a href="{{ continue }}" class="btn btn-primary">{{ button_continue }}</a></div>
+      		{{ content_bottom }}
+        </div>
+    </section>
+{{ footer }}

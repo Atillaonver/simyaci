@@ -1,0 +1,40 @@
+<html dir="ltr" lang="{{ language }}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{{ title }}</title>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
+<div style="width: 680px;">
+  <div style="text-align:center;">
+     <a href="{{ store_url }}" title="{{ store_name }}"><img src="{{ logo }}" alt="{{ store_name }}" style="margin:auto;margin-bottom: 20px; border: none;height:70px;width:auto;"/></a>
+    </div> 
+  <p style="margin-top: 0px; margin-bottom: 20px;">
+    Dear Customer,
+    <span class="Apple-converted-space">
+      &nbsp;
+    </span>
+    <br>
+    <br>
+    Thank you for your order
+    <span class="Apple-converted-space">
+      &nbsp;
+    </span>
+    We are pleased to inform you that your order has been shipped.<br>
+    </p>
+    {% if cargo=='FEDEX' %}
+    <a href="https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber={{ tracking_no }}" target="_blank">https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber={{ tracking_no }} </a>
+    {% endif %}
+    {% if cargo=='UPS' %}
+    <a href="https://www.ups.com/track?tracknum={{ tracking_no }}&loc=en_US&requester=ST/trackdetails" target="_blank">https://www.ups.com/track?tracknum={{ tracking_no }}&loc=en_US&requester=ST/trackdetails </a>
+    {% endif %}
+    
+    <br><br>
+    <p style="margin-top: 0px; margin-bottom: 20px;">
+    
+    <br><br>Sincerely,<br>Customer Service<br>
+    </p>
+ 
+  <p style="margin-top: 0px; margin-bottom: 20px;"></p>
+</div>
+</body>
+</html>

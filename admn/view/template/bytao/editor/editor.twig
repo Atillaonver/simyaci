@@ -1,0 +1,147 @@
+<div class="editor-container" data-row-count="{{ rows?rows|length:'0' }}" data-language_id="{{ language_id }}">
+	<div class="editor-body">
+		<div class="addRow">
+			{% if ADM == '1' %}
+			<a class="by_control row_add by_row-add" href="#" title="{{ text_add_row }}" data-vc-control="add"><i class="by_icon"></i></a>
+			{% endif %}
+			
+			<a class="by_control by_page-property" href="#" title="Properties"><i class="fas fa-cogs"></i></a>
+			<label class="pull-right kolaps">
+			<span class="editor-switch-btn">
+				<input type="checkbox" class="status" name="collaps[{{ language_id }}]" value="{{ language_id }}" onclick="collapsedc(this.checked);" {{ collaps? 'checked="checked"':'' }} />
+				<span class="editor-switch-btn-holder"></span>
+			</span>
+			  {{ text_collapse_all }}
+			</label>
+		</div>
+		
+		<ul class="text-editor rows" id="text-editor{{ language_id }}" >
+			{% if rows|length > 0 %}
+			{% for row in rows %}
+			{% set rowcount = loop.index  %}
+			
+			<li id="L-{{ language_id }}-{{ rowcount }}" class="row by_row {% if loop.first  %} selected{% endif %} ui-state-default" data-image="{{ row.image }}" data-row_cells="{{ row.row_cells?row.row_cells:'11' }}" data-id="{{ row.row_tag_id }}" data-class="{{ row.row_class }}" data-margin="{{ row.margin }}" data-padding="{{ row.padding }}" rowcount="{{ rowcount }}" rowid="{{ row.row_id }}" data-col-count="{{ row.cols|length }}" >
+<div class="hidden rowDataDiv">
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_cells]" id="row_cells" value="{{ row.row_cells?row.row_cells:'11' }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_data][has_container]" id="row_has_container" value="{{ row.row_data['has_container'] }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_data][has_collapsed]" id="row_has_collapsed" value="{{ row.row_data['has_collapsed']=='1'?1:0 }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_data][has_form]" id="row_has_form" value="{{ row.row_data['has_form'] }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_data][has_user]" id="row_has_user" value="{{ row.row_data['has_user'] }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_data][has_not_user]" id="row_has_not_user" value="{{ row.row_data['has_not_user'] }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][image]" id="row_image" value="{{ row.image }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_class]" id="row_class" value="{{ row.row_class }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_tag_id]" id="row_tag_id" value="{{ row.row_tag_id }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_margin]" id="row_margin" value="{{ row.row_margin }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_padding]" id="row_padding" value="{{ row.row_padding }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][row_sort_order]" id="row_sort_order" value="{{ row.row_sort_order }}" />
+</div>
+			
+				<div class="by_controls-row controls controls_row by_clearfix">
+					<a class="by_control column_move by_column-move" href="#" title="{{ text_drag_drop_order }}" data-vc-control="move"><i class="by_icon"></i></a>
+					<span class="by_row_name by_control"><span class="row_name">{% if row.name %}{{ row.name }}{% else %}{{ text_row }}{% endif %}</span><input type="text" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][name]" value="{% if row.name %}{{ row.name }}{% else %}{{ text_row }}{% endif %}" placeholder="" class="row_name_input"></span>
+					<span class="by_control seperator x2"></span>
+					<span class="by_row_layouts by_control">
+						<a class="by_control-set-column set_columns l_11 {% if row.row_cells == "11" %} by_active {% endif %}" data-cells="11" data-cells-mask="12" title="1/1"></a>
+						<a class="by_control-set-column set_columns l_12_12 {% if row.row_cells == "12_12" %} by_active {% endif %}" data-cells="12_12" data-cells-mask="26" title="1/2 + 1/2"></a> 
+						<a class="by_control-set-column set_columns l_23_13 {% if row.row_cells == "23_13" %} by_active {% endif %}" data-cells="23_13" data-cells-mask="29" title="2/3 + 1/3"></a>
+						<a class="by_control-set-column set_columns l_13_13_13 {% if row.row_cells == "13_13_13" %} by_active {% endif %}" data-cells="13_13_13" data-cells-mask="312" title="1/3 + 1/3 + 1/3"></a>
+						<a class="by_control-set-column set_columns l_14_14_14_14 {% if row.row_cells == "14_14_14_14" %} by_active {% endif %}" data-cells="14_14_14_14" data-cells-mask="420" title="1/4 + 1/4 + 1/4 + 1/4"></a>
+						<a class="by_control-set-column set_columns l_14_34 {% if row.row_cells == "14_34" %} by_active {% endif %}" data-cells="14_34" data-cells-mask="212" title="1/4 + 3/4"></a>
+						<a class="by_control-set-column set_columns l_14_12_14 {% if row.row_cells == "14_12_14" %} by_active {% endif %}" data-cells="14_12_14" data-cells-mask="313" title="1/4 + 1/2 + 1/4"></a>
+						<a class="by_control-set-column set_columns l_56_16 {% if row.row_cells == "56_16" %} by_active {% endif %}" data-cells="56_16" data-cells-mask="218" title="5/6 + 1/6"></a>
+						<a class="by_control-set-column set_columns l_16_16_16_16_16_16 {% if row.row_cells == "16_16_16_16_16_16" %} by_active {% endif %}" data-cells="16_16_16_16_16_16" data-cells-mask="642" title="1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6"></a>
+						<a class="by_control-set-column set_columns l_16_46_16 {% if row.row_cells == "16_23_16" %} by_active {% endif %}" data-cells="16_23_16" data-cells-mask="319" title="1/6 + 4/6 + 1/6"></a>
+						<a class="by_control-set-column set_columns l_16_16_16_12 {% if row.row_cells == "16_16_16_12" %} by_active {% endif %}" data-cells="16_16_16_12" data-cells-mask="424" title="1/6 + 1/6 + 1/6 + 1/2"></a>
+					</span>
+					<span class="by_row_edit_clone_delete">
+						<a class="by_control column_delete by_column-delete" href="#" title="Delete this row" data-vc-control="delete"><i class="by_icon"></i></a>
+						<a class="by_control column_clone by_column-clone" href="#" title="Clone this row" data-vc-control="clone" ><i class="by_icon"></i></a>
+						<a class="row-mng-setting mng-sttng float-end" href="#" title="{{ text_setting }}"><i class="fa-solid fa-gear"></i></a>
+						<a class="by_control column_img by_column-img" href="#" title="Paralax/arkaplan resmi" data-vc-control="Back Image" data-rid="" >{% if row.image %}<img src="{{ HTTP_IMAGE }}{{ row.image }}" class="back-img" /> {% else %}<i class="fa-solid fa-panorama"></i> {% endif %}</a>
+						{# HAS Buttons #}
+						<span class="by_control btn-has by_has_container {{ row.row_data['has_container']?'has':'' }}" title="{{ text_has_container }}"><i class="fa-solid fa-diagram-next"></i></span>
+						<span class="by_control btn-has by_has_form {{ row.row_data['has_form']?'has':'' }}" title="{{ text_has_form }}"><i class="fa-solid fa-share-square"></i></span>
+						<span class="by_control btn-has by_has_user {{ row.row_data['has_user']?'has':'' }}" title="{{ text_has_user }}"><i class="fa-solid fa-user"></i></span>
+						<span class="by_control btn-has by_has_not_user {{ row.row_data['has_not_user']?'has':'' }}" title="{{ text_has_not_user }}"><i class="fa-solid fa-user-slash"></i></span>
+						{# HAS End #}
+						<span class="by_control seperator x3"></span>
+						<div class="row-switch-btn form-check form-switch form-switch-lg">
+		                    <input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][status]" value="0"/> <input type="checkbox" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][status]" value="1" class="status form-check-input"{% if row.status %} checked{% endif %}/>
+		                </div>
+						
+						<a class="by_control column_toggle by_column-collapse {{ row.row_data['has_collapsed']=='1'?'collapsed':'' }}" data-bs-toggle="collapse" aria-controls="collapse-{{ language_id }}-{{ rowcount }}" href="#collapse-{{ language_id }}-{{ rowcount }}" ><i class="by_icon"></i></a>
+					</span>
+				</div>
+				
+				<div class="collDiv collapse {{ row.row_data['has_collapsed']=='1'?'':'show' }} row mb-3" id="collapse-{{ language_id }}-{{ rowcount }}">
+					{% set COLS = row.cols %}
+					{% set colC = COLS|length %}
+					{% if not colC %}{% set colC = 12 %}{% endif %}
+					{% set colsm = 12 / colC  %}
+					{% for col in COLS %}
+						{% set colcount = loop.index  %}
+						
+						
+						<div class="col-sm-{{ col.col_cellx }} by_col ct{{ col.col_type }}" id="col-" data-class="{{ col.col_class }}" data-margin="{{ col.margin }}" data-padding="{{ col.padding }}" data-col_type="{{ col.col_type }}"  data-col_content_id="{{ col.col_content_id }}" data-id="{{ col.col_tag_id }}" colcount="{{ colcount }}">
+						
+<div class="hidden colDataDiv">
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_cell]" id="col_cell" value="{{ col.col_cell?col.col_cell:'' }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_data][has_container]" id="has_container" value="{{ col.col_data['has_container'] }}" />
+
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_tag_id]" id="col_tag_id" value="{{ col.col_tag_id }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_padding]" id="col_padding" value="{{ col.col_padding }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_margin]" id="col_margin" value="{{ col.col_margin }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_item]" id="col_item" value="{{ col.col_item }}" />
+
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_class]" id="col_class" value="{{ col.col_class }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_margin]" id="col_margin" value="{{ col.col_margin }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_padding]" id="col_padding" value="{{ col.col_padding }}" />
+<input type="hidden" name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_content_id]" id="col_content_id" value="{{ col.col_content_id }}" />
+</div>							
+							<div class="by_controls by_control-column controls"> 
+
+								{% for item in mTypes %}
+									{% if item.col_type_id == '1' %}
+									<ul class="col-tab nav nav-tabs col_cntrll_rch_edit {{ col.col_type == '1'?'':'hidden' }}"><li class="nav-item"><a href="#" data-index="0" class="nav-link active"><i class="fa fa-eye"></i></a></li>{% if ADM == '1' %}<li class="nav-item"><a href="#" data-index="1" class="nav-link"><i class="fa-solid fa-code"></i></a></li>{% endif %}<li class="nav-item"><a href="#" data-index="2" class="nav-link"><i class="fa-solid fa-image"></i></a></li><li class="nav-item"><a href="#" data-index="3" class="nav-link"><i class="fa-solid fa-spell-check"></i></a></li></ul>
+									
+									{% else %} 
+									
+									<a class="by_control pull-left in-content cntr{{ item.col_type_id }} {{ item.cntrll }} {% if  item.col_type_id != col.col_type %}hidden{% endif  %} " href="#" title="{{ item.name }}"><i class="{{ item.icon }}"></i></a>
+									
+									{% endif %} 
+								{% endfor %} 
+								
+								<a class="col-mng-setting mng-sttng float-end" href="#" title="{{ text_setting }}"><i class="fa-solid fa-gear"></i></a>
+								<select name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_type]" class="col_type in-content float-end hidden" {{ not ADM == '1' ? 'data-val = "' ~ col.col_type ~ '"':'' }}>
+									{% for item in mTypes %}
+									<option value="{{ item.col_type_id }}"{% if col.col_type == item.col_type_id  %} selected="selected" {% endif %}>{{ item.name }}</option>
+									{% endfor %}	
+								</select>
+								
+							</div>
+							<div class="colpro hidden "></div>
+							{% autoescape false %}
+							<div class="byED hidden" id="byED-{{ language_id }}-{{ rowcount }}-{{ colcount}}">{{ col.col_content|html_entity_decode }}</div>
+							<div class="byPT hidden" id="byPT-{{ language_id }}-{{ rowcount }}-{{ loop.index }}"><ul></ul></div>
+							<div class="byCK content inContent ct{{ col.col_type }} {{ col.sub_rows?'hidden' }}" id="byCK-{{ language_id }}-{{ rowcount }}-{{ colcount }}">{{ col.col_content|html_entity_decode }}</div>
+							<textarea name="{{ ctrl }}_description[{{ language_id }}][rows][{{ rowcount }}][cols][{{ colcount }}][col_content]" class="content-html" id="CbyCK-{{ language_id }}-{{ rowcount }}-{{ colcount }}">{{ col.col_content|html_entity_decode }}</textarea>
+							
+							{% endautoescape %}
+							
+						</div>
+					{% endfor %}
+				
+				</div>
+			</li>
+			{% endfor %}
+			{% endif %}
+		</ul>
+	</div>
+	<div class="editor-foot hidden" id="editor-foot-{{ language_id }}">
+		<input id="himage-{{ language_id }}" type="hidden" name="{{ ctrl }}_description[{{ language_id }}][himage]" value="{{ himage }}" />
+		<input id="fimage-{{ language_id }}" type="hidden" name="{{ ctrl }}_description[{{ language_id }}][fimage]" value="{{ fimage }}" />
+		<input id="hthumb-{{ language_id }}" type="hidden" value="{{ himage_thumb }}" />
+		<input id="fthumb-{{ language_id }}" type="hidden" value="{{ fimage_thumb }}" />
+		<textarea id="css-{{ language_id }}" name="{{ ctrl }}_description[{{ language_id }}][css]" >{{ css }}</textarea>
+	</div>
+</div>

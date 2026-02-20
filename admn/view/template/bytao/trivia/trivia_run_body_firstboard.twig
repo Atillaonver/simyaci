@@ -1,0 +1,32 @@
+<div class="head row">
+	<div class="col-md-3 lefted">
+		{% if trivia %}
+			<img src="{{ trivia }}" alt="{{ trivia }}" />
+		{% else %}
+			<img src="{{ trivia_logo }}" alt="{{ trivia_logo }}"  />
+		{% endif %}
+	</div>
+	<div class="col-md-6 centered title"></div>
+	<div class="col-md-3 righted">
+		{% if logo %}
+		<img src="{{ logo }}" />
+		{% endif %}
+	</div>
+</div>
+<div id="board" class="body body-content board">
+	<div class="row" id="firstboard">
+		{{ list }}
+	</div>
+</div>
+<div class="foot row">
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-6 centered">
+	</div>
+	<div class="col-md-3">
+		<span class="btn-left by-btn" data-by-toggle="ajax" data-by-href="index.php?route=bytao/trivia|nextq&user_token={{ user_token ~ '&trivia_id=' ~ trivia_id }}">
+			<i class="arrow arrow-right">
+			</i>
+		</span>
+	</div>
+</div>

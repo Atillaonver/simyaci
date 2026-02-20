@@ -1,0 +1,235 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-prod" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+    <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+       <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-prod">
+       			{% if prod_id %}
+       			<input type="hidden" name="prod_id" value="{{ prod_id }}" />
+       			{% endif %}
+				 <ul class="nav nav-tabs" id="language">
+	                {% for language in languages %}
+	                <li class="nav-item"><a href="#language{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+	                {% endfor %}
+	              </ul>
+              <div class="tab-content">
+                {% for language in languages %}
+                <div class="tab-pane{% if loop.first %}{% set first_lid = language.language_id  %} active{% endif %}" id="language{{ language.language_id }}">
+				<div class="row mb-3 required">
+					<label class="col-sm-2 col-form-label" for="input-status">{{ entry_name }}</label>
+					<div class="col-sm-10">
+						
+							<input type="text" name="prod_description[{{ language.language_id }}][name]" value="{% if prod_description[language.language_id].name %} {{ prod_description[language.language_id].name }} {% endif %}" placeholder="{{ entry_name }}" class="form-control" />
+						
+	                  
+						{% if error_name[language.language_id] %}
+						<div class="text-danger">{{ error_name[language.language_id] }}</div>
+						{% endif %}
+
+					</div>
+				</div>
+				<div class="row mb-3 required">
+					<label class="col-sm-2 col-form-label" for="input-status">{{ entry_title }}</label>
+					<div class="col-sm-10">
+						
+							<input type="text" name="prod_description[{{ language.language_id }}][title]" value="{% if prod_description[language.language_id] %} {{ prod_description[language.language_id].title }} {% endif %}" placeholder="{{ entry_title }}" class="form-control" />
+						
+	                  
+						{% if error_title[language.language_id] %}
+						<div class="text-danger">{{ error_title[language.language_id] }}</div>
+						{% endif %}
+
+					</div>
+				</div>
+				 <div class="row mb-3">
+                  	{% for prod_opt in prod_opts %}
+                  		{% if prod_opt.opt[language.language_id].name %}
+                  		<label class="col-sm-2 col-form-label" for="input-prod-opt{{ language.language_id }}">{{ prod_opt.opt[first_lid].name }}</label>
+                  		<div class="col-sm-10">
+                  		<input type="text" name="prod_opt[{{ language.language_id }}][{{ prod_opt.code }}]" value="{{ prod_description[language.language_id].opt[ prod_opt.code] ?  prod_description[language.language_id].opt[prod_opt.code] }}" placeholder="{{ text_value }}" class="form-control" />
+                  		</div>
+                  		<div class="col-sm-12"><br/></div>
+                  		{% endif %}
+                  	{% endfor %}
+                  </div>
+				
+        		<div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="prod_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ prod_description[language.language_id] ? prod_description[language.language_id].description }}</textarea>
+                      	{% if error_description[language.language_id] %}
+						<div class="text-danger">{{ error_description[language.language_id] }}</div>
+						{% endif %}
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+	                <label class="col-sm-2 col-form-label">{{ entry_bimage }}</label>
+	                <div class="col-sm-10">
+	                <div class="card image">
+                    	<img src="{{ prod_description[language.language_id].thumb?prod_description[language.language_id].thumb:placeholder }}" alt="" title="" id="thumb-bimage-{{ language.language_id }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> 
+                    	<input type="hidden" name="prod_description[{{ language.language_id }}][image]" value="{{ prod_description[language.language_id] ? prod_description[language.language_id].image }}" id="input-bimage-{{ language.language_id }}"/>
+                    <div class="card-body">
+                      <button type="button" data-oc-toggle="image" data-oc-target="input-bimage-{{ language.language_id }}" data-oc-thumb="#thumb-bimage-{{ language.language_id }}" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-oc-toggle="clear" data-oc-target="input-bimage-{{ language.language_id }}" data-oc-thumb="#thumb-bimage-{{ language.language_id }}" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+	                </div>
+	              </div>
+	              
+                  <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="input-description{{ language.language_id }}">{{ entry_description2 }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="prod_description[{{ language.language_id }}][description2]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ prod_description[language.language_id] ? prod_description[language.language_id].description2 }}</textarea>
+                    </div>
+                  </div>
+                  
+                 
+                  
+                   <div class="row mb-3 required">
+                      <label for="input-meta-title-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_title }}</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="prod_description[{{ language.language_id }}][meta_title]" value="{{ prod_description[language.language_id] ? prod_description[language.language_id].meta_title }}" placeholder="{{ entry_meta_title }}" id="input-meta-title-{{ language.language_id }}" class="form-control"/>
+                        <div id="error-meta-title-{{ language.language_id }}" class="invalid-feedback"></div>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="input-meta-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_description }}</label>
+                      <div class="col-sm-10">
+                        <textarea name="prod_description[{{ language.language_id }}][meta_description]" rows="5" placeholder="{{ entry_meta_description }}" id="input-meta-description-{{ language.language_id }}" class="form-control">{{ prod_description[language.language_id] ? prod_description[language.language_id].meta_description }}</textarea>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="input-meta-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_meta_keyword }}</label>
+                      <div class="col-sm-10">
+                        <textarea name="prod_description[{{ language.language_id }}][meta_keyword]" rows="5" placeholder="{{ entry_meta_keyword }}" id="input-meta-keyword-{{ language.language_id }}" class="form-control">{{ prod_description[language.language_id] ? prod_description[language.language_id].meta_keyword }}</textarea>
+                      </div>
+                    </div>
+                    
+                  <div class="row mb-3">
+                    <label for="input-keyword-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_keyword }}</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="prod_seo_url[{{ store_id }}][{{ language.language_id }}]" value="{{ prod_seo_url[store_id][language.language_id] }}" placeholder="{{ entry_keyword }}" id="input-keyword-{{ language.language_id }}" class="form-control"/>
+                      	<div id="error-keyword-{{ store_id }}-{{ language.language_id }}" class="invalid-feedback"></div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+          		</div>
+          		{% endfor %}
+				
+				
+				<div class="row mb-3">
+	                <label class="col-sm-2 col-form-label">{{ entry_image }}</label>
+	                <div class="col-sm-10"> 
+	                <div class="card image">
+                    	<img src="{{ thumb }}" alt="" title="" id="thumb-image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> 
+                    	<input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+                    <div class="card-body">
+                      <button type="button" data-oc-toggle="image" data-oc-target="input-image" data-oc-thumb="#thumb-image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+                      <button type="button" data-oc-toggle="clear" data-oc-target="input-image" data-oc-thumb="#thumb-image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+                    </div>
+                  </div>
+	                </div>
+	              </div>
+				
+				
+	              
+	            <div class="row mb-3">
+                <label for="input-parent" class="col-sm-2 col-form-label">{{ entry_parent }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="cat_path" value="{{ cat_path }}" placeholder="{{ entry_parent }}" id="input-parent" list="list-parent" class="form-control"/> <input type="hidden" name="prod_cat_id" value="{{ prod_cat_id }}" id="input-parent-id"/>
+                  <datalist id="list-parent"></datalist>
+                  <div class="form-text">{{ help_parent }}</div>
+                  <div id="error-parent" class="invalid-feedback"></div>
+                </div>
+              </div>
+              
+	            <div class="row mb-3">
+	              <label class="col-sm-2 col-form-label">{{ entry_ref }}</label>
+	                <div class="col-sm-10">
+	                  <input type="text" name="ref" value="{{ ref }}" placeholder="{{ entry_ref }}" class="form-control" />
+	              </div>
+	            </div>
+	            <div class="row mb-3">
+	              <label class="col-sm-2 col-form-label">{{ entry_url }}</label>
+	                <div class="col-sm-10">
+	                  <input type="url" name="url" value="{{ url }}" placeholder="{{ entry_url }}" class="form-control" />
+	              </div>
+	            </div>
+	            <div class="row mb-3">
+					<label class="col-sm-2 col-form-label" for="input-status">{{ entry_status }}</label>
+					<div class="col-sm-10">
+						<select name="status" id="input-status" class="form-control">
+							{% if status %}
+							<option value="1" selected="selected">{{ text_enabled }}</option>
+							<option value="0">{{ text_disabled }}</option>
+							{%  else %}
+							<option value="1">{{ text_enabled }}</option>
+							<option value="0" selected="selected">{{ text_disabled }}</option>
+							{% endif %}
+						</select>
+					</div>
+				</div>
+				<div class="row mb-3">
+	                <label for="input-sort-order" class="col-sm-2 col-form-label">{{ entry_sort_order }}</label>
+	                <div class="col-sm-10">
+	                  <input type="text" name="sort_order" value="{{ sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/>
+	                </div>
+	              </div>
+				
+			</form>
+      </div>
+    </div>
+  </div>
+  </div>
+<script type="text/javascript"><!--
+$('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+    language:'{{ ckeditor }}'
+});
+
+$('#input-parent').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=bytao/prod_cat|autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                json.unshift({
+                    name: '{{ text_none }}',
+                    prod_cat_id: 0
+                });
+
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['prod_cat_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-parent-id').val(item['value']);
+    }
+});
+
+</script>
+
+</div>
+{{ footer }} 
+

@@ -1,0 +1,20 @@
+<div id="popup-accept" class="popup-banner full-width-bottom" data-popup-anima="fade-bottom">
+            <i class="fa fa-times popup-close"></i>
+            <div class="row">
+            	<div class="col-md-8 text-center">
+            		{{ text_accepte }} <a href="{{ politics }}" target="_blank">{{ text_link }}</a> 
+            	</div>
+            	
+            	<div class="col-md-4 text-center">
+            		  <button id="idBtOkCookie" type="button" class="btn-black btn" style="display: inline-block;">{{ text_all_accepte }}</button>
+            	</div>
+            </div>
+          
+</div>
+
+<script>
+$(document).ready(function () {
+	$('#popup-accept').show();
+	$('.popup-close').on('click',function(){$('#popup-accept').hide();})
+});	
+</script>	

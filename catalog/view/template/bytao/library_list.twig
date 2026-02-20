@@ -1,0 +1,33 @@
+{{ header }}
+<div id="bytao-library" class="container">
+  <ul class="breadcrumb">
+    {% for breadcrumb in breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+    {% endfor %}
+  </ul>
+  <div class="row">{{ column_left }}
+    <div id="content" class="col">{{ content_top }}
+      
+      <h1>{{ heading_title }}</h1>
+      {% if libraries %}
+	      {% for article in libraries %}
+	      	{% if article.href %}
+	      		<a href="{{ article.href }}"
+		      	<h3>{{ article.header }}</h3>
+		      	<h4>{{ article.title }}</h4>
+		      	{% if article.thumb %} <img src="{{ article.thumb }}" alt="" />{% endif %}
+	      		</a>
+	      	{% else %}
+	      		<h3>{{ article.header }}</h3>
+		      	<h4>{{ article.title }}</h4>
+		      	{% if article.thumb %} <img src="{{ article.thumb }}" alt="" />{% endif %}
+	      	
+	      	{% endif %}
+	      {% endfor %}
+      {% endif %}
+      
+      
+      {{ content_bottom }}</div>
+    {{ column_right }}</div>
+</div>
+{{ footer }}

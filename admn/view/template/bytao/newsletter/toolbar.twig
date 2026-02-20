@@ -1,0 +1,12 @@
+<ul class="toolbar">
+	{% for key, menu in menus %}
+	{% if menu_active == key %}
+	{% set class_active = "active" %}
+	{% else %}
+	{% set class_active = "" %}
+	{% endif %}
+	<li class="{{ class_active }} text-right">
+		<a href="{{ menu.link }}" data-target="#newsletter-container" data-oc-toggle="ajax">{{ menu.title }}</a>
+	</li>
+	{% endfor %}
+</ul>

@@ -1,0 +1,7 @@
+{
+  "name": "OpenCart Cloudflare CAPTCHA Extensions",
+  "description": "Cloudflare Turnstile, a free CAPTCHA replacement for OpenCart 4",
+  "version": "0.0.1",
+  "author": "OpenCart 101 Ltd",
+  "link": "https://opencart101.com"
+}

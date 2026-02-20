@@ -1,0 +1,44 @@
+{{ header }}
+
+    <main class="main main-inner main-project" style="background-image:url('{% if himage %}{{ HTTP_IMAGE }}{{ himage }}{% endif  %}');" data-stellar-background-ratio="0.6">
+      <div class="container">
+        <header class="main-header">
+          <h1>{{ heading_title }}</h1>
+          
+        </header>
+      </div>
+    </main>
+    	
+      <section class="projects">
+        <div class="js-projects-gallery">
+          <div class="container">
+          <div class="row">
+          	{% for document in documents %}
+          	 <div class="project project-light col-sm-6 col-md-4 col-lg-3">
+              <a href="{{ HTTP_IMAGE }}{{ document.bimage }}" title="{{ document.title }}" class="gal">
+                <figure>
+                  <img alt="{{ document.name }}" src="{{ HTTP_IMAGE }}{{ document.simage }}">
+                  <figcaption>
+                    <h3 class="project-title">
+                      {{ document.title }}
+                    </h3>
+                    <h4 class="project-category">
+                      {{ document.name }}
+                    </h4>
+                    <div class="project-zoom"></div>
+                    <div class="project-download"></div>
+                  </figcaption>
+                </figure>
+              </a>
+              {% if document.mask %}
+              <a href="{{ HTTP_IMAGE }}{{ document.mask }}" title="{{ document.title }}" class="pdf-download"><i class="fa fa-download"></i></a>
+              {% endif %}
+            </div>
+            
+          	
+           {% endfor %}
+         </div>
+          </div>
+        </div>
+      </section>
+{{ footer }}

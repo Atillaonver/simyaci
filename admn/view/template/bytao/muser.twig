@@ -1,0 +1,404 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="float-end">
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+				<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+	    <div class="card">
+	      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_admin_user }}</div>
+	      	<div class="card-body">
+				<div class="row">
+					<div class="col-md-4">
+						{{ list }}
+					</div>	
+					<div class="col-md-1">
+						<a href="{{ add }}" title="{{ button_add }}" class="btn btn-primary ajax"><i class="fa fa-plus"></i></a>
+						
+					</div>
+					<div class="col-md-7">
+						<div id="userForm"></div>
+						<div id="menuForm"></div>
+      			
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="cmodalx" class="modal">
+  <div id="c-modal" class="modal-dialog modal-lg modal-dialog-centered">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">{{ message_delete_category }}</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>
+				<button type="button" class="btn btn-primary" id="btnDeleteTree">{{ button_remove }}</button>
+			</div>
+			<input id="menuid" type="hidden" name="menuid" value="0"/>
+		</div>
+	</div>
+  </div>
+</div>
+
+<div id="dmodal" class="modal fade deleteMenu-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				{{ message_delete }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">{{ button_cancel }}</button>
+				<button type="button" class="btn btn-primary" id="btnDeleteMenu">{{ button_remove }}</button>
+			</div>
+			<input class="menu-id" type="hidden" name="menuid" value="0"/>
+		</div>
+	</div>
+</div>
+
+<style>
+	tr.active {
+		color: #000;
+		background-color: #ccc;
+		font-weight: bold;
+	}
+	#language a.nav-link {
+	    text-transform: uppercase;
+	}
+</style>
+
+<link href="view/stylesheet/bytao/menu/menu.css?v8" rel="stylesheet" />
+<script type="text/javascript" src="view/javascript/bytao/menu/jquerycookie.js"></script> 
+<script type="text/javascript" src="view/javascript/jquery/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="view/javascript/bytao/menu/jquery.nestable.js"></script>
+
+<script>
+
+	$(document).on('click','.najax',function(e){
+			e.preventDefault();
+			$($(this).attr('href')).html('');
+			$('tr.active').removeClass('active')
+			return false;
+		});
+	
+	$(document).on('click','.ajax',function(e){
+			e.preventDefault();
+			var button=$(this);
+			thisURL=$(this).attr('href');
+			$.ajax({
+					url: thisURL,
+					dataType: 'json',
+					success: function(json) {
+						if(json['error']){
+							alert(json['error']);
+						}
+						if(json['userForm']){
+							$('tr.active').removeClass('active')
+							$(button).parents('tr').addClass('active')
+							$('#menuForm').html('')
+							$('#userForm').html(json['userForm'])
+						}
+				
+						if(json['menuForm']){
+							$('tr.active').removeClass('active')
+							$(button).parents('tr').addClass('active')
+							$('#userForm').html('')
+							$('#menuForm').html(json['menuForm'])
+							$("#menuForm ol.sortable").nestedSortable({
+									forcePlaceholderSize: true,
+									handle: 'div',
+									helper:	'clone',
+									items: 'li',
+									opacity: .6,
+									placeholder: 'placeholder',
+									revert: 250,
+									tabSize: 25,
+									tolerance: 'pointer',
+									toleranceElement: '> div',
+									maxLevels: 4,
+									isTree: true,
+									expandOnHover: 700,
+									startCollapsed: true
+								});
+							$("#language a:first").tab('show');
+					
+						}
+					}
+				});
+			return false;
+		});
+</script>
+  
+<script type="text/javascript">
+
+	$('body').on('click','#serialize, .btn-updatetree', function(e) {
+			var uid = $('#users-body tr.active').attr('data-uid');
+			var serialized = $('ol.sortable').nestedSortable('serialize');
+			$.ajax({
+					async : false,
+					type: 'POST',
+					dataType:'json',
+					url: 'index.php?route=bytao/muser|updatetree&user_token={{ user_token }}&uid='+uid,
+					data : serialized, 
+					success : function (r) {
+	
+					}
+				});
+		});
+
+	function formReset(){
+		$("#menu-form").find("[name=\'menu[menu_id]\']").val('');
+		$("#menu-form").find("[name=\'menu[user_id]\']").val($('#users-body tr.active').attr('data-uid'));
+		$("#menu-form").find("[name=\'menu[menu_class]\']").val('');
+		$("#menu-form").find("[name=\'menu[parent_id]\']").val(0);
+		$("#menu-form").find("[name=\'menu[url]\']").val('');
+		$("#menu-form").find("[name=\'menu[ctrl]\']").val('');
+		{% for language in languages %}
+		$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][title]\']').val('');
+		$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][description]\']').val('');
+		{% endfor %}
+		$("#language a:first").tab('show');
+	}
+	
+
+</script>  
+<script type="text/javascript"><!--
+	$(document).on('click','.quickedit', function(e) {
+			e.preventDefault();
+	 
+			formId = $(this).parents('form').attr('id');
+			$(".treeContainer li.active").removeClass('active');
+			$(this).parent().parent().addClass('active');
+	
+			$.ajax({
+					url: 'index.php?route=bytao/muser|getmenu&user_token={{ user_token }}&mid='+$(this).attr('rel'),
+					type: "POST",
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['menu']){
+							$("#menu-form").find("[name=\'menu[menu_id]\']").val(data['menu'].menu_id);
+							$("#menu-form").find("[name=\'menu[user_id]\']").val(data['menu'].user_id);
+							$("#menu-form").find("[name=\'menu[menu_class]\']").val(data['menu'].menu_class);
+							$("#menu-form").find("[name=\'menu[parent_id]\']").val(data['menu'].parent_id);
+							$("#menu-form").find("[name=\'menu[url]\']").val(data['menu'].url);
+							$("#menu-form").find("[name=\'menu[ctrl]\']").val(data['menu'].ctrl);
+						}
+						
+						if(data['menu_user_description']){
+							{% for language in languages %}
+							$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][title]\']').val(data['menu_user_description'][{{ language.language_id }}].title);
+							$('#menu-form [name=\'menu_user_description[{{ language.language_id }}][description]\']').val(data['menu_user_description'][{{ language.language_id }}].description);
+							{% endfor %}
+							$("#language a:first").tab('show');
+
+						}
+						
+						if(data['menus']){
+							$("#menu-form").find('#menu-pos').html(data['menus']);
+						}
+					}
+				});
+		});
+	
+	$(document).on('click','.btn-copied', function(e) {
+			e.preventDefault();
+			var uid=$('#userID').val();
+			var Button=$(this)
+			if($(Button).hasClass('btn-warning')){
+				$.ajax({
+						url: 'index.php?route=bytao/muser|copied&user_token={{ user_token }}&uid='+uid,
+						type: "POST",
+						success:function(data, textStatus, jqXHR) 
+						{
+							$(Button).removeClass('btn-warning').addClass('btn-default')
+							$(Button).html($(Button).attr('text-paste'))
+						}
+					});
+				
+			}else{
+				$.ajax({
+						url: 'index.php?route=bytao/muser|paste&user_token={{ user_token }}&uid='+uid,
+						type: "POST",
+						success:function(data, textStatus, jqXHR) 
+						{
+							if(data['tree']){
+								$('#tree-part .treeContainer').html(data['tree']);
+								$("ol.sortable").nestedSortable({
+										forcePlaceholderSize: true,
+										handle: 'div',
+										helper:	'clone',
+										items: 'li',
+										opacity: .6,
+										placeholder: 'placeholder',
+										revert: 250,
+										tabSize: 25,
+										tolerance: 'pointer',
+										toleranceElement: '> div',
+										maxLevels: 4,
+
+										isTree: true,
+										expandOnHover: 700,
+										startCollapsed: true
+									});
+								
+							}
+						
+							if(data['parent']){
+								$('[name=\'menu[parent_id]\']').find('option').remove();
+								$('[name=\'menu[parent_id]\']').html(data['parent']);
+								$(".treeContainer li.active").removeClass('active');
+							}
+						
+							$(Button).removeClass('btn-default').addClass('btn-warning');
+							$(Button).html($(Button).attr('text-copy'))
+							$("#menu-form").trigger("reset");
+							$("[name=\'menu[menu_id]\'").val(0);
+							formReset();
+						}
+					});
+				
+			}
+	
+			
+		});
+	
+	$(document).on('click','.btnCancel', function(e) {
+			e.preventDefault();
+			$("#menu-form").trigger("reset");
+			$("[name=\'menu[menu_id]\'").val(0);
+			$(".treeContainer li.active").removeClass("active");
+			formReset();
+		});
+
+	$(document).on('click','.quickdel', function(e) {
+			
+			if(!$('#by-modaler').length){appendToBody('2');}
+			
+			var id = $(this).attr("rel").replace("id_","");
+			$('#by-modaler .modal-body').html( "{{ message_delete }}" );
+			$('#by-modaler .modal-footer').html('<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ button_close }}</button><button type="button" id="btnDeleteTree" data-id="'+id+'" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>');
+			$("#menuid").attr('pform',$(this).parents('form').attr('nform'));
+			$("#menuid").val(id);
+			
+			
+			var moDelm = document.querySelector('#by-modaler');
+            var cmodal = new bootstrap.Modal(moDelm);
+            cmodal.show();
+            	
+			return false;
+		});
+	
+	$(document).on('click','.quickdisplay', function(e) {
+			e.preventDefault();
+			var M = $(this)
+			var Mval=1;
+			if($(M).find('i').hasClass('fa-eye')){
+				Mval=0;
+			}
+			$.ajax({
+					url: 'index.php?route=bytao/muser|hidemenu&user_token={{ user_token }}&mid='+$(this).attr('rel')+'&val='+Mval,
+					type: "POST",
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['success']){
+							if(Mval)
+							$(M).find('i').removeClass('fa-eye-slash').addClass('fa-eye')
+							else
+							$(M).find('i').removeClass('fa-eye').addClass('fa-eye-slash')
+						}
+						
+					}
+				});
+			
+			return false;
+		});
+
+	$(document).on('click','#btnDeleteTree', function(e) {
+			var id = $(this).attr('data-id');
+			var userId = $("#userID").val();
+			
+			$.ajax({
+					url: 'index.php?route=bytao/muser.deletemenu&user_token={{ user_token }}&id='+id+'&uid='+userId,
+					dataType: 'json',			
+					success: function(json) {
+						if(json['warning']){
+							alertDivided(json['warning'],'warning');
+						}
+					
+						if(json['success']){
+							$('#list_'+id).remove();
+							alertDivided(json['success'],'success');
+						}
+						
+						cmodal.hide();
+					
+					}
+				});
+		
+		});
+
+	$(document).on('click','.btnSave', function(e) {
+			e.preventDefault();
+			
+			parentName =   $(this).parents('form').attr('id');
+			uLang='';
+			$('.url-lang').each(function(){
+					uLang+= $(this).data('lang')+':'+$(this).val()+',';
+				});
+	
+			$('#menu-url').val(uLang);
+			var postData = $("#menu-form").serializeArray();
+			$.ajax({
+					url: 'index.php?route=bytao/muser.addnewmenu&user_token={{ user_token }}',
+					type: "POST",
+					data : postData,
+					success:function(data, textStatus, jqXHR) 
+					{
+						if(data['tree']){
+							$('#tree-part .treeContainer').html(data['tree']);
+							$("ol.sortable").nestedSortable({
+									forcePlaceholderSize: true,
+									handle: 'div',
+									helper:	'clone',
+									items: 'li',
+									opacity: .6,
+									placeholder: 'placeholder',
+									revert: 250,
+									tabSize: 25,
+									tolerance: 'pointer',
+									toleranceElement: '> div',
+									maxLevels: 4,
+
+									isTree: true,
+									expandOnHover: 700,
+									startCollapsed: true
+								});
+								
+						}
+						
+						if(data['parent']){
+							$('[name=\'menu[parent_id]\']').find('option').remove();
+							$('[name=\'menu[parent_id]\']').html(data['parent']);
+							$(".treeContainer li.active").removeClass('active');
+						}
+						
+						//$("#menu-form").trigger("reset");
+						formReset();
+					}
+				});
+			return false;
+		});
+
+	//-->
+</script>
+
+{{ footer }} 

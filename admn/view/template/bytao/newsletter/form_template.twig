@@ -1,0 +1,117 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+	<div id="page-content" class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		
+		{% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ heading_title }}</h3>
+			</div>
+			<div class="panel-body" >
+				<div class="row mb-3" >
+
+				<div class="col-sm-3">
+					{{ toolbar }}
+				</div>
+
+				<div class="col-sm-9">
+					<div class="heading">
+						<h3>{{ text_templates }}</h1>
+					</div>
+					<div class="toolbar">
+						<div class="pull-left pavbtn">
+							<a onclick="$('#form').submit();" class="btn btn-success">{{ button_save }}</a>
+							<a href="{{ cancel }}" class="btn btn-danger">{{ button_cancel }}</a>
+						</div>		
+					</div> 
+
+			 		<div class="content">
+						<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form">
+							<input type="hidden" name="template[template_id]" value="{{ template_id }}" />
+							<input type="hidden" name="action" id="action" value=""/>
+							<table class="table">
+									<tr>
+										<td colspan="2"><strong>{{ entry_general_template }}</strong></td>
+									</tr>
+									<tr>
+										<td>{{ entry_name }}</td>
+										<td><input class="form-control" type="text" name="template[name]" value="{{ template.name }}" size="50" /></td>
+									</tr>
+									<tr>
+										<td>{{ entry_sort_order }}</td>
+										<td><input class="form-control" type="text" name="template[ordering]" value="{{ template.ordering }}" size="3" /></td>
+									</tr>
+							</table>
+							<p><strong>{{ entry_template }}</strong></p> 
+							<div class="tab-panel">
+								<ul class="nav nav-tabs" id="language">
+									{% for language in languages  %}
+									<li><a href="#tab-language{{ language.language_id }}" data-toggle="tab"><img src="view/image/flags/{{ language.image }}" title="{{ language.name }}" /> {{ language.name }}</a></li>
+									{% endfor %}
+								</ul>
+								<ul class="nav nav-tabs" id="language">
+					                {% for language in languages %}
+					                <li class="nav-item"><a href="#tab-language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+					                {% endfor %}
+					              </ul>
+								<div class="tab-content">
+              					{% for language in languages %}
+									<div class="tab-pane" id="tab-language{{ language.language_id }}">
+										<table class="table">
+											<tr>
+												<td>{{ entry_subject }}</td>
+												<td><input class="form-control" name="template_description[subject][{{ language.language_id }}]" id="module_subject-1-{{ language.language_id }}" value="{{ template_description[language.language_id]['subject'] }}"/>
+													{% if  error.subject  %}
+													<span class="error">{{ error.subject }}</span>
+													{% endif %}
+												</td>
+											</tr>
+								
+											<tr>
+												<td>{{ entry_message }}</td>
+												<td>
+													{% if error.message %}
+													<span class="error">{{ error.message }}</span>
+													{% endif %}
+													<textarea name="template_description[template_message][{{ language.language_id }}]" id="template_message-1-{{ language.language_id }}">{{ template_description[language.language_id]['template_message'] }}</textarea><br/>
+													{{ text_template_help }}
+												</td>
+											</tr>
+									</table>
+									</div>
+									{% endfor %}
+								</div>
+							</div>
+
+
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$('#language li:first-child a').tab('show');
+
+	{% for language in languages %}
+	$('#template_message-1-{{ language.language_id }}').summernote({ height: 300 });
+	{% endfor %}
+</script> 
+
+
+{{ footer }}

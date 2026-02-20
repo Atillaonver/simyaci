@@ -1,0 +1,141 @@
+.account-login #main,.account-register #main {
+    padding-left: calc(12% + 149px)!important;
+    padding-right: calc(12% + 0px) !important;
+    padding-bottom: 145px;
+    padding-top: 69px;
+}
+content-main {
+    min-width: 580px;
+    clear: both;
+    margin: 0 auto;
+}
+.logon-page .sign-in, .logon-page #sign-up, .logon-page #persistent, .logon-page #guest-access,.logon-page > .sign-in-guest {
+    width: 48%;
+    display: inline-block;
+    float: left;
+}
+h1.head{
+	font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .9px;
+    color: #000;
+    padding: 0 0 30px;
+    background: 0 0;
+    display: table;
+    text-transform: uppercase;
+}
+form label {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 0.5em;
+    width: 130px;
+}
+form label.label-up {
+    float: none;
+    width: auto;
+}
+form .form-entry {
+    position: relative;
+}
+.logon-page form label, #user-area.recover-password-page form label, #user-area.reset-password-page form label, #user-area.sign-up-page form label, .order-request-donation-page form label {
+    opacity: .65;
+    font-size: 15px;
+    font-weight: 300;
+    margin-right: 8px;
+    width: 164px;
+    margin-bottom: 0;
+}
+
+
+
+form input[type="text"], form input[type="password"], form input[type="email"] {
+    width: 295px;
+    height: auto;
+    padding: 0 2px;
+    border: none;
+    border-bottom: 1px solid #afafaf;
+    margin-right: 10px;
+    vertical-align: middle;
+
+     font-size: 15px;
+    line-height: 26px;
+    font-weight: bold;
+    color: #000;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+.valid {
+    color: green;
+}
+
+.valid:before {
+    position: relative;
+    left: -35px;
+    content: "?";
+}
+.invalid {
+    color: red;
+}
+.invalid:before {
+    position: relative;
+    left: -35px;
+    content: "?";
+}
+form .form-control {
+    float: left;
+    width: 100%;
+    height: auto;
+    margin-top: 5px;
+    margin-bottom: 1em;
+}
+form label {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-bottom: 0.5em;
+    width: 130px;
+}
+form label.label-up {
+    float: none;
+    width: auto;
+}
+.logon-page form label, .recover-password-page form label, .reset-password-page form label, .sign-up-page form label, .order-request-donation-page form label {
+    opacity: .65;
+    font-size: 15px;
+    font-weight: 300;
+    margin-right: 8px;
+    width: 164px;
+    margin-bottom: 0;
+}
+.logon-page #forget-password-link {
+    margin-bottom: 36px;
+    padding-top: 22px;
+}
+.logon-page #forget-password-link {
+    text-decoration: underline;
+    color: #595959;
+    clear: both;
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+h2 {
+    padding-bottom: 20px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.logon-page h2 {
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#user-area.logon-page h2 {
+    font-size: 16px;
+}

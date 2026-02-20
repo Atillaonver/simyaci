@@ -1,0 +1,16 @@
+{% if status %}
+<script src="https://www.google.com/recaptcha/api.js?render={{ site_key }}"> </script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		setInterval(function() {
+			grecaptcha.ready(function() {
+				grecaptcha.execute('{{ site_key }}', {action: 'application_form'}).then(function(token) {
+					$('#g-recaptcha-response').val(token);
+					$('#action').val('application_form');
+				});
+			});
+		}, 3000);
+	});
+</script>
+{% endif %}

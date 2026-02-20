@@ -1,0 +1,89 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="home-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+        <button type="submit" form="form-footer" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+   <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-footer" action="{{ save }}" method="post" enctype="multipart/form-data">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
+            
+          </ul>
+          
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab-general">
+              <ul class="nav nav-tabs" id="language">
+                {% for language in languages %}
+                <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image|lower }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+              	{% for language in languages %}
+                <div class="tab-pane lan {% if loop.first %} active{% endif %}" id="language-{{ language.language_id }}" lid="{{ language.language_id }}">
+                	<div class="row mb-3 required">
+                      <label for="input-title-{{ language.language_id }}" class="col-sm-1 col-form-label">{{ entry_description }}</label>
+                      <div class="col-sm-11">
+                       {% for languageid , editor in editors %}
+                    	{% if languageid == language.language_id %}
+                       		{{ editor | html_entity_decode }}
+                    	{% endif %}    
+                    {% endfor %}    
+                       <div id="hidden-form" class="hidden"></div>
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+               </div>
+            </div>
+          	
+          </div>
+        </form>
+     </div>
+    </div>
+  </div>
+ </div> 
+  
+
+  <script type="text/javascript" src="view/bytao/js/summernote/summernote.js"></script>
+  <link href="view/bytao/js/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/bytao/js/summernote/summernote-image-attributes.js"></script> 
+  		
+  
+  <script type="text/javascript"><!--
+$(document).ready(function(){
+		$('#input-bottom').click(function(){
+			if($('#input-bottom').prop('checked')){
+				if($('.bottom-position').hasClass('hidden')){
+					$('.bottom-position').removeClass('hidden');
+				}
+			}else{
+				$('.bottom-position').addClass('hidden');
+			}
+		});
+		
+		$('#bottom-position').change(function(){
+			$('#input-bottom').val($(this).val())
+		});
+		
+});
+
+//--></script>
+<!-- editor JS -->
+{{ editJS|html_entity_decode }}
+{{ modals|html_entity_decode  }}
+
+{{ footer }} 

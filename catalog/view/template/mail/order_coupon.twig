@@ -1,0 +1,106 @@
+<html dir="ltr" lang="{{ language }}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{{ title }}</title>
+  
+  
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #000000;">
+<div style="width: 600px; margin:auto;">
+    <span class="Apple-converted-space">
+     <br />
+    </span>
+    <br>
+    <table cellpadding="2" cellspacing="2" border="0" bgcolor="#7E98A9">
+    	<tbody>    
+    		<tr>      
+    			<td width="320" height="35" align="center" valign="middle" bgcolor="#7E98A9" class="astonLINK">
+    				<a href="{{ store_url }}" class="astonLINK" style="color: rgb(0, 0, 0);">{{ store_name }}</a>
+    			</td>      
+    			<td width="320" rowspan="9" align="center" valign="middle" class="astonLINK"> 
+    				<table>
+
+						<tr>
+							<td>
+								<a href="{{ content.link }}" >
+									<img src="{{ content.image }}" alt="{{ content.name }}" />
+								</a>
+							</td>
+						</tr>
+						</table>
+    			</td>    
+    		</tr>
+    		<tr>      
+    			<td align="center" valign="middle" bgcolor="#7E98A9"><a href="{{ store_url }}">
+    				<img src="https://www.astonleather.com/image/catalog/aston/ASTON_complete_your_order-LOGO-plain.jpg" width="192" height="87" border="0"></a>
+    			</td>    
+    		</tr> 
+    		{% if  content.type == '1' %}
+	    		<tr>      
+	    			<td align="center" bgcolor="#7E98A9" class="complete">
+	    				<span class="freeshipping" style="color: rgb(0, 0, 0); font-size: 18px;">COMPLETE YOUR ORDER NOW!</span>
+	    			</td>
+	    		</tr>
+    		{% elseif content.type == '2' %}
+    			<tr>      
+	    			<td align="center" bgcolor="#7E98A9" class="complete">
+	    				<span class="freeshipping" style="color: rgb(0, 0, 0); font-size: 18px;">THANK YOU FOR SHOPPING WITH US<br>      Shop with us again and</span>
+	    			</td>
+	    		</tr>
+			{% elseif content.type == '3' %}
+			
+			{% else %}
+			    
+			{% endif %}
+    		<tr>
+    			<td height="50" align="center" bgcolor="#7E98A9" class="get15off"><span style="color: rgb(0, 0, 0); font-size: 18px;">{{ content.name }}</span>
+    			</td>    
+    		</tr>
+    		<tr>
+    			<td height="35" align="center" bgcolor="#7E98A9" class="offerENDS">
+    				<span class="freeshipping" style="color: rgb(255, 255, 255);">offer ends by {{ content.coupondate }} </span>
+    			</td>
+    		</tr>
+    		
+    		{% if  content.type == '1' %}
+	    		<tr>      
+	    			<td height="35" align="center" bgcolor="#7E98A9">
+	    				<a href="{{ store_url }}">
+							<img src="https://www.astonleather.com/image/catalog/aston/email/ast_comp_btn.jpg" alt="Complete Order">
+						</a>
+					</td>
+				</tr>
+    		{% elseif content.type == '2' %}
+	    		<tr>      
+	    			<td height="35" align="center" bgcolor="#7E98A9">
+	    				<a href="{{ store_url }}">
+							<img src="https://www.astonleather.com/image/catalog/aston/email/ast_comp_btn.jpg" alt="Complete Order">
+						</a>
+					</td>
+				</tr>
+			{% elseif content.type == '3' %}
+			
+			{% else %}
+			    
+			{% endif %}
+			    
+			<tr>      
+				<td height="35" align="center" bgcolor="#7E98A9" class="complete"><span class="freeshipping" style="color: rgb(255, 255, 255);">*FREE SHIPPING</span>
+				</td>    
+			</tr>    
+			<tr>      
+				<td align="center" bgcolor="#7E98A9" class="couponCODE"><br />
+				</td>    
+			</tr>    
+			<tr>      
+				<td align="center" bgcolor="#7E98A9" class="dipnot">
+				<span style="color: rgb(255, 255, 255);">{{ coupon_message }}</span>
+				</td>
+			</tr>  
+		</tbody>
+	</table>
+    
+  <p style="margin-top: 0px; margin-bottom: 20px;"></p>
+</div>
+</body>
+</html>

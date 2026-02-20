@@ -1,0 +1,103 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+        <button type="submit" form="form-analytics" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-outline-primary"><i class="fas fa-save"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-outline-secondary"><i class="fas fa-reply"></i></a>
+        <a href="{{ support_link }}" target="_blank" data-bs-toggle="tooltip" title="{{ button_support }}" class="btn btn-outline-warning"><i class="fas fa-life-ring"></i></a>
+      </div>
+    <h1>
+        {{ text_title }}
+        <div class="e-version" style="font-size: 12px;float: right;">v{{ e_version }}</div>
+        <div class="e-author" style="position: absolute;font-size: 12px;"><a href="{{ author_link }}" target="_blank">by {{ author_name }}</a></div>
+      </h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fas fa-pencil-alt"></i> {{ text_edit }}</div>
+      <div class="card-body">
+        <div class="alert alert-info" role="alert"><i class="fa fa-info-circle"></i> {{ text_set_up_ga }}
+          <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+          <span class="float-end"><i class="fas fa-chart-line"></i> {{ text_ecommerce }}&nbsp;&nbsp;&nbsp;</span>
+        </div>
+        <form id="form-analytics" action="{{ save }}" method="post" data-oc-toggle="ajax">
+          <div class="row mb-3">
+            <label for="checkbox-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+            <div class="col-sm-10">
+              <div class="form-check form-switch form-switch-lg">
+                <input name="analytics_google_status" value="1" class="form-check-input" type="checkbox" id="checkbox-status" {% if analytics_google_status %}checked="checked"{% endif %}>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="radio-type0" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+              <div class="btn-group" role="group" aria-label="">
+                <input type="radio" class="btn-check" value="0" name="analytics_google_type" id="radio-type-0" autocomplete="off" {% if analytics_google_type is null or analytics_google_type == 0 %}checked="checked"{% endif %}>
+                <label class="btn btn-outline-primary" for="radio-type-0">{{ text_measurement_id }}</label>
+                <input type="radio" class="btn-check" value="1" name="analytics_google_type" id="radio-type-1" autocomplete="off" {% if analytics_google_type == 1 %}checked="checked"{% endif %}>
+                <label class="btn btn-outline-primary" for="radio-type-1">{{ text_tracking_id }}</label>
+                <input type="radio" class="btn-check" value="2" name="analytics_google_type" id="radio-type-2" autocomplete="off" {% if analytics_google_type == 2 %}checked="checked"{% endif %}>
+                <label class="btn btn-outline-primary" for="radio-type-2">{{ text_code }}</label>
+              </div>
+            </div>
+          </div>
+          <div class="group-type-0 row mb-3" style="display: {% if analytics_google_type is null or analytics_google_type == 0 %}flex{% else %}none{% endif %};">
+            <label for="input-measurement-id" class="col-sm-2 col-form-label">{{ entry_measurement_id }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="analytics_google_measurement_id" value="{{ analytics_google_measurement_id }}" placeholder="G-XXXXXXXXXX" id="input-measurement-id" class="form-control"/>
+              <div class="form-text">{{ note_measurement_id }}</div>
+              <div id="error-measurement-id" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="group-type-1 row mb-3" style="display: {% if analytics_google_type == 1 %}flex{% else %}none{% endif %};">
+            <label for="input-tracking-id" class="col-sm-2 col-form-label">{{ entry_tracking_id }}</label>
+            <div class="col-sm-10">
+              <input type="text" name="analytics_google_tracking_id" value="{{ analytics_google_tracking_id }}" placeholder="UA-XXXXXXXX-X" id="input-tracking-id" class="form-control"/>
+              <div class="form-text">{{ note_tracking_id }}</div>
+              <div id="error-tracking-id" class="invalid-feedback"></div>
+            </div>
+          </div>
+          <div class="group-type-2 row mb-3" style="display: {% if analytics_google_type == 2 %}flex{% else %}none{% endif %};">
+            <label for="input-code" class="col-sm-2 col-form-label">{{ entry_code }}</label>
+            <div class="col-sm-10">
+              <textarea name="analytics_google_code" rows="9" placeholder="{{ entry_code }}" id="input-code" class="form-control">{{ analytics_google_code }}</textarea>
+              <div id="error-tracking-id"  class="invalid-feedback"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(document).on('click', 'input[name=\'analytics_google_type\']', function (e) {
+        $('div[class^=\'group-type-\']').hide();
+        $('.group-type-' + $(this).val()).show();
+    });
+    $(document).on('change', 'input[name=\'analytics_google_status\']', function (e) {
+        if ($(this).is(':checked')) {
+            $(this).attr('checked', true);
+        } else {
+            $(this).attr('checked', false);
+        }
+    });
+</script>
+<style>
+  .form-switch .form-check-input {
+    cursor: pointer;
+  }
+  .form-switch .form-check-input:checked {
+    background-color: #32cd32;
+    border-color: #32cd32;
+  }
+</style>
+{{ footer }}

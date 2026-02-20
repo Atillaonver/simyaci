@@ -1,0 +1,79 @@
+
+<div class="row mb-3">
+	<label class="col-sm-2 col-form-label">{{ entry_banner_id }}</label>
+	<div class="col-sm-10">
+	  <input type="text" name="item" value="" placeholder="{{ entry_banner_id }}" id="input-item" data-oc-target="autocomplete-item" class="form-control" autocomplete="off"/>
+	  <ul id="autocomplete-item" class="dropdown-menu"></ul>
+	  <div class="input-group">
+	    <div class="form-control p-0" style="height: 150px; overflow: auto;">
+	      <table id="items" class="table table-sm m-0">
+	        <tbody>
+	          {% for item in items %}
+		          {% if item.item_id  %}
+		            <tr id="slider-item-{{ item.item_id }}">
+		              <td>{{ item.title }}<input type="hidden" name="items[]" value="{{ item.item_id }}" class="fItem" title="{{ item.title }}"  /></td>
+		              <td class="text-end"><button type="button" class="btn remove btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+		            </tr>
+		          {% endif %}
+	          {% endfor %}
+	        </tbody>
+	      </table>
+	    </div>
+	  </div>
+	  <div class="form-text">{{ help_layerslider }}</div>
+	</div>
+</div>
+
+
+<script type="text/javascript"><!--
+
+        $(document).on('input','#input-item',function(e){
+		e.preventDefault();
+			$.ajax({
+		            url: 'index.php?route=bytao/layerslider.groupautocomplete&user_token={{ user_token }}&filter_status=1&filter_name=' + encodeURIComponent($(this).val()),
+		            dataType: 'json',
+		            beforeSend: function () {
+			            $('#autocomplete-loading').remove();
+                		$('#autocomplete-item').prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+                		$('#autocomplete-item').addClass('show');
+			        },
+			        complete: function () {
+			            
+			        },
+		            success: function (json) {
+	            		var html = '';
+					    var i = 0, j = 0;
+					    if (json.length) {
+					        for (i = 0; i < json.length; i++) {
+					        	html += '<li><a href="' + json[i]['item_id'] + '" class="dropdown-item">' + json[i]['item_name'] + '</a></li>';
+					        }
+					    }
+    					$('#autocomplete-item').html(html);
+			        }
+		        });
+		}).on('focusout', function (e) {
+                if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
+                    $('#autocomplete-item').removeClass('show');
+                }
+            });
+
+
+$('#autocomplete-item').on("click", "a", function (e) {
+    e.preventDefault();
+	var tLabel = $(this).html();
+	var tLink = $(this).attr('href');
+	
+	 $('#item-' + tLink).remove();
+
+        html = '<tr id="slider-item-' + tLink + '">';
+        html += '  <td><span class="label">' + tLabel + '</span><input type="hidden" name="items[]" value="' + tLink + '" class="fItem" title="' + tLabel + '"/></td>';
+        html += '  <td class="text-end"><button type="button" class="btn remove btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
+        html += '</tr>';
+
+        $('#items tbody').append(html);
+		$('#autocomplete-item').removeClass('show');
+		$('#input-item').html('')
+});            
+//--></script>            
+
+      

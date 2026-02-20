@@ -1,0 +1,37 @@
+{% if general_stores|length > 0 %}
+
+<div class="linkstores">
+	{% if gID == '1' %}
+		
+			<div class="store-search">
+		        <input type="text" name="filter_store" value="" placeholder="Site" id="input-store-search" class="">
+			</div>
+		
+	{% endif %}
+	
+	<div class="store-container">
+		<div class="store-content">
+     {% for store in general_stores %}
+          <div class="{% if store_id == store.store_id %} active {% endif %}top-store-div" data-storeid="{{ store.store_id }}" data-storetype="{{ store.sitetype }}" title="{{ store.name }}">{% if store.logo %}<img src="{{ store.logo }}" class="top-store-logo" alt=""/>{% else %}{{ store.name }}{% endif %} 
+          {% if store.sitetype in [12] %}<div class="top-store-order"><i class="fas fa-shopping-cart">{% if not store.order %}{{ store.order }}{% endif %}</i></div>{% endif %}
+          {% if store.sitetype in [12,23,34] %}<div class="top-store-customer"><i class="fas fa-user">{% if not store.customer %}{{ store.customer }}{% endif %}</i></div>{% endif %}
+          {% if store_id == store.store_id %}
+		<div style="position:relative;top: 10px;margin-top: -86px;margin-left: 71px;"> 
+			<a class="store-link" href="{{ store.url }}" target="_blank">
+				<i class="fa-solid fa-eye"></i>
+			</a>
+		</div>
+<div style="position:relative;bottom: 10px;margin-top: -20px;margin-left: 71px;"> 
+			<a class="store-link" href="{{ store.edit }}">
+				<i class="fa-solid fa-gear"></i>
+			</a>
+		</div>
+
+	   {% endif %}
+          </div>
+     {% endfor %}
+     
+		</div>
+	</div>
+</div>
+{% endif %}

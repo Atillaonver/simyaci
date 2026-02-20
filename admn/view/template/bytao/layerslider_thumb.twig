@@ -1,0 +1,33 @@
+{% for slider in sliders %}
+
+<div class="slider-item" data-id="{{ slider.layerslider_id }}" id="slider-item-{{ slider.layerslider_id }}" >
+	<a class="image" href="#" data-layer_id="{{ slider.layerslider_id }}">
+		<img class="slayt-img-responsive" src="{{ slider.image }}" height="86"/>
+	</a>
+	<a  title="{{ text_clone_this }}" class="slider-clone" href="#" data-layer_id="{{ slider.layerslider_id }}">
+		<span>
+			{{ button_clone }}
+		</span>
+	</a>
+	<a  title="{{ text_delete_this }}" class="slider-delete" href="#" data-layer_id="{{ slider.layerslider_id }}">
+		<span>
+			{{ button_delete }}
+		</span>
+	</a>
+	<a  title="{{ text_change_this }}" class="slider-change-language" href="#" data-layer_id="{{ slider.layerslider_id }}">
+		<span>
+			{{ button_change }}
+		</span>
+	</a>
+
+	<a class="slider-status{% if not slider.status %} slider-status-off {% endif %}" href="#" data-layer_id="{{ slider.layerslider_id }}">
+		<span>
+			{{ text_status }}
+		</span>
+	</a>
+	<div>
+		{{ slider.title }}
+	</div>
+</div>
+
+{% endfor %}

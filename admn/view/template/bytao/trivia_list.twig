@@ -1,0 +1,51 @@
+<form id="form-trivia" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="trivia">
+	<div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"></td>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{{ column_image }}</td>
+                  <td class="text-left">{{ column_name }}</td>
+                  <td class="text-left">{{ column_status }}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if items %}
+                {% for trivia in items  %}
+                <tr data-id="{{ trivia.trivia_id }}" data-order="{{ trivia.sort_order }}">
+                	<td><!--<i class="fa-solid fa-up-down-left-right"></i>--></td>
+                  <td class="text-center">
+                  	
+                  	{% if trivia.trivia_id in selected|keys %}
+                    <input type="checkbox" name="selected[]" value="{{ trivia.trivia_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ trivia.trivia_id }}" />
+                    {% endif %}
+                    </td>
+                  <td class="text-start"><img src="{{ trivia.thumb }}" alt="" class="list-img"/></td>  
+                  <td class="text-left">{{ trivia.name }}</td>
+                  <td class="text-left">{{ trivia.status }}</td>
+                  <td class="text-right">
+                  <span style="padding-right: 30px;"> <a href="{{ trivia.manage }}" data-toggle="tooltip" title="AKTİF OTURUM" class="btn btn-success {{ quest.status_val== '1' ?'':'hidden' }}"><i class="fa fa-desktop"> </i></a> </span> 
+                  <span style="padding-right: 30px;"> <a href="{{ trivia.view }}" data-toggle="tooltip" title="KATILIMCILAR" class="btn btn-warning "><i class="fa fa-user"> K</i></a> </span> <span style="padding-right: 30px;" class="{{ trivia.status_val== '1' ?'':'hidden' }}"> <a href="{{ trivia.run }}" target="RUN" data-toggle="tooltip" title="BAŞLAT" class="btn btn-success "><i class="fa fa-play"> </i></a> </span> <a href="{{ trivia.questions }}" data-toggle="tooltip" title="SORULAR" class="btn btn-primary"><i class="fa fa-plus"> S</i></a> <a href="{{ trivia.edit }}" data-toggle="tooltip" title="DÜZENLE" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                {% endfor %}
+                {%  else %}
+                <tr>
+                  <td class="text-center" colspan="4">{{ text_no_results }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+	<div class="row">
+		<div class="col-sm-6 text-start">
+			{{ not filter_all?pagination:'' }}
+		</div>
+		<div class="col-sm-6 text-end">
+			{{ results }}
+		</div>
+	</div>
+</form>

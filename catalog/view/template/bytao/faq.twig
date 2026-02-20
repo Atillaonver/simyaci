@@ -1,0 +1,45 @@
+{{ header }}
+
+<section class="software_service_area sec_pad">
+        <div class="container">
+            <div class="sec_title text-center mb_70 wow fadeInUp" data-wow-delay="0.2s"
+                style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                <h2 class="f_p f_size_30 l_height50 f_600 t_color3">{{ heading_title }}</h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <ul class="nav nav-tabs software_service_tab" id="myTab" role="tablist">
+                    	{% if rows %}
+						{% for ROW in rows %}
+                        <li class="nav-item">
+                            <div class="nav-link {{ loop.first ? 'active':'' }}" id="de-tab-{{ ROW.faq_id }}" data-bs-toggle="tab" data-bs-target="#de-tab-pane-{{ ROW.faq_id }}"
+                                role="tab" aria-controls="de-tab-{{ ROW.faq_id }}" aria-selected="false">{{ ROW.question }}</div>
+                        </li>
+                        {% endfor %}
+						{% endif %}
+                        
+                    </ul>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <div class="tab-content software_service_tab_content">
+                    	{% if rows %}
+						{% for ROW in rows %}
+						
+                        <div class="tab-pane fade {{ loop.first ? 'active show':'' }}" id="de-tab-pane-{{ ROW.faq_id }}" role="tabpanel" aria-labelledby="de-tab">
+                            <div class="row f_400 f_size_16 text-center">
+                                {{ ROW.ansver|html_entity_decode }}
+                                {% if ROW.image %}
+                                <img src="{{ HTTP_IMAGE ~ ROW.image }}" alt="{{ ROW.question|html_entity_decode }}" class="faq-image" />
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+						{% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{{ footer }}

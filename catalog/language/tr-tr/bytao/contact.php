@@ -1,0 +1,33 @@
+<?php
+
+
+// Heading
+$_['heading_title']  = 'İLETİŞİM';
+
+// Text
+$_['text_location']  = 'Konum Bilgilerimiz';
+$_['text_store']     = 'Mağazalarımız';
+$_['text_contact']   = 'İletişim Formu';
+$_['text_address']   = 'Adres:';
+$_['text_telephone'] = 'Telefon:';
+$_['text_fax']       = 'Faks:';
+$_['text_email']       = 'Email:';
+$_['text_open']      = 'Çalışma Saatleri';
+$_['text_comment']   = 'Açıklamalar';
+$_['text_success']   = '<p>Mesajınız başarıyla gönderildi!</p><p>En kısa sürede size geri dönüş yapılacaktır.</p>';
+
+// Entry
+$_['entry_name']     = 'Adınız(Gerekli)';
+$_['entry_email']    = 'E-Posta (Gerekli)';
+$_['entry_enquiry']  = 'Mesajınız (Gerekli)';
+$_['entry_subject']  = 'Konu';
+
+
+// Email
+$_['email_subject']  = '%s Mesaj Gönderdi: %s';
+
+// Errors
+$_['error_captcha']  = 'Sen Nasıl İnsansın:%s score:%s !';
+$_['error_name']     = 'Ad 3 ile 32 karakter arasında olmalı!';
+$_['error_email']    = 'E-Posta Adresi geçersiz!';
+$_['error_enquiry']  = 'Mesajınız 10 ile 3000 karakter arasında olmalı!';

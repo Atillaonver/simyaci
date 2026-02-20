@@ -1,0 +1,353 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+<div class="page-header">
+	<div class="container-fluid">
+		<div class="pull-right">
+			<button type="submit" form="form-pslide" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+			<a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+		<h1>{{ heading_title }}</h1>
+		<ul class="breadcrumb">
+			{% for breadcrumb in breadcrumbs %}
+			<li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+<div class="container-fluid">{% if error_warning %}
+	<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+	</div>
+	{% endif %}
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
+		</div>
+		<div class="panel-body">
+			<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-pslide" class="form-horizontal">
+				<div class="form-group required">
+					<label class="col-sm-2 control-label" for="input-status">{{ entry_title }}</label>
+					<div class="col-sm-10">
+						{% for language in languages %}
+						<div class="input-group pull-left">
+							<span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>
+							<input type="text" name="pslide_description[{{ language.language_id }}][title]" value="{% if pslide_description[language.language_id] %} {{ pslide_description[language.language_id].title }} {% endif %}" placeholder="{{ entry_title }}" class="form-control" />
+						</div>
+	                  
+						{% if error_pslide_description[language.language_id] %}
+						<div class="text-danger">{{ error_pslide_description[language.language_id] }}</div>
+						{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+        
+          
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+					<div class="col-sm-10">
+						<select name="status" id="input-status" class="form-control">
+							{% if status %}
+							<option value="1" selected="selected">{{ text_enabled }}</option>
+							<option value="0">{{ text_disabled }}</option>
+							{%  else %}
+							<option value="1">{{ text_enabled }}</option>
+							<option value="0" selected="selected">{{ text_disabled }}</option>
+							{% endif %}
+						</select>
+					</div>
+				</div>
+				<style>
+	
+					#images { 
+						list-style-type: none; 
+						margin: 0; 
+						padding: 0; }
+					#images li { 
+						position:relative;
+						margin: 0 3px 3px 3px; 
+						padding: 0.4em; 
+						padding-left: 1.5em; 
+						font-size: 1.4em;
+						width: 100%; }
+					#images > li > span { 
+						position: absolute; 
+						margin-left: -1.3em; }
+					#images > li > span.action { 
+						margin-left:auto;
+						right: 8px;
+    					top: 6px;}
+					div.titles{ padding-top:33px;}
+					.col-sm-6.selected {
+					    background-color: #efefef;
+					}
+					.col-thumb {
+					    text-align: center;
+					    padding-bottom: 24px;
+					}
+					.ui-icon{
+						cursor:move;
+					}
+				</style>
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="input-status">{{ entry_container }}</label>
+					<div class="col-sm-10">
+						<ul id="images" class="ul-container border-info">
+							{% set image_row = 0 %}
+             
+							{% for pslide_prod in pslide_prods %}
+							<li id="image-row{{ image_row }}" class="ui-state-default">
+								<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+								<div class="form-group">
+									<div class="col-sm-5">
+										<div class="row">
+											<div class="col-sm-6">
+												<div class="radio col-title">
+													<label> <input type="radio" name="pslide_prod[{{ image_row }}][position]" value="0" {% if not pslide_prod.position %} checked="checked" {% endif %} />{{ text_col_left }}</label>
+												</div>
+												<div class="col-thumb">
+													<a href="" id="thumb-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ pslide_prod.thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+													<input type="hidden" name="pslide_prod[{{ image_row }}][image]" value="{{ pslide_prod.image }}" id="input-image{{ image_row }}" />
+												</div>	
+	                				
+	                  		
+											</div>
+											<div class="col-sm-6">
+												<div class="radio col-title">
+													<label> <input type="radio" name="pslide_prod[{{ image_row }}][position]" value="1" {% if pslide_prod.position %} checked="checked" {% endif %} />{{ text_col_right }}</label>
+												</div>
+												<div class="col-thumb">
+													<a href="" id="thumb-mobile-image{{ image_row }}" data-toggle="image" class="img-thumbnail"><img src="{{ pslide_prod.thumb2 }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+													<input type="hidden" name="pslide_prod[{{ image_row }}][image2]" value="{{ pslide_prod.image2 }}" id="input-mobile-image{{ image_row }}" />	
+		                				
+												</div>
+	                				
+											</div>
+										</div>
+										<input type="text" name="pslide_prod[{{ image_row }}][url]" value="{{ pslide_prod.url }}" placeholder="{{ entry_link }}" class="form-control" />
+									</div>
+									<div class="col-sm-7 titles">
+										<input type="hidden" class="sort-order" name="pslide_prod[{{ image_row }}][sort_order]" value="{{ image_row }}"/>
+										{% for language in languages %}
+										<div class="input-group pull-left">
+											<span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>
+											<input type="text" name="pslide_prod[{{ image_row }}][pslide_prod_description][{{ language.language_id }}][title]" value="{% if pslide_prod.pslide_prod_description[language.language_id] %} {{ pslide_prod.pslide_prod_description[language.language_id].title }} {% endif %}" placeholder="{{ entry_title }}" class="form-control" />
+										</div>
+										
+										<div class="input-group pull-left">
+											<span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>
+											<input type="text" name="pslide_prod[{{ image_row }}][pslide_prod_description][{{ language.language_id }}][title2]" value="{% if pslide_prod.pslide_prod_description[language.language_id] %} {{ pslide_prod.pslide_prod_description[language.language_id].title2 }} {% endif %}" placeholder="{{ entry_title }}" class="form-control" />
+										</div>
+	                  					<br/>
+										{% if  error_pslide_prod[image_row][language.language_id] %}
+										<div class="text-danger">{{ error_pslide_prod[image_row][language.language_id] }}</div>
+										{% endif %}
+										
+										{% endfor %}
+                   		
+                   		
+                   		
+                   		
+                   		
+									</div>
+								</div>
+								<span width="20" class="action">
+									<button type="button" onclick="$('#image-row{{ image_row }},.tooltip').remove(); " title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus"></i></button></span>
+							</li>
+							{% set image_row = image_row + 1   %}
+							{%  endfor %}
+          		
+						</ul>
+						<button type="button" onclick="addImage();" title="{{ button_add }}" class="btn btn-success pull-right"><i class="fa fa-plus-circle"></i></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+  
+
+  
+<script type="text/javascript"><!--
+
+
+$(document).ready(function() {
+		$(document).on('click','#button-sellect',  function(e) { 
+	
+				$.ajax({
+						url: 'index.php?route=common/filemanager&user_token={{ user_token }}',
+						type: 'post',
+						dataType: 'json',
+						data: $('input[name^=\'path\']:checked'),
+						beforeSend: function() {
+							$('#button-delete').prop('disabled', true);
+						},
+						complete: function() {
+							$('#button-delete').prop('disabled', false);
+						},
+						success: function(json) {
+							if (json['error']) {
+								alert(json['error']);
+							}
+
+							if (json['images']) {
+					
+								$.each(json['images'], function(i, item) {
+										addImages( item.path,item.thumb );
+									})
+							}
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+
+				$('.popover').remove();
+				$('#modal-image').modal('hide');
+			});
+  
+	});
+
+//--></script>
+
+
+<script type="text/javascript"><!--
+var selectedOne = 0;
+$(document).on('click','a.thumbnail',  function(e) {
+		e.preventDefault();
+		if($(this).parent().parent().hasClass('selected')){
+			if($(this).data('path')){
+				if(selectedOne==0){
+					addImages($(this).data('path'),$(this).data('thumb'));
+				}
+					
+				$('.popover').remove();
+				$('#modal-image').modal('hide');
+			}
+		}else{
+			$(this).parent().parent().find(' input[type=radio]').attr('checked','checked');
+			selected();
+			
+		}
+		
+		return false;
+	});
+	
+	$(document).on('click','a.img-thumbnail',  function(e) {
+		if($(this).parent().parent().hasClass('selected')){
+			
+		}else{
+			
+			$(this).parent().parent().find(' input[type=radio]').attr('checked','checked');
+			selected();
+			e.preventDefault();
+		}
+	});
+//--></script>
+
+<script type="text/javascript"><!--
+$(document).ready(function ()
+	{
+		sortable();
+		selected();
+		$(document).on('click','.col-title input[type=radio]',function(){
+			selected();
+		})
+		$(document).on( "sortupdate", "#images",  function( event, ui ) {
+			$( ".sort-order" ).each(function(index, element) {
+				$( this ).val(index);
+			});
+		} );
+		
+	});
+	
+function selected(){
+	$('.col-title input[type=radio]').each(function(e){
+				if($( this ).prop( "checked" )){
+					$(this).parents('.col-title').parent().addClass('selected')
+				}else{
+					$(this).parents('.col-title').parent().removeClass('selected')
+				}
+			});
+}
+function sortable(){
+	$('#images').sortable({
+			handle: ".ui-icon",
+			placeholder: "ui-state-highlight",
+			pullPlaceholder:'true',
+			onDrop:function ($item, container, _super, event) {
+				$item.removeClass("dragged").removeAttr("style")
+				$("body").removeClass("dragging")
+				updatesort();
+			}
+		});
+	$('#images').disableSelection();
+	
+}	
+
+function updatesort(){
+	$( ".sort-order" ).each(function(index, element) {
+		$( this ).val(index);
+	});
+}
+//--></script>
+
+<script type="text/javascript"><!--
+
+var image_row = {{ image_row }};
+
+function addImage() {
+	
+	
+	html  = '<li id="image-row' + image_row + '" class="ui-state-default">';
+	html += '<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>';
+	html += '<div class="form-group">';
+	html += '<div class="col-sm-5">';
+	html += '<div class="row">';
+	html += '<div class="col-sm-6">';
+	html += '<div class="radio col-title">';
+	html += '<label> <input type="radio" name="pslide_prod[' + image_row + '][position]" value="0" checked="checked"/>{{ text_col_left }}</label>';
+	html += '</div>';
+	html += '<div class="col-thumb">';
+	html += '<a href="" id="thumb-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>';
+	html += '<input type="hidden" name="pslide_prod[' + image_row + '][image]" value="" id="input-image' + image_row + '" />';
+	html += '</div>	';
+	html += '</div>';
+	html += '<div class="col-sm-6">';
+	html += '<div class="radio col-title">';
+	html += '<label> <input type="radio" name="pslide_prod[' + image_row + '][position]" value="1"/>{{ text_col_right }}</label>';
+	html += '</div>';
+	html += '<div class="col-thumb">';
+	html += '<a href="" id="thumb-mobile-image' + image_row + '" data-toggle="image" class="img-thumbnail"><img src="{{ placeholder }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>';
+	html += '<input type="hidden" name="pslide_prod[' + image_row + '][image2]" value="" id="input-mobile-image' + image_row + '" />	';
+	html += '</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '<input type="text" name="pslide_prod[' + image_row + '][url]" value="" placeholder="{{ entry_link }}" class="form-control" />';
+	html += '</div>';
+	html += '<div class="col-sm-7 titles">';
+	html += '<input type="hidden" class="sort-order" name="pslide_prod[' + image_row + '][sort_order]" value="' + image_row + '"/>';
+	{% for language in languages %}
+	html += '<div class="input-group">';
+	html += '<span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>';
+	html += '<input type="text" name="pslide_prod[' + image_row + '][pslide_prod_description][{{ language.language_id }}][title]" value="" placeholder="{{ entry_title }}1" class="form-control" />';
+	html += '</div>';
+	html += '<div class="input-group">';
+	html += '<span class="input-group-addon"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> </span>';
+	html += '<input type="text" name="pslide_prod[' + image_row + '][pslide_prod_description][{{ language.language_id }}][title2]" value="" placeholder="{{ entry_title }}2" class="form-control" />';
+	html += '</div>';
+	html += '<br/>';
+	
+	{% endfor %}
+    html += '</div>';
+	html += '</div>';
+	html += '<span width="20" class="action">';
+	html += '<button type="button" onclick="$(this).parents(\'li\').remove(); " title="{{ button_remove }}" class="btn btn-danger"><i class="fa fa-minus"></i></button></span>';
+	html += '</li>';
+	
+	$('#images').append(html);
+	selected();
+	image_row++;
+}
+
+//--></script></div>
+{{ footer }}

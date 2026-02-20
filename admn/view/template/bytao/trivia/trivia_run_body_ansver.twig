@@ -1,0 +1,59 @@
+<div class="head row">
+	<div class="col-md-3 lefted">
+		{% if trivia %}
+			<img src="{{ trivia }}" alt="{{ trivia }}" />
+		{% else %}
+			<img src="{{ trivia_logo }}" alt="{{ trivia_logo }}"  />
+		{% endif %}
+	</div>
+	<div class="col-md-6 centered title"> <span id="quest">{{ title }}</span></div>
+	<div class="col-md-3 righted">
+		{% if logo %}
+		<img src="{{ logo }}" />
+		{% endif %}
+	</div>
+</div>
+<div class="body body-content">
+{% if correct_image %}
+	<div class="col-md-6 ans-img-div" id="ans-img-div" style="height: 100%">
+	<table width="100%" height="100%" align="center" valign="center">
+   <tr><td>
+      <img src="{{ correct_image }}" class="theImg" />
+   </td></tr>
+   </table>
+   </div>
+	 <div class="col-md-6 ans-div center" style="height: 100%">
+	 <table width="100%" height="100%" align="left" valign="center">
+   <tr><td>
+   	
+			{{ answer_a ? correct|upper ~ answer_a :'' }}
+			{{ answer_b ? correct|upper ~ answer_b :'' }}
+			{{ answer_c ? correct|upper ~ answer_c :'' }}
+			{{ answer_d ? correct|upper ~ answer_d :'' }}
+	  
+   </td></tr>
+   </table>
+	</div>
+{% else %}
+	 <div class="ans-div">
+	 		{{ answer_a ? correct|upper ~ answer_a :'' }}
+			{{ answer_b ? correct|upper ~ answer_b :'' }}
+			{{ answer_c ? correct|upper ~ answer_c :'' }}
+			{{ answer_d ? correct|upper ~ answer_d :'' }}
+	</div>
+
+{% endif %}
+
+</div>
+<div class="foot row">
+	<div class="col-md-3">
+	</div>
+	<div class="col-md-6 centered counter">
+		<span class="btn-left by-btn" data-by-toggle="ajax" data-by-href="index.php?route=bytao/trivia|{{ board?'board':( topboard ? 'topboard':'nextq' ) }}&user_token={{ user_token }}&trivia_id={{ trivia_id }}&equal={{ equal }}">
+			<i class="arrow arrow-right">
+			</i>
+		</span>
+	</div>
+	<div class="col-md-3">
+	</div>
+</div>

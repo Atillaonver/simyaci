@@ -1,0 +1,5 @@
+{% if allcss %}
+	{% for css in allcss %}
+<link href="{{ base }}cdn/css/bytao-{{ css.name }}.css" type="text/css" rel="stylesheet" media="screen" />
+	{% endfor %}
+{% endif %} 

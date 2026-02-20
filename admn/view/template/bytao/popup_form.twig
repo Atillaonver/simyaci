@@ -1,0 +1,192 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        <button type="submit" form="form-popup" formaction="{{ save }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+    <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+        <form id="form-popup" method="post" data-oc-toggle="ajax">
+          <input type="hidden" name="popup_id" value="{{ popup_id }}" id="popupId"/>
+          <legend class="type0{{ popup_type=='0' ?:' hidden' }}">Popup show Image</legend>
+          <legend class="type1{{ popup_type=='1' ?:' hidden' }}">Popup show Text content</legend>
+          <legend class="type2{{ popup_type=='2' ?:' hidden' }}">Popup show Form and Send Coupon</legend>
+          
+          <div class="row mb-3 type0{{ popup_type=='0' ?' show' }}">
+	              <label for="input-image" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+	              <div class="col-sm-10">
+	               <div class="card image">
+	                      <img src="{{ thumb }}" alt="" title="" id="image" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ image }}" id="input-image"/>
+	                      <div class="card-body">
+	                        <button type="button" data-oc-toggle="image" data-oc-target="input-image" data-oc-thumb="#image" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+	                        <button type="button" data-oc-toggle="clear" data-oc-target="input-image" data-oc-thumb="#image" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+	                      </div>
+	                    </div>
+	              </div>
+	        </div>
+	        <div class="row mb-3">
+                <label for="input-name" class="col-sm-2 col-form-label">{{ entry_name }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
+                </div>
+              </div>
+	        <div class="row mb-3">
+                <label for="input-status" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+                    <input type="hidden" name="status" value="0"/>
+                    <input type="checkbox" name="status" value="1" id="input-status" class="form-check-input"{% if status %} checked{% endif %}/>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label for="input-status" class="col-sm-2 col-form-label">{{ entry_type }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+	                <select name="popup_type" class="form-control" id="popup_type">
+	                  	<option value="0" {{ popup_type==0 ? 'selected="selected"' }}>Image + Link</option>
+	                  	<option value="1" {{ popup_type==1 ? 'selected="selected"' }}>Form + Campaign</option>
+	                  	<option value="2" {{ popup_type==2 ? 'selected="selected"' }}>Form + Coupon</option>
+	                </select>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mb-3">
+                <label for="input-status" class="col-sm-2 col-form-label">{{ entry_type }}</label>
+                <div class="col-sm-10">
+                  <div class="form-check form-switch form-switch-lg">
+	                <select name="customer_group_id" class="form-control">
+	                	<option value="0" {{ popup_type==0 ? 'selected="selected"' }}>{{ text_for_all }}</option>
+                		{% for customer_group in customer_groups %}
+                			<option value="{{ customer_group.customer_group_id }}" {{ customer_group.customer_group_id==customer_group_id ? 'selected="selected"' }}>{{ customer_group.name }}</option>
+                		{% endfor %}
+	                		
+	                </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-date-start" class="col-sm-2 col-form-label">{{ entry_date_start }}</label>
+                <div class="col-sm-10 col-md-4">
+                  <div class="input-group">
+                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" id="input-date-start" class="form-control date"/>
+                    <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-date-end" class="col-sm-2 col-form-label">{{ entry_date_end }}</label>
+                <div class="col-sm-10 col-md-4">
+                  <div class="input-group">
+                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" id="input-date-end" class="form-control date"/>
+                    <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="input-link" class="col-sm-2 col-form-label">{{ entry_link }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="link" value="{{ link }}" placeholder="{{ entry_link }}" id="input-link" class="form-control"/>
+                </div>
+              </div>
+              
+              <ul class="nav nav-tabs">
+                {% for language in languages %}
+                  <li class="nav-item"><a href="#language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+              	 {% for language in languages %}
+                  <div id="language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">
+			        <div class="row mb-3">
+		              <label for="input-description-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_description }}</label>
+		              <div class="col-sm-10">
+		                <div id="input-description-{{ language.language_id }}">
+		                  <textarea name="popup_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" data-oc-toggle="ckeditor" data-lang="{{ ckeditor }}" class="form-control">{{ popup_description[language.language_id] ? popup_description[language.language_id].description }}</textarea>
+		                </div>
+		              </div>
+		            </div>
+		            <div class="row mb-3">
+		                <label for="input-status-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_status }}</label>
+		                <div class="col-sm-10">
+		                  <div class="form-check form-switch form-switch-lg">
+		                    <input type="hidden" name="popup_description[{{ language.language_id }}][status]" value="0"/>
+		                    <input type="checkbox" name="popup_description[{{ language.language_id }}][status]" value="1" id="input-status-{{ language.language_id }}" class="form-check-input"{% if popup_description[language.language_id].status %} checked{% endif %}/>
+		                  </div>
+		                </div>
+		              </div>
+		            <div class="row mb-3 type0{{ popup_type=='0' ?' show' }}">
+		              <label for="input-image-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_image }}</label>
+		              <div class="col-sm-10">
+		               <div class="card image">
+		                      <img src="{{ popup_description[language.language_id].thumb?popup_description[language.language_id].thumb:placeholder }}" alt="" title="" id="image-{{ language.language_id }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="popup_description[{{ language.language_id }}][image]" value="{{ popup_description[language.language_id].image }}" id="input-image-{{ language.language_id }}"/>
+		                      <div class="card-body">
+		                        <button type="button" data-oc-toggle="image" data-oc-target="input-image-{{ language.language_id }}" data-oc-thumb="#image-{{ language.language_id }}" class="btn btn-primary btn-sm btn-block"><i class="fa-solid fa-pencil"></i> {{ button_edit }}</button>
+		                        <button type="button" data-oc-toggle="clear" data-oc-target="input-image-{{ language.language_id }}" data-oc-thumb="#image-{{ language.language_id }}" class="btn btn-warning btn-sm btn-block"><i class="fa-regular fa-trash-can"></i> {{ button_clear }}</button>
+		                      </div>
+		                    </div>
+		              </div>
+		        	</div>
+		            
+		            
+		        </div>
+                {% endfor %}    	
+           	</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+<link href="../cdn/js/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" />
+<script type="text/javascript" src="../cdn/js/fancybox/jquery.fancybox-1.3.4.js"></script>   		
+  
+  
+  <script type="text/javascript"><!--
+ $('textarea[data-oc-toggle=\'ckeditor\']').ckeditor({
+    language: '{{ ckeditor }}'
+});
+
+$(document).on('change','#popup_type',function(){
+	$('#row'+$(this).attr('parent')+' .typeN').removeClass('show');
+	$('#row'+$(this).attr('parent')+' .type'+$(this).val()).addClass('show');
+});
+$('#popup_type').trigger('change');
+
+$('.view-button').on('click',function(){
+
+	big_Image= '../image/'+$(this).parent().parent().parent().find('.popupimage').val();
+	
+	$.fancybox.open([
+	    {   href : big_Image,
+	    }
+	], {
+	    padding : 0,
+	     afterShow: function() {
+                $("img.fancybox-image").click(function() {
+                    window.location.href =big_Image;                        
+                });
+            }   
+	});
+
+	return false;
+});
+
+//--></script>
+
+</div>
+{{ footer }} 

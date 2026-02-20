@@ -1,0 +1,47 @@
+<form id="form-art" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-go="" data-oc-target="art">
+	<input type="hidden" name="cat_id" id="cat_id" value="{{ filter_category }}"/>
+	<input type="hidden" name="typ" id="typ" value="{{ typ?typ:'' }}" />
+	<div id="sortableDiv" class="table-responsive">
+		<ul id="sortable">
+			{% for col,item in Items %}
+			<li class="portlet{{ not item.status?' status-close':'' }}" id="{{ item.art_id}}">
+				<div class="portlet-header">
+					<span class="carry"><i class="fa fa-people-carry"></i></span>
+					<span class="check">
+						<input type="checkbox" name="selected[]" value="{{ item.art_id }}" {% if not item.art_id in selected %} checked="checked" {% endif %}/>
+					</span>
+					{{ item.art_code }}
+					<span class="editItem">
+						<a href="{{ item.edit }}" data-toggle="tooltip" title="{{ button_edit }}">
+							<i class="fa fa-pencil">
+							</i>
+						</a>
+					</span>
+				</div>
+				<div class="portlet-content">
+					{% if item.image %}
+					<a href="{{ item.bimage}}" data-lightbox="example-set">
+						<img src="{{ item.image }}" alt="{{ item.title }}" alt="" class="img-thumbnail" />
+					</a>
+					{% else %}
+					<span class="img-thumbnail list">
+						<i class="fa fa-camera fa-2x">
+						</i>
+					</span>
+					{% endif %}
+				</div>
+			</li>
+			
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="row">
+		<div class="col-sm-6 text-start">
+			{{ not filter_all?pagination:'' }}
+		</div>
+		<div class="col-sm-6 text-end">
+			{{ results }}
+		</div>
+	</div>
+</form>
+

@@ -1,0 +1,96 @@
+{% if popupd %}
+<a id="fancyform" href="#popup_form" class="hidden">Popup</a>
+<div style="display:none;" id="div-popup">
+	<form id="popup_form" method="post" action="">
+	<div id="popup-body">
+		<div class="div-center">
+			<img src="{{ logo }}" alt="{{ name }}" >
+		</div>
+		<input type="hidden" name="temp_id" value="{{ popupd.temp_id }}" />
+		
+		<div class="exp">
+	    	<h2>{{ popupd.name }}</h2>
+	    	<h4>{{ popupd.description }}</h4>
+	    </div>
+	    <div id="login_error" class="div-center" >
+			
+		</div>
+		<div class="form-group">
+	      <label class="col-sm-4 control-label" for="name">{{ entry_firstname }}</label>
+	      <div class="col-sm-7">
+	        <input type="text" name="name" value="" id="name" />
+	        
+	      </div>
+	    </div>
+	
+		<div class="form-group">
+	      <label class="col-sm-4 control-label" for="name">{{ entry_lastname }}</label>
+	      <div class="col-sm-7">
+	        <input type="text" name="name" value="" id="name" />
+	        
+	      </div>
+	    </div>
+	
+		<div class="form-group">
+	      <label class="col-sm-4 control-label" for="email">{{ entry_email }}</label>
+	      <div class="col-sm-7">
+	        <input type="email" name="email" value="" id="email" />
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label class="col-sm-4 control-label"></label>
+	      <div class="col-sm-7 div-right">
+	        <input type="submit" value="SUBMIT" />
+	      </div>
+	    </div>
+	    
+		</div>	
+		
+	</form>
+</div>
+
+<script type="text/javascript"><!--
+
+$("#fancyform").fancybox({
+	'scrolling'		: 'no',
+	'titleShow'		: false,
+	'onClosed'		: function() {
+	    $("#login_error").hide();
+	}
+});
+
+$("#login_form").bind("submit", function() {
+
+	if ($("#login_name").val().length < 3 || $("#email").val().length < 4) {
+	    $("#login_error").show();
+	    $.fancybox.resize();
+	    return false;
+	}
+
+	$.fancybox.showActivity();
+
+	$.ajax({
+		type		: "POST",
+		cache	: false,
+		url: 'index.php?route=bytao/popup.form',
+		data		: $(this).serializeArray(),
+		success: function(data) {
+			if(data['error']['name']){ 
+				$('#login_error').html(data['error']['name'])
+			}else if(data['error']['email']){
+				$('#login_error').html(data['error']['name'])
+			}else if (data['success']){
+				$.fancybox(data['success']);
+			}
+		}
+	});
+
+	return false;
+});
+
+jQuery(document).ready(function() {
+    $("#fancyform").trigger('click');
+});
+//--></script> 
+
+{% endif %}

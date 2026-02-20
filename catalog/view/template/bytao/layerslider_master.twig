@@ -1,0 +1,125 @@
+
+{#{% if sliderParams['show_navigator'] %}
+	{% set sliderParams['hide_navigator_after'] = '0' %}
+{% else %} 
+	{% set sliderParams['hide_navigator_after'] = sliderParams.hide_navigator_after %}
+{% endif %} 
+
+{% if sliderParams.fullwidth %}
+	{% set class = sliderParams.fullwidth %}
+{% else %} 
+	{% set class = 'boxed' %}
+{% endif %} 
+
+
+{% if class == "boxed" %}
+	{% set fullwidth = "off" %}
+{% else %} 
+	{% set fullwidth = 'on' %}
+{% endif %} 
+#}
+
+<div id="layer-slider-{{ module }}" class="master-slider-parent animated-mouse ms-parent-id-{{ module }}">
+	<div id="ms-sl-{{ module }}"  class="master-slider ms-skin-default" >
+		{% for _key,slider in sliders  %}
+				{#
+						
+						{% set type = layer.layer_type %}
+						{% set endeffect = '' %}
+						{% if layer.layer_end_animation == 'auto' %}
+							{% set layer.layer_end_animation = '' %}
+						{% endif %}
+						{% if layer['layer_end_time'] %}
+							{% set endeffect = ' data-end="'~layer['layer_end_time']~'"' %}
+							{% set endeffect = endeffect ~ ' data-endspeed="' ~ layer.layer_end_speed ~'"' %}
+							{% if not layer.layer_end_easing == 'nothing' %}
+								{% set endeffect == endeffect ~ ' data-endeasing="' ~ layer.layer_end_easing ~ '" ' %}	
+							{% endif %}
+						{% else %}
+							{% set layer['layer_end_animation'] = '' %}
+						{% endif %} 
+						#}
+				{% set sliderDelay = slider.params['slider_delay'] ? 'data-delay="'~slider.params['slider_delay']~'"':"" %}		
+				<div class="ms-slide" {{ sliderDelay?sliderDelay }} data-fill-mode="fit" data-delay="5" >
+                    <img src="cdn/image/blank.gif" alt="" title="" data-src="{{ slider.thumbnail }}" />
+                    
+					{% for i,layer in slider.layers  %}
+					
+				 		{% if layer.layer_link_status and layer.layer_link_status %}
+								<a href="{{ layer.layer_link }}" 
+									target="_self" 
+									class="ms-layer ms-btn ms-caption {{ layer.layer_class }}"
+								    data-offset-x      = "['{{ layer.layer_pos_left }}']"
+		     					 	data-offset-y      = "['{{ layer.layer_pos_top }}']"
+								    data-type          = "button"
+								    data-origin        = "tl" 
+			                        data-effect="t(true,n,70,-70,n,n,n,n,n,n,n,n,n,n,n)"
+			                        
+			                        data-delay="{{ slider.params['slider_delay'] }}"
+			                        data-ease="easeOutQuint"
+			                        data-type="button"
+			                        data-position="normal" > {{ layer.layer_pos_left }}
+								    {{ layer.layer_caption|html_entity_decode }}
+								</a>				
+											
+						{% else %}
+								<div class="ms-layer ms-caption {{ layer.layer_class }}"
+			                         style=""
+			                         data-duration="{{ slider.params['slider_duration'] }}"
+			                         data-ease="{{ slider.params['slider_transition'] }}"
+									 data-offset-x      = "{{ layer.layer_pos_left }}"
+			     					 data-offset-y      = "{{ layer.layer_pos_top }}"
+			     					 data-effect="t(true,n,70,-70,n,n,n,n,n,n,n,n,n,n,n)"
+			     					 data-origin = "tl" >
+			                        {{ layer.layer_caption|html_entity_decode }}
+			                    </div>
+						{% endif %}
+			
+				{% endfor %}					
+			</div>							
+									
+		{% endfor %}	
+			
+		</div>	
+</div>	
+
+
+<script>
+
+
+var masterslider{{ module }} = new MasterSlider();
+			masterslider{{ module }}.setup("ms-sl-{{ module }}", {
+				width           : 900,
+				height          : 900,
+				minHeight       : 0,
+				space           : 0,
+				start           : 1,
+				grabCursor      : false,
+				swipe           : false,
+				mouse           : true,
+				keyboard        : false,
+				layout          : "box",
+				//wheel           : true,
+				wheel           : false,
+				autoplay        : false,
+				instantStartLayers:true,
+				loop            : false,
+				shuffle         : false,
+				preload         : 0,
+				heightLimit     : true,
+				autoHeight      : false,
+				smoothHeight    : true,
+				endPause        : false,
+				overPause       : true,
+				fillMode        : "fill",
+				centerControls  : false,
+				startOnAppear   : false,
+				layersMode      : "center",
+				autofillTarget  : "",
+				hideLayers      : false,
+				fullscreenMargin: 0,
+				speed           : 16,
+				dir             : "h",
+				view            : "basic"
+			});
+</script>

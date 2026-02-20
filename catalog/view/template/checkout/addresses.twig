@@ -1,0 +1,58 @@
+{% if addresses %}
+	{% if type =='register' %}
+		<div id="register-added-addresses" class="toggle" data-mach="{{ addresses['address_match'] }}" data-count="{{ addresses|length }}">
+			<div class="address-container">
+				<div class="address-item w3-border w3-panel w3-padding w3-leftbar {{ addresses['payment'].address_id == address_id ? 'active ':'' }}" id="addr{{ addresses['payment'].address_id }}" data-id="{{ addresses['payment'].address_id }}">
+					
+					{% if addresses['address_match'] !='1' %}<div class="w3-half">{% endif %}
+						<span class="add-name">{{ addresses['payment'].firstname }} {{ addresses['payment'].lastname }}</span>
+						<span class="addr-name">{{ addresses['payment'].address_1 }} {{ addresses['payment'].postcode }} {{ addresses['payment'].city }} {{ addresses['payment'].zone }} {{ addresses['payment'].country }}</span>
+						{% if addresses['address_match'] !='1' %}</div>{% endif %}
+					{% if addresses['address_match'] =='1' %}
+					<span class="addr-same">{{ entry_match }}</span>
+					{% else %}
+					<div class="w3-half">
+						<span class="add-name">{{ addresses['shipping'].firstname }} {{ addresses['shipping'].lastname }}</span>
+						<span class="addr-name">{{ addresses['shipping'].address_1 }} {{ addresses['shipping'].city }} {{ addresses['shipping'].postcode }} {{ addresses['shipping'].zone }} {{ addresses['shipping'].country }}</span>
+					</div>
+					{% endif %}
+					<div class="item-buttons">
+						<button data-id="0"  class="w3-button w3-transparent w3-hover-none edit-address-item" title="{{ text_edit }}">
+							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 512 512">
+								<path d="M432 0c44.182 0 80 35.817 80 80 0 18.010-5.955 34.629-16 48l-32 32-112-112 32-32c13.371-10.045 29.989-16 48-16zM32 368l-32 144 144-32 296-296-112-112-296 296zM357.789 181.789l-224 224-27.578-27.578 224-224 27.578 27.578z"/>
+							</svg>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% else %}
+		<div id="{{ type }}-added-addresses" class="toggle" data-count="{{ addresses|length }}">
+			<div id="{{ type }}-address-container" class="address-container">
+				{% for addressId , address in addresses %}
+				<div class="address-item {{ address.address_id == address_id ? 'active ':'' }}" id="{{ type }}-addr-{{ address.address_id }}" data-type="{{ type }}" data-id="{{ address.address_id }}">
+				<input type="radio" {{ address.address_id == address_id ? 'checked="checked"':'' }} name="{{ type }}_address_id" value="{{ address.address_id }}" class="address-id" />
+					<span class="add-name">{{ address.firstname }} {{ address.lastname }}</span>
+					<span class="addr-name">{{ address.address_1 }} {{ address.postcode }} {{ address.city }} {{ address.zone }} {{ address.country }}</span>
+					<div class="item-buttons">
+						{#<button data-id="{{ address.address_id }}"  class="edit-address-item">
+							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 512 512">
+								<path d="M432 0c44.182 0 80 35.817 80 80 0 18.010-5.955 34.629-16 48l-32 32-112-112 32-32c13.371-10.045 29.989-16 48-16zM32 368l-32 144 144-32 296-296-112-112-296 296zM357.789 181.789l-224 224-27.578-27.578 224-224 27.578 27.578z"/>
+							</svg>
+						</button>
+						<button data-id="{{ address.address_id }}" class="remove-address-item" title="DELETE">
+							<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="24" height="24" viewBox="0 0 512 512">
+								<path d="M64 160v320c0 17.6 14.4 32 32 32h288c17.6 0 32-14.4 32-32v-320h-352zM160 448h-32v-224h32v224zM224 448h-32v-224h32v224zM288 448h-32v-224h32v224zM352 448h-32v-224h32v224z"/>
+								<path d="M424 64h-104v-40c0-13.2-10.8-24-24-24h-112c-13.2 0-24 10.8-24 24v40h-104c-13.2 0-24 10.8-24 24v40h416v-40c0-13.2-10.8-24-24-24zM288 64h-96v-31.599h96v31.599z"/>
+							</svg>
+						</button> #}
+
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="address-item add" data-type="{{ type }}" data-id="0"><i class="fa fa-plus"></i>{{ text_address_new }}</div>
+		</div>
+	{% endif %}
+{% endif %}

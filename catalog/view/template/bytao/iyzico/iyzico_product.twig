@@ -1,0 +1,15 @@
+Alınan Ürün /Ürünler
+
+{% if product.option %}
+{% for option in product.option %}
+- {{ option.name }} {{ option.value }}<br/>
+{% endfor %}
+{% endif %}
+
+br/>
+{{ text_total }}<br/>
+<br/>
+{% for total in totals %}
+{{ total.title }}: {{ total.value }}<br/>
+{% endfor %}
+<br/>

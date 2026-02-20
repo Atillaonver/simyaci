@@ -1,0 +1,40 @@
+<?php
+
+// Heading
+$_['heading_title']    = 'Analiz ve belgeler';
+
+// Text
+$_['text_success']     = 'Başarılı: başarılı bir şekilde değiştirildi!';
+$_['text_list']        = 'Belge Listesi';
+$_['text_add']         = 'Analiz veya Belge Ekle';
+$_['text_edit']        = 'Kayıt Düzenle';
+$_['text_default']     = 'Varsayılan';
+
+
+// Column
+$_['column_title']      = 'Başlık';
+$_['column_status']    = 'Durumu';
+$_['column_action']    = 'Eylem';
+
+$_['button_media_add']    = 'Resim Ekle';
+
+// Entry
+$_['entry_name']       	= 'Medya Adı';
+$_['entry_title']      	= 'Başlık';
+$_['entry_description'] = 'Açıklama';
+
+$_['entry_width']      = 'Genişlik';
+$_['entry_height']      = 'Yükseklik';
+$_['entry_url']       = 'Bağlantı';
+$_['entry_image']      = 'Resim';
+$_['entry_bimage']      = 'Belge Resim';
+$_['entry_status']     = 'Durumu';
+
+
+$_['entry_container'] = 'Koleksiyon';
+
+// Error
+$_['error_permission'] = 'Uyarı: Düzenleme iznine sahip değilsiniz!';
+$_['error_name']       = 'Medya Adı 3 ile 64 karakter arasında olmalı!';
+$_['error_title']      = 'Ödül Başlığı 3 ile 64 karakter arasında olmalı!';
+$_['error_description']      = 'Açıklaması boş olmalı!';

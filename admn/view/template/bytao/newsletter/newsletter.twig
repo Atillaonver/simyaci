@@ -1,0 +1,46 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="float-end">
+        
+      </div>
+      <h1>{{ heading_title }}</h1>
+    </div>
+  </div>
+  <style type="text/css">
+	.noborder tbody > tr > td {border: 1px solid #fff;}
+	.help {font-style:italic;}
+	.toolbar{padding:0;}
+	.toolbar li{text-align: right;height: 2em;vertical-align: middle;padding: 4px;}
+	.toolbar li.active {
+	    background-color: #dcdcdc;
+	    font-weight: bolder;
+	    text-align: left;
+	    padding-left: 24px;
+	}
+	.nav-modules {padding:0;}
+	.nav-modules li{padding: 10px 4px;}
+	.nav-modules li.active {
+	    background-color: #efefef;
+	}
+	
+</style>
+	<div class="container-fluid">
+	    <div class="row">
+			<div id="filter-newsleter" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+				<div class="card">
+					<div class="card-header"><i class="fa-solid fa-clipboard-list"></i> {{ text_toolbar }}</div>
+					<div class="card-body">{{ toolbar }}</div>
+				</div>
+			</div>
+			<div class="col col-lg-9 col-md-12">
+				<div class="card">
+					<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+					<div id="newsletter-container" class="card-body"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{{ footer }}

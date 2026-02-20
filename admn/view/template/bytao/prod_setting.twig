@@ -1,0 +1,77 @@
+<div class="row">
+	
+	<div id="formside" class="col-md-12">
+		<form id="form-setting" method="post" data-oc-toggle="ajax" data-oc-load="{{ fsetting }}" data-oc-target="setting">
+	<fieldset>
+            <legend>{{ text_value }}</legend>
+            <table id="filter" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-start required">{{ entry_prod_opt_name }}</td>
+                  <td class="text-end">{{ entry_code }}</td>
+                  <td class="text-end">{{ entry_sort_order }}</td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                {% set opt_row = 0 %}
+                {% for prod in prodsetting %}
+                  <tr id="filter-row-{{ opt_row }}">
+                    <td class="text-start" style="width: 70%;">
+                      {% for language in languages %}
+                        <div class="input-group">
+                          <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}"/></div>
+                          <textarea type="text" name="ctrl_prod_opt[{{ opt_row }}][opt][{{ language.language_id }}][name]"  placeholder="{{ entry_prod_opt_name }}" id="input-prod-{{ opt_row }}-{{ language.language_id }}" class="form-control">{{ prod.opt[language.language_id] ? prod.opt[language.language_id].name }}</textarea>
+                        </div>
+                        <div id="error-filter-{{ opt_row }}-{{ language.language_id }}" class="invalid-feedback"></div>
+                      {% endfor %}</td>
+                    <td class="text-end"><input type="text" name="ctrl_prod_opt[{{ opt_row }}][code]" value="{{ prod.code }}" placeholder="{{ entry_code }}" id="input-sort-order" class="form-control"/></td>
+                    <td class="text-end"><input type="text" name="ctrl_prod_opt[{{ opt_row }}][sort_order]" value="{{ prod.sort_order }}" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/></td>
+                    
+                    <td class="text-end"><button type="button" onclick="$('#filter-row-{{ opt_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>
+                  </tr>
+                  {% set opt_row = opt_row + 1 %}
+                {% endfor %}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3"></td>
+                  <td class="text-end"><button type="button" id="button-filter" data-bs-toggle="tooltip" title="{{ button_filter_add }}" class="btn btn-primary"><i class="fa-solid fa-plus-circle"></i></button></td>
+                </tr>
+              </tfoot>
+            </table>
+          </fieldset>
+
+	</form>
+	<button type="submit" form="form-setting" formaction="{{ fsetting }}" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-success"><i class="fa-regular fa-save"> {{ button_save }}</i></button>
+	</div>
+	
+</div>
+<script type="text/javascript"><!--
+var opt_row = {{ opt_row }};
+
+$('#button-filter').on('click', function () {
+    html = '<tr id="filter-row-' + opt_row + '">';
+    html += '  <td class="text-start" style="width: 70%;">';
+  {% for language in languages %}
+    html += '  <div class="input-group">';
+    html += '    <div class="input-group-text"><img src="{{ language.image }}" title="{{ language.name }}" /></div>';
+    html += '    <input type="text" name="ctrl_prod_opt[' + opt_row + '][opt][{{ language.language_id }}][name]" value="" placeholder="{{ entry_prod_opt_name }}" id="input-filter-' + opt_row + '-{{ language.language_id }}" class="form-control"/>';
+    html += '  </div>';
+    html += '  <div id="error-filter-' + opt_row + '-{{ language.language_id }}" class="invalid-feedback"></div>';
+
+  {% endfor %}
+    html += '  </td>';
+    html += '  <td class="text-end"><input type="text" name="ctrl_prod_opt[' + opt_row + '][code]" value="" placeholder="{{ entry_code }}" id="input-code" class="form-control"/></td>';
+    html += '  <td class="text-end"><input type="text" name="ctrl_prod_opt[' + opt_row + '][sort_order]" value="" placeholder="{{ entry_sort_order }}" id="input-sort-order" class="form-control"/></td>';
+    
+    html += '  <td class="text-end"><button type="button" onclick="$(\'#filter-row-' + opt_row + '\').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger"><i class="fa-solid fa-minus-circle"></i></button></td>';
+    html += '</tr>';
+
+    $('#filter tbody').append(html);
+
+    opt_row++;
+});
+//--></script>
+
+

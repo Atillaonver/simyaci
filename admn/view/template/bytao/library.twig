@@ -1,0 +1,118 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+	<style>
+	.sortable li .li-body img {
+	    width: 100%;
+	}
+</style>
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+			<a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+			{% if ADM=='1'%}{% endif %}
+			<button type="submit" form="form-library" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+			
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+		<div id="filter-article_review" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="input-library" class="form-label">{{ entry_product }}</label>
+              <input type="text" name="filter_title" value="{{ filter_title }}" placeholder="{{ entry_title }}" id="input-library" data-oc-target="autocomplete-library" class="form-control" autocomplete="off"/>
+              <ul id="autocomplete-library" class="dropdown-menu"></ul>
+            </div>
+            
+             <div class="mb-3">
+              <label for="input-status" class="form-label">{{ entry_status }}</label> <select name="filter_status" id="input-status" class="form-select">
+                <option value=""></option>
+                <option value="1"{% if filter_status == '1' %} selected{% endif %}>{{ text_enabled }}</option>
+                <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
+              </select>
+            </div>
+
+             <div class="mb-3">
+              <div class="input-group row">
+              	<label for="input-all" class="form-label col-sm-7">{{ entry_pagination }}</label>
+                <div class="form-check form-switch form-switch-lg col-sm-3" style="">
+                   <input type="checkbox" name="filter_all" value="1" id="input-all" class="form-check-input"{% if filter_all %} checked{% endif %}/>
+                </div>
+            </div>
+            </div>
+            <div class="text-end">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+	      <div class="col-lg-9 col-md-12">
+			<div class="card">
+				<div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+				<div id="library" class="card-body">{{ list }}</div>
+			</div>
+		</div>
+</div>
+<script type="text/javascript"><!--
+$('#library').on('click', 'thead a, .pagination a', function (e) {
+    e.preventDefault();
+    $('#library').load(this.href);
+});
+
+
+$('#button-filter').on('click', function () {
+    url = '';
+
+    var filter_title = $('#input-title').val();
+    if (filter_title) {
+        url += '&filter_title=' + encodeURIComponent(filter_title);
+    }
+    
+    var filter_all = $('#input-all').prop( "checked" )
+    if (filter_all) {
+        url += '&filter_all=1';
+    }
+
+    var filter_status = $('#input-status').val();
+
+    if (filter_status !== '') {
+        url += '&filter_status=' + filter_status;
+    }
+
+
+    $('#library').load('index.php?route=bytao/library.list&user_token={{ user_token }}' + url);
+});
+
+$('#input-library').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=bytao/library.autocomplete&user_token={{ user_token }}&filter_title=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['title'],
+                        value: item['library_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-library').val(item['label']);
+    }
+});
+
+
+//--></script>
+{{ footer }}

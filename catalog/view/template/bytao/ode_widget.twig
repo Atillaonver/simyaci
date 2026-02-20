@@ -1,0 +1,24 @@
+{% if witems %}
+        <section class="qua_section">
+            <div class="container">
+                <h2>{{ headtitle }}</h2>
+                <div class="qua_icon_boxes row text-center">
+                    <div data-animation="animation_blocks" data-bottom="@class:noactive" data--100-bottom="@class:active">
+                        {% for item in witems %}
+                        <div class="ode-box col-md-4 col-sm-6">
+                        	<img src="{{ item.image }}" alt="{{ item.title }}">
+                            <div class="ode_text">
+                                {{ item.description|html_entity_decode }}
+                            </div>
+                            <h4 class="ode_name">{{ item.title }}</h4>
+                        </div> 
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="text-center">
+                	<a href="/testimonials" class="btn btn-testimonial">{{ button_more_testimonial }}</a>
+                </div>
+            	
+            </div>
+        </section>
+{% endif %}         

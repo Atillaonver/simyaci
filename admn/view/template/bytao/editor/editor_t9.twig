@@ -1,0 +1,31 @@
+<div class="row" >
+	<legend>
+		{{ text_control_groups }}
+	</legend>
+	<fieldset>
+		<div class="row mb-3">
+			<label class="col-sm-2 col-form-label" for="input-width">
+				{{ entry_control }}
+			</label>
+			<div class="col-sm-10">
+				<select id="controls" class="form-control fItem">
+					<option>
+						{{ text_select }}
+					</option>
+					{% for p,item in ctrls %}
+					<option
+						value="{{ item.ctrl }}"  {% if item.ctrl == selected %} selected="selected" {% endif %}>{{ item.name }}
+					</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</fieldset>
+	<fieldset id="control-form-group">
+		{% if sel_content %}{{ sel_content|html_entity_decode }}{% endif %}
+	</fieldset>
+
+</div>
+
+
+

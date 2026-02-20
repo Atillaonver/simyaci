@@ -1,0 +1,31 @@
+<form id="form-article" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-target="article">
+	{% if items %}
+	<ul id="sortable" class="sortable">
+	{% for article in items %}
+		<li data-id="{{ article.article_id }}" class="sortable-li w200">
+			<div class="li-header">
+				<input type="checkbox" name="selected[]" value="{{ article.article_id }}" class="form-check-input"/>
+				<span class="handle"></span>
+				<a href="{{ article.edit }}" data-bs-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa-solid fa-pencil"></i></a>
+			</div>
+			<div class="li-body">
+				<img src="{{ article.thumb }}" alt=""/>
+			</div>
+			<div class="li-footer text-center h20">
+				{{ article.title }}
+			</div>
+			
+		</li>
+	{% endfor %}
+	</ul>
+	{% else %}
+		<div>
+			<p class="text-center">{{ text_no_results }}</p>
+		</div>
+	{% endif %}
+	
+	<div class="row">
+		<div class="col-sm-6 text-start">{{ pagination }}</div>
+		<div class="col-sm-6 text-end">{{ results }}</div>
+	</div>
+</form>

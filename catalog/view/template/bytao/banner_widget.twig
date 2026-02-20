@@ -1,0 +1,18 @@
+{% if bybanners %}
+<section class="banner-side bytao-banner">
+	<div class="site-box-container container--fullscreen add-border">
+		{% for banner in bybanners %}	
+			<a href="{{ banner.link }}" class="site-box box--big active {{ banner.banner_parent_class }}">
+			<div class="site-box-content w3-display-container">
+				<div class="content w3-display-middle">
+	    			{#% if banner.title %}
+	  				<h2 class="title-home  add-hr ">{{ banner.title }}</h2>
+	  				{% endif %#}
+			</div>
+			<span class="site-box-background with-image " style="background-image: url({{ banner.image }});"></span>
+			</div>
+			</a>
+		{% endfor %}
+	</div>
+</section>
+{% endif %} 

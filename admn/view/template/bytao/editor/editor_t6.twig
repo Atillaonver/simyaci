@@ -1,0 +1,16 @@
+<div class="row" >
+	<h4>Aktif Slayt Grupları</h4>
+</div>
+<div class="form-group required">
+	<label class="col-sm-2 control-label" >Slayt Grupları: </label>
+    <div class="col-sm-10">
+    	<select id="sliderin" class="form-control">
+    	<option> Seçin </option>
+    {% for slayd in slayders %}
+    	<option value="{{ slayd.layerslider_group_id }}">{{ slayd.name }}</option> 
+    {% endfor %}    
+      	</select>
+      </div>
+</div>
+               
+                  

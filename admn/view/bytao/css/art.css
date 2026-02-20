@@ -1,0 +1,39 @@
+.color-green{
+	color:green;
+}
+.color-red{
+	color:red;
+}
+.art-list{
+	float: left;
+	list-style: none;
+	margin: 20px;
+	border:solid 1px #ddd;
+	border-radius: 3px;
+}
+.art-list img{
+	border:none;
+}
+.work-management{
+	
+	padding: 3px;
+}
+.work-management .fa-th{
+	font-size: 2em;
+	color:#dedede;
+	margin-right:8px;
+	cursor: move;
+}
+.work-management .fa-pencil{
+	font-size: 1.3em;	
+}
+.art-code{
+	line-height:2em;
+}
+.portlet{
+	min-height: 240px;
+}
+
+.portlet-content {
+    text-align: center;
+}

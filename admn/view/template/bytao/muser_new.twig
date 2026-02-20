@@ -1,0 +1,100 @@
+{% set module_row = 0 %}
+
+<div class="row">
+	<div class="col-md-5" id="tree-part">
+		<div class="tree-megamenu">
+			<h4>{{ text_treemenu }}</h4>
+			<a class="btn btn-success btn-updatetree" name="serialize" id="serialize">{{ button_update_order }}</a>	
+			<a class="btn btn-copied {% if copied %}btn-default{% else %}btn-warning{% endif %}" id="copied" text-paste="{{ button_paste }}" text-copy="{{ button_copy }}">{% if copied %}{{ button_paste }}{% else %}{{ button_copy }}{% endif %}</a>	
+			<div class="treeContainer" >
+				{% if tree %}
+				{{ tree }}
+				{% endif %}
+			</div>
+			
+			<p class="note"><i>{{ text_explain_drapanddrop }}</i></p>
+		</div>
+	</div>
+	
+	<div id="form-part" class="col-md-7">
+		<form id="menu-form">
+			<h4>{{ entry_menu_information}}<span id="menuID"></span><div class="pull-right">
+					<a class="btn btn-primary btnSave" href="#"><i class="fa fa-save"></i> {{ button_save}}</a>
+					<a class="btn btn-danger btnCancel" title="{{ button_cancel }}" href="#menuForm" ><i class="fa fa-book"></i> {{ button_cancel }}</a> 
+				</div></h4>
+			<ul class="nav nav-tabs" id="language">
+				{% for language in languages %}
+				<li class="nav-item">
+					<a href="#tab-language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link{% if loop.first %} active{% endif %}"><img src="{{ language.image }}" title="{{ language.name }}"/> {{ language.code }}</a>
+				</li>
+				{% endfor %}
+			</ul>
+			<div class="tab-content">
+				{% for language in languages %}
+				<div class="tab-pane{% if loop.first %} active{% endif %}" id="tab-language-{{ language.language_id }}">
+					<table class="table no-border">
+						<tr>
+							<td>{{ entry_menu_title }}</td>
+							<td>
+								<input class="form-control" name="menu_user_description[{{ language.language_id }}][title]" value="{% if menu_user_description[language.language_id]['title'] %}{{ language.language_id }}{{menu_user_description[language.language_id]['title']}}{% endif %}"/>
+							</td>
+						</tr>
+						<tr>
+							<td>{{ entry_description }}</td>
+							<td>
+								<textarea class="form-control" name="menu_user_description[{{ language.language_id }}][description]">{% if menu_user_description[language.language_id]['description'] %}{{ language.language_id }}{{menu_user_description[language.language_id]['description']}}{% endif %}</textarea>
+							</td>
+						</tr>
+					</table>
+				</div>
+				{% endfor %}
+				<table class="table no-border">
+					<tr>
+						<td class="col-sm-3">{{ entry_parent_id }}</td>
+						
+						<td class="col-sm-9" id="menu-pos" >
+							{{ menus }}
+						</td>
+					</tr>
+					<tr id="" class="">
+						<td class="col-sm-3">{{ entry_url }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu[url]" value="" size="50"/>
+						</td>
+					</tr>
+					<tr id="" class="">
+						<td class="col-sm-3">{{ entry_ctrl }}</td>
+						<td class="col-sm-9">
+							<select name="menu[ctrl]" class="form-control">
+								<option value=""></option>
+								{% for key, ctrl in ctrls %}
+								<optgroup label="{{ key }}">
+									{% for ct in ctrl %}
+									<option value="{{ key }}/{{ ct }}">{{ key }}/{{ ct }}</option>
+									{% endfor %}
+								</optgroup>	
+								{% endfor %}
+							</select>
+							
+						</td>
+					</tr>
+					<tr>
+						<td class="col-sm-3">{{ entry_menuclass }}</td>
+						<td class="col-sm-9">
+							<input type="text" class="form-control" name="menu[menu_class]" value=""/>
+						</td>
+					</tr>
+				</table>
+				<input type="hidden" class="form-control" name="menu[user_id]" id="userID" value="{{ user_id }}"/>
+				<input type="hidden" class="form-control" name="menu[menu_id]" value=""/>
+			</div>
+		</form>
+	</div>
+	
+</div>
+
+						
+							
+							
+							
+							

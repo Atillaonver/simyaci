@@ -1,0 +1,47 @@
+{% set option_value_row = 0 %}
+
+{% for option_value in option_values %}
+	<li id="option-value-row-{{ option_value_row }}" class="tr-parent">
+		<form action="{{ save_value }}" method="post" data-oc-toggle="ajax" data-oc-target="append">
+			<div class="text-center">
+				<input type="hidden" name="option_value_id" value="{{ option_value.option_value_id }}"/>
+				<input type="hidden" name="option_id" value="{{ option_id }}"/>
+				{% for language in languages %}
+				<div class="input-group">
+					<div class="input-group-text">
+						<img src="{{ language.image|lower }}" title="{{ language.name }}"/>
+					</div>
+					<input type="text" name="add[{{ language.language_id }}][name]" value="{{ option_value.option_value_description[language.language_id] ? option_value.option_value_description[language.language_id].name }}" placeholder="{{ entry_option_value }}" id="input-option-value-{{ option_value_row }}-{{ language.language_id }}" class="form-control srch"/>
+				</div>
+				<div id="error-option-value-{{ option_value_row }}-{{ language.language_id }}" class="invalid-feedback">
+				</div>
+				{% endfor %}
+			</div>
+			<div class="text-center {{ GId=='1'?'hidden':'hidden' }}">
+				<div class="card image">
+					<img src="{{ option_value.thumb }}" alt="" title="" id="thumb-image-{{ option_value_row }}" data-oc-placeholder="{{ placeholder }}" class="card-img-top"/> <input type="hidden" name="image" value="{{ option_value.image }}" id="input-image-{{ option_value_row }}"/>
+					<div class="card-body">
+						<button type="button" data-oc-toggle="image" data-oc-target="input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-primary btn-sm btn-block">
+							<i class="fa-solid fa-pencil">
+							</i>{{ button_edit }}
+						</button>
+						<button type="button" data-oc-toggle="clear" data-oc-target="input-image-{{ option_value_row }}" data-oc-thumb="#thumb-image-{{ option_value_row }}" class="btn btn-warning btn-sm btn-block">
+							<i class="fa-regular fa-trash-can">
+							</i>{{ button_clear }}
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="text-end {{ GId=='1'?'hidden':'hidden' }}">
+				<input type="text" name="sort_order" value="{{ option_value.sort_order }}" placeholder="{{ entry_sort_order }}" class="form-control"/>
+			</div>
+			<div class="text-end">
+				<button type="button" onclick="$('#option-value-row-{{ option_value_row }}').remove();" data-bs-toggle="tooltip" title="{{ button_remove }}" class="btn btn-danger">
+					<i class="fa-solid fa-minus-circle">
+					</i>
+				</button>
+			</div>
+		</form>
+	</li>
+	{% set option_value_row = option_value_row + 1 %}
+{% endfor %}

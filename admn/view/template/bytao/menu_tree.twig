@@ -1,0 +1,50 @@
+
+								
+	<div class="tree-megamenu">
+		<div class="buttons">
+			{#			
+			<a class="btn btn-primary" title="{{ button_import_categories }}" onclick="$('#save_mode').val('import-categories');$('#form').submit();">{{ button_import_categories }}</a>
+			<a class="btn btn-danger" title="{{ button_delete_categories }}" data-toggle="modal" data-target=".deleteTree-modal-sm">{{ button_delete_categories}}</a>
+		</div>#}<br/><br/>
+		<h4>{{ text_treemenu }}</h4>
+		<a class="btn btn-success btn-updatetree" name="serialize" id="serialize">{{ button_update_order }}</a>	
+		<div class="treeContainer" >
+			{% if tree %}
+			{{ tree }}
+			{% endif %}
+		</div>
+		<a class="btn btn-success btn-updatetree" name="serialize" id="serialize">{{ button_update_order }}</a>
+		<p class="note"><i>{{ text_explain_drapanddrop }}</i></p>
+	</div>
+	</div>
+								
+								
+<script type="text/javascript"><!--//
+	$(document).ready(function(){
+	
+			$("ol.sortable").nestedSortable({
+					forcePlaceholderSize: true,
+					handle: 'div',
+					helper:	'clone',
+					items: 'li',
+					opacity: .6,
+					placeholder: 'placeholder',
+					revert: 250,
+					tabSize: 25,
+					tolerance: 'pointer',
+					toleranceElement: '> div',
+					maxLevels: 4,
+
+					isTree: true,
+					expandOnHover: 700,
+					startCollapsed: true
+				});
+
+		});
+	//-->
+</script>	
+						
+							
+							
+							
+							

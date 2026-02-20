@@ -1,0 +1,47 @@
+ <form id="form-art-catagory" method="post" data-oc-toggle="ajax" data-oc-load="{{ action }}" data-oc-go="" data-oc-target="art-catagory">
+           <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                  <td class="text-left">{% if sort == 'acd.name' %}
+                    <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
+                    {% else %}
+                    <a href="{{ sort_name }}">{{ column_name }}</a>
+                    {% endif %}</td>
+                    
+                  <td class="text-right">{% if sort == 'sort_order' %}
+                    <a href="{{ sort_sort_order }}" class="{{ order|lower }}">{{ column_sort_order }}</a>
+                    {% else %}
+                    <a href="{{ sort_sort_order }}">{{ column_sort_order }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
+                </tr>
+              </thead>
+              <tbody>
+                {% if  Items %}
+                {% for col,item in Items %}
+                <tr>
+                  <td class="text-center">{% if item.art_category_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ item.art_category_id }}" checked="checked" />
+                    {% else %}
+                    <input type="checkbox" name="selected[]" value="{{ item.art_category_id }}" />
+                    {% endif %}</td>
+                  <td class="text-left">{{ item.name }}</td>
+                  <td class="text-right">{{ item.sort_order }}</td>
+                  <td class="text-right">
+                  
+                  <a href="{{ item.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td class="text-center" colspan="4">{{ results }}</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </form>
+
+

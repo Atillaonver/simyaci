@@ -1,0 +1,179 @@
+<script type="text/javascript"><!--
+function appointment(){
+	$('#appointModal').remove();
+		htmlE  = '<div id="appointModal" class="modal fade">';
+	  	htmlE += '<div  class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">';
+	  	htmlE += '<div class="modal-content">';
+	  	htmlE += '<div class="modal-header">';
+	  	htmlE += '<h1 class="modal-title fs-5" id="appointModalLabel">{{ text_edit}}</h1>';
+	  	htmlE += '<h4 class="the-day"></h4>';
+	  	htmlE += '</div>';
+	  	htmlE += '<div class="modal-body">';
+	  	htmlE += '</div>';
+	  	htmlE += '<div class="modal-footer">';
+	  	htmlE += '<button type="button" class="btn btn-primary" id="update-modal-content" disabled >{{ button_update }}</button>';
+	  	htmlE += '</div>';
+	  	htmlE += '</div>';
+	  	htmlE += '</div>';
+	  	htmlE += '</div>';
+		$('body').append(htmlE);
+}
+
+$(document).on("click",'.add-app', function (e) {
+	theTime=$('#timepicker').val();
+	$('#appoints').append('<li class="empty" data-app-id="0" data-date="'+ $('#appointModal').find('.the-day').html() +'" data-time="'+ theTime +'">'+theTime+'<i class="text-danger fa-solid fa-square-minus"></i></li>')
+	 if($('#appoints li').length<1){
+		$('#update-modal-content').prop('disabled',true);
+	}else{
+		$('#update-modal-content').prop('disabled',false);
+	}
+});
+
+$(document).on("click",'.right-appmenu-plain', function (e) {
+	e.preventDefault();
+	appointment();
+	
+	var theDay = $('.appoint.clckd').closest('.day_num').data('date');
+	$('#appointModal').find('.the-day').html(theDay);
+	$('#appointModalLabel').html('{{ text_planning }}');
+	
+	htmlE = '<div class="container-fluid">'
+	htmlE += '<div class="row">';
+	htmlE += '<div class="col-md-9 appo-container"></div>';
+	htmlE += '<div class="col-md-3"><span class="btn add-app" style="padding: 0;"><i class="btn-success fa-solid fa-circle-left"></i></span> <input id="timepicker" class="timepicker"/></div>';
+	htmlE += '</div>';
+	htmlE += '</div>';
+	
+	
+	$('#appointModal .modal-body').html(htmlE);
+	var appoints = $('.appoint.clckd').clone(); 
+	$(appoints).attr('id','appoints');
+	$(appoints).removeClass('appoint clckd');
+	$(appoints).addClass('appointM');
+	$('#appointModal .appo-container').append(appoints)
+	
+	$('#appoints li').append('<i class="text-danger fa-solid fa-square-minus"></i>')
+	$('.timepicker').timepicker({
+		    timeFormat: 'HH:mm',
+		    interval: 60,
+		    minTime: '10',
+		    maxTime: '18:00',
+		    defaultTime: '11',
+		    startTime: '10:00',
+		    dynamic: false,
+		    dropdown: true,
+		    scrollbar: true
+		});
+		
+	var appointModal= document.querySelector('#appointModal');
+	var apModal = new bootstrap.Modal(appointModal);
+    apModal.show();
+    
+    if($('#appoints li').length<1){
+		$('#update-modal-content').prop('disabled',true);
+	}else{
+		$('#update-modal-content').prop('disabled',false);
+	}
+});
+
+$('body').append('<ul class="right-click-menu" id="right-click-menu"></ul>')
+
+$(document).on("contextmenu",'.appoint', function (e) {
+	if(!$(this).hasClass('ignored')){
+		e.preventDefault();
+		appointment();
+		
+		$(this).addClass('clckd');
+		$("#right-click-menu").html('<li class="right-appmenu-plain"> Plaining </li><li class="right-appmenu-clear"> Clear Appointments </li><li class="right-appmenu-add"> Add Appointments </li>');
+   		$("#right-click-menu").finish().toggle(100).css({top: e.pageY + "px",left: e.pageX + "px"});
+   	}		
+})
+				
+$('#appointModal').on('hidePrevented.bs.modal',function(evt){
+	
+});				
+
+$(document).on("click",'.fa-square-minus', function (e) {
+	if($(this).parent().parent().children().length<1){
+		$('#update-modal-content').prop('disabled',true);
+	}else{
+		$('#update-modal-content').prop('disabled',false);
+	}
+	$(this).parent().remove();
+		
+});
+
+$(document).on("click",'.day_num', function (e) {
+	e.preventDefault();
+	if(!$(this).hasClass('selected')){
+		
+		$('.day_num.selected').removeClass('selected');
+		$(this).addClass('selected');
+	}	
+	$('#theDayAppointments').load('index.php?route=bytao/appointment.dayappointer&user_token={{ user_token }}&day='+$(this).data('day')+'&month='+$(this).data('month')+'&year='+$(this).data('year'),function(){
+			
+		});
+});
+
+$(document).on("click",'.right-appmenu-clear', function (e) {
+	e.preventDefault();
+	editText($('.clckd'));
+	
+	var  appointModal= document.querySelector('#appointModal');
+	var appModal = new bootstrap.Modal(appointModal);
+    appModal.show();
+	$("#right-click-menu").hide(100);
+	$("#right-click-menu").html('');
+});
+
+$(document).on("click",'#update-modal-content', function (e) {
+	e.preventDefault();
+	CLCKD = $('#appoints > li');
+	theDay = $('#appointModal').find('.the-day').html();
+	aText='';
+	$(CLCKD).each(function(){ 
+		aText += $(this).data('app-id')+'~'+$(this).data('date')+'~'+$(this).data('time')+'|';
+	});
+	
+	$.ajax({
+		url: 'index.php?route=bytao/appointment.addplain&user_token={{ user_token }}',
+		type: 'post',
+		dataType: 'json',
+		data: {apptimes:aText},
+		success: function(json) {
+			if(json['success']){
+				
+				var appoints = $('#appoints').clone();
+				$(appoints).find('i.fa-square-minus').remove();
+				$(appoints).addClass('appoint clckd').attr('id','');
+				$('#appointment .clckd').parent().html('').append(appoints)
+				$('#appointment .clckd').removeClass('clckd');
+				
+				$('#appointModal').modal('hide');
+				$('#appoints').html('');
+				//$('.day-container ul.clckd').html($('#appoints').html()).removeClass('clckd');
+			}
+			
+			
+		}
+	});		
+});
+
+$(document).on("mousedown", function (e) {
+	if (!$(e.target).parents(".right-click-menu").length > 0) {
+		if($(e.target).closest('.day_num').length){
+			$('.day_num.selected').removeClass('selected');
+			$(e.target).closest('.day_num').addClass('selected');
+		}
+		$(".right-click-menu").hide(100);
+		$(".right-click-menu").html('');
+	}
+});
+		
+		
+		
+		
+
+
+
+//--></script>

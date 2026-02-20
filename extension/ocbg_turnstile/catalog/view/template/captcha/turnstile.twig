@@ -1,0 +1,10 @@
+<fieldset>
+  <legend>{{ text_captcha }}</legend>
+  <div class="mb-3 required">
+    <label for="input-captcha" class="form-label">{{ entry_captcha }}</label>
+    <div id="captcha">
+      <div class="cf-turnstile" data-sitekey="{{ key }}" data-language="{{ language }}"></div>
+    </div>
+    <div id="error-captcha" class="invalid-feedback"></div>
+  </div>
+</fieldset>

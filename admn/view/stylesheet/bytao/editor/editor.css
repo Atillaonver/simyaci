@@ -1,0 +1,80 @@
+.bytao-switch-btn {
+    width: 70px;
+    height: 28px;
+    position: relative;
+    top: 4px;
+}
+.bytao-switch-btn input, .bytao-switch-btn input[type*="checkbox"] {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+}
+.bytao-switch-btn input, .bytao-switch-btn input[type*="checkbox"] {
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+}
+input[type="checkbox"]:checked::after, .checkbox input[type="checkbox"]:checked::after, .checkbox-inline input[type="checkbox"]:checked::after {
+    position: absolute;
+    top: -6px;
+    left: -5px;
+    display: block;
+    content: url(../image/checkmark.png);
+}
+.bytao-switch-btn .bytao-switch-btn-holder {
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 28px;
+    position: absolute;
+    background: url(images/icon/icon-label-off.png?v2) left center no-repeat;
+    transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -webkit-transition: 0.3s ease;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+}
+.bytao-switch-btn input:checked ~ .bytao-switch-btn-holder:before {
+    background-position: left center;
+}
+.bytao-switch-btn .bytao-switch-btn-holder:before {
+    top: 0;
+    left: 0;
+    content: "";
+    width: 70px;
+    height: 28px;
+    position: absolute;
+    background: url(images/icon/icon-label-on.png?v1) 70px center no-repeat;
+    transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -webkit-transition: 0.3s ease;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+}
+.bytao-switch-btn input:checked ~ .bytao-switch-btn-holder:after {
+    right: 44px;
+}
+.bytao-switch-btn .bytao-switch-btn-holder:after {
+    top: 2px;
+    right: 2px;
+    content: "";
+    width: 28px;
+    height: 28px;
+    position: absolute;
+    background: url(images/icon/icon-switch-btn.png) center center no-repeat;
+    transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -webkit-transition: 0.3s ease;
+}

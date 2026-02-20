@@ -1,0 +1,21 @@
+{% if popupd %}
+<div id="popup-camp" class="w3-display-container"><div class="popup-camp-content w3-display-middle"><span class="w3-button w3-circle close-content w3-black"><i class="fa fa-times"></i></span><img src="{{ popupd.image }}" alt="" /></div></div>
+
+
+<script type="text/javascript"><!--
+var el = document.getElementById('popup-camp')
+el.height = screen.height;
+jQuery(document).ready(function() {
+	
+	$('.close-content').on('click',function(){
+		$('#popup-camp').remove();
+		
+	});
+	
+    big_Image= '{{ popupd.image }}';
+    link_Image= '{{ popupd.link ? popupd.link:'' }}';
+	
+	
+});
+//--></script> 
+{% endif %}

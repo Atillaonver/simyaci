@@ -1,0 +1,273 @@
+{{ header }}{{ column_left }}
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+      	<button type="button" class="btn btn-light collapsed" data-bs-toggle="collapse" data-bs-target="#collapse-order"><i class="fa-regular fa-file-excel"></i></button>
+      	
+      	
+        <button type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-order').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <button type="submit" id="button-invoice" form="form-order" formaction="{{ invoice }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_invoice_print }}" class="btn btn-info"><i class="fa-solid fa-print"></i></button>
+        <button type="submit" id="button-shipping" form="form-order" formaction="{{ shipping }}" formtarget="_blank" data-bs-toggle="tooltip" title="{{ button_shipping_print }}" class="btn btn-info"><i class="fa-solid fa-truck"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="button" id="button-delete" data-bs-toggle="tooltip" title="{{ button_delete }}" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+  <div class="container-fluid">
+  	<div class="accordion" id="accordion-option">
+        <div id="collapse-order" class="accordion-collapse collapse" data-bs-parent="#accordion-option">
+            <div class="accordion-body">
+	          {{ export_tab }}
+            </div>
+        </div>            
+    </div>    
+    <div class="row">
+      <div id="filter-order" class="col-md-12">
+        <div class="card">
+          <div class="card-body row">
+          	<div class="col-md-4">
+	            <div class="mb-3">
+	              <label for="input-order-id" class="form-label">{{ entry_order_id }}</label> <input type="text" name="filter_order_id" value="{{ filter_order_id }}" placeholder="{{ entry_order_id }}" id="input-order-id" class="form-control"/>
+	            </div>
+	            <div class="mb-3">
+	              <label class="form-label">{{ entry_customer }}</label>
+	              <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+	              <ul id="autocomplete-customer" class="dropdown-menu"></ul>
+	            </div>
+	            <div class="mb-3">
+	              <label for="input-customer_group_id" class="form-label">{{ entry_customer_group }}</label> 
+	              <select name="filter_customer_group_id" id="input-customer_group_id" class="form-select">
+	                <option value=""></option>
+	                <option value="2" {% if filter_order_status_id=='2' %} selected{% endif %}>RETAILER</option>
+	                <option value="1" {% if filter_order_status_id and filter_order_status_id != '2' %} selected{% endif %}>INDIVIDUALS</option>
+	              </select>
+	            </div>
+            </div>
+            <div class="col-md-4">
+	            <div class="mb-3">
+	              <label for="input-order-status" class="form-label">{{ entry_order_status }}</label> <select name="filter_order_status_id" id="input-order-status" class="form-select">
+	                <option value=""></option>
+	                <option value="0"{% if filter_order_status_id == '0' %} selected{% endif %}>{{ text_missing }}</option>
+	                {% for order_status in order_statuses %}
+	                  <option value="{{ order_status.order_status_id }}"{% if order_status.order_status_id == filter_order_status_id %} selected{% endif %}>{{ order_status.name }}</option>
+	                {% endfor %}
+	              </select>
+	            </div>
+	            <div class="mb-3">
+	              <label for="input-total" class="form-label">{{ entry_total }}</label> <input type="text" name="filter_total" value="{{ filter_total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control"/>
+	            </div>
+	            <div class="mb-3">
+	              <label for="input-total" class="form-label">{{ entry_pagination }}</label>
+	              <div class="input-group">
+                      <div class="form-check form-switch form-switch-lg">
+                        <input type="checkbox" name="filter_all" value="1" id="input-all" class="form-check-input"{% if filter_all %} checked{% endif %}/>
+                      </div>
+                </div>
+	            </div>
+	            
+	        </div>
+	        <div class="col-md-4">    
+	            <div class="mb-3">
+	              <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
+	              <div class="input-group">
+	                <input type="text" name="filter_date_from" value="{{ filter_date_from }}" placeholder="{{ entry_date_from }}" id="input-date-from" class="form-control date"/>
+	                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+	              </div>
+	            </div>
+	            <div class="mb-3">
+	              <label for="input-date-to" class="form-label">{{ entry_date_to }}</label>
+	              <div class="input-group">
+	                <input type="text" name="filter_date_to" value="{{ filter_date_to }}" placeholder="{{ entry_date_to }}" id="input-date-to" class="form-control date"/>
+	                <div class="input-group-text"><i class="fa-regular fa-calendar"></i></div>
+	              </div>
+	            </div>
+	            
+	        </div>
+	            
+            <div class="text-end">
+              <button type="button" id="button-filter" class="btn btn-light"><i class="fa-solid fa-filter"></i> {{ button_filter }}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="order" class="card-body">{{ list }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+	div#orderedProducts,#sendedMailTo {
+	    height: 70vh;
+	    overflow-y: auto;
+	}
+	#sendedMailTo li {
+	    border-bottom: solid 1px #ccc;
+	    padding-bottom: 7px;
+	}
+	span.POSt,span.PName{display: block;};
+	#divPreview li.list-group-item,#orderedProducts li.list-group-item{cursor: pointer;}
+	li.list-group-item.disabled {
+	    background-color: rgb(227 80 62 / 6%);
+	    color: #ccc;
+	    cursor: not-allowed;
+	}
+	span.cType { margin-left: -5px;color: burlywood;}
+</style>
+
+<script type="text/javascript"><!--
+$('#order').on('click', 'thead a, .pagination a', function (e) {
+    e.preventDefault();
+
+    $('#order').load(this.href);
+});
+
+$('#button-filter').on('click', function () {
+    url = '';
+
+    var filter_order_id = $('#input-order-id').val();
+
+    if (filter_order_id) {
+        url += '&filter_order_id=' + filter_order_id;
+    }
+
+    var filter_customer = $('#input-customer').val();
+
+    if (filter_customer) {
+        url += '&filter_customer=' + encodeURIComponent(filter_customer);
+    }
+    
+    var filter_customer_group_id = $('#input-customer_group_id').val();
+
+    if (filter_customer_group_id) {
+        url += '&filter_customer_group_id=' + encodeURIComponent(filter_customer_group_id);
+    }
+
+    var filter_store_id = $('#input-store').val();
+
+    if (filter_store_id !== '') {
+        url += '&filter_store_id=' + filter_store_id;
+    }
+
+    var filter_order_status_id = $('#input-order-status').val();
+
+    if (filter_order_status_id !== '') {
+        url += '&filter_order_status_id=' + filter_order_status_id;
+    }
+	
+	var filter_all = $('#input-all').val();
+
+    if (filter_all !== '') {
+        url += '&filter_all=' + filter_all;
+    }
+
+    var filter_total = $('#input-total').val();
+
+    if (filter_total) {
+        url += '&filter_total=' + encodeURIComponent(filter_total);
+    }
+
+    var filter_date_from = $('#input-date-from').val();
+
+    if (filter_date_from) {
+        url += '&filter_date_from=' + encodeURIComponent(filter_date_from);
+    }
+
+    var filter_date_to = $('#input-date-to').val();
+
+    if (filter_date_to) {
+        url += '&filter_date_to=' + encodeURIComponent(filter_date_to);
+    }
+
+    $('#order').load('index.php?route=sale/order.list&user_token={{ user_token }}' + url);
+});
+
+$('#input-customer').autocomplete({
+    'source': function (request, response) {
+        $.ajax({
+            url: 'index.php?route=customer/customer.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
+            dataType: 'json',
+            success: function (json) {
+                response($.map(json, function (item) {
+                    return {
+                        label: item['name'],
+                        value: item['customer_id']
+                    }
+                }));
+            }
+        });
+    },
+    'select': function (item) {
+        $('#input-customer').val(item['label']);
+    }
+});
+
+$('input[name^=\'selected\']').on('change', function () {
+    $('#button-shipping, #button-invoice').prop('disabled', true);
+
+    var selected = $('input[name^=\'selected\']:checked');
+
+    if (selected.length) {
+        $('#button-invoice').prop('disabled', false);
+    }
+
+    for (i = 0; i < selected.length; i++) {
+        if ($(selected[i]).parent().find('input[name^=\'shipping_method\']').val()) {
+            $('#button-shipping').prop('disabled', false);
+
+            break;
+        }
+    }
+});
+
+$('#button-shipping, #button-invoice').prop('disabled', true);
+
+$('#button-delete').on('click', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    if (confirm('{{ text_confirm }}')) {
+        $.ajax({
+            url: 'index.php?route=sale/order.call&user_token={{ user_token }}&action=sale/order.delete',
+            type: 'post',
+            data: $('#form-order').serialize(),
+            dataType: 'json',
+            beforeSend: function () {
+                $(element).button('loading');
+            },
+            complete: function () {
+                $(element).button('reset');
+            },
+            success: function (json) {
+                $('.alert-dismissible').remove();
+
+                if (json['error']) {
+                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+                }
+
+                if (json['success']) {
+                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+                    $('#order').load($('#form-order').attr('data-load'));
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            }
+        });
+    }
+});
+//--></script>
+{{ footer }}

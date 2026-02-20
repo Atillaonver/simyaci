@@ -1,0 +1,100 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+  <div class="page-header">
+    <div class="container-fluid">
+      <div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+        <button type="submit" form="form-news" data-bs-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i></button>
+        <a href="{{ back }}" data-bs-toggle="tooltip" title="{{ button_back }}" class="btn btn-light"><i class="fa-solid fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+    <div class="container-fluid">
+    <div class="card">
+      <div class="card-header"><i class="fa-solid fa-pencil"></i> {{ text_form }}</div>
+      <div class="card-body">
+       <form action="{{ save }}" method="post" data-oc-toggle="ajax" id="form-award">
+				 <ul class="nav nav-tabs" id="language">
+                {% for language in languages %}
+                <li><a href="#language{{ language.language_id }}" data-toggle="tab"><img src="language/{{ language.code }}/{{ language.code }}.png" title="{{ language.name }}" /> {{ language.name }}</a></li>
+                {% endfor %}
+              </ul>
+              <div class="tab-content">
+                {% for language in languages %}
+                <div class="tab-pane" id="language{{ language.language_id }}">
+				<div class="form-group required">
+					<label class="col-sm-2 control-label" for="input-status">{{ entry_title }}</label>
+					<div class="col-sm-10">
+						
+							<input type="text" name="award_description[{{ language.language_id }}][title]" value="{% if award_description[language.language_id] %} {{ award_description[language.language_id].title }} {% endif %}" placeholder="{{ entry_title }}" class="form-control" />
+						
+	                  
+						{% if error_title[language.language_id] %}
+						<div class="text-danger">{{ error_title[language.language_id] }}</div>
+						{% endif %}
+
+					</div>
+				</div>
+        		<div class="form-group">
+                    <label class="col-sm-2 control-label" for="input-description{{ language.language_id }}">{{ entry_description }}</label>
+                    <div class="col-sm-10">
+                      <textarea name="award_description[{{ language.language_id }}][description]" placeholder="{{ entry_description }}" id="input-description{{ language.language_id }}" data-toggle="summernote" data-lang="{{ summernote }}" class="form-control">{{ award_description[language.language_id] ? award_description[language.language_id].description }}</textarea>
+                      	{% if error_description[language.language_id] %}
+						<div class="text-danger">{{ error_description[language.language_id] }}</div>
+						{% endif %}
+                    </div>
+                  </div>
+          		</div>
+          		{% endfor %}
+				<div class="form-group">
+					<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+					<div class="col-sm-10">
+						<select name="status" id="input-status" class="form-control">
+							{% if status %}
+							<option value="1" selected="selected">{{ text_enabled }}</option>
+							<option value="0">{{ text_disabled }}</option>
+							{%  else %}
+							<option value="1">{{ text_enabled }}</option>
+							<option value="0" selected="selected">{{ text_disabled }}</option>
+							{% endif %}
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group">
+	                <label class="col-sm-2 control-label">{{ entry_image }}</label>
+	                <div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{ thumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+	                  <input type="hidden" name="image" value="{{ image }}" id="input-image" />
+	                </div>
+	              </div>
+				
+				<div class="form-group">
+	                <label class="col-sm-2 control-label">{{ entry_bimage }}</label>
+	                <div class="col-sm-10"><a href="" id="thumb-bimage" data-toggle="image" class="img-thumbnail"><img src="{{ bthumb }}" alt="" title="" data-placeholder="{{ placeholder }}" /></a>
+	                  <input type="hidden" name="bimage" value="{{ image }}" id="input-bimage" />
+	                </div>
+	              </div>
+	              <div class="form-group">
+	                <label class="col-sm-2 control-label">{{ entry_url }}</label>
+	                <div class="col-sm-10">
+	                  <input type="url" name="url" value="{{ url }}" class="form-control" />
+	                </div>
+	              </div>
+	              
+			</form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script type="text/javascript" src="view/javascript/summernote/summernote.js"></script>
+  <link href="view/javascript/summernote/summernote.css" rel="stylesheet" />
+  <script type="text/javascript" src="view/javascript/summernote/summernote-image-attributes.js"></script>
+  <script type="text/javascript" src="view/javascript/summernote/opencart.js"></script>
+</div>
+{{ footer }} 

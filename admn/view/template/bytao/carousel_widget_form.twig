@@ -1,0 +1,30 @@
+<div class="row" >
+	<legend>
+		{{ text_carousel }}
+	</legend>
+	<fieldset>
+		<div class="row mb-3">
+			<label class="col-sm-2 col-form-label" for="input-width">
+				{{ entry_carousel_type }}
+			</label>
+			<div class="col-sm-10">
+				<select id="type-item" class="form-control">
+					<option>
+						{{ text_select }}
+					</option>
+					{% for item in items  %}
+				    	<option value="{{ item.item_id }}" {% if item.item_id==parts[1] %} selected="selected" {% endif %}>{{ item.title }}</option> 
+				    {% endfor %}   
+				</select>
+			</div>
+		</div>
+	</fieldset>
+
+</div>
+
+
+
+
+        
+
+      

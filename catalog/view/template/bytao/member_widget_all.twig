@@ -1,0 +1,17 @@
+{% if witems %}
+<div class="row portfolio_gallery mb_30" id="work-portfolio">
+		{% for item in witems %}
+ 		<div class="col-lg-2 col-sm-4 portfolio_item br ux mb-30">
+            <div class="portfolio_img">
+                <img src="{{ item.image?item.image:placeholder }}" alt="{{ item.title?item.title:'img' }}">
+                {% if item.url %}
+                <div class="hover_content h_content_two">
+                    <a href="{{ item.url?item.url:'#' }}" class="img_popup leaf"><i class="ti-plus"></i></a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+		{% endfor %}
+</div>
+{% endif %}
+

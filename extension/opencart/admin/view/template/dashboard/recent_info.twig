@@ -1,0 +1,84 @@
+<div class="card mb-3">
+  <div class="card-header"><i class="fa-solid fa-shopping-cart"></i> {{ heading_title }}</div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <td class="text-end">{{ column_order_id }}</td>
+          <td>Risk(%)</td>
+          <td>{{ column_customer }}</td>
+          <td>{{ column_status }}</td>
+          <td>Payment</td>
+          <td>Device</td>
+          <td>{{ column_date_added }}</td>
+          <td class="text-end">{{ column_total }}</td>
+          <td class="text-end">{{ column_action }}</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% if orders %}
+          {% for order in orders %}
+            <tr>
+              <td class="text-end">{{ order.order_key }}</td>
+              <td class="text-start risk {{ order.risk<4? 'good' }}{{ order.risk>4 and order.risk<20? 'risky' }}{{ order.risk>20? 'xrisky' }}">{{ order.risk }}</td>
+              <td>{{ order.customer }}</td>
+              <td>{{ order.status }}</td>
+              <td class="text-center paymen-method">
+              
+              {% if order.payment_method['code'] %}
+              		
+              		{% if order.payment_method['code'] == 'corp.corp' %}
+              			<i class="fa-solid fa-money-check" title="RETAILER CREDIT"></i>
+              		{% endif %}
+              				
+              		{% if order.payment_method['code'] == 'pp_express.pp_express' %}
+              			<i class="fa-brands fa-cc-paypal" title="PayPal Website Payment"></i>
+              		{% endif %}
+              				
+              		{% if order.payment_method['code'] == 'authorizenet_aim.authorizenet_aim' %}
+              			<i class="fa-regular fa-credit-card" title="Authorize.Net"></i>
+              		{% endif %}
+              				
+              		{% if order.payment_method['code'] == 'bank_transfer.bank_transfer' %}
+              			<i class="fa-solid fa-money-bill-transfer"></i>
+              		{% endif %}	
+              		
+              {% else %}
+	              	{% if order.payment_code == 'authorizenet_aim' %}
+	                  	<i class="fa-regular fa-credit-card" title="Authorize.Net"></i>
+	                {% elseif order.payment_code == 'pp_express' %}
+	                  	<i class="fa-brands fa-cc-paypal" title="PayPal Website Payment"></i>
+	                {% elseif order.payment_method == 'corp' %}
+	                  	<i class="fa-solid fa-money-check" title="RETAILER CREDIT"></i>
+	                {% elseif order.payment_method == '' %}
+	                  	<i class="fa-solid fa-money-check" title="RETAILER CREDIT"></i>
+	                {% endif %}	
+              {% endif %}
+              
+              	
+              </td>
+              <td class="text-center device">
+              	{% if order.device == '1' %}
+              	<i class="fa-solid fa-computer" title="DESKTOP"></i>
+              	{% elseif order.device == '2' %}
+              	<i class="fa-solid fa-mobile-screen" title="MOBILE"></i>
+              	{% elseif order.device == '3' %}
+              	<i class="fa-solid fa-tablet-button" title="TABLET"></i>
+              	{% else %}
+              	<i class="fa-solid fa-circle-question" title="UNKNOWN"></i>
+              	{% endif %}
+              </td>
+              <td>{{ order.date_added }}</td>
+              <td class="text-end">{{ order.total }}</td>
+              <td class="text-end"><a href="{{ order.view }}" data-bs-toggle="tooltip" title="{{ button_view }}" class="btn btn-info"><i class="fa-solid fa-eye"></i></a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td class="text-center" colspan="6">{{ text_no_results }}</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>

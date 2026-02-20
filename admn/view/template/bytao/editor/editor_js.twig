@@ -1,0 +1,2511 @@
+<style>
+	.ui-front {
+	    z-index: 9999;
+	}
+	
+</style>
+<script type="text/javascript">
+var cCounter=0;
+var sender='';
+var partType=0;
+var epID=0;
+var langID=0;
+var row_col_id=0;
+var ctrl='{{ ctrl }}';
+var actRow;
+var actCol='';
+var placeholder='{{ placeholder }}'
+$('.by-editor').hide();  
+var cPath ="bytao/simple-config.js";
+var pOContent='';
+var codemirror;
+var cllps = 0;
+var activeM=0;
+var Changed='';
+$(function()
+	{
+		epID = $('#parentId').val();	
+		langID = $('.tab-pane.lan.active').attr('lid');
+		
+		var cCounter = $('.inContent').length;
+		var rCount = $('.by_row').length;
+		
+		$.event.special.remove = {
+			remove: function(o) {
+				if (o.handler) {
+					o.handler.apply(this, arguments);
+				}
+			}
+		}
+		$(document).on('click',".by_row-add", function(e)
+			{
+				e.preventDefault();
+				
+				cCounter++;
+				rCount++;
+				
+				langID = $(this).parents('.lan.active').attr('lid');
+				rowCount = $(this).parents('.editor-container').data('row-count') + 1;
+				colCount = 1;
+				
+				html  = '<li class="row by_row selected ui-state-default" id="L-' + langID + '-' + rowCount + '" data-image="" data-id="" data-class="" data-margin="" data-row_cells="11" data-padding="" rowcount="' + rowCount + '" data-col-count="1" >';
+				
+				
+				html += '<div class="hidden rowDataDiv">';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_cells]" id="row_cells" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_data][has_container]" id="row_has_container" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_data][has_collapsed]" id="row_has_collapsed" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_data][has_form]" id="row_has_form" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_data][has_user]" id="row_has_user" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_data][has_not_user]" id="row_has_not_user" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][image]" id="row_image" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_class]" id="row_class" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_tag_id]" id="row_tag_id" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_margin]" id="row_margin" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_padding]" id="row_padding" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][row_sort_order]" id="row_sort_order" value="' + rowCount + '" />';
+				html += '</div>';
+				
+				
+				
+				html += '<div class="by_controls-row controls controls_row by_clearfix">'; 
+				html += '<a class="by_control column_move by_column-move" href="#" title="Drag row to reorder" data-vc-control="move"><i class="by_icon"></i></a>';
+				html += '<span class="by_row_name by_control"><span class="row_name">{{ text_row }}</span><input type="text" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][name]" value="{{ text_row }}" placeholder="" class="row_name_input"></span>';
+				html += '<span class="by_control seperator x2"></span>';
+				html += '<span class="by_row_layouts by_control">';
+				html += '<a class="by_control-set-column set_columns l_11 by_active" data-cells="11" data-cells-mask="12" title="1/1"></a> ';
+				html += '<a class="by_control-set-column set_columns l_12_12" data-cells="12_12" data-cells-mask="26" title="1/2 + 1/2"></a>'; 
+				html += '<a class="by_control-set-column set_columns l_23_13" data-cells="23_13" data-cells-mask="29" title="2/3 + 1/3"></a>';
+				html += '<a class="by_control-set-column set_columns l_13_13_13" data-cells="13_13_13" data-cells-mask="312" title="1/3 + 1/3 + 1/3"></a>';
+				html += '<a class="by_control-set-column set_columns l_14_14_14_14" data-cells="14_14_14_14" data-cells-mask="420" title="1/4 + 1/4 + 1/4 + 1/4"></a>';
+				html += '<a class="by_control-set-column set_columns l_14_34" data-cells="14_34" data-cells-mask="212" title="1/4 + 3/4"></a>';
+				html += '<a class="by_control-set-column set_columns l_14_12_14" data-cells="14_12_14" data-cells-mask="313" title="1/4 + 1/2 + 1/4"></a>';
+				html += '<a class="by_control-set-column set_columns l_56_16" data-cells="56_16" data-cells-mask="218" title="5/6 + 1/6"></a>';
+				html += '<a class="by_control-set-column set_columns l_16_16_16_16_16_16" data-cells="16_16_16_16_16_16" data-cells-mask="642" title="1/6 + 1/6 + 1/6 + 1/6 + 1/6 + 1/6"></a>';
+				html += '<a class="by_control-set-column set_columns l_16_46_16" data-cells="16_23_16" data-cells-mask="319" title="1/6 + 4/6 + 1/6"></a>';
+				html += '<a class="by_control-set-column set_columns l_16_16_16_12" data-cells="16_16_16_12" data-cells-mask="424" title="1/6 + 1/6 + 1/6 + 1/2"></a>';
+				html += '</span>';
+				html += '<span class="by_row_edit_clone_delete">';
+				html += '<a class="by_control column_delete by_column-delete" href="#" title="Delete this row" data-vc-control="delete" data-rid=""><i class="by_icon"></i></a>';
+				html += '<a class="by_control column_clone by_column-clone" href="#" title="Clone this row" data-vc-control="clone" data-rid=""><i class="by_icon"></i></a>';
+				html += '<a class="row-mng-setting mng-sttng float-end" href="#" title="{{ text_setting }}"><i class="fa-solid fa-gear"></i></a>';
+				html += '<a class="by_control column_clone by_column-img" href="#" title="Paralax/arkaplan resmi" data-vc-control="Back Image" data-rid=""><i class="fa-solid fa-panorama"></i></a>';
+				html += '<span class="by_control btn-has by_has_container" title="{{ text_has_container }}"><i class="fa-solid fa-diagram-next"></i></span>';
+				html += '<span class="by_control btn-has by_has_form" title="{{ text_has_form }}"><i class="fa-solid fa-share-square"></i></span>';
+				html += '<span class="by_control btn-has by_has_user" title="{{ text_has_user }}"><i class="fa-solid fa-user"></i></span>';
+				html += '<span class="by_control btn-has by_has_not_user" title="{{ text_has_not_user }}"><i class="fa-solid fa-user-slash"></i></span>';
+				
+				html += '<span class="by_control seperator x3"></span>';
+				html += '	<span class="row-switch-btn form-check form-switch form-switch-lg">';
+				html += '		<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][status]" value="0" />';
+				html += '		<input type="checkbox" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][status]" value="1" checked="checked" class="status form-check-input"/>';
+				//html += '		<span class="editor-switch-btn-holder"></span>';
+				html += '	</span>';
+				html += '<a class="by_control column_toggle by_column-collapse" data-bs-toggle="collapse" aria-controls="collapse'+rCount+'" href="#collapse-' + langID + '-' + rowCount + '"><i class="by_icon"></i></a>';
+				html += '</span>';
+				html += '</div>';
+				html += '<div class="collDiv collapse show row mb-3" id="collapse-' + langID + '-' + rowCount + '">';
+				html += '<div class="col-sm-12 by_col" id="col-" data-col_type="1" data-class="" data-margin="" data-padding="">';
+				
+				
+				
+				html += '<div class="hidden colDataDiv">';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_data][has_container]" id="has_container" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_tag_id]" id="col_tag_id" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_padding]" id="col_padding" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_margin]" id="col_margin" value="{{ col.col_margin }}" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_item]" id="col_item" value="" />';
+				html += '<textarea name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_content]" id="col_content"></textarea>';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_class]" id="col_class" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_margin]" id="col_margin" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_padding]" id="col_padding" value="" />';
+				html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_content_id]" class="col_content_id"/>';
+				html += '</div>';	
+				
+				
+				
+				
+				html += '<div class="by_controls by_control-column controls hidden"> ';
+				html += '<ul class="col-tab nav nav-tabs cntr1 col_cntrll_rch_edit"><li class="nav-item"><a href="#" data-index="0" class="nav-link active"><i class="fa fa-eye"></i></a></li><li class="nav-item"><a href="#" data-index="1" class="nav-link"><i class="fa-solid fa-code"></i></a></li><li class="nav-item"><a href="#" data-index="2" class="nav-link"><i class="fa-solid fa-image"></i></a></li><li class="nav-item"><a href="#" data-index="3" class="nav-link"><i class="fa-solid fa-spell-check"></i></a></li></ul>';
+				{% for item in mTypes %}
+				{% if not item.col_type_id=='1' %}
+				html += '<a class="by_control pull-left in-content cntr{{ item.col_type_id }} {{ item.cntrll }} {% if not item.col_type_id=='1' %}hidden{% endif %}" href="#" title="{{ item.name }}"><i class="{{ item.icon }}"></i></a>'; 
+				{% endif %}
+				{% endfor %}
+				
+				html += '<a class="col-mng-setting mng-sttng float-end" href="#" title="{{ text_setting }}"><i class="fa-solid fa-gear"></i></a>';
+				html += '<select name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_type]" class="col_type in-content float-end hidden">';
+				
+				{% for item in mTypes %}
+				html += '<option value="{{ item.col_type_id }}" {{ item.col_type_id=="1"?"selected":"" }}>{{ item.name }}</option>';	
+				{% endfor %}
+				
+				html += '</select>';
+				html += '</div>';
+				html += '<div class="hidden colpro"></div>';
+				html += '<div class="byPT" id="byPT-'+langID+'-'+rowCount+'-1"></div>';
+				html += '<div class="byCK" id="byCK-'+langID+'-'+rowCount+'-1"></div>';
+				html += '<div class="byED" id="byED-'+langID+'-'+rowCount+'-1"></div>';
+				html += '<div class="content inContent" id="inContent1"></div>';
+				html += '<textarea name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols][1][col_content]" class="content-html"></textarea>';
+				
+				
+				html += '<ul class="sub-rows"></ul>';
+				html += '</div>';
+				html += '</div>';
+				html += '</li>';
+				$('.lan.active').find('.by_row.selected').removeClass('selected');
+				$('.lan.active').find('.by_col.selected').removeClass('selected');
+				$(html).appendTo($('.lan.active ul.rows'));
+				$(this).parents('.editor-container').data('row-count',rowCount);
+				
+				$('.lan.active ul.rows .selected').find('.row_name').html('{{ text_new_row }}' + rowCount);
+				$('.lan.active ul.rows .selected').find('.row_name_input').val('{{ text_new_row }}' + rowCount);
+				move2($('.lan.active ul.rows .selected'));
+				
+				
+				e.stopPropagation();
+			});	
+	
+		$(document).on('click',".by_control-set-column", function(e) 
+			{
+				e.preventDefault();
+				if($(this).parents('.by_row').hasClass('selected')){
+					var $PARENT = $(this).closest('.by_row');
+					
+					if(confirm("{{ text_sure }}")) {
+						langID = $(this).parents('.lan.active').attr('lid');
+						rowCount = $PARENT.attr('rowcount');
+						colCount = 1;
+						
+						
+						$(this).parent().find('.by_active').removeClass('by_active');
+						$(this).addClass('by_active');
+						
+						$PARENT.data('row_cells',$(this).attr("data-cells"));
+						$PARENT.find('.collDiv').html('');
+						$PARENT.find('.rowDataDiv #row_cells').val($(this).attr("data-cells"))
+						
+						const Divs = $(this).attr("data-cells").split(/_/);
+						Divs.forEach(function(vl){
+								
+								html ='';
+								const AF = Array.from(vl);
+								col = 12/AF[1]*AF[0];
+								html += '<div class="col-'+col+' by_col" data-col_type="{{ mTypes[0].col_type_id }}" data-class="" data-margin="" data-padding="">';
+								html += '<div class="hidden colDataDiv">';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_cell]" id="col_cell" value="'+vl+'" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_data][has_container]" id="has_container" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_content_id]" id="col_content_id" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_tag_id]" id="col_tag_id" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_padding]" id="col_padding" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_margin]" id="col_margin" value="{{ col.col_margin }}" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_item]" id="col_item" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_class]" id="col_class" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_margin]" id="col_margin" value="" />';
+								html += '<input type="hidden" name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_padding]" id="col_padding" value="" />';
+								html += '</div>';
+								
+								html += '<div class="by_controls by_control-column controls hidden">';
+								{% for item in mTypes %}
+								{% if not item.col_type_id=='1' %}
+								html += '<a class="by_control pull-left in-content cntr{{ item.col_type_id }} {{ item.cntrll }} hidden" href="#" title="{{ item.name }}"><i class="{{ item.icon }}"></i></a>'; 
+								{% endif %}
+								{% endfor %}
+								html += '<ul class="col-tab nav nav-tabs cntr1 col_cntrll_rch_edit"><li class="nav-item"><a href="#" data-index="0" class="nav-link active"><i class="fa fa-eye"></i></a></li><li class="nav-item"><a href="#" data-index="1" class="nav-link"><i class="fa-solid fa-code"></i></a></li><li class="nav-item"><a href="#" data-index="2" class="nav-link"><i class="fa-solid fa-image"></i></a></li><li class="nav-item"><a href="#" data-index="3" class="nav-link"><i class="fa-solid fa-spell-check"></i></a></li></ul>';
+								
+								html += '<a class="col-mng-setting mng-sttng float-end" href="#" title="{{ text_setting }}"><i class="fa-solid fa-gear"></i></a>';
+								html += '<select name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_type]" class="col_type float-end hidden">';
+								{% for item in mTypes %}
+								html += '<option value="{{ item.col_type_id }}" {{ item.col_type_id=="1"?"selected":"" }}>{{ item.name }}</option>';
+								{% endfor %}	
+								html += '</select>';
+								html += '</div>';
+								
+								html += '<div class="hidden colpro"></div>';
+								html += '<div class="byPT" id="byPT-'+langID+'-'+rowCount+'-'+colCount+'"></div>';
+								html += '<div class="byCK" id="byCK-'+langID+'-'+rowCount+'-'+colCount+'"></div>';
+								html += '<div class="byED" id="byED-'+langID+'-'+rowCount+'-'+colCount+'"></div>';
+								html += '<div class="content inContent" id="inContent'+colCount+'"></div>';
+								html += '<textarea name="{{ ctrl }}_description[' + langID + '][rows][' + rowCount + '][cols]['+colCount+'][col_content]" class="content-html"></textarea>';
+								html += '<ul class="sub-rows"></ul>';
+								html += '</div>';
+								$PARENT.find('.collDiv').append(html)
+								colCount++;
+							});
+						pp = $('#language'+langID).find('.by_row.selected');
+			
+						
+					}
+				}
+			});
+	
+		$(document).on('click',".by_column-clone", function(e) 
+			{
+				e.preventDefault();
+				if($(this).parents('li.by_row').hasClass('selected')){
+					$('.lan.active').find('.by_row.selected').removeClass('selected');
+					$('.lan.active').find('.by_col.selected').removeClass('selected');
+					
+					cont = $(document).find('.by_row').length;
+					clone = $(this).parent().parent().parent().clone();
+					
+					rowcount = $('.lan.active ul.rows li').length +1 ;	
+			
+					$(clone).find(".collDiv").each(function( index ) {$( this ).attr('id','collapse'+cont);});
+					$(clone).find(".by_column-toggle").each(function( index ) {$( this ).attr('href','#collapse'+cont);});
+					if($(this).parents('.sub-rows').length){
+						$(this).parents('.sub-rows').prepend(clone)
+					}else{
+						$(clone).prependTo( ".text-editor" );
+					}
+					$(clone).addClass('selected');
+					
+					$(clone).find('.row_name').html($(clone).find('.row_name').html()+' {{ text_clone_row }}');
+					$(clone).find('.row_name_input').val($(clone).find('.row_name_input').html()+' {{ text_clone_row }}');
+					move2($('.lan.active ul.rows .selected'));
+					$('.lan.active ul.rows .selected a.by_column-collapse').trigger('click');
+					
+				}
+			});
+	
+		$(document).on('click',".by_column-collapse", function(e)
+			{
+				VL = $(this).hasClass('collapsed')?1:0;
+				$(this).parents('.by_row').find('#row_has_collapsed').val(VL)
+			});
+			
+		$(document).on('click',".by_column-delete", function(e)
+			{
+				e.preventDefault();
+				{% if ADM == '1' %}
+				if($(this).parents('li.row').hasClass('selected')){
+					if(confirm("Are you sure?")) {
+						obj = $(this).parents('li.row').remove();
+					}
+				}
+				{% endif %}
+			});
+	
+		$(document).on('click',".by_column-save", function(e)
+			{
+				e.preventDefault();
+				colType = $(this).parent().parent().data('col_type')
+				$(this).parent().parent().find(".cntr"+colType).show();
+				$(this).parent().parent().find('.content').summernote('destroy');
+				$(this).remove();
+			});
+	
+		
+		/* COLUMN CONTROLLS	*/
+		
+		//1 Rich Text		
+		$(document).on('click',".col_cntrll_rch_edit_ex", function(e){ 
+			e.preventDefault();
+			$(this).hide();
+			$(this).before('<a class="by_control column_save pull-left color-green by_column-save" data-vc-control="edit" href="#" title="Save Changes"><i class="fa-solid fa-floppy-disk"></i></a>');
+			theNote = $(this).parent().parent().find('.content');
+			
+			$(theNote).summernote(
+			{
+				height: 400,
+				focus:true,
+				lang:'TR',
+				popover: {
+					image: [
+						['custom', ['examplePlugin']],
+						['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+						['float', ['floatLeft', 'floatRight', 'floatNone']],
+						['remove', ['removeMedia']]
+					]
+				},
+				toolbar: [
+					//['font', ['style','bold','italic', 'underline', 'clear']],
+					//['fontname', ['fontname','fontsize','color','height']],
+					['para', ['ul', 'ol', 'paragraph']],
+					['table', ['table']],
+					['insert', ['link', 'image', 'video']],
+					['view', ['fullscreen', 'codeview','computed']]
+				],
+				buttons: {
+					image: function() {
+						var ui = $.summernote.ui;
+			
+						// create button
+						var button = ui.button({
+								contents: '<i class="fa fa-image" />',
+								tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
+								click: function () {
+									
+									$('#modal-image').remove();
+									$.ajax({
+											url: 'index.php?route=common/filemanager&user_token={{user_token}}&summernote=' + encodeURIComponent($(theNote).attr('id')),
+											dataType: 'html',
+											beforeSend: function() {
+												$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+												$('#button-image').prop('disabled', true);
+											},
+											complete: function() {
+												$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+												$('#button-image').prop('disabled', false);
+											},
+											success: function(html) {
+							
+												$('body').append(html);
+												$('#modal-image').modal('show');
+							
+												$(document).on('click','#modal-image a.thumbnail', function(e) {
+														e.preventDefault();
+								
+														$( ".note-frame" ).prev().summernote('insertImage', $(this).attr('href'),function ($image) {
+																$image.removeClass('img-responsive');
+																$image.addClass('by-image');
+																//$image.css('width', $image.width() / 3).attr('data-filename', 'puppies');
+															});
+															
+														$('#modal-image').modal('hide');
+								
+														e.stopImmediatePropagation();
+								
+													});
+											}
+										});						
+								}
+							});
+		
+						return button.render();
+					},
+					computed: function(){
+						var ui = $.summernote.ui;
+		
+						// create button
+						var button = ui.button({
+							contents: '<i class="fa fa-sliders" />',
+							tooltip: $.summernote.lang[$.summernote.options.lang].options.computed,
+							click: function () {
+								$('#activeContent').val(contentName);
+								var mpad = propert.html().split("-");
+								if(mpad[1]){
+									var margins = mpad[0].split(",");
+									var padings = mpad[1].split(",");
+									$('#mod-p-t').val(padings[0]);
+									$('#mod-p-b').val(padings[1]);
+									$('#mod-p-l').val(padings[2]);
+									$('#mod-p-r').val(padings[3]);
+					
+									$('#mod-m-t').val(margins[0]);
+									$('#mod-m-b').val(margins[1]);
+									$('#mod-m-l').val(margins[2]);
+									$('#mod-m-r').val(margins[3]);
+								}else{
+									$('#mod-p-t').val(0);
+									$('#mod-p-b').val(0);
+									$('#mod-p-l').val(0);
+									$('#mod-p-r').val(0);
+					
+									$('#mod-m-t').val(0);
+									$('#mod-m-b').val(0);
+									$('#mod-m-l').val(0);
+									$('#mod-m-r').val(0);
+								}
+								$('#spacesModal').modal('show');
+									
+							}
+						});
+	
+					return button.render();
+				}
+				},
+				callbacks: {
+					onFocus: function() {
+						//console.log('Editable area is focused');
+					},
+					onChange: function(contents, $editable) {
+						$(this).parent().find('.column_save').removeClass('color-green');
+						$(this).parent().find('.column_save').addClass('color-red');
+	    	
+					},
+					onBlur: function() {
+						//$(this).parent().find('.column_save').trigger('click');
+					},
+					onBlurCodeview: function() {
+						//$(this).parent().find('.column_save').trigger('click');
+					}
+
+						
+				}
+			});
+
+		}); 
+		
+		//2 Simple Text		
+		$(document).on('click',".col_cntrll_smpl_edit", function(e){ 
+			e.preventDefault();
+			$(this).hide();
+			$(this).before('<a class="by_control column_save pull-left color-green by_column-save" data-vc-control="edit" href="#" title="Save Changes"><i class="fa-solid fa-floppy-disk"></i></a>');
+			
+		}); 
+		
+		//3 Simple Image
+		$(document).on('click',".col_cntrll_smpl_img", function(e){ 
+			e.preventDefault();
+		}); 
+		
+		//4 Image Collection
+		$(document).on('click',".col_cntrll_cll_img", function(e){ 
+			e.preventDefault();
+		}); 
+		
+		//5 Video		
+		$(document).on('click',".col_cntrll_vid", function(e){ 
+			e.preventDefault();
+		}); 
+		
+		//6 Slider		
+		$(document).on('click',".col_cntrll_sldr", function(e){
+			e.preventDefault();
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+			
+			cType = $(this).parent().find('.col_type').val();
+			colid = $(this).parent().parent().data('col_content_id')?$(this).parent().parent().data('col_content_id'):0;
+			$.ajax({
+				url: 'index.php?route=bytao/layerslider.getwidget&user_token='+getVar('user_token')+'&type='+cType+'&cntnt='+colid,
+				dataType: 'json',
+				success: function(json) {
+					if(json['error']){
+						alertDivided(json['error'],'danger');
+					}
+					if(json['view']){
+						$('#ctModal .tab-6-container').html(json['view'])
+						ctTab(6);
+					}
+				}
+			});
+			
+		});
+		 
+		//7 carousel		
+		$(document).on('click',".col_cntrll_crsl", function(e){ 
+			e.preventDefault();
+			cType = $(this).parent().find('.col_type').val();
+			colid = $('.lan.active .ct7.selected').data('col_content_id')?$('.lan.active .ct7.selected').data('col_content_id'):0;
+			rowid = $(this).parents('.row.by_row').attr('rowid');
+			$.ajax({
+				url: 'index.php?route=bytao/editor.getmodal&user_token='+getVar('user_token')+'&type='+cType+'&cntnt='+colid+'&rwid='+rowid,
+				dataType: 'json',
+				//type: 'post',
+				//data: {content:coHtml},
+				success: function(json) {
+					
+					if(json['error']){
+						alertDivided(json['error'],'danger');
+					}
+					
+					if(json['view']){
+						$('#ctModal .tab-7-container').html(json['view'])
+						ctTab(7);
+						$('#carouseltype').trigger('change');
+					}
+				}
+			});
+			
+			
+		}); 
+		
+		//8 Module		
+		$(document).on('click',".col_cntrll_mdl", function(e){ 
+			e.preventDefault();
+			
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+			
+			var cType = $(this).parent().find('.col_type').val();
+			if (typeof ($(this).parent().parent().data('col_content_id')) === "undefined" ) {
+				colid = '';
+			}else{
+				colid = $(this).parent().parent().data('col_content_id');
+			}
+			
+			$.ajax({
+				url: 'index.php?route=bytao/editor.getmodal&user_token='+getVar('user_token')+'&type='+cType+'&cntnt='+colid,
+				dataType: 'json',
+				success: function(json) {
+					if(json['error']){
+						alertDivided(json['error'],'danger');
+					}
+					if(json['view']){
+						$('#widget-modal').find('.modal-body').html(json['view'])
+						$('#widget-modal').modal('show')
+					}
+				}
+			});
+		}); 
+		
+		//9 Controll		
+		$(document).on('click',".col_cntrll_ctrll", function(e){ 
+			e.preventDefault();
+			
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+			
+			cType = $(this).parent().find('.col_type').val();
+			colid = $(this).parents('.by_col').find('#col_content_id').val();
+			
+			$.ajax({
+				url: 'index.php?route=bytao/editor.getmodal&user_token='+getVar('user_token')+'&type='+cType+'&cntnt='+colid,
+				dataType: 'json',
+				//type: 'post',
+				//data: {content:coHtml},
+				success: function(json) {
+					if(json['error']){
+						alertDivided(json['error'],'danger');
+					}
+					if(json['view']){
+						$('#ctModal .tab-9-container').html(json['view'])
+						ctTab(9);
+					}
+				}
+			});
+				
+		}); 
+		
+		//10 HTML		
+		$(document).on('click',".col_cntrll_html", function(e){ 
+			e.preventDefault();
+			$(this).hide();
+			$(this).before('<a class="by_control column_save pull-left color-green by_column-save" data-vc-control="edit" href="#" title="Save Changes"><i class="fa-solid fa-floppy-disk"></i></a>');
+			$(this).parents('.by_col.selected').find('.inContent').hide();
+			theNote = document.querySelector('.lan.active .by_row.selected .by_col.selected .content-html');
+			codemirror = CodeMirror.fromTextArea(document.querySelector('.lan.active .by_row.selected .by_col.selected textarea'), {
+                mode: 'text/html',
+                lineNumbers: true,
+                lineWrapping: true,
+                autofocus: false,
+                theme: 'monokai'
+            });
+			codemirror.on('change', (editor) => {
+				if(!$('.lan.active .by_row.selected .by_col.selected .by_column-save').hasClass('color-red')){
+					$('.lan.active .by_row.selected .by_col.selected .by_column-save').addClass('color-red').removeClass('color-green')
+				}
+				const text = editor.getValue()
+				codemirror.save(text);
+		    })
+            //codemirror.setValue(json['code']);
+            codemirror.setSize('100%', '500px');
+		}); 
+		
+		//11 Kolon
+		$(document).on('click',".col_cntrll_clmn", function(e){ 
+			e.preventDefault();
+			var COLL = $(this).parent().parent()
+			langID = $(this).parents('.lan.active').attr('lid');
+			$(COLL).children('.collDiv').addClass('hidden');
+			
+			cllps++;
+			
+			html  = '<li class="row by_row selected ui-state-default" data-image="" data-id="" data-class="" data-margin="" data-padding="" data-row_cells="1_1" >';
+			html += '<div class="by_controls-row controls controls_row by_clearfix">'; 
+			html += '<a class="by_control column_move by_sub-column-move" href="#" title="Drag row to reorder" data-vc-control="move"><i class="by_icon"></i></a>';
+			html += '<span class="by_row_name by_control"><span class="row_name">{{ text_row }}</span><input type="text" value="{{ text_row }}" placeholder="" class="row_name_input"></span>';
+			html += '<span class="by_control seperator x2"></span>';
+			html += '<span class="by_row_layouts by_control">';
+			html += '<a class="by_control-set-column set_columns l_11 by_active" data-cells="11" data-cells-mask="12" title="1/1"></a> ';
+			html += '</span>';
+			html += '<span class="by_row_edit_clone_delete">';
+			html += '<a class="by_control column_delete by_column-delete" href="#" title="Delete this row" data-vc-control="delete" data-rid=""><i class="by_icon"></i></a>';
+			html += '<a class="by_control column_clone by_column-clone" href="#" title="Clone this row" data-vc-control="clone" data-rid=""><i class="by_icon"></i></a>';
+			html += '<a class="by_control column_clone by_column-cog" href="#" title="Properties" data-vc-control="properties" data-rid=""><i class="fa fa-cog"></i></a>';
+			html += '<a class="by_control column_clone by_column-img" href="#" title="Paralax/arkaplan resmi" data-vc-control="Back Image" data-rid=""><i class="fa fa-picture-o"></i></a>';
+			html += '<span class="by_control seperator x3"></span>';
+			html += '	<span class="by_row_name by_control editor-switch-btn">';
+			html += '		<input type="hidden" name="status" value="0" />';
+			html += '		<input type="checkbox" name="status" value="1" checked="checked" class="status"/>';
+			html += '		<span class="editor-switch-btn-holder"></span>';
+			html += '	</span>';
+			html += '<a class="by_control column_toggle by_column-collapse" data-bs-toggle="collapse" aria-controls="collapse'+cllps+'" href="#collapse'+cllps+'"><i class="by_icon"></i></a>';
+			html += '</span>';
+			html += '</div>';
+			html += '<div class="collDiv collapse show row mb-3" id="collapse'+cllps+'">';
+			
+			ehtml = '';
+			{% for item in mTypes %}
+				{% if item.sub %}
+				{% if not coltypeid %}{% set coltypeid = item.col_type_id  %}{% endif %}
+				ehtml += '<a class="by_control pull-left in-content cntr{{ item.col_type_id }} {{ item.cntrll }} hidden" href="#" title="{{ item.name }}"><i class="{{ item.icon }}"></i></a>'; 
+				{% endif %}
+			{% endfor %}
+			
+			html += '<div class="col-sm-12 by_col" id="col-" data-col_type="{{ coltypeid }}" data-id="" data-obj="">';
+			html += '<div class="by_controls by_control-column hidden controls"> ';
+			html += ehtml;
+			html += '<select name="col_type" class="col_type in-content hidden">';
+			{% for item in mTypes %}
+				{% if item.sub %}
+				html += '<option value="{{ item.col_type_id }}">{{ item.name }}</option>';	
+				{% endif %}
+			{% endfor %}
+			html += '</select>';
+			html += '</div>';
+			html += '<div class="hidden colpro">';
+			html += '</div>';
+			html += '<div class="content inContent" id="inContent'+cCounter+'"></div>';
+			html += '<textarea class="content-html"></textarea>';
+			
+			html += '</div>';
+			html += '</div>';
+			html += '</li>';
+			$(this).parents('.by_col.selected').find('.sub-rows').append(html)
+			
+			rowcount = $('.lan.active ul.rows > li,.lan.active ul.sub-rows > li').length +1 ;	
+			$('.lan.active ul.rows .selected').find('.row_name').html('{{ text_new_row }}' + rowcount);
+			$('.lan.active ul.rows .selected').find('.row_name_input').val('{{ text_new_row }}' + rowcount);
+			
+			$(COLL).find('.sub_rows').sortable({
+				handle: ".by_sub-column-move",
+				containment: "parent",
+				axis: "y",
+				helper: "clone",
+				update:function (event,ui) {
+					var dataN = $(ui.item[0]).parent().sortable("serialize")
+				}
+			});	
+			$(COLL).find('.sub_rows').disableSelection();
+			
+			
+			
+		}); 
+		
+		//12 URL/Lınk Collection		
+		$(document).on('click',".col_cntrll_url", function(e){ 
+			e.preventDefault();
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+			ctTab(12);
+			
+		}); 
+		
+		//13 Social
+		$(document).on('click',".col_cntrll_scl", function(e){ 
+			e.preventDefault();
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+			ctTab(13);
+			
+		}); 
+		
+		//14 Banner
+		$(document).on('click',".col_cntrll_bnnr", function(e) {
+			e.preventDefault();
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+
+			cType = $(this).parent().find('.col_type').val();
+			colid = $(this).parent().parent().data('col_content_id')?$(this).parent().parent().data('col_content_id'):0;
+			$.ajax({
+				url: 'index.php?route=bytao/banner.getwidget&user_token='+getVar('user_token')+'&type='+cType+'&cntnt='+colid,
+				dataType: 'json',
+				success: function(json) {
+					if (json['error']) {
+						alertDivided(json['error'],'danger');
+					}
+					if (json['view']) {
+						$('#ctModal .tab-14-container').html(json['view'])
+						ctTab(14);
+					}
+				}
+			});
+
+		});
+		
+		//15 Section Templates
+		$(document).on('click',".col_cntrll_sctn", function(e) {
+			e.preventDefault();
+			$('.sopoint').removeClass('sopoint');
+			$(this).addClass('sopoint');
+
+			cType = $(this).parent().find('.col_type').val();
+			colid = $(this).parent().parent().data('col_content_id')?$(this).parent().parent().data('col_content_id'):0;
+			$.ajax({
+				url: 'index.php?route=bytao/sectioner.getwidget&user_token='+getVar('user_token')+'&type='+cType+'&cntnt='+colid,
+				dataType: 'json',
+				success: function(json) {
+					if (json['error']) {
+						alertDivided(json['error'],'danger');
+					}
+					if (json['view']) {
+						$('#ctModal .tab-15-container').html(json['view'])
+						ctTab(15);
+					}
+				}
+			});
+
+		});
+
+		
+		/* column controlls END */
+
+		/** MODAL CONTROLLS **/
+		//urlModal
+		$(document).on('change','#url-column', function (e){
+			col = parseInt($(this).val()) ;
+			$('#ctTab-12 .link-col').addClass('hidden')
+			for(i=1; i<col+1;i++){
+				$('#ctTab-12 .col'+i).removeClass('hidden')	
+			}
+		});
+		
+		$(document).on('input','#input-urls',function(e){
+			$.ajax({
+		            url: 'index.php?route=bytao/common.linkautocomplete&user_token={{ user_token }}&language_id=1&filter_title=' + encodeURIComponent($(this).val()),
+		            dataType: 'json',
+		            beforeSend: function () {
+			            $('#autocomplete-loading').remove();
+                		$('#autocompleteUrl').prepend('<li id="autocomplete-loading"><span class="dropdown-item text-center disabled"><i class="fa-solid fa-circle-notch fa-spin"></i></span></li>');
+                		$('#autocompleteUrl').addClass('show');
+			        },
+			        complete: function () {
+			            
+			        },
+		            success: function (json) {
+	            		var html = '';
+					    var i = 0, j = 0;
+					    if (json.length) {
+					        for (i = 0; i < json.length; i++) {
+					        	html += '<li><a href="' + json[i]['link'] + '" target="' + json[i]['seo_url_id'] + '" class="dropdown-item">' + json[i]['title'] + '</a></li>';
+					        }
+					    }
+    					$('#autocompleteUrl').html(html);
+			        }
+		        });
+		}).on('focusout', function (e) {
+                if (!e.relatedTarget || !$(e.relatedTarget).hasClass('dropdown-item')) {
+                    $('#autocompleteUrl').removeClass('show');
+                }
+            });
+		
+		$('#autocompleteUrl').on("click", "a", function (e) {
+                e.preventDefault();
+				var tLabel = $(this).html();
+				var tLink = $(this).attr('href');
+				var tUid = $(this).attr('target');
+				var tTar = $('#url-target').val();
+				
+				
+				var html='<li class="link-col-li" data-link="' + tLink + '" data-uid="' + tUid + '" data-target="' + tTar + '"><i class="fa-solid fa-up-down-left-right"></i>  <i class="fa-regular fa-user" title="{{ text_not_logined }}"></i><span class="link-col-li-name">' + tLabel + '</span><i class="fa-solid fa-delete-left"></i></li>';
+				
+				$('#ctTab-12 .link-col.active ul [data-link="' + tLink + '"]').remove();
+				$('#ctTab-12 .link-col.active ul').append(html);
+				
+					
+					$('#autocompleteUrl').removeClass('show');
+		        	$('#input-urls').val('');
+		        	$('#url-target').val('')
+		        	
+            });
+            
+		
+		$(document).on('click',".link-col", function(e){
+			if(!$(this).hasClass('active')){
+				$('.link-col.active').removeClass('active');
+				$(this).addClass('active');
+			}	
+		});
+		
+		$(document).on('click',"#ctTab-12 .fa-delete-left", function(e){ 
+			$(this).parent().remove();
+		});
+		
+		$('#ctTab-12').on('click',"i.fa-user", function(e){ 
+			if($(this).hasClass('fa-regular')){
+				$(this).addClass('fa-solid').removeClass('fa-regular').attr('title','{{ text_logined }}');
+			}else{
+				$(this).addClass('fa-regular').removeClass('fa-solid').attr('title','{{ text_not_logined }}');
+			}
+		});
+			
+		$(document).on('click',"#updateUrlModal", function(e){
+			html = '';
+			$('#ctTab-12 .link-col').each(function(end,elem){
+				if(!$(this).hasClass('hidden')){
+					html += '<div class="linkcol"><ul>';
+					$(this).children('ul').children().each(function(ind,ele){
+						$Li=$(this);
+						dLink = $(this).data('link')
+						dTeks = $(this).children('.link-col-li-name').html();
+						dTrgt = $(this).data('target');
+						dUid = $(this).data('uid');
+						dAlt = $(this).find('.fa-solid.fa-user').length?'{{ text_logined }}':'';
+						dIco = $(this).find('.fa-solid.fa-user').length?'<i class="fa-solid fa-user" title="{{ text_logined }}"></i>':'';
+						
+						html += '<li><a href="'+dLink+'" target="'+dTrgt+'" title="'+dUid+'" class="no-link" alt="'+dAlt+'">'+dTeks+'</a>  '+dIco+'</li>';
+					});
+					html += '</ul></div>';
+				}
+					
+			});
+			
+			
+			$('.sopoint').parent().parent().find('.inContent').html(html);
+				//$('.tab-pane.active .by_row.selected by_col.selected.ct12').children('.content-html').html(html);
+			$('.sopoint').parent().parent().find('.content-html').val(html);
+			$('.sopoint').removeClass('sopoint');
+			$('#ctModal').modal('hide');
+		});
+			
+		$(".link-col-ul").sortable({
+			handle: 'i.fa-up-down-left-right',
+			containment: 'parent',
+			appendTo: 'parent',
+			scroll: true,
+			helper: 'clone',
+			revert: true,
+			tolerance: 10,
+			distance: 10,
+		});
+		
+		$(document).on('click','#ctSave6',function(e){
+			e.preventDefault();
+			const partsText =[];
+			const partsVal =[];
+			
+			$('#items .fItem').each(function(e,elm){
+				partsText.push($(this).attr('title'))
+				partsVal.push($(this).val());
+			});
+			
+			$('.sopoint').parent().parent().find('.content').html('SLAYD SHOW|'+ partsText.toString());
+			$('.sopoint').parent().parent().data('col_content_id',partsVal.toString());
+			$('.sopoint').parent().parent().find('#col_content_id').val(partsVal.toString());
+			$('#ctModal').modal('hide');
+		});
+		
+		$(document).on('click','#ctSave7',function(e){
+			e.preventDefault();
+			var formData = $("#form-t7").serializeArray();
+			$.ajax({
+				url: 'index.php?route=bytao/carousel.indat&user_token='+getVar('user_token')+'&ctrl='+ctrl+'&lid='+langID,
+				dataType: 'json',
+				type: 'post',
+				data: formData,
+				success: function(json) {
+					if(json['error']){
+						alertDivided(json['error'],'danger');
+					}
+					
+					if(json['item_id']){
+						title = 'CAROUSEL|'+ json['title'];
+						intent = json['item_id']
+						
+						$('.lan.active .ct7.selected').find('.content').html(title);
+						$('.lan.active .ct7.selected').data('col_content_id',intent);
+						$('#ctModal').modal('hide');
+						
+					}
+				}
+			});
+		
+		});
+		
+		$(document).on('click','#ctSave9',function(e){
+			e.preventDefault();
+			const partsText =[];
+			const partsVal =[];
+			
+			$('#ctTab-9 .fItem').each(function(e,elm){
+				switch(elm.tagName){
+					case 'SELECT':
+						partsText.push($(this).find('option:selected').text())
+						partsVal.push($(this).val());
+						break;
+					default:
+						partsVal.push($(this).val());
+						partsText.push($(this).text());
+				} 
+			});
+			
+			$('.sopoint').parents('.by_col').find('.content').html(partsText.toString());
+			$('.sopoint').parents('.by_col').find('.colDataDiv #col_content_id').val(partsVal.toString());
+			$('#ctModal').modal('hide');
+		});
+		
+		$(document).on('click','#ctSave14',function(e) {
+			e.preventDefault();
+			const partsText =[];
+			const partsVal =[];
+
+			$('#banner_widget_items .fItem').each(function(e, elm) {
+				partsText.push($(this).text())
+				partsVal.push($(this).val());
+			});
+
+			$('.sopoint').parent().parent().find('.content').html('BANNER |'+ partsText.toString());
+			$('.sopoint').parent().parent().data('col_content_id',partsVal.toString());
+			$('.sopoint').parent().parent().find('#col_content_id').val(partsVal.toString());
+			$('#ctModal').modal('hide');
+		});
+		
+		$(document).on('click','#ctSave15',function(e) {
+			e.preventDefault();
+			const partsText =[];
+			const partsVal =[];
+
+			$('#sections_widget_items .fItem').each(function(e, elm) {
+				partsText.push($(this).text())
+				partsVal.push($(this).val());
+			});
+
+			$('.sopoint').parent().parent().find('.content').html('SECTION |'+ partsText.toString());
+			$('.sopoint').parent().parent().data('col_content_id',partsVal.toString());
+			$('.sopoint').parent().parent().find('#col_content_id').val(partsVal.toString());
+			$('#ctModal').modal('hide');
+		});
+
+		
+		//ctModal
+		$('#ctModal').on('show.bs.modal', function (e) {
+			
+			switch(activeM){
+				case 9: // controll
+					break;
+				case 10:
+					break;
+				case 11:
+					break;
+				case 12: // Link Url
+					{
+						var colc = $('.tab-pane.active .by_row.selected .by_col.selected.ct12>.inContent  .linkcol').length
+						if(colc){
+							$('#url-column option[value='+colc+']').attr('selected','selected');
+						}
+						
+						$('#url-column').trigger('change');
+						var ccol=1;
+						$('.tab-pane.active .by_row.selected .by_col.selected.ct12>.inContent  .linkcol').each(function(indx,elem){
+							
+								$('#ctTab-12 .col'+ccol+' ul').html('');
+								
+								var thisCol=$(this);
+								
+								$(thisCol).find('li').each(function(i,el){
+									
+									dLink = $(this).find('a').attr('href')
+									dTeks = $(this).find('a').html();
+									dTrgt = $(this).find('a').attr('target');
+									dAlt = $(this).find('a').attr('alt');
+									dUid = $(this).find('a').attr('title');
+									
+									if(dAlt){
+										solid='fa-solid';
+										lgnd='{{ text_logined }}'
+									}else{
+										solid='fa-regular';
+										lgnd='{{ text_not_logined }}'
+									}
+									
+									$('#ctTab-'+activeM+' .col'+ccol+' ul').append('<li class="link-col-li" data-link="' + dLink + '" data-target="' + dTrgt + '" data-uid="'+dUid +'" data-alt="' + dAlt + '"><i class="fa-solid fa-up-down-left-right"></i> <i class="'+solid+' fa-user" title="'+lgnd+'"></i> <span class="link-col-li-name">' + dTeks + '</span></i> <i class="fa-solid fa-delete-left"></i></li>');
+								
+								});
+								ccol++
+						});
+					}
+					break;
+				case 13: // social
+					break;
+				case 14: // Banner
+					break;
+				case 15: // Sectioner
+					break;
+				
+				default:
+					break;
+			}
+			
+		});
+		
+		$('#ctModal').on('hidden.bs.modal', function (e) {
+			
+			
+		});
+		
+		$(document).on('click','.byCK a,.byCK button,.byED a,.byED button',function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			return False;
+		})
+		
+		
+
+		$(document).on('click','.btn-has', function (e){ 
+			if($(this).parent().parent().parent().hasClass('selected')){
+				$(this).toggleClass('has');
+				if($(this).hasClass('has')){
+					VL=1;
+				}else{
+					VL=0;
+				}
+				if($(this).is('[class*="by_has_container"]')) {VN="row_has_container";}
+				if($(this).is('[class*="by_has_user"]')) { VN="row_has_user";}
+				if($(this).is('[class*="by_has_not_user"]')) {VN="row_has_not_user";}
+				if($(this).is('[class*="by_has_form"]')) {VN="row_has_form";}
+				$(this).parents('.by_row.selected').find('#'+VN).val(VL);
+			}			
+		});
+		
+
+		$(document).on('focus','.col_type', function (e)
+			{ 
+				$(this).attr('old-value',$(this).val())
+				partType = $(this).val();
+			});
+			
+		$(document).on('change','.col_type', function (e)
+			{ 
+				e.preventDefault();
+				e.stopPropagation();
+				obj = $(this);
+				if(confirm("Are you sure?")){colClear(obj);}
+			});	
+		
+		$(document).on('change','#controls', function (e)
+			{ 
+				obj = $(this);
+				col_type_val = obj.val();
+				if(confirm("Are you sure?")) 
+				{
+					$.ajax({
+							url: 'index.php?route='+obj.val()+'.getwidget&user_token='+getVar('user_token'),
+							dataType: 'json',
+							success: function(json) {
+								
+								if (json['error']) {
+									alertDivided(json['error'],'danger');
+								}
+
+								if (json['items']) {
+									html = '<option value="">{{ text_select }}</option>';
+
+									if (json['items'] && json['items'] != '') {
+										for (i = 0; i < json['items'].length; i++) {
+											html += '<option value="' + json['items'][i]['item_id'] + '"';
+											html += '>' + json['items'][i]['title'] + '</option>';
+										}
+									} else {
+										html += '<option value="0" selected="selected">{{ text_none }}</option>';
+									}
+
+									$('#control-widget').html(html);
+									$('#control-widget').parents('.form-group').removeClass('hidden').addClass('active');
+									$('#control-widget').attr('operant',json['ope']);
+								}
+								
+								if(json['view']){
+									$('#control-form-group').html(json['view'])
+								}
+							}
+						});
+										
+					
+				}
+			});	
+		
+		
+		$(document).on('change','#control-widget', function (e)
+			{
+				obj = $(this);
+				type_val = obj.val();
+				ctrls = $('#controls');
+				$.ajax({
+						url: 'index.php?route='+ctrls.val()+'.getwidget&user_token='+getVar('user_token')+'&sub='+type_val,
+						dataType: 'json',
+						success: function(json) {
+							if (json['error']) {
+								alertDivided(json['error'],'danger');
+							}
+							if(json.subs){
+
+								if(json.subs.thumb_width){
+									$('#img-size').removeClass('hidden');
+								}
+							
+								if(json.subs.limit){
+									html='';
+									$('#widget-limit').removeClass('hidden');
+									if (json.subs.limit && json.subs.limit != '') {
+										for (i = 0; i < json.subs.limit.length; i++) {
+											html += '<option value="' + json.subs.limit[i] + '"';
+											html += '>' + json.subs.limit[i] + '</option>';
+										}
+									} else {
+										html += '<option value="0" selected="selected">{{ text_none }}</option>';
+									}
+									$('select#limit').html(html)
+								}
+								if(json.subs.product_id){
+								
+							
+								}
+							}
+						}
+					});
+				
+			});
+		
+		$(document).on('click',".row-mng-setting", function(e) 
+			{
+				e.preventDefault();
+				$('.sopoint').removeClass('sopoint');
+				$(this).addClass('sopoint');
+				$('#settingModal .modal-title').html('{{ text_col_setting }}')
+				
+				var theRow = $('.sopoint').parent().parent().parent();
+				$('#modal_col_class').addClass('hidden');
+				$('#modal_col_tag_id').addClass('hidden');
+				
+				$('#modal_row_class').removeClass('hidden');
+				$('#modal_row_tag_id').removeClass('hidden');
+				$('#modal_row_class').val($(theRow).data('class'));
+				$('#modal_row_tag_id').val($(theRow).data('id'));
+				
+				mad= $(theRow).data('margin');
+				if(mad){
+					var margins = mad.split(",");
+					$('#mod-m-t').val(margins[0]);
+					$('#mod-m-b').val(margins[1]);
+					$('#mod-m-l').val(margins[2]);
+					$('#mod-m-r').val(margins[3]);
+				}
+				
+				pad= $(theRow).data('padding');
+				if(pad){
+					var padings = pad.split(",");
+					$('#mod-p-t').val(padings[0]);
+					$('#mod-p-b').val(padings[1]);
+					$('#mod-p-l').val(padings[2]);
+					$('#mod-p-r').val(padings[3]);
+				}
+				$('#settingModal').modal('show');
+				e.stopPropagation();
+			});
+		
+		$(document).on('click',"a.col-mng-setting", function(e) 
+			{
+				e.preventDefault();
+				$('.sopoint').removeClass('sopoint');
+				$(this).addClass('sopoint');
+				
+				var theCol = $('.sopoint').parent().parent();
+				$('#settingModal .modal-title').html('{{ text_col_setting }}')
+				
+				$('#modal_row_class').addClass('hidden');
+				$('#modal_row_tag_id').addClass('hidden');
+				$('#modal_col_class').removeClass('hidden');
+				$('#modal_col_tag_id').removeClass('hidden');
+				
+				$('#modal_col_class').val($(theCol).data('class'));
+				$('#modal_col_tag_id').val($(theCol).data('id'));
+				
+				mad= $(theCol).data('margin');
+				if(mad){
+					var margins = mad.split(",");
+					$('#mod-m-t').val(margins[0]);
+					$('#mod-m-b').val(margins[1]);
+					$('#mod-m-l').val(margins[2]);
+					$('#mod-m-r').val(margins[3]);
+				}
+				
+				pad= $(theCol).data('padding');
+				if(pad){
+					var padings = pad.split(",");
+					$('#mod-p-t').val(padings[0]);
+					$('#mod-p-b').val(padings[1]);
+					$('#mod-p-l').val(padings[2]);
+					$('#mod-p-r').val(padings[3]);
+				}
+				
+				$('#settingModal').modal('show');
+				e.stopPropagation();
+			});
+			
+		
+		$(document).on('click',".by_col", function(e)
+			{
+				if(!$(this).hasClass('selected')){
+					colClear($(this).children('.by_controls').children('.col_type'));
+				}
+				e.stopPropagation();
+			});	
+		
+		$(document).on('click',".by_row", function(e)
+			{
+				if(!$(this).hasClass('selected')){
+					$(this).parents('.tab-pane').find('.by_row.selected').removeClass('selected')
+					$(this).parents('.tab-pane').find('.by_row.selected .by_col.selected').removeClass('selected')
+					$(this).addClass('selected');
+				}
+			});	
+
+		
+		$('.popover-dismiss').popover({trigger: 'focus'});
+		
+		
+		$(document).on('click',".by_column-img", function(e) {	
+				e.preventDefault();
+				if($(this).parents('.by_row.selected').length){
+					var $element = $(this);
+					var $theRow = $(this).parents('.by_row');
+					
+				    var thisURL='index.php?route=common/filemanager&user_token=' + getURLVar('user_token')+'&multi=0';
+				    
+				    $.ajax({
+				        url: thisURL,
+				        dataType: 'html',
+				        success: function (html) {
+				            $('body').append(html);
+
+				            var elem = document.querySelector('#modal-image');
+				            var modal = new bootstrap.Modal(elem);
+							modal.show();
+							$(document).on('click', '#modal-image a.thumbnail', function (e) {
+								e.preventDefault();
+								e.stopImmediatePropagation();
+								
+								$theRow.attr('data-image',$(this).data('path'));
+								$theRow.find('#row_image').val($(this).data('path'));
+								if($theRow.attr('data-image')){
+									if($($theRow).find('img.back-img').length){
+										$($theRow).find('img.back-img').attr('src','{{ HTTP_IMAGE }}'+$theRow.attr('data-image'));
+									}else{
+										$($theRow).find(".by_column-img").html('<img class="back-img" src="'+'{{ HTTP_IMAGE }}'+$theRow.attr('data-image')+'" >')	
+									}
+													}
+									
+							});
+				        }
+				    });
+				}
+				e.stopImmediatePropagation(); 
+			});
+		
+		$(document).on('click','#updatem',function()
+			{
+				if($('#modal_row_class').hasClass('hidden')){
+					var theCol = $('.sopoint').parent().parent();
+					$(theCol).data('class',$('#modal_col_class').val());
+					$(theCol).data('id',$('#modal_col_tag_id').val());
+					$(theCol).data('padding',$('#mod-p-t').val() + ',' + $('#mod-p-b').val() + ',' + $('#mod-p-l').val() + ',' + $('#mod-p-r').val());
+					$(theCol).data('margin',$('#mod-m-t').val() + ',' + $('#mod-m-b').val() + ',' + $('#mod-m-l').val() + ',' + $('#mod-m-r').val());
+					$(theCol).find('#col_class').val($(theCol).data('class'));	
+					$(theCol).find('#col_tag_id').val($(theCol).data('id'));
+					$(theCol).find('#col_padding').val($(theCol).data('padding'));
+					$(theCol).find('#col_margin').val($(theCol).data('margin'));
+					
+				}else{
+					var theRow = $('.sopoint').parent().parent().parent();
+					$(theRow).data('class',$('#modal_row_class').val());
+					$(theRow).data('id',$('#modal_row_tag_id').val());
+					$(theRow).data('padding',$('#mod-p-t').val() + ',' + $('#mod-p-b').val() + ',' + $('#mod-p-l').val() + ',' + $('#mod-p-r').val());
+					$(theRow).data('margin',$('#mod-m-t').val() + ',' + $('#mod-m-b').val() + ',' + $('#mod-m-l').val() + ',' + $('#mod-m-r').val());
+					$(theRow).find('#row_class').val($(theRow).data('class'));	
+					$(theRow).find('#row_tag_id').val($(theRow).data('id'));
+					$(theRow).find('#row_padding').val($(theRow).data('padding'));
+					$(theRow).find('#row_margin').val($(theRow).data('margin'));
+				}
+				
+				$('.sopoint').removeClass('sopoint');
+				$('#settingModal').modal('hide');
+				
+			});
+		
+		$(document).on('click','#editModule',function()
+			{
+				var formData = $('form#ajax').serialize();
+				moduleID = $('#module-modal').data('mId');
+				extension = $('#module-modal').data('ext');
+				$.ajax({
+						url: 'index.php?route=bytao/editor.editmodule&user_token={{ user_token }}&mID='+moduleID+'&ext='+extension,
+						dataType: 'json',
+						method: "POST",
+						data: formData,
+						cache: false,
+						success: function(json) {
+							$('#module-modal').modal('hide');
+						}
+					});
+			});
+		
+		$(document).on('click','#updatew',function(e)
+			{
+				var partType = $('.tab-pane.lan.active').find('.by_col.selected .col_type').val();
+				
+				switch(parseInt(partType))
+				{
+					case 1: nTitle="ZENGİN YAZI:";break;
+					
+					case 2: nTitle="BASİT YAZI:";break;
+					
+					case 10: nTitle="HTML:";break;
+					
+					case 3: nTitle="BASİT RESİM:";break;
+						colContentID=$('#wbannert').val() + '-' + $('#wmedia').val() + '-' + $('#wbannerw').val();
+						colContent=' <i class="fa fa-picture-o"></i> <i class="fa fa-picture-o"></i> <i class="fa fa-picture-o"></i> <b> '+ nTitle + $('#wmedia option:selected').text() + ' </b>';
+						break;
+					case 4:	nTitle="RESİM KOLEKSİYON:";break;
+					
+					case 5:	nTitle="YOUTUBE:";break;
+					
+					case 6:	
+						$('.sopoint').parent().parent().find('.content').html('SLIDER|'+ $('#sliderin  option:selected').text());
+						$('.sopoint').parent().parent().data('col_content_id',$('#sliderin').val());
+						
+						/*nTitle="SLIDER::"+$('#sliderin').val()+':'+$('#sliderin option:selected').text();
+						$('.tab-pane.lan.active .by_col.selected ').find('.content').html(nTitle);*/
+						break;
+						
+					case 7: nTitle="CAROUSEL:";
+						//$('.sopoint').parent().parent().find('.content').html('CAROUSEL|'+ $('#sliderin  option:selected').text());
+						//$('.sopoint').parent().parent().data('col_content_id',$('#sliderin').val());
+						break;
+					
+					case 8: 
+						$('.sopoint').parent().parent().find('.content').html('MODÜL|'+ $('#modules  option:selected').text());
+						$('.sopoint').parent().parent().data('col_content_id',$('#modules').val());
+						break;
+						
+					case 9: 
+						/*$('.sopoint').parent().parent().find('.content').html('KONTROL|'+ $('#controls  option:selected').text());
+						$('.sopoint').parent().parent().data('col_content_id',$('#controls').val()+','+$('#control-widget').val()+'|'+$('#img-size #width').val()+'|'+ $('#img-size #height').val()+'|'+$('#widget-limit #limit').val());
+						
+						
+						nTitle="KONTROL|";  
+						nTitle += $('#controls').val();  
+						nTitle += $('#control-widget').attr('operant');
+						
+						if(! $('#control-widget').parent().parent().hasClass('hidden')){
+							nTitle += $('#control-widget').val();  
+						}
+						if(!$('#img-size').hasClass('hidden')){
+							nTitle += '-'+$('#img-size #width').val()+'x'+ $('#img-size #height').val();  
+						}
+						if(!$('#widget-limit').hasClass('hidden')){
+							nTitle += '*'+$('#widget-limit #limit').val();  
+						} 
+								
+								
+						nTitle += '|' + $('#controls option:selected').text();
+						$('.tab-pane.lan.active .by_col.selected ').find('.content').html(nTitle);
+						*/
+						
+						break;
+					case 15: nTitle="Sections:";break;	
+					default:
+					nTitle="";
+						
+				}
+				
+		
+				$('#widget-modal').modal('hide');
+			});
+		
+		$(document).on('click','#updatepage',function(e)
+			{
+				langID = $('.tab-pane.lan.active').attr('lid');
+				$('#himage-'+langID).val($('#input-hImage').val());
+				$('#fimage-'+langID).val($('#input-fImage').val());
+				$('#hthumb-'+langID).val($('#thumb-hImage').attr('src'));
+				$('#fthumb-'+langID).val($('#thumb-fImage').attr('src'))
+				$('#css-'+langID).val($('#input-css').val());
+				$('#pageMainModal').modal('hide');
+			});
+	 
+		$(document).on('click',".by_page-property", function(e) 
+			{
+				e.preventDefault();
+				langID = $('.tab-pane.lan.active').attr('lid');
+				$('#pageMainModal').data('obj',$(this).parents('.by_col.selected'));
+				
+				$('#thumb-hImage').attr('src',$('#hthumb-'+langID).val());
+				$('#thumb-fImage').attr('src',$('#fthumb-'+langID).val());
+				$('#input-hImage').val($('#himage-'+langID).val());
+				$('#input-fImage').val($('#fimage-'+langID).val());
+				$('#input-css').val($('#css-'+langID).val());
+				
+				$('#pageMainModal').modal('show');
+			
+			});
+		
+		$(document).on('click',".by_column-pict", function(e) 
+			{
+				e.preventDefault();
+				if( $(this).hasClass('color-green')|| $(this).hasClass('color-red')){
+			
+					$("#image-collection").prependTo("#image-collection-container");
+					$("#image-collection").attr('data-cid','');
+					$("#simg > li").each(function(i, item) {
+							siID= $(this).data('imageId');
+							dSrc = $(this).find('img').attr('src');
+							dImg = $(this).find('img').attr('data-src');
+				
+							$('#content'+colID).append('<img src="'+dSrc+'" alt="'+siID+'" data-src="'+dImg+'" data-id="'+siID+'" class="col-images"/>');
+						});
+					$('#simg > li').remove();
+					$(this).removeClass('color-green color-red');
+			
+				}else{
+			
+					$("#image-collection").attr('data-cid',colID);
+					$("#simg > li").remove();
+					$('#content img').each(function(i, item) {
+							siID=$(this).data('id');
+							dSrc=$(this).attr('src');
+							dImg=$(this).attr('data-src');
+							$('#simg').append('<li id="si-'+siID+'" data-imageId="'+siID+'"  class="img-box"><div class="li-box"><div class="li-controls"><span class="fanzyLi" data-image="'+siID+'"></span><span class="removeLi remove-col-image" data-imageId="'+siID+'"><i class="fa fa-trash-o"></i></span></div><div class="li-ima"><img src="'+dSrc+'" alt="" title="" data-placeholder="" data-src="" /></div></div></li>');
+				
+						});
+					$('#content img').remove();
+					$(this).addClass('color-green');
+					$("#image-collection").prependTo("#content"+colID);
+					sImages.sortable( "refresh" );
+				}
+		
+					
+			});
+	
+		$(document).on('dblclick',".row_name", function(e) 
+			{
+				$(this).parent().find('input').show();
+			});
+		
+		$(document).on('focusout',".row_name_input", function(e) {
+				$(this).hide();
+			}).blur(function(){$(this).hide();});
+			
+		$(document).on('input',".row_name_input", function(e) 
+			{
+				$(this).parent().find('.row_name').html($(this).val());
+				$(this).parent().find('#row_name').val($(this).val());
+				
+				$(this).width($(this).parent().find('.row_name').width());
+			});
+
+
+// FORM SUBMIT		
+		$(document).on('submit', '#form-{{ ctrl }}', function (e) 
+			{
+				e.preventDefault();
+
+				var element = this;
+				var form = e.target;
+				var action = $(form).attr('action');
+
+				if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
+					var button = e.originalEvent.submitter;
+				} else {
+					var button = '';
+				}
+
+				var formaction = $(button).attr('formaction');
+
+				if (formaction !== undefined) {
+					action = formaction;
+				}
+
+				var method = $(form).attr('method');
+
+				if (method === undefined) {
+					method = 'post';
+				}
+
+				var enctype = $(element).attr('enctype');
+
+				if (enctype === undefined) {
+					enctype = 'application/x-www-form-urlencoded';
+				}
+				var hForm = $('#hidden-form');
+				var action = $(this).attr('action');
+				
+				$('.byCK').each(function(elm){
+					$(this).find('.clckd').removeClass('clckd')
+					$(this).find('.clck').removeClass('clck')
+					
+			 		$(this).parent().find('textarea.content-html').html($(this).html());
+			 	});
+				
+				
+		    	
+				$.ajax({
+						url: action.replaceAll('&amp;', '&'),
+						type: method,
+						data: $(form).serialize(),
+						dataType: 'json',
+						contentType: 'application/x-www-form-urlencoded',
+						beforeSend: function () {
+							$(button).prop('disabled', true).addClass('loading');
+						},
+						complete: function () {
+							$(button).prop('disabled', false).removeClass('loading');
+						},
+						success: function (json) {
+							$('.taberr').remove();
+							$('.alert-dismissible').remove();
+							$(element).find('.is-invalid').removeClass('is-invalid');
+							$(element).find('.invalid-feedback').removeClass('d-block');
+							if (json['redirect']) {
+								location = json['redirect'];
+							}
+							if (typeof json['error'] == 'string') {
+								alertDivided(json['error'],'danger');
+							}
+
+							if (typeof json['error'] == 'object') {
+								if (json['error']['warning']) {
+									alertDivided(json['error']['warning'],'warning');
+									
+								}
+								
+								
+								for (key in json['error']) {
+									$('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+									$('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+								}
+								
+								tabN = $('#input-' + key.replaceAll('_', '-')).closest('.tab-pane').attr('id');
+                    
+			                    if(!$("a[href='#"+tabN+"']").find('.taberr').length){
+									$("a[href='#"+tabN+"']").css('position','relative').append('<span class="taberr">!</span>');
+								}
+							}
+
+							if (json['success']) {
+								alertDivided(json['success'],'success');
+								
+								// Refresh
+								var url = $(form).attr('data-oc-load');
+								var target = $(form).attr('data-oc-target');
+
+								if (url !== undefined && target !== undefined) {
+									$(target).load(url);
+								}
+							}
+
+							// Replace any form values that correspond to form names.
+							for (key in json) {
+								$(element).find('[name=\'' + key + '\']').val(json[key]);
+							}
+						}
+					});
+		   
+				return false; 
+		});
+		
+		
+		
+{# *********************	right click events ******* #}
+
+		$('body').append('<ul class="right-click-menu" id="right-click-menu"></ul>')
+		
+            
+		$(document).on("click",'.byCK a', function (e) {
+			e.preventDefault();
+			return false;
+		});
+		
+		$(document).on("contextmenu",'.byED-a,.byED-h,.byED-p,.byED-u', function (e) {
+			e.preventDefault();
+				$(this).parents('.byED').find('.clckd').removeClass('clckd');
+				$(this).addClass('clckd');
+				$(".right-click-menu").html('<li class="edit-text-modal"> Edit </li>');
+		   		$(".right-click-menu").finish().toggle(100).css({top: e.pageY + "px",left: e.pageX + "px"});	
+		})
+		
+		$(document).on("clickd",'.edit-text-modal', function (e) {
+			e.preventDefault();
+			editText($('.clckd'));
+			
+			var  editTextModal= document.querySelector('#editTextModal');
+        	var eModal = new bootstrap.Modal(editTextModal);
+            eModal.show();
+			$(".right-click-menu").hide(100);
+			$(".right-click-menu").html('');
+			
+		});
+		
+		$('.byED').on("click",'.byED-a,.byED-h,.byED-p,.byED-u', function (e) {
+			e.preventDefault();
+			$('.byED .clckd').removeClass('clckd');
+			$(this).addClass('clckd');
+			editText($(this));
+            
+            var  editTextModal= document.querySelector('#editTextModal');
+        	var eModal = new bootstrap.Modal(editTextModal);
+            eModal.show();
+		});
+		
+		$(document).on("click",'#update-modal-content', function (e) {
+			e.preventDefault();
+			CLCK = $('.clckd');
+			$(CLCK).html($('#editTextModal').find('#message-text').val()).removeClass('clckd');
+			$(CLCK).closest('.by_col').find('.byCK').html($(CLCK).closest('.by_col').find('.byED').html())
+			$('#editTextModal').modal('hide');
+		});
+		
+		
+		
+		
+		
+		$(document).on("mousedown", function (e) {
+    		if (!$(e.target).parents(".right-click-menu").length > 0) {
+        		$(".right-click-menu").hide(100);
+        		$(".right-click-menu").html('');
+    		}
+		});
+		
+		$(document).on("contextmenu",'.by_column-img', function (e) {
+		   e.preventDefault();
+		   if($(this).parents('.by_row.selected').length && $(this).find('img').length ){
+		   		$(".right-click-menu").html('<li class="clear-back-image"> Clear Back Image</li>');
+		   		$(".right-click-menu").finish().toggle(100).css({top: e.pageY + "px",left: e.pageX + "px"});
+		   }
+		});
+		
+		$(document).on('click',".clear-back-image", function(){
+			$('.by_row.selected').data('image','');
+			$('.by_row.selected').find('#row_image').val('');
+			$('.by_row.selected .by_column-img').html('<i class="fa-solid fa-panorama"></i>')
+			$(".right-click-menu").hide(100);
+			$(".right-click-menu").html('');
+		});
+		
+{# **************** right click events ends ******* #}
+
+		
+		$(document).on('change','#mModule',function(e)
+			{
+				e.preventDefault();
+				if($(this).val()=='pages'){
+					$('#m-group').removeClass('hidden')
+				}else{
+					if(! $('#m-group').hasClass('hidden')){
+						$('#m-group').addClass('hidden')
+					}
+				}
+			});
+	
+		$(document).on('click','#updatep',function(e)
+			{
+				$('#' + $('#sender').val()).html(' <i class="fa fa-picture-o"></i> <i class="fa fa-picture-o"></i> <i class="fa fa-picture-o"></i> <b> SLIDER: ' + $('#wbanner').text() + ' </b>');
+		
+				$('#' + $('#sender').val()).parent().find('.colpro').attr('col-type',$('#wbannert').val()+'-'+$('#wbanner').val());
+		
+		
+				$('#page-modal').modal('hide');
+				updateData();
+			});
+	
+		properties = {
+			group: 'limited_drop_targets',
+			isValidTarget: function  (item, container) {
+				if(item.is(".highlight"))
+				return true
+				else {
+					return item.parent("ol")[0] == container.el[0]
+				}
+			},
+			update: function (item, container, _super) {
+
+				var boxes = [];
+				var Olchild=$('#simg li');
+				serials='';
+	  	
+				$(Olchild).each(function(){
+						serials += $(this).attr('data-imageid')+'_'
+					});
+				cID=$('#image-collection').data('cid');
+				$.ajax({
+						url: 'index.php?route=bytao/editor.sortimg&user_token='+getVar('user_token')+'&ctrl='+ctrl+'&row_col_id='+cID,
+						dataType: 'json',
+						type:'post',
+						data:{serial:serials},	
+						success: function(json) {
+						}
+					});
+				/**/
+
+			},
+			serialize: function (parent, children, isContainer) {
+				return isContainer ? children.join() : parent.attr('id');
+			},
+			tolerance: 3,
+			distance: 10,
+			helper: "clone",
+			opacity: 0.5,
+			placeholder: "ui-state-highlight",
+			start: function(e, ui){
+				ui.placeholder.height(ui.helper[0].scrollHeight);
+			},
+			activate: function( event, ui ) { 
+	  
+			}
+		};
+	
+		var sImages = $("#simg").sortable(properties);
+	 	var sImagesM = $(".sortible-image").sortable(properties);
+		sImages.disableSelection();
+		
+		$("#simg").disableSelection();
+		
+		$(document).on('click','#button-sellect', function(e) 
+			{ 
+				row_col_id = $('#image-collection').data('cid');
+		
+				$.ajax({
+						url: 'index.php?route=bytao/editor.addcolimg&user_token='+getVar('user_token')+'&ctrl='+ctrl+'&row_col_id='+row_col_id,
+						type: 'post',
+						dataType: 'json',
+						data: $('input[name^=\'path\']:checked'),
+						beforeSend: function() {
+				
+						},
+						complete: function() {
+				
+						},
+						success: function(json) {
+							if (json['error']) {
+								alertDivided(json['error'],'danger');
+							}
+
+							if (json['images']) {
+								$.each(json['images'], function(i, item) {
+					    
+										$('#simg').append('<li id="si-'+item['image_id']+'" data-imageId="'+item['image_id']+'"  class="img-box"><div class="li-box"><div class="li-controls"><span class="fanzyLi" data-image="'+item['image_id']+'"></span><span class="removeLi" data-imageId="'+item['image_id']+'"><i class="fa fa-trash-o"></i></span></div><div class="li-ima"><img src="'+item['thumb']+'" alt="" title="" data-placeholder="" /></div></div></li>');
+					    
+				
+									})
+					
+								sImages.sortable( "refresh" );
+							}
+				
+						},
+						error: function(xhr, ajaxOptions, thrownError) {
+							alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+						}
+					});
+		
+			
+	
+				$('.popover').remove();
+				$('#modal-image').modal('hide');
+			});
+	
+		$(document).on('click','a.thumbnail',  function(e) 
+			{
+				if($(this).data('path') && ( $('.by_column-pict').hasClass('color-green') || $('.by_column-pict').hasClass('color-red'))){
+			
+					e.preventDefault();
+					row_col_id = $('#image-collection').data('cid');
+		
+					$.ajax({
+							url: 'index.php?route=bytao/editor.addcolimg&user_token='+getVar('user_token')+'&ctrl='+ctrl+'&row_col_id='+row_col_id,
+							type: 'post',
+							dataType: 'json',
+							data: {path:$(this).data('path')},
+							success: function(json) {
+								if (json['error']) {
+									alertDivided(json['error'],'danger');
+									alertDivided(json['error'],'danger');
+								}
+
+								if (json['images']) {
+									$.each(json['images'], function(i, item) {
+						    
+											$('#simg').append('<li id="si-'+item['image_id']+'" data-imageId="'+item['image_id']+'"  class="img-box"><div class="li-box"><div class="li-controls"><span class="fanzyLi" data-image="'+item['image_id']+'"></span><span class="removeLi" data-imageId="'+item['image_id']+'"><i class="fa fa-trash-o"></i></span></div><div class="li-ima"><img src="'+item['thumb']+'" alt="" title="" data-placeholder="" /></div></div></li>');
+										})
+									sImages.sortable( "refresh" );
+								}
+							}
+						});
+				}
+				$('.popover').remove();
+				$('#modal-image').modal('hide');
+		
+				return false;
+			});
+	
+		$(document).on('click','.remove-col-image', function(e) 
+			{
+				col_image_id = $(this).data('imageid');
+				$.ajax({
+						url: 'index.php?route=bytao/editor.delcolimg&user_token='+getVar('user_token')+'&ctrl='+ctrl+'&image_id='+col_image_id,
+						dataType: 'json',
+						success: function(json) {
+							if(json['error']){
+								alertDivided(json['error'],'danger');
+							}
+							if(json['success']){
+								alertDivided(json['success'],'success');
+								$('#si-'+json['image_id']).remove();
+							}
+						}
+					});
+		
+			});
+	
+		$(document).on('click','.img-box-add', function(e) 
+			{
+				row_col_id = $('#image-collection').data('cid');
+				$.ajax({
+						url: 'index.php?route=common/filemanager.multi&user_token=' + getURLVar('user_token'),
+						dataType: 'html',
+						beforeSend: function() {
+							$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+							$('#button-image').prop('disabled', true);
+						},
+						complete: function() {
+							$('#button-image i').replaceWith('<i class="fa fa-pencil"></i>');
+							$('#button-image').prop('disabled', false);
+						},
+						success: function(html) {
+				
+							$('#dir-image').html(html);
+							$('#modal-image').modal('show');
+						}
+					});
+			});
+
+		var group = $( ".active .text-editor.rows" ).sortable({
+				handle: ".by_column-move",
+				containment: "parent",
+				axis: "y",
+				helper: "clone",
+				update:function (event, ui) {
+					$( ".active .text-editor.rows" ).find('.by_row').each(function(ind,elm){
+						$(this).find('.rowDataDiv #row_sort_order').val($(this).index());
+					})
+					//var dataN = group.sortable("serialize");
+				}
+				
+			});
+			group.disableSelection();
+		
+});
+	
+		
+	
+	
+function ctTab(tNum){
+	$('#ctModalNavs a' ).removeClass('active').addClass('hidden');
+	$('#ctModalNavContents > div' ).removeClass('active');
+	$('#ctModalNavButtons > .tab-pane' ).removeClass('active');
+	$('#ctModalNavs [href="#ctTab-' + tNum + '"]' ).addClass('active').removeClass('hidden').trigger('click');
+	$('#ctModalNavContents > #ctTab-' + tNum ).addClass('active');
+	$('#ctModalNavButtons > #ctTab-' + tNum+'-bottom' ).addClass('active');
+	
+	activeM = tNum;
+	$('#ctModal').modal('show');
+}
+
+
+function colClear(element){
+	var theROW =$(element).parents('.by_row');
+	var theCOL =$(element).parents('.by_col');
+	
+	var Lan = $('.lan.active');
+	
+	$('.by_controls.by_control-column').each(function(){
+		if(!$(this).hasClass('hidden')){
+			$(this).addClass('hidden')
+		}	
+	});
+	
+	$('.by_row.selected,.by_col.selected').removeClass('selected');
+	
+	$('.by_control.col_ctrl').addClass('hidden')
+	$('.col_type').addClass('hidden')
+	
+	
+	$(element).parent().parent().addClass('selected');
+	$(element).parent().removeClass('hidden');
+	$(element).parent().parent().parent().parent().addClass('selected');
+	ctv = $(element).val();
+	
+	$(element).parent().parent().data('col_type',ctv);
+	$('.shoved').addClass('hidden').removeClass('shoved')
+	
+	$(element).parent().find('.cntr'+ctv).removeClass('hidden').addClass('shoved');
+	$(element).removeClass('hidden')
+	
+}
+	
+function collapsedc(check){
+	$('.tab-pane.active .by_column-collapse').each(function(e){
+		if(!check ){
+			if(!$(this).hasClass('collapsed')){
+				$(this).addClass('collapsed')
+				$('#'+$(this).attr('aria-controls')).addClass('show');
+			}
+		} else {
+				$(this).removeClass('collapsed')
+				$('#'+$(this).attr('aria-controls')).removeClass('show');
+		}
+	});
+}
+
+function addImage(iID){
+	htmlE  = '<li id="si-'+iID+'" data-imageId="'+iID+'"  class="img-box">';
+	htmlE += '<div class="li-box">';
+	htmlE += '<div class="li-controls">';
+	htmlE += '<span class="fanzyLi" data-image="'+iID+'"></span>';
+	htmlE += '<span class="removeLi remove-col-image" data-imageId="'+iID+'"><i class="fa fa-trash-o"></i></span>';
+	htmlE += '</div>';
+	htmlE += '<div class="li-ima">';
+	htmlE += '<img src="" alt="" title="" data-placeholder="" />';
+	htmlE += '</div>';
+	htmlE += '</div>';
+	htmlE += '</li>';
+}
+
+function editText(obj){
+	
+	if(!$('#editTextModal').length){
+		htmlE  = '<div id="editTextModal" class="modal fade">';
+	  	htmlE += '<div  class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">';
+	  	htmlE += '<div class="modal-content">';
+	  	htmlE += '<div class="modal-header">';
+	  	//htmlE += '<h1 class="modal-title fs-5" id="exampleModalLabel">{{ text_edit}}</h1>';
+	  	htmlE += '</div>';
+	  	htmlE += '<div class="modal-body">';
+	  	htmlE += '<form>';
+	  	htmlE += '<div class="mb-3">';
+	  	htmlE += '<label for="message-text" class="col-form-label"></label>';
+	  	htmlE += '<textarea class="form-control" rows="4" id="message-text" data-toggle="notemin"></textarea>';
+	  	htmlE += '</div>';
+	  	htmlE += '</form>';
+	  	htmlE += '</div>';
+	  	htmlE += '<div class="modal-footer">';
+	  	htmlE += '<button type="button" class="btn btn-primary" id="update-modal-content" >{{ button_update }}</button>';
+	  	htmlE += '</div>';
+	  	htmlE += '</div>';
+	  	htmlE += '</div>';
+	  	htmlE += '</div>';
+		$('body').append(htmlE);
+		$('#message-text').html($(obj).html());
+		theNote = $('#message-text');
+		$(theNote).summernote({
+				height: 200,
+				focus:true,
+				lang:'TR',
+				toolbar: [
+					['font', ['bold','italic', 'underline']]
+					//['fontname', ['fontname','fontsize','color','height']],
+					//['para', ['ul', 'ol', 'paragraph']],
+					//['table', ['table']],
+					//['insert', ['link', 'image', 'video']],
+					//['view', ['fullscreen', 'codeview','computed']]
+				],
+				callbacks: {
+					onFocus: function() {
+						//console.log('Editable area is focused');
+					},
+					onChange: function(contents, $editable) {
+						//$(this).parent().find('.column_save').removeClass('color-green');
+						//$(this).parent().find('.column_save').addClass('color-red');
+					},
+					onBlur: function() {
+						//$(this).parent().find('.column_save').trigger('click');
+					},
+					onBlurCodeview: function() {
+						//$(this).parent().find('.column_save').trigger('click');
+					}
+				}
+			});
+	}else{
+		$('#message-text').summernote('destroy');
+		$('#message-text').val($(obj).html());
+		$('#message-text').summernote({
+				height: 200,
+				focus:true,
+				lang:'TR',
+				toolbar: [
+					['font', ['bold','italic', 'underline']]
+					//['fontname', ['fontname','fontsize','color','height']],
+					//['para', ['ul', 'ol', 'paragraph']],
+					//['table', ['table']],
+					//['insert', ['link', 'image', 'video']],
+					//['view', ['fullscreen', 'codeview','computed']]
+				],
+				callbacks: {
+					onFocus: function() {
+						//console.log('Editable area is focused');
+					},
+					onChange: function(contents, $editable) {
+						//$(this).parent().find('.column_save').removeClass('color-green');
+						//$(this).parent().find('.column_save').addClass('color-red');
+					},
+					onBlur: function() {
+						//$(this).parent().find('.column_save').trigger('click');
+					},
+					onBlurCodeview: function() {
+						//$(this).parent().find('.column_save').trigger('click');
+					}
+				}
+			});
+		
+	}
+}
+
+function move2(elm){
+	var position = elm.position();
+	$("html, body").animate({scrollTop:position.top}, 500);
+}
+
+function getAjax(){
+	var Divs = resform.split(/_/);
+	rowID=$(objF).data('id');
+	$.ajax({
+			url: 'index.php?route=bytao/editor.getwidget&user_token='+getVar('user_token')+'&ctrl='+ctrl+'&row_id='+rowID+'&divs='+resform,
+			dataType: 'json',
+			success: function(json) {
+				if(json['error']){
+					alertDivided(json['error'],'danger');
+				}
+				if(json['success']){
+					
+					$('#collapse'+json['row']).find('.by_col').remove();
+					$('#collapse'+json['row']).append(json['content']);
+					
+				}
+			}
+		});
+}
+
+function getVar(key) {
+	var value = [];
+
+	var query = String(document.location).split('?');
+
+	if (query[1]) {
+		var part = query[1].split('&');
+
+		for (i = 0; i < part.length; i++) {
+			var data = part[i].split('=');
+
+			if (data[0] && data[1]) {
+				value[data[0]] = data[1];
+			}
+		}
+
+		if (value[key]) {
+			return value[key];
+		} else {
+			return '';
+		}
+	}
+}
+
+function imgClear(element)
+{
+	$element=$(element);
+	var $theRow = $element.parents('.by_row');
+    $element.find('img').attr('src', $element.find('img').attr('data-placeholder'));
+	$theRow.data('image','');
+	$theRow.find('.by_column-img').html('<i class="fa fa-picture-o"></i>');
+
+	$("[data-toggle='popover']").popover('destroy');
+    return false;
+};
+
+// Image Manager
+function imgLib(element)
+{
+    $('#modal-image').remove();
+	var $theRow = $(element).parents('.by_row');
+    $.ajax({
+        url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token'),
+        dataType: 'html',
+        beforeSend: function () {
+            $(element).prop('disabled', true).addClass('loading');
+        },
+        complete: function () {
+            $(element).prop('disabled', false).removeClass('loading');
+        },
+        success: function (html) {
+            $('body').append(html);
+            var element = document.querySelector('#modal-image');
+            var modal = new bootstrap.Modal(element);
+            modal.show();
+            
+            $('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+			e.preventDefault();
+
+			$theRow.data('image',$(this).parent().find('input').val());
+			$theRow.find('.by_column-img').html('<img src="' + $(this).find('img').attr('src') + '" />')
+			$('#modal-image').modal('hide');
+		});
+            
+            
+        }
+    });
+	return false;
+};
+
+function completed(json,dropdown) {
+    var html = '';
+    var category = {};
+    var name;
+    var i = 0, j = 0;
+    console.log(dropdown)
+    if (json.length) {
+        for (i = 0; i < json.length; i++) {
+        	html += '<li><a href="' + json[i]['link'] + '" class="dropdown-item">' + json[i]['keyword'] + '</a></li>';
+        }
+    }
+
+    $('#autocompleteUrl').html(html);
+};
+
+function html_entity_decode(txt){
+    var randomID = Math.floor((Math.random()*100000)+1);
+    $('body').append('<div id="random'+randomID+'"></div>');
+    $('#random'+randomID).html(txt);
+    var entity_decoded = $('#random'+randomID).html();
+    $('#random'+randomID).remove();
+    return entity_decoded;
+}
+
+$(document).on('click', '.btn.remove', function (e) {
+	e.preventDefault();
+    $(this).parent().parent().remove();
+});
+
+$(document).on('click','a.btn-popover',function(e){
+	e.preventDefault();
+	 $('.popover').addClass('disabled');
+	imgLib(this);
+	return false;
+});
+
+$(document).on('click','a.btn-clear',function(e){
+	e.preventDefault();
+	$('.popover').addClass('disabled');
+	imgClear(this);
+	return false;
+})
+
+$('#modal-image').on('hidden.bs.modal', function (e) {
+  $('.popover').removeClass('disabled');
+  
+})
+
+$(document).ready(function() {
+	cllps = $('.collapse').length +1 ;
+});
+
+$(document).on('click','.col-tab a.nav-link',function(e){
+	e.preventDefault();
+	
+	if(!$(this).hasClass('active')){
+		
+		$(this).parent().find('.active').removeClass('changed');
+		$(this).parent().parent().find('a.active').removeClass('active');
+		$(this).addClass('active');
+		ind = $(this).data('index');
+		$byCK = $(this).parents('.by_col').find('.byCK');
+		
+		switch(ind){
+			case 0://view
+				{
+					$(this).parents('.by_col').find('.byED').addClass('hidden');
+					$(this).parents('.by_col').find('.byPT').addClass('hidden');
+					$(this).parents('.by_col').find('.byCK').removeClass('hidden');
+					
+					var markup = $('#'+$byCK.attr('id')).summernote('code');
+	  				$('#'+$byCK.attr('id')).summernote('destroy');
+	  				
+					$('#C'+$byCK.attr('id')).html($('#'+$byCK.attr('id')).html());
+					$(this).parent().parent().find('.nav-link.changed').removeClass('changed');
+				}
+				break;
+			case 1://edit
+				{
+					$(this).parents('.by_col').find('.byED').addClass('hidden');
+					$(this).parents('.by_col').find('.byPT').addClass('hidden');
+					$(this).parents('.by_col').find('.byCK').removeClass('hidden');
+					var $SUMM = $(this).parents('.by_col').find('.byCK');
+					$SUMM.summernote({
+						focus: true,
+						lang: $(this).attr('data-lang'),
+						disableDragAndDrop: true,
+						height: 300,
+						callbacks: {
+						    onChange: function(contents, $editable) {
+						     	$byCK.parent().find('.by_control-column .nav-link.active').addClass('changed');
+						    }
+						  },
+						 lang: $(this).attr('data-lang'),
+						disableDragAndDrop: true,
+						height: 300,
+						emptyPara: '',
+						codemirror: { // codemirror options
+							mode: 'text/html',
+							htmlMode: true,
+							lineNumbers: true,
+							theme: 'monokai'
+						},
+						fontSizes: ['8', '9', '10', '11', '12', '13', '14', '16', '18', '20', '24', '30', '36', '48' , '64'],
+						toolbar: [
+							['style', ['style']],
+							['font', ['bold', 'underline', 'italic', 'clear']],
+							['fontname', ['fontname']],
+							['fontsize', ['fontsize']],
+							['color', ['color']],
+							['para', ['ul', 'ol', 'paragraph']],
+							['table', ['table']],
+							['insert', ['link', 'image', 'video']],
+							['view', ['fullscreen', 'codeview', 'help']]
+						],
+						popover: {
+							image: [
+								['custom', ['imageAttributes']],
+								['resize', ['resizeFull', 'resizeHalf', 'resizeQuarter', 'resizeNone']],
+								['float', ['floatLeft', 'floatRight', 'floatNone']],
+								['remove', ['removeMedia']]
+							],
+							table: [
+								['add', ['addRowDown', 'addRowUp', 'addColLeft', 'addColRight']],
+								['delete', ['deleteRow', 'deleteCol', 'deleteTable']]
+							],
+						},
+						buttons: {
+			    			image: function() {
+								var ui = $.summernote.ui;
+
+								// create button
+								var button = ui.button({
+									contents: '<i class="note-icon-picture" />',
+									tooltip: $.summernote.lang[$.summernote.options.lang].image.image,
+									click: function () {
+										$('#modal-image').remove();
+										
+										$.ajax({
+											url: 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token'),
+											dataType: 'html',
+											beforeSend: function() {
+												$('#button-image i').replaceWith('<i class="fa fa-circle-o-notch fa-spin"></i>');
+												$('#button-image').prop('disabled', true);
+											},
+											complete: function() {
+												$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+												$('#button-image').prop('disabled', false);
+											},
+											success: function(html) {
+												$('body').append(html);
+									            var element = document.querySelector('#modal-image');
+									            var modal = new bootstrap.Modal(element);
+									            modal.show();
+												
+												$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+													e.preventDefault();
+													
+													
+													$SUMM.summernote('insertImage', $(this).attr('href'));
+
+													$('#modal-image').modal('hide');
+												});
+											}
+										});
+									}
+								});
+
+								return button.render();
+							}
+			  			}
+			  			 
+					});
+				}
+				break;
+			case 2:// image
+				{
+					$(this).parents('.by_col').find('.byPT').removeClass('hidden');
+					$(this).parents('.by_col').find('.byCK').addClass('hidden');
+					$(this).parents('.by_col').find('.byED').addClass('hidden');
+					if($(this).parents('.col_cntrll_rch_edit').data('old')=='1'){
+						var markup = $('#'+$byCK.attr('id')).summernote('code');
+		  				$('#'+$byCK.attr('id')).summernote('destroy');
+						$('#C'+$byCK.attr('id')).html($('#'+$byCK.attr('id')).html());
+						$(this).parent().parent().find('.nav-link.changed').removeClass('changed');
+					}
+				}
+				break;
+			case 3:
+				{
+					$(this).parents('.by_col').find('.byED').removeClass('hidden');
+					$(this).parents('.by_col').find('.byCK').addClass('hidden');
+					$(this).parents('.by_col').find('.byPT').addClass('hidden');
+					if($(this).parents('.col_cntrll_rch_edit').data('old')=='1'){
+						var markup = $('#'+$byCK.attr('id')).summernote('code');
+		  				$('#'+$byCK.attr('id')).summernote('destroy');
+						$('#C'+$byCK.attr('id')).html($('#'+$byCK.attr('id')).html());
+						$(this).parent().parent().find('.nav-link.changed').removeClass('changed');
+					}	
+				}
+				break;
+		}
+		$(this).parents('.col_cntrll_rch_edit').data('old',ind);
+	}
+	return false;
+});
+
+
+
+$(document).on('click','#button-select', function(e) {
+		$('#filemanager .form-check-input').each(function(ind,elem) {
+			childC=0;
+			sovr=0;
+			if($(this).prop('checked') && $(this).val()){
+				pathI = $(this).val();
+				thumbI 	= $(this).parent().parent().find('.img-thumbnail').attr('src');
+				childC++;
+				$('.by_row.selected .img-platform .sortible-image').append('<li id="" class="img-box"><div class="li-box"><div class="li-controls"><span class="fanzyLi"><a class="grouped_elements" rel="" href="'+pathI+'"><i class="fa fa-eye"></i></a></span><span><a class="mainLi" href="{{ HTTP_IMAGE }}'+pathI+'" data-path="'+pathI+'"><i class="fa fa-desktop"></i></a></span><span class="removeLi"><i class="fa-solid fa-trash"></i></span></div><div class="li-ima"><img src="'+thumbI+'" alt="" /><input type="hidden" name="product_image['+ sovr+']['+childC+'][image]" value="'+pathI+'"/><input type="hidden" name="product_image['+ sovr+']['+childC+'][color_id]" value="'+ sovr+'"/><input type="hidden" name="product_image['+ sovr+']['+childC+'][sort_order]" value=""/></div></div></li>');
+				
+				
+			}
+		});
+		
+		
+		sImages.sortable('refresh');
+		$('#modal-image').modal('hide');
+		$('#modal-image').remove();
+		
+});
+	
+$(document).on('click','[data-by-toggle=\'image\']',  function (e) {
+   	
+   	e.stopImmediatePropagation(); 
+    var element = this;
+	var thisURL='index.php?route=common/filemanager&user_token=' + getURLVar('user_token')+'&multi=1';
+    $.ajax({
+        url: thisURL,
+        dataType: 'html',
+        success: function (html) {
+            $('body').append(html);
+
+            var element = document.querySelector('#modal-image');
+
+            var modal = new bootstrap.Modal(element);
+			modal.show();
+			$(document).on('click', '#modal-image a.thumbnail', function (e) {
+				e.preventDefault();
+				sovr 	= $('.by_row.selected .sortible-image').attr('data-ovid');
+				childC 	= $('.imageTR.active .sortible-image').attr('data-ccount');
+				childC++;
+				pathI = $(this).parent().parent().find('input').val()
+				thumbI = $(this).find('img').attr('src')
+				
+				eHtml  ='<li id="" class="img-box">';
+				eHtml +='<div class="li-box">';
+				eHtml +='	<div class="li-controls">';
+				eHtml +='		<span class="fanzyLi"><a class="grouped_elements" rel="" href="'+pathI+'"><i class="fa fa-eye"></i></a></span>';
+				eHtml +='		<span><a class="mainLi" href="{{ HTTP_IMAGE }}'+pathI+'" data-path="'+pathI+'"><i class="fa fa-desktop"></i></a></span>';
+				eHtml +='		<span class="removeLi"><i class="fa-solid fa-trash"></i></span>';
+				eHtml +='	</div>';
+				eHtml +='	<div class="li-ima"><img src="'+thumbI+'" alt="" /><input type="hidden" name="product_image['+ sovr+']['+childC+'][image]" value="'+pathI+'"/><input type="hidden" name="product_image['+ sovr+']['+childC+'][color_id]" value="'+ sovr+'"/><input type="hidden" name="product_image['+ sovr+']['+childC+'][sort_order]" value=""/>';
+				eHtml +='	</div>';
+				eHtml +='</div>';
+				eHtml +='</li>';
+				
+				$('body').attr('style','');
+				$('.by_row.selected .img-platform .sortible-image').append(eHtml);
+				$('#modal-image').modal('hide');
+				$('#modal-image').remove();
+				
+			});
+			
+        }
+    });
+});
+
+$(document).on('change','.img-box .alt-text',function(e){
+	imageId=$(this).parent().attr('imageId');
+	$('[iid="'+imageId+'"]').attr('alt',$(this).val());
+	
+});
+
+$(document).on('click','a.change-img',function(e){
+	e.preventDefault();
+	var $COL =$(this).parents('.by_col');
+	var IDt = $(this).data('target-id');
+	var element = this;
+	var thisURL = 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token'); 
+    $.ajax({
+        url: thisURL,
+        dataType: 'html',
+        success: function (html) {
+            $('body').append(html);
+
+            var element = document.querySelector('#modal-image');
+            var modal = new bootstrap.Modal(element);
+			modal.show();
+
+			$(document).on('click', '#modal-image a.thumbnail', function (e) {
+				e.preventDefault();
+				
+				pathI = $(this).parent().parent().find('input').val()
+				thumbI = $(this).find('img').attr('src')
+				$('#T'+IDt).attr('src',thumbI);
+				$('#I'+IDt).val(pathI);
+				$('[iid="'+IDt+'"]').attr('src',pathI)
+				
+				
+				$COL.find('textarea.content-html').html($COL.find('.byCK').html())
+				
+				$('#modal-image').remove();
+				
+			});
+			
+        }
+    });
+	
+});
+
+$(document).ready(function() {
+	if($('.byCK').length){
+		aText='';
+		$('.byCK').each(function(elm){
+			//$(this).is('p')
+			rowCount= 	$(this).parents('li.by_row').attr('rowcount')
+			colCount= 	$(this).parents('.by_col').attr('colcount')
+			lang_ID =	$(this).parents('.tab-pane.lan').attr('lid');
+			$byED 	= 	$(this).parent().find('.byED')
+			$byPT 	= 	$(this).parent().find('.byPT')
+			$byED.html($(this).html());
+			
+			$("[class*='byED-i']",this).each(function(ind,el){
+				var $IMG = $(this); 
+				id = lang_ID + '-' + rowCount +'-' + colCount + '-' + ind ;
+				aText += id + ':' + $IMG.attr('src')+',';
+				$IMG.attr('iid',id);
+				
+				$byPT.find('ul').append('<li id="" imageId="'+id+'" class="img-box"><div class="li-box byPTI" id="' + id + '"><img src="" id="T' + id + '" title="' + $IMG.attr('src') + '"><input id="I'+id+'" type="hidden" name="{{ ctrl }}_description[' + lang_ID + '][rows][' + rowCount + '][cols][' + colCount + '][col_data][image][' + ind + '][src]" id="'+ind+'" value="'+$IMG.attr('src')+'" /><a href="#" data-target-id ="'+id+'" class="btn btn-secondary change-img"><i class="fa-solid fa-arrows-rotate"></i></a></div><input type="text" name="{{ ctrl }}_description[' + lang_ID + '][rows][' + rowCount + '][cols][' + colCount + '][col_data][image][' + ind + '][alt]" id="'+ind+'" value="'+$IMG.attr('alt')+'" placeholder="Alt" class="alt-text" /></li>');
+				
+			});
+		});
+		
+		if(aText){	
+			$.ajax({
+				url: 'index.php?route=bytao/editor.gethumb&user_token='+getVar('user_token'),
+				type: 'post',
+				dataType: 'json',
+				data: {thumbs:aText},
+				success: function(json) {
+					 if (json.length) {
+					        for (i = 0; i < json.length; i++) {
+					        	mAr = json[i].split("|");
+					        	$('#' + mAr[0]+' img').attr('src',mAr[1])
+					        }
+					}
+				}
+			});			
+		}
+	}
+});
+</script>

@@ -1,0 +1,45 @@
+
+.toolbar .pavbtn {
+	margin-bottom: 10px;	
+}
+
+
+.tool-icons ul li a { text-decoration:none; }
+.tool-icons ul li{ display:block; float:left; width:73px;margin:12px; }
+.tool-icons ul li span{ font-size:94%; text-align:center; display:block}
+.tool-icons .icon{ 
+	display:block;
+	width:68px;
+	height:68px;
+}
+
+.tool-icons .icon-information{ background:url(../bytao/image/newsletter/big/information.png) no-repeat;}
+.tool-icons .icon-blog{ background:url(../bytao/image/newsletter/big/addblog.png) no-repeat;}
+.tool-icons .icon-blogs{ background:url(../bytao/image/newsletter/big/blog.png) no-repeat;}
+.tool-icons .icon-comment{ background:url(../bytao/image/newsletter/big/comment.png) no-repeat;}
+.tool-icons .icon-modules{ background:url(../bytao/image/newsletter/big/setting.png) no-repeat;}
+.tool-icons .icon-front-modules{ background:url(../bytao/image/newsletter/big/module.png) no-repeat;}
+.tool-icons .icon-category { background:url(../bytao/image/newsletter/big/forder.png) no-repeat;}
+.tool-icons .icon-addcategory { background:url(../bytao/image/newsletter/big/addforder.png) no-repeat;}
+
+ul.toolbar {list-style: none;}
+.toolbar i {font-size: 22px;color:#000;}
+.toolbar li {position: relative;height: 35px;}
+
+/*.toolbar li:before {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: -25px;
+    top: -3px;
+    content: " ";
+}
+.toolbar li::nth-child(0):before { background:url(../bytao/image/newsletter/small/information.png) no-repeat;}
+.toolbar li:nth-child(1):before{ background:url(../bytao/image/newsletter/small/addblog.png) no-repeat;}
+.toolbar li:nth-child(2):before{ background:url(../bytao/image/newsletter/small/blog.png) no-repeat;}
+.toolbar li:nth-child(4):before{ background:url(../bytao/image/newsletter/small/comment.png) no-repeat;}
+.toolbar li:nth-child(5):before{ background:url(../bytao/image/newsletter/small/setting.png) no-repeat;}
+.toolbar li:nth-child(6):before{ background:url(../bytao/image/newsletter/small/module.png) no-repeat;}
+.toolbar li:nth-child(7):before{ background:url(../bytao/image/newsletter/small/forder.png) no-repeat;}
+.toolbar li:nth-child(8):before{ background:url(../bytao/image/newsletter/small/addforder.png) no-repeat;}
+*/

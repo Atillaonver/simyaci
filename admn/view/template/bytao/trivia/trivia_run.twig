@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html dir="{{ direction}}" lang="{{ lang}}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRIVIA AKÞAMI BNI</title>
+{% if icon %}
+<link href="{{ icon}}" rel="icon" />
+{% endif %}
+<link href="https://fonts.googleapis.com/css?family=Courier+Prime:400,700&display=swap&subset=latin-ext" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&display=swap&subset=latin-ext" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="view/bytao/css/bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="view/bytao/js/trivia.js?v33"></script>
+<script type="text/javascript">
+	var QQ ='';	
+	var ACT='0';
+</script>
+
+<link href="view/bytao/css/bootstrap/core/core.css" type="text/css" rel="stylesheet" />
+<link href="view/bytao/css/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<style>
+	.vh{
+		height: 100%;
+		height:calc(100vh - 100px);
+	}
+	.img-height-responsive{
+		max-height: 100%;
+		height: 100%;
+		width: auto;
+	}
+	.centered{
+		text-align: center;
+	}
+	.prel{
+		position:relative;
+		overflow: hidden;
+	}
+	.web{
+		position: absolute;
+	    bottom: 68px;
+	    font-size: .8em;
+	    text-align: center;
+	    width: 100%;
+	    font-weight: 900;
+	    letter-spacing: 0.22em;
+	}
+	.logo{
+		position: absolute;
+		 top: 50%;
+	    left: 50%;
+	    transform: translate(-50%,-50%);
+	    -ms-transform: translate(-50%,-50%);
+	    -webkit-transform: translate(-50%,-50%);
+	    -moz-transform: translate(-50%,-50%);
+	    -o-transform: translate(-50%,-50%);
+	}
+	.sponsor{
+		position: absolute;
+		 top: 75%;
+	    left: 50%;
+	    transform: translate(-50%,-50%);
+	    -ms-transform: translate(-50%,-50%);
+	    -webkit-transform: translate(-50%,-50%);
+	    -moz-transform: translate(-50%,-50%);
+	    -o-transform: translate(-50%,-50%);
+	}
+	h1.baslik {
+	    margin-top: 77px;
+	    font-size: 1.6em;
+	    font-weight: 900;
+	}
+	
+	
+	i.arrow:before{
+	position:absolute;
+	content:"";
+	height:2px;
+	width:33px;
+	margin-left:-17px;
+	background-color:#000;
+	transform: rotate(-225deg);
+	  -webkit-transform: rotate(-225deg);
+	}
+	i {
+	  
+	  position:relative;
+	}
+
+	.arrow {
+	  position: absolute;
+	  padding: 14px; /* Arrow size */
+	          box-shadow: 1px -1px 0 1px #000 inset;
+	  -webkit-box-shadow: 2px -2px #000 inset;
+	  border: solid transparent;
+	  border-width: 0 0 14px 14px;
+	  transition: 0.2s;
+	  right:56px;
+	  top: 43px;
+	}
+	.counter .arrow{right: inherit;}
+.arrow:hover {
+          box-shadow: 2px -2px 0 2px #000 inset;
+  -webkit-box-shadow: 4px -4px #000 inset;
+}
+
+
+.arrow-right { transform:rotate(225deg) }
+.by-btn{cursor: pointer;}
+#page-content > .row{margin-left:0;margin-right:0;}
+
+#page-content{
+	width:100%;
+	width:100vw;
+	height: 100%;
+	height: 100vh;
+	padding: 35px;
+	font-size: 38px;
+	font-family: 'Open Sans', sans-serif;
+}
+.head {
+	display: block;
+    height: 15%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.start-1 {
+	display: block;
+    height: 100%;
+    width: 100%;
+}
+.foot {
+	display: block;
+    height: 10%;
+    width: 100%;
+}
+.body {
+	display: block;
+	
+    height: 75%;
+    overflow: hidden;
+}
+.upbody {
+    height: 40%;
+   
+}
+.upbody.full{
+	text-align: center;
+	padding: 0 200px;
+}
+.body ul{
+	margin-left:50px;
+}
+.clist ul{
+	margin-left:0px;
+}
+.body li {
+    list-style: none;
+    font-size: 40px;
+}
+.theImg{width:100%; height: auto;}
+.title {
+    line-height: 125px;
+    vertical-align: middle;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+#topten{
+	height: 100%;
+	overflow: auto;
+}
+.clist li,.topten {
+    font-size: .45em !important;
+}
+.righted{text-align: right;}
+.lefted{text-align: left;}
+.lefted img{max-width: 255px;}
+.op0{opacity: 0!important;}
+.ans-div {
+    height: 100%;
+    line-height: 13em;
+    vertical-align: middle;
+    font-weight: 900;
+}
+#ans-img-div{position: relative;overflow: hidden;}
+#ans-img-div img{}
+.ans-div.center {
+    line-height: 16em;
+}
+.color-red{color: #ff0000;}
+.color-green{color: green;}
+.center {
+  line-height: 6em;
+}
+
+.center p {
+  line-height: 1.5;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+}
+.counter {
+    font-weight: bolder;
+}
+
+.h100{height: 100%;}
+.bttm{position: absolute;bottom:0px}
+#btn-full {
+    position: absolute;
+    right: 40px;
+    top: 10px;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+    color: #ccc;
+    cursor: pointer;
+}
+.cor-ans{color: green;}
+.wrong-ans{color: red;}
+.collapsed{display: none;}
+.opened.collapsed{display: table-row;}
+.board{font-family: 'Courier Prime', monospace;}
+.head.board {
+    font-size: 2em;
+}
+span.cli-ans {
+    display: block;
+}
+a.btn.btn-by {
+    border: solid 1px #000;
+    color: #000;
+    font-size: .8em;
+    padding: 6px 7px 3px 7px;
+}
+.baslik img {
+    margin-top: 50px;
+}
+.clicked {
+	color: red !important;
+  	text-shadow: 1px 1px 2px black, 0 0 25px red, 0 0 5px red;
+}
+</style>
+
+</head>
+<body>
+<div id="btn-full" class=""><span class="fa fa-arrows-alt"></span></div>
+<div id="page-content" class="page">
+	{{ start }}
+</div>
+
+<script>
+	
+	
+	var maxQ={{ maxQ }};
+	var act=0;
+	var quest=1;
+	var timer;
+	var onl;
+	var tt;
+	var strt;
+	
+	var scr1 = '<div class="start-1 row">';
+		scr1 +='<div class="col-md-6 h100 centered"><img src="{{ URL_IMAGE ~ session.image }}" class="img-height-responsive"/>';
+		scr1 +='</div>';
+		scr1 +='<div class="col-md-6 h100 centered prel">';
+		{% if trivia %}
+		scr1 +='<div class="baslik next"><img src="{{ trivia }}" /></div>';
+		{% else %}
+		scr1 +='<h1 class="baslik next">TRIVIA</h1>';
+		{% endif %}
+		{% if logo %}
+		scr1 +='<div class="logo"><img src="{{ logo}}" /></div>';
+		{% endif %}
+		{% if sponsor %}
+		scr1 +='<div class="sponsor"><img src="{{ sponsor}}" /></div>';
+		{% endif %}
+		scr1 +='	<div class="web">trivia.bugunnelerizledim.com </div>';
+		
+		scr1 +='<div class="foot bttm row">';
+		scr1 +='<div class="col-md-3"></div><div class="col-md-6 centered counter"></div><div class="col-md-3"><span class="btn-left by-btn"><i class="arrow arrow-right"></i></span></div>';
+		scr1 +='</div>';
+		scr1 +='</div>';
+		scr1 +='</div>';
+		
+	var qu = '<div class="head row">';
+		qu +='<div class="col-md-3 lefted">';
+		{% if trivia %}
+		qu +='<img src="{{ trivia }}" />';
+		{% else %}
+		qu +='<img src="{{ trivia_logo }}" />';
+		{% endif %}
+		qu +='</div>';
+		qu +='<div class="col-md-6 centered title"> SORU : <span id="quest"></span></div>';
+		qu +='<div class="col-md-3 righted">';
+		{% if logo %}
+		qu +='<img src="{{ logo }}" />';
+		{% endif %}
+		qu +='</div>';
+	 	qu +='</div>';
+	 	qu+='<div class="body body-content"></div>';
+		qu +='<div class="foot row">';
+		qu +='<div class="col-md-3"></div><div class="col-md-6 centered counter"> sn|<span id="count"></span></div>';
+		qu +='<div class="col-md-3"><span class="btn-left by-btn"><a href="index.php?route=bytao/trivia|nexta&user_token={{ user_token ~ "&trivia_id=" ~ trivia_id }}"><i class="arrow arrow-right"></i></a></span></div>';
+		qu +='</div>';
+	
+	var An = '<div class="head row">';
+		An +='<div class="col-md-3 lefted">';
+		{% if trivia %}
+		An +='<img src="{{ trivia }}" />';
+		{% else %}
+		An +='<img src="{{ trivia_logo}}" />';
+		{% endif %}
+		An +='</div>';
+		An +='<div class="col-md-6 centered title"> CEVAP : <span id="quest"></span></div>';
+		An +='<div class="col-md-3 righted">';
+		{% if logo %}
+		An +='<img src="{{ logo}}" />';
+		{% endif %}
+		An +='</div>';
+	 	An +='</div>';
+	 	An +='<div class="body body-content"></div>';
+		An +='<div class="foot row">';
+		An +='<div class="col-md-3"></div><div class="col-md-6 centered counter"><span class="btn-left by-btn"><i class="arrow arrow-right"></i></span></div><div class="col-md-3"></div>';
+		An +='</div>';
+	
+		
+	var brd = '<div class="head row">';
+		brd +='<div class="col-md-3 lefted">';
+		{% if trivia %}
+		brd +='<img src="{{ trivia }}" />';
+		{% else %}
+		brd +='<img src="{{ trivia_logo }}" />';
+		{% endif %}
+		brd +='</div>';
+		brd +='<div class="col-md-6 centered title"></div>';
+		brd +='<div class="col-md-3 righted">';
+		{% if logo %}
+		brd +='<img src="{{ logo}}" />';
+		{% endif %}
+		brd +='</div>';
+	 	brd +='</div>';
+	 	brd +='<div id="board" class="body body-content board">';
+		brd +='</div>';
+		brd +='</div>';
+		brd +='<div class="foot row">';
+		brd +='<div class="col-md-3"></div><div class="col-md-6 centered"> </div><div class="col-md-3"><span class="btn-left by-btn"><i class="arrow arrow-right"></i></span></div>';
+		brd +='</div>';
+	
+	var brd10 = '<div class="head row board">';
+		brd10 +='<div class="col-md-3 centered title">TOP 10</div>';
+		brd10 +='<div class="col-md-6 centered title">';
+		{% if trivia_logo %}
+		brd10 +='<img src="{{ trivia_logo}}" />';
+		{% endif %}
+		brd10 +='</div>';
+		brd10 +='<div class="col-md-3 righted">';
+		
+		brd10 +='</div>';
+	 	brd10 +='</div>';
+	 	brd10 +='<div id="board" class="body body-content board">';
+		brd10 +='</div>';
+		brd10 +='</div>';
+		brd10 +='<div class="foot row">';
+		brd10 +='<div class="col-md-3"></div><div class="col-md-6 centered">';
+		{% if logo %}
+		brd10 +='<img src="{{ logo }}" />';
+		{% endif %}
+		brd10 +='</div><div class="col-md-3"><span class="by-btn"><i class="arrow arrow-right"></i></span></div>';
+		brd10 +='</div>';
+			
+	
+
+	
+	$(document).ready(function(){
+			
+			//$('#page-content').html(scr1);
+			
+			$('#btn-full').on('click',function(){
+				toggleFullScreen();
+			});
+			
+			$(document).on('click','a.in',function(e){
+				e.preventDefault()
+				clId=$(this).data('clid');
+				if(!$('#'+clId+'-collapse').hasClass('opened')){
+					$('#'+clId+'-collapse').addClass('opened')
+				}else{
+					$('#'+clId+'-collapse').removeClass('opened')
+				}
+				
+			});
+			
+			$(document).on('click','.Narrow',function(){
+				alert()
+				$('#page-content').animate({opacity: 0,}, 1000, function() {
+					
+   					$.ajax({
+						url: 'index.php?route=bytao/trivia|next&user_token={{ user_token ~ "&trivia_id=" ~ trivia_id }}&act='+act+'&quest='+quest,
+						dataType: 'json',
+						success: function(json) {
+							
+							if(json['act']||json['act']==0){ act = json['act'];}
+							
+							if(json['brd']){
+								if(json['frsbrd'] && quest==1){
+									$('#page-content').html(qu);
+									$('.title').html(json['title']);
+									$('.body.body-content').html(json['content']);
+									
+									$('.counter').addClass('op0');
+									$('#page-content').animate({opacity: 1,}, 1000, function() {})
+									
+									strt = setInterval(function() {
+									    $.ajax({
+												url: 'index.php?route=bytao/trivia|frsbrd&user_token={{ user_token ~ "&trivia_id=" ~ trivia_id }}',
+												dataType: 'json',
+												success: function(jsoner) {
+														if(jsoner['content']){
+															$('.body.body-content').html(jsoner['content']);
+														}
+													}
+										});	
+								  	}, 1000);
+								}else{
+									$('#page-content').html(brd10);
+									$('.body.body-content').html(json['content']);
+									$('.counter').addClass('op0');
+									$('#page-content').animate({opacity: 1,}, 1000, function() {})
+								}
+							}
+							
+							if(json['qview']){
+								clearInterval(tt);
+								clearInterval(strt);
+								clearInterval(onl);
+								
+								$('#page-content').html(qu);
+								$('.title').html(json['title']);
+								$('.counter').removeClass('op0')
+								$('.body.body-content').html(json['qview']);
+								$('.by-btn').hide();
+								
+								$('#page-content').animate({opacity: 1,}, 1000, function() {
+									if(json['time']){
+										timer = json['time'];
+										tt = setInterval(function() {
+				    						timer--;
+				    						$('#count').html(timer);
+				    						if(timer<1){
+				    							$('.by-btn').show();
+				    							clearInterval(tt);
+				    							
+				    							$.ajax({
+													url: 'index.php?route=bytao/trivia|addevent&user_token={{ user_token ~ "&trivia_id=" ~ trivia_id }}&act='+act+'&quest='+quest,
+													dataType: 'json',
+													success: function(json) {
+														
+													}
+												});
+				    							
+				    						}
+			  							}, 1000);
+									}
+								})
+							}
+							
+							if(json['aview']){
+								clearInterval(tt);
+								clearInterval(strt);
+								$('#page-content').html(An);
+								$('.title').html(json['title']);
+								$('.body.body-content').html(json['aview']);
+								
+								$('.by-btn').show();
+								$('#page-content').animate({opacity: 1,}, 1000, function() {
+									
+								})
+							}
+							
+							if(json['finish']){
+								clearInterval(tt);
+								clearInterval(strt);
+								clearInterval(onl);
+								$('#page-content').html(scr1);
+								$('.counter').addClass('op0');
+								$('.by-btn').hide();
+								
+								$('#page-content').animate({opacity: 1,}, 1000, function() {})
+							}
+							
+							if(json['qq']){
+								quest = json['qq'];
+							}
+						}
+			});	
+  				});
+			});
+		})
+</script>
+	
+</body>
+</html>

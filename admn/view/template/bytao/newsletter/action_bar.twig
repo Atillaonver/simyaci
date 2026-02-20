@@ -1,0 +1,23 @@
+<div class="pull-left pavbtn">
+		{% if menu_active %}
+			{% if menu_active == 'subscribes' or menu_active == 'draft' %}
+				<a onclick="$('#action').val('delete');$('#form').submit();" class="btn btn-danger">{{ button_delete }}</a>
+			{% elseif menu_active =='modules' or menu_active =='config' %}
+				<a onclick="$('#form').submit();" class="btn btn-primary">{{ button_save }}</a>&nbsp;&nbsp;
+				<a href="{{ cancel }}" class="btn btn-danger">{{ button_cancel }}</a>&nbsp;&nbsp;
+			{% elseif menu_active =='templates' %}
+				<a onclick="$('#action').val('copy_default');$('#form').submit();" class="btn btn-primary">{{ button_copy_default }}</a>&nbsp;&nbsp;
+				<a onclick="$('#action').val('copy');$('#form').submit();" class="btn btn-success">{{ button_copy }}</a>&nbsp;&nbsp;
+				<a href="{{ insert_link }}" class="btn btn-success">{{ button_insert }}</a>&nbsp;&nbsp;
+				<a onclick="$('#action').val('delete');$('#form').submit();" class="btn btn-danger">{{ button_delete }}</a>&nbsp;&nbsp;
+			{% elseif menu_active =='template' %}
+				<a onclick="$('#form').submit();" class="btn btn-success">{{ button_save }}</a>&nbsp;&nbsp;
+				<a href="{{ cancel }}" class="btn btn-danger">{{ button_cancel }}</a>&nbsp;&nbsp;
+			{% elseif menu_active =='create_newsletter' %}
+				<a onclick="$('#action').val('save_draft');$('#form').submit();" class="btn btn-primary">{{ button_save_draft }}</a>&nbsp;&nbsp;
+				<a onclick="$('#action').val('send');$('#form').submit();" class="btn btn-success">{{ button_send }}</a>&nbsp;&nbsp;
+				<a onclick="$('#action').val('check_spam');$('#form').submit();" class="btn btn-warning">{{ button_check }}</a>&nbsp;&nbsp;
+			{% endif %}
+			
+		{% endif %}
+</div>

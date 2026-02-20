@@ -1,0 +1,206 @@
+{{ header }}{{ column_left }}
+<div id="content">
+	  <style>
+  	span.sname {
+	    text-transform: capitalize;
+	    font-size: medium;
+	    margin-right: 8px;
+    }
+    .addTab {
+	    font-size: 36px;
+	    cursor: pointer;
+	    color: darkgreen;
+	    margin-right: 6px;
+	}
+	.nav-item>input{
+		margin-top: 0px;
+	    height: 100%;
+	    padding: 8px;
+    }
+    .changed {
+	    color: red !important;
+	}
+  </style>
+  <div class="container-fluid">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_jqscript }}</h3>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ text_info_script }}</div>
+                        
+            <div id="jqscript">
+              <ul class="nav nav-tabs" id="njqscript" data-tabs="{{ allJqscript|length }}">
+              <li class="nav-item"><i class="addTab fa-solid fa-square-plus"></i></li>
+              {% for scrpt in allJqscript %}
+              <li class="nav-item"><input type="hidden" name="type" value="{{ scrpt.type }}" id="input-{{ loop.index }}-type"/><a href="#tab-{{ loop.index }}" data-bs-toggle="tab" class="nav-link">V:<span class="version">{{ scrpt.version }}</span>  <span class="type">{{ scrpt.type }}</span></a></li>
+              {% endfor %}	
+              </ul>
+              <div class="tab-content" id="tabcontents">
+              	{% for scrpt in allJqscript %}
+              	<div class="tab-pane" id="tab-{{ loop.index }}">
+                    <textarea name="jqscript" id="input-jqscript{{ loop.index }}" rows="10" class="form-control">{{ scrpt.jqscript | html_entity_decode }}</textarea>
+                    
+                    <input type="hidden" name="jqscript_id" value="{{ scrpt.jqscript_id }}" id="input-{{ loop.index }}-jqscript_id"/>
+                    <br/>
+                    <div class="pull-left">
+                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>
+                    
+                    </div>
+                    </div>
+                {% endfor %}	
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link href="view/javascript/codemirror/lib/codemirror.css" rel="stylesheet" />
+  <link href="view/javascript/codemirror/theme/monokai.css" rel="stylesheet" />
+  
+	<script type="text/javascript" src="view/javascript/codemirror/lib/codemirror.js"></script>
+	<script type="text/javascript" src="view/javascript/codemirror/mode/javascript.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/formatting.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/search.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/searchcursor.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/jump-to-line.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/javascript-hint.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/closebrackets.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/closetag.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/rulers.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/autorefresh.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/match-highlighter.js"></script> 
+	<script type="text/javascript" src="view/javascript/codemirror/lib/fullscreen.js"></script> 
+
+	<link href="view/javascript/codemirror/lib/fullscreen.css" rel="stylesheet" />
+	<link href="view/javascript/codemirror/lib/show-hint.css" rel="stylesheet" />
+  
+<script type="text/javascript">
+var t = {{ allJqscript|length }};
+
+$(document).ready(function(){
+	var allOption = {
+			mode: 'javascript',
+			height: '800px',
+			lineNumbers: true,
+			autofocus: true,
+			autoRefresh:true,
+			smartIndent:true,
+			lineWiseCopyCut: true,
+			lineWrapping: true,
+			theme: "monokai",
+			tabSize: 2,
+		    autoCloseBrackets: true,
+		    matchBrackets: true,
+		    showCursorWhenSelecting: true,
+		    extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); },"Ctrl-Space": "autocomplete"},
+		    foldGutter: true,
+		    gutters: ["CodeMirror-linenumbers", "CodeMirror-lint-markers"]
+		};
+	/**/
+	{% for item in allJqscript %}
+		var codemirror{{ loop.index }} = CodeMirror.fromTextArea(document.getElementById('input-jqscript{{ loop.index }}'),allOption );
+			codemirror{{ loop.index }}.on("focus", function(){ codemirror{{ loop.index }}.refresh();});
+			codemirror{{ loop.index }}.on("change", function(){ $('#njqscript .nav-link.active').addClass('changed');});
+			codemirror{{ loop.index }}.setSize('100%', '500px');
+	{% endfor %}	
+	
+	$('#jqscript a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		switch($(this).index()){
+			case 0:
+				break;
+			default:
+				window['codemirror'+$(this).index()].refresh().focus().getCursor();
+				break;
+				
+		}
+	});	
+	
+	
+	
+	$('.nav-tabs a[href=\'#tab-1\']').tab('show');
+	
+		
+	$(document).on('blur', '.nav-item > input', function(e) {
+		$(this).parent().find('input').attr('type','hidden');
+		$(this).parent().find('.type').html($(this).val())
+		$(this).parent().find('.nav-link').show();
+	});
+	
+	$(document).on('dblclick', '.nav-link', function(e) {
+		e.preventDefault();
+		$(this).hide();
+		$(this).parent().find('input').attr('type','text');
+	});
+	
+	$(document).on('click', '.addTab', function(e) {
+		e.preventDefault();
+		t = t+1;
+		
+		html='<div class="tab-pane" id="tab-' + t + '">';
+	    html +='	<textarea name="jqscript" id="input-jqscript'+t+'" rows="10" class="form-control"></textarea>';
+	    html +='	<input type="hidden" name="jqscript_id" value="0" id="input-'+t+'-jqscript_id"/><br/>';
+	    html +='	<div class="pull-left">'
+	    html +='	<button type="button" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> {{ button_save }}</button>'
+	    html +='	</div>'
+	    html +='</div>';
+	    
+		$('#tabcontents').append(html);
+		$('#njqscript').append('<li class="nav-item"><input type="hidden" name="type" value="" id="input-'+t+'-type"/><a href="#tab-'+t+'" data-bs-toggle="tab" class="nav-link">V:<span class="version">0</span> <span class="type">script'+t+'</span></a></li>');
+		window['codemirror'+t] = CodeMirror.fromTextArea(document.getElementById('input-jqscript'+t),allOption )
+		window['codemirror'+t].on("focus", function(){ window['codemirror'+t].refresh();})
+		window['codemirror'+t].setSize('100%', '500px');
+		$('.nav-tabs a[href=\'#tab-'+t+'\']').tab('show');
+		
+		window['codemirror'+t].on("change", function(){ $('#njqscript .nav-link.active').addClass('changed');});
+		
+		
+	});				
+
+	
+});
+
+$('#jqscript .tab-content').on('click', '.btn-primary', function(e) {
+	e.preventDefault();
+	
+	var node = this;
+
+	var editor = $('#jqscript .tab-content .active .CodeMirror')[0].CodeMirror;
+	var jqscriptId = $('#jqscript .tab-content .active input[name="jqscript_id"]').val();
+	var jqscriptType = $('#njqscript .nav-link.active').parent().find('input[name="type"]').val();
+				
+	$.ajax({
+		url: 'index.php?route=bytao/jqscript|save&user_token={{ user_token }}&jqscript_id=' + jqscriptId + '&type=' + jqscriptType,
+		type: 'post',
+		data: 'jqscript=' + encodeURIComponent(editor.getValue()),
+		dataType: 'json',
+		success: function(json) {
+			$('.alert-dismissible').remove();
+			
+			if (json['version']) {
+				$('#njqscript .active span.version').html(json['version']);
+			}
+			
+			if (json['jqscript_id']) {
+				$('#jqscript .tab-content .active input[name="jqscript_id"]').val(json['jqscript_id']);
+			}
+			
+			if (json['error']) {
+				alertDivided(json['error'],'danger');
+			}
+
+			if (json['success']) {
+				alertDivided(json['success'],'success');
+				
+				$('#njqscript .nav-link.active').removeClass('changed');
+			}
+		}
+	});
+});
+
+</script> 
+</div>
+{{ footer }} 

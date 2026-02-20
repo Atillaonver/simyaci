@@ -1,0 +1,63 @@
+<div id="pay-it">
+<span id="btn-cancel" class="hidden">
+	<span>Cancel</span><i class="fa fa-times-circle"></i>
+</span>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="Pay" id="button-pay" class="btn btn-primary" />
+    
+  </div>
+</div>
+
+<fieldset class="hidden">
+  <legend>{{ text_instruction }}</legend>
+  <p><b>{{ text_description }}</b></p>
+  <div class="border rounded p-3 mb-2">
+    <p>{{ bank }}</p>
+    <p>{{ text_payment }}</p>
+  </div>
+</fieldset>
+
+<div class="buttons hidden">
+  <div class="pull-right">
+    <button type="button" id="button-confirm" class="btn btn-primary" >{{ button_confirm }}</button>
+  </div>
+</div>
+
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function () {
+    var element = this;
+
+    $.ajax({
+        url: 'index.php?route=extension/opencart/payment/bank_transfer.confirm&language={{ language }}',
+        dataType: 'json',
+        success: function (json) {
+            if (json['error']) {
+                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+            }
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+    });
+});
+
+$('#btn-cancel').on('click', function() {
+	$('#checkout-payment').removeClass('active');
+	$('#payment').addClass('hidden');
+	$('#pay-it div.buttons,#pay-it fieldset,#btn-cancel').toggleClass('hidden');
+});
+
+$('#button-pay').on('click',function() {
+	$('#checkout-payment').addClass('active');
+	$('#payment').removeClass('hidden');
+	$('#pay-it div.buttons,#pay-it fieldset,#btn-cancel').toggleClass('hidden');
+});
+
+//--></script>
+
+</div>
