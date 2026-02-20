@@ -1,0 +1,145 @@
+/* SHEA Tablet */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+    #mobile-menu{display:inline-block;}
+  .tabled .p-l-i-z  {display:inline-block;}
+  .t-only,.t-m-only {display:block !important;}
+  .d-only {display:none !important;}
+  .l-p-c-m {margin: 40px 0; text-align: center;}
+   .sticky-container{position:initial;}    
+    
+    #primary-menu .uper-item{display:none;}
+    #col-image,#col-info{width:100%;}
+    .menu-key{display:inline-block;}
+  	
+  	#col-info .product-name { display:block;}
+  	#col-info .product-name h1 { font-size: 31px;}
+  	#col-info .option-row > ul {width: 100% ;}
+  	#col-info .option-row > label {position:unset; display:block;}
+    #col-info-container {width: 80%;}
+  	.image-container{height: calc(100vh - 233px);}
+  	.site-sharing {left: 20px;}
+  	#slider-control {right: 20px;}
+  	#zoom-pan{display:none}
+    .mobile.content-height{min-height:200px;height:200px !important;}
+  	.mobile-title{display:block;}
+  	.mobile-title .content-title,.mobile .content-title{max-width:100%; text-align:center;padding:30px 10px;}
+	.desktop-title{display:none;}
+    
+    .also {height: calc( ( 100vh - 88px ) / 2) !important;}
+    .woman-menu > .qua_top_menu::after,.man-menu > .qua_top_menu::after  {content: '';top: 0;left: 0;font-size: 0px;}
+    .mobile-title .content-title {max-width: 100%; margin-bottom: 38px;}
+	.product-cell {width: 33.333333%;}
+    .tree-side-menu-container > .has-sub {width: 29%;float: left;}
+    .qua_top_menu > ul { padding-left: 20px;}
+    .menu-key button {margin-top: 16px;}
+    .product-list-content .name { transform: translateY(0) !important; opacity: 1;}
+    .product-cell-text {position: inherit;top: 0;left: 0;width: 100%;padding-top:10px; height: 100px; color: #333;background-color:#fff;}
+    .to-middle { position: inherit; top: 0; left: 0; transform: inherit;  }
+    .product-cell .name { opacity: 1;transition: none;transform: inherit;font-size: 18px;font-weight:normal; line-height: 1;}
+  	.product-cell .price {line-height: 1.7;}
+    #col-title.mobile{position: relative !important;   margin-top: 0px !important;min-height: 150px;}
+    .master-slider-parent{
+      margin-bottom:10px;
+    }
+    
+}
+
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+	.tabled .p-l-i-z  {display:inline-block;}
+    #mobile-menu{display:inline-block;}
+}
+
+/* ----------- iPad 3, 4 and Pro 9.7" ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+    
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* ----------- iPad Pro 10.5" ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 834px) 
+  and (max-device-width: 1112px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 834px) 
+  and (max-device-width: 834px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 1112px) 
+  and (max-device-width: 1112px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* ----------- iPad Pro 12.9" ----------- */
+
+/* Portrait and Landscape */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* Portrait */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1024px) 
+  and (orientation: portrait) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}
+
+/* Landscape */
+@media only screen 
+  and (min-device-width: 1366px) 
+  and (max-device-width: 1366px) 
+  and (orientation: landscape) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+	.tabled .p-l-i-z  {display:inline-block;}
+}

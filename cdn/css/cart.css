@@ -1,0 +1,73 @@
+#main {
+    padding-left: calc(12% + 149px) !important;
+    padding-right: calc(12% + 0px) !important;
+}
+
+
+#checkout-cart h1{
+	font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .9px;
+    color: #000;
+    padding: 0 0 30px;
+    background: 0 0;
+    display: table;
+    text-transform: uppercase;
+}
+.order-table {
+    width: 100%;
+    position: relative;
+    margin-bottom: 25px;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.order-table .description {
+    width: 30%;
+}
+
+.order-table thead th, .order-table .thead th {
+    padding: 13px 13px 13px 0;
+    background: url(../../../../image/tools/dotted_line.png) repeat-x bottom left;
+    font-weight: bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    text-align: lef;
+    
+}.order-table tbody tr:last-child{
+    background: url(../../../../image/tools/dotted_line.png) repeat-x bottom left;
+   
+}
+
+.order-table .thead th, .order-table thead th {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: .3px;
+    text-align: left;
+    text-transform: uppercase;
+}
+.order-item .description a {
+    color: #959595;
+     text-decoration:none;
+}
+.order-item .description a:hover {
+    text-decoration: underline;
+}
+.order-table tbody td.description span {
+    color: #000 !important;
+    letter-spacing: 0;
+    margin-bottom: 2px;
+    overflow: hidden;
+    max-width: 280px;
+    display: block;
+    text-transform: uppercase;
+}
+td.quantity span{
+	font-size: 20px;
+	padding: 4px;
+	vertical-align: text-bottom;
+}
+.button-white{border: none;background-color: white;cursor: pointer;  color: #959595;}
+.button-white:hover {color:#000;}
+.button-white i {font-weight: lighter; line-height: 28px; font-size: 30px; padding: 5px;}

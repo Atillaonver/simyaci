@@ -1,0 +1,969 @@
+/*===============================================*/
+/* 09. Mobile, Tablet                            */
+/*===============================================*/
+
+
+/*Responsive*/
+@media (max-width:1350px){
+	.qua_page_margin header nav {
+		width: 96%;
+	}
+	.qua_page.qua_page_margin {
+		margin-left: 2%;
+    margin-right: 2%;
+	}
+}
+@media (max-width:1300px){
+	.qua_spa .qua_slide_left_middle {
+		left: 5%;
+	}
+	.qua_great_titles .qua_blog_title h2 {
+		font: 900 68px/73px Open Sans, Arial;
+	}
+
+}
+@media (max-width:1196px){
+	.qua_page.qua_page_margin {
+		margin-left: 0%;
+    margin-right: 0%;
+	}
+	.qua_page_margin header nav {
+		width: 100%;
+	}
+	.qua_wrapper_slider {
+		width: 90%;
+	}
+	.qua_iphone {
+		min-width: 300px;
+	}
+	.qua_slider_copyright {
+ 		line-height: 100px;
+ 		left: 2%;
+	}
+	.qua_port_titles.qua_furniture_button {
+	top: 5%;
+	transform:translateY(-50%);
+	text-align: center;
+}
+.qua_padding_title_left {
+	padding: 80px 120px 60px 50px;
+}
+	.qua_black	.qua_slide_title {
+		font:400 70px PT Sans Narrow, Arial;
+		line-height: 1.0625;
+		text-transform: uppercase;
+		-webkit-transition: all 0.6s;
+		-o-transition: all 0.6s;
+		transition: all 0.6s;
+		}
+	.qua_material .qua_icon_box i {
+		font-size: 20px;
+		margin: 13px 0 0 -9px;
+		padding: 18px;
+	}
+	.qua_material .qua_icon_box:hover i {
+		font-size: 20px;
+		margin: 13px 0 0 -9px;
+		padding: 18px;
+	}
+	.qua_material.qua_middle_titles h2 {
+		font-size: 30px;
+	}
+}
+@media (max-width:1100px){
+	.qua_simple_block {
+		padding: 56px 45px 46px;
+	}
+		.qua_mnu_btn {
+		top: 96%;
+	}
+	.qua_great_titles .qua_blog_title h2 {
+		font: 900 60px/73px Open Sans, Arial;
+	}
+	.qua_slide_txt.qua_slide_center_middle {
+		width: 80%;
+	} 
+	.qua_port_titles {
+		top: 24%;
+	}
+}
+@media (max-height:1100px){
+.qua_slider_copyright {
+	font-size: 130px;
+}
+}
+@media (max-height:1000px){
+.qua_slider_copyright {
+	font-size: 120px;
+}
+.qua_parent ul{
+	background-color: #fff;
+}
+}
+@media (max-height:950px){
+.qua_slider_copyright {
+	font-size: 100px;
+}
+.qua_logo img { max-height: 110px;}
+
+}
+@media (max-height:880px){
+.qua_slider_copyright {
+	font-size: 72px;
+}
+.line-div{
+	display: none;
+}
+.home-button{
+	margin: auto;
+	margin-top:50px;
+}
+
+h1.headiv{
+	line-height: normal;
+	margin-top: 100px;
+    height: auto;
+}
+h2.headiv{font-size: 38px;}
+footer h3:after{
+	margin-left: auto;
+	margin-right: auto;
+}
+.qua_first_step .qua_logo.active img {
+    margin-top: -10px;
+    height: 38px;
+}
+}
+@media (max-height:680px){
+.qua_slider_copyright {
+	font-size: 42px;
+}
+.qua_slide_subtitle_thin.qua_thin_txt {
+	font: 100 90px Josefin Sans, Arial;
+}
+}
+@media (max-width:1024px){
+	.qua_fixed, 
+	.tablet .qua_fixed {
+		background-attachment:scroll!important;
+	}
+	.qua_slide_txt .qua_big_txt {
+		top: 40%;
+	}
+	
+	.social{
+		width: 188px;
+		margin: 10px 0 10px 0;
+	}
+}
+
+@media (max-width:1000px){
+	.mobile .qua_iphone,
+	.qua_top_menu, 
+	.qua_header_address,
+	.qua_browsers,
+	.qua_logo_und,
+	.mobile.landscape .qua_slide_desq,
+	.mobile.landscape .qua_scroll_down,
+	.qua_first_step .qua_header_lang ul  {
+		display: none;
+	}
+	.qua_restaurant .qua_mobile_menu_hor {
+		right: 0;
+		top: 0;
+	}
+	.qua_restaurant .qua_mobile_menu_hor.active {
+		right: 0;
+		top: 0;
+	}
+	.qua_section {
+		text-align: center;
+	}
+	.qua_icon_box i {
+		position: relative;
+	}
+	.qua_icon_box_content {
+		padding: 0;
+	}
+	.qua_services_bg .qua_icon_box_content {
+		padding: 3px 10px 20px 10px;
+	}
+	.qua_icon_box h4:after,
+	.text-left .qua_icon_box h4:after,
+	.text-right .qua_icon_box h4:after {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.qua_transp_nav .qua_top_menu a:hover, .qua_light_nav .qua_top_menu a:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, .1);
+	}
+	.qua_parent .qua_parent > a:after{
+		color:#fff;
+		float: none;
+		margin-left:15px;
+		margin-right: auto;
+	}
+	.qua_top_menu ul{
+		border-top:none;
+	}
+	.qua_top_menu ul ul{
+		padding: 40px 0 10px 55px;
+	}
+	.qua_header_lang {
+		right: 15px;
+	}
+	.qua_slide_title {
+		font:900 40px Open Sans, Arial;
+		width: 100%;
+		text-align: center;
+	}
+		.qua_slide_title:after {
+			margin: 20px auto;
+		}
+	.qua_slide_desq {
+		font:400 18px Open Sans, Arial;
+		text-align: center;
+	}
+	.qua_slide_txt,
+	.qua_slide_txt_wide,
+	.qua_slide_txt.qua_slide_center_middle, 
+	.qua_slide_txt.qua_slide_center_top, 
+	.qua_slide_txt.qua_slide_center_bottom {
+		width: 100%;
+		left: 0;
+		top: 50%;
+		transform:translateY(-50%);
+		padding: 0 10px;
+	}
+	.qua_spa .qua_slide_txt{
+		width: 100%;
+	}
+	.qua_spa .qua_slide_left_middle {
+		left: 0;
+	}
+	.mobile.landscape .qua_slide_txt {
+		padding: 0 25px;
+	}
+	.qua_great_titles h2 {
+		font:900 36px Open Sans, Arial;
+		text-align: center;
+	}
+		.qua_great_titles h2:after {
+			margin: 20px auto;
+		}
+
+	.qua_section .container {
+		padding-top: 56px;
+		padding-bottom: 46px;
+	}
+	.qua_section .container-fluid {
+		padding-top: 56px;
+	}
+	.text-left, .text-right {
+		text-align: center;
+	}
+
+	header nav {
+		height: 52px;
+		background: rgba(255,255,255,0.7);
+	}
+	.qua_around_bl,
+	.qua_around_bl:last-child,
+	.qua_icon_box:last-child,
+	.qua_icon_box {
+		margin-bottom: 30px;
+	}
+	.text-center .qua_icon_box .qua_icon_box_content {
+		padding-left: 0;
+	}
+	header nav.qua_transp_nav {
+		background: none;
+	}
+	.qua_first_step header nav.qua_transp_nav {
+		background: rgba(255,255,255,0.9);
+	}
+	.qua_logo,
+	.tablet.portrait .qua_logo {
+		top: 17px;
+		z-index: 3;
+	}
+
+	.qua_header_tech {
+		height: 26px;
+		padding: 0;
+	}
+		.qua_first_step .qua_header_tech {
+			height: 0;
+		}
+	.qua_header_lang .qua_parent ul {
+		padding: 1px 0 0 0;
+	}
+	.qua_portfolio_item,
+	.container-fluid .qua_portfolio_item  {
+		width: 100%;
+	}
+	.qua_port_titles {
+		text-align: left;
+	}
+
+	.qua_top {
+		width: 40px;
+		height: 40px;
+		padding: 12px;
+		right: 20px;
+		bottom: 20px;
+	}
+
+	.qua_middle_titles h2 {
+		font:900 27px Open Sans, Arial;
+	}
+	.qua_middle_titles h2.qua_hensa {
+		font: 300 80px hensa, Arial;
+		line-height: 70px;
+	}
+	.qua_portfolio_footer_grey:after,
+	.qua_portfolio_footer_white:after {
+		display: none;
+	}
+	.qua_team_slider .owl-prev {
+		left: 20px;
+	}
+	.qua_team_slider .owl-next {
+		right: 20px;
+	}
+	.qua_auto_height .qua_image_bck[data-image] {
+		min-height: 400px;
+	}
+	.qua_simple_block {
+		padding: 56px 15px 46px;
+	}
+	.qua_simple_block h2:after, 
+		h2:after {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.qua_news_block {
+		margin-bottom: 40px;
+		text-align: center;
+	}
+	.qua_news_img {
+		height: auto;
+	}
+	.form-control {
+		margin-bottom: 10px;
+	}
+	form {
+		margin-bottom: 20px;
+	}
+	.qua_icon_boxes {
+		margin-top: 0;
+	}
+	.qua_icon_box:last-child, .qua_anim_box:last-child {
+		margin-bottom: 0;
+	}
+	footer {
+		text-align: center;
+	}
+	footer h4:after {
+		margin-left: auto;
+		margin-right: auto;
+	}
+	/*Inside Pages*/
+	.breadcrumbs {
+		text-align: center;
+	}
+	.qua_page_title_great {
+		padding-top: 95px;
+	}
+
+	/*Mobile Top Menu*/
+	.qua_top_menu {
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		padding-top: 170px;
+	}
+	header nav.qua_transp_nav .qua_parent ul a{
+		color:#fff;
+	}
+	.qua_top_menu_cont:after {
+		display: block;
+		content: '';
+		width: 100%;
+		height: 52px;
+		background: #000;
+		left: 0;
+		right: 0;
+		top: 0;
+		position: fixed;
+	}
+	.qua_top_menu_cont {
+		/*background: rgba(0,0,0,0.95);*/
+		background: #021E82;
+		position: fixed;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		overflow: auto;
+		display: none;
+	}
+	.qua_header_search_cont input {
+		margin-bottom: 0;
+	}
+	.qua_header_search_cont form {
+		margin-bottom: 0;
+	}
+	.qua_header_search_cont {
+		width: 100%;
+	}
+	.qua_first_step .qua_transp_nav .qua_top_menu a:hover,
+	.qua_first_step header nav.qua_transp_nav ul a {
+		color: #fff;
+	}
+	.qua_top_menu > li > a {
+		padding: 13px 25px;
+		height: 52px;
+		color: #fff!important;
+	}
+	.qua_top_menu > li > a:before {
+		display: none!important;
+	}
+	.tablet.portrait .qua_top_menu > li > a {
+		padding: 13px 25px;
+		height: 52px;
+		color: #fff;
+	}
+	.qua_parent ul, 
+	.qua_parent ul.mega-menu, 
+	.qua_parent ul, 
+	.qua_parent ul.mega-menu {
+		position: relative;
+		white-space:normal;
+		width: 100%;
+		background: none;
+	}
+	.qua_transp_nav .qua_top_menu li:hover > a:before {
+		display: none;
+	}
+	.qua_parent ul .mega-menu-column {
+		width: 100%;
+		margin-bottom: 20px;
+	}
+
+	header nav ul.qua_top_menu li {
+		float: none;
+		height: auto;
+	}
+	/*Mobile Menu*/
+	.qua_top_menu_mobile_link {
+		position: absolute;
+		right: 0;
+		top: 0;
+		font-size: 18px;
+		padding: 15px;
+		display: none;
+		cursor: pointer;
+		z-index: 3;
+	}
+	.qua_parent .qua_parent ul
+	{
+		left: 0px; 
+	    top: unset;
+	    background-color: transparent; 
+	}
+	h1.qua_h1_title{
+		display: none;
+	}
+	.qua_top_menu_mobile_link,
+	.active .qua_top_menu_mobile_link {
+		display: block;
+		right: 15px;
+	}
+	.qua_header_search {
+		display: none;
+	}
+	.qua_header_search span {
+		padding: 15px;
+		color: #fff;
+		font-size: 18px;
+	}
+
+	header nav.active .qua_top_menu_mobile_link, 
+	header nav.active .qua_logo {
+		color: #fff;
+	}
+	/*Portfolio*/
+	.qua_port_title {
+		font: 400 18px/24px Open Sans, Arial,sans-serif;
+	}
+	.qua_port_subtitle {
+		font: 400 14px/22px Open Sans, Arial,sans-serif;
+	}
+	/*Text Align*/
+	.mobile-text-left {
+		text-align: left;
+	}
+	.mobile-text-right {
+		text-align: right;
+	}
+
+	.qua_mobile_menu {
+		display: none;
+	}
+	.qua_mobile_menu_hor_padding,
+	.qua_mobile_menu_hor_padding.active,
+	.qua_first_step header nav.qua_mobile_menu_hor_padding {
+		top: 0;
+		left: 0;
+		right: 0;
+		opacity: 1;
+		pointer-events:auto;
+	}
+	.tablet .qua_auto_height .qua_slider_copyright {
+		left: 20px;
+	}
+	.qua_auto_height .qua_slider_copyright {
+		left: 20px;
+	}
+	.qua_slider_copyright.qua_slider_copyright_right,
+	.qua_slider_copyright_right {
+		left: auto;
+		right: 20px;
+	}
+	.qua_slide_txt {
+		text-align: center;
+		bottom: auto;
+		top: 50%;
+		transform:translateY(-50%);
+		left: 0;
+	}
+	.qua_team_slider_single .qua_news_block {
+		width: 100%;
+	}
+	.reply {
+		padding-left: 20px;
+		text-align: left;
+	}
+	.add-to-box {
+		text-align: center;
+	}
+	.add-to-cart {
+		margin-right: auto;
+		margin-left: auto;
+	}
+	/*Header Login Form*/
+	.qua_header_login .btn {
+		padding: 5px 15px;
+	}
+	.qua_header_login {
+		padding: 12px 0;
+		margin-right: 40px;
+		position: relative;
+		z-index: 3;
+	}
+	/*Choise*/
+	.qua_choose_img {
+		margin-top: 17%;
+	}
+	.inner-link,.outher-link{
+		display: none;
+	}
+
+}
+
+/*09.2 Tablet*/
+@media (max-width:992px){
+	
+	.tablet.portrait .qua_logo_und {
+		display: none;
+	}
+	.qua_slide_txt {
+		width: 100%;
+	}
+	.qua_header_lang {
+		right: 15px;
+	}
+	.tablet.portrait .qua_browsers {
+		display: none;
+	}
+
+	.tablet .qua_great_titles h2 {
+		font:900 56px Open Sans, Arial;
+	}
+
+
+	.tablet.portrait .qua_second_step .qua_logo,
+	.tablet.portrait .qua_logo {
+		top: 17px;
+	}
+	.tablet.portrait header nav {
+		height: 52px;
+	}
+	.tablet.portrait .form-control {
+		margin-bottom: 10px;
+	}
+	.text-center .qua_iphone_pink, 
+	.text-center .qua_iphone_gold {
+		height: 540px;
+		width: 185px;
+	}
+
+	.qua_simple_block {
+		 padding: 56px 10px 46px 10px;
+	}
+	.qua_restaurant .qua_simple_block,
+	.qua_organic .qua_simple_block {
+			padding: 0px 10px 66px 10px;
+	}
+	/*Vertical Mnu*/
+	.qua_left_mnu_content {
+		width: 100%;
+	}
+
+	.qua_left_section_block {
+    padding-right: 0;
+	}
+	.container-fluid h2 {
+		margin-top: 0;
+	}
+	.qua_grade_title {
+		margin-bottom: 75px;
+	}
+	.qua_wht_txt .qua_middle_title h3:after {
+		display: none;
+	}
+	.qua_grade_row {
+		padding-bottom: 40px;
+	}
+	.qua_pagslider_owl .owl-buttons .owl-next {
+		right: 15%;
+		margin-right: 0;
+	}
+	.qua_pagslider_owl .owl-buttons .owl-prev {
+		left: 65%;
+	}
+	.qua_photo_left_titles {
+	  background-color: rgba(0,0,0,.5);
+	}
+	.active .qua_slide_title span {
+		margin-bottom: 0;
+	}
+	.text-center .qua_icon_box .qua_icon_box_content {
+		margin-bottom: 20px;
+	}
+	.qua_slide_txt.qua_padding_title_right,
+	.qua_slide_txt.qua_padding_title_left {
+		width: 100%;
+	}
+	.qua_portfolio_item:hover .qua_port_titles, 
+	.qua_portfolio_slide_item:hover .qua_port_titles {
+		text-align: center;
+	}
+	.qua_vertical .container-fluid h2 {
+		margin-bottom: 30px;
+	}
+	.qua_vertical .container-fluid h3 {
+		margin-bottom: 50px;
+		padding: 0 15px;
+		font: 100 18px/24px Josefin Sans, Arial;
+	}
+	.qua_vertical.qua_photo .container-fluid h3 {
+		margin-bottom: 10px;
+		padding: 0;
+	}
+	.qua_shop_item_title {
+		 margin: 20px 0px 0 0;
+	}
+		.qua_shop_item_links a {
+		 display: block;
+		 position: absolute;
+		left: 48%;
+		transform:translateY(67%) translateX(-50%);
+	}
+	.text-center p {
+		padding: 20px 10px;
+	}
+	.qua_furniture_label_right {
+		right: 0;
+		top: -50%;
+	}
+	.qua_furniture_label {
+		left: 0;
+		top: -50%;	
+	}
+.qua_great_titles h3 {
+	margin-bottom: 0;
+}
+.qua_corporate_black .qua_slide_txt{
+	width: 100%;
+}
+	.qua_slide_title_black {
+		font: 100 60px Josefin Sans, Arial;
+		padding: 60px;
+	}
+	.qua_cars .qua_slide_txt {
+		width: 100%;
+	}
+	.qua_blackcreative .qua_slide_title {
+		font: 900 42px Open Sans, Arial;
+		line-height: 50px;
+	}
+	.qua_slide_title_small {
+		line-height: 1.6925;
+	}
+	.qua_pad_block {
+		padding: 60px 0;
+	}
+	.qua_ring_header.qua_wht_rings {
+		top: 10px;
+		z-index: 9;
+	}
+	.qua_ring_header.qua_black_rings {
+		top: 10px;
+	}
+	.qua_app_block {
+		padding: 0;
+	}
+	.qua_app .qua_choose_img {
+		 min-height: auto;
+	}
+
+	.qua_port_titles.qua_furniture_button {
+		top: 15%;
+		transform:translateY(-50%);
+		text-align: center;
+	}
+	.qua_padding_title_left,
+	.qua_padding_title_right {
+		padding: 40px 10px;
+	}
+	.qua_scrollable_txt {
+		padding: 30px;
+	}
+	.qua_slide_uptitle_thin {
+		margin: 20px 0 0px 0px;
+	}
+	.qua_slide_desq_small {
+		padding-right: 0;
+		margin: 20px 10px 40px 10px;
+	}
+	.qua_slide_txt_wide {
+		width: 100%;
+		padding: 30px 30px;
+	}
+	.qua_section_portfoilo .container-fluid {
+		padding-top: 56px;
+	}
+	.qua_slide_subtitle_thin.qua_thin_txt {
+		font: 100 90px Josefin Sans, Arial;
+	}
+	.qua_wrapper_slider {
+    margin: auto;
+    padding: 0px; 
+    margin-bottom: 66px;
+}
+.qua_material .qua_icon_box i {
+	position: relative;
+	margin: 23px auto; 
+}
+.qua_material .qua_icon_box:hover i {
+	position: relative;
+	margin: -38px -19px -8px -23px; 
+}
+}
+@media (max-width:768px) {
+	.qua_photo_left_titles {
+	  width: 100%;
+	}
+	.qua_big_img img {
+		min-width: auto;
+	}
+	.qua_blog h2.qua_hensa {
+		font-size: 72px;
+	}
+	.qua_wedding h2.qua_hensa {
+		font: 300 80px hensa, Arial;
+	}
+	.qua_furniture_label {
+		 top: -20%;
+	}
+	.qua_furniture_label_right {
+		 top: -20%;
+	}
+	.qua_slide_subtitle_thin.qua_thin_txt {
+		font: 100 60px Josefin Sans, Arial;
+	}
+	.qua_black	.qua_slide_title {
+		font:400 50px PT Sans Narrow, Arial;
+		line-height: 1.0625;
+		text-transform: uppercase;
+		-webkit-transition: all 0.6s;
+		-o-transition: all 0.6s;
+		transition: all 0.6s;
+	}
+	.qua_shrikhand	.qua_slide_title {
+		font:400 100px Shrikhand, Arial;
+		line-height: 1.0625;
+		text-transform: uppercase;
+		-webkit-transition: all 0.6s;
+		-o-transition: all 0.6s;
+		transition: all 0.6s;
+	}
+	.qua_slide_gallery.qua_gravity .owl-controls {
+		bottom: -10%;
+	}
+}
+@media (max-width:568px){
+
+	.qua_top_menu > li > a {
+		padding: 13px 16px;
+	}
+	.qua_pagslider_owl .owl-buttons .owl-next {
+		right: 10%;
+		margin-right: 0;
+	}
+	.qua_pagslider_owl .owl-buttons .owl-prev {
+		left: 10%;
+	}
+	.qua_pagslider_owl.qua_slider_carousel .owl-buttons {
+	  top: 50vh;
+	}
+	.qua_slide_title {
+		font: 900 30px Open Sans, Arial;
+	}
+	.qua_slider_carousel.qua_wht_txt .owl-buttons i,
+	.qua_slider_carousel.qua_black_owl .owl-buttons i {
+		padding: 6px;
+	}
+	.qua_slider_carousel .owl-next {
+		right: 10px;
+	}
+	.qua_slider_carousel .owl-prev {
+		left: 10px;
+	}
+	.qua_furniture_label_right {
+		display: none;
+	}
+	.qua_furniture_label {
+	 display: none;
+	}
+.qua_slide_subtitle_centre {
+	padding: 0 40px 0 40px;
+}
+	.qua_mnu_item_desq {
+		margin-left: 0;
+	}
+	.qua_wedding h2.qua_hensa {
+		font: 300 60px hensa, Arial;
+	}
+	.qua_port_titles.qua_furniture_button {
+		top: 5%;
+		transform:translateY(-50%);
+		text-align: center;
+	}
+}
+
+@media (max-width:480px){
+	.qua_iphone {
+		display: none;
+	}
+	.qua_top_menu > li > a {
+		padding: 13px 16px;
+	}
+	/*Vertical Mnu*/
+	.qua_left_mnu_content .qua_vert_mnu ul {
+		padding: 109px 0px 30px 120px;
+	}
+	.qua_left_mnu_content .qua_menu_social {
+		padding: 0 0 0 112px;
+	}
+	.qua_shop_item_links a {
+		display: block;
+		position: absolute;
+    left: 45%;
+    transform: translateY(67%) translateX(-50%);
+	}
+	.qua_shop_item_sale {
+		top: 0;
+		left: 0;
+	}
+
+	.qua_port_titles {
+		top: 20%;
+	}
+	.qua_slide_title_black {
+		font: 100 40px Josefin Sans, Arial;
+		padding: 60px;
+	}
+	.qua_slide_title_bold {
+		font: 900 50px Open Sans, Arial;
+	}
+	.qua_slide_subtitle_thin {
+		font: 100 50px Josefin Sans, Arial;
+		margin: 20px 0;
+	}
+	.qua_app_block {
+		padding: 0;
+	}
+	.qua_blog h2.qua_hensa {
+		font-size: 60px;
+	}
+	.qua_restaurant.qua_middle_titles h2.qua_hensa {
+		font-size: 70px;
+	}
+	.qua_wedding h2.qua_hensa {
+		font: 300 90px hensa, Arial;
+		line-height: 80px;
+	}
+	.qua_post_img img {
+		min-width: auto;
+	}
+	.qua_great_titles .qua_blog_title h2 {
+		font: 900 42px/43px Open Sans, Arial;
+	}
+	.qua_port_titles.qua_furniture_button {
+		top: -14%;
+		transform:translateY(-50%);
+		text-align: center;
+	}
+	.qua_slide_btn {
+		display: none;
+	}
+	.qua_black	.qua_slide_title {
+		font:400 34px PT Sans Narrow, Arial;
+		line-height: 1.0625;
+		text-transform: uppercase;
+		-webkit-transition: all 0.6s;
+		-o-transition: all 0.6s;
+		transition: all 0.6s;
+	}
+	.qua_shrikhand	.qua_slide_title {
+		font:400 50px Shrikhand, Arial;
+		line-height: 1.0625;
+		text-transform: uppercase;
+		-webkit-transition: all 0.6s;
+		-o-transition: all 0.6s;
+		transition: all 0.6s;
+	}
+	.qua_color_txt_grad span {
+		min-width: 56px;
+	}
+}
+@media (max-width:320px){
+	.qua_great_titles .qua_blog_title h2 {
+		font: 900 32px/33px Open Sans, Arial;
+	}
+	.qua_black	.qua_slide_title {
+		font:400 28px PT Sans Narrow, Arial;
+		line-height: 1.0625;
+		text-transform: uppercase;
+		-webkit-transition: all 0.6s;
+		-o-transition: all 0.6s;
+		transition: all 0.6s;
+	}
+}

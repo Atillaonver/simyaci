@@ -1,0 +1,782 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project name="C:\xampp\htdocs\ADM25\MADMIN25.clpprj">
+ <settings>
+  <PM_URL><![CDATA[http://localhost/ADM25/]]></PM_URL>
+  <PM_HOME_URL><![CDATA[http://localhost/ADM25/]]></PM_HOME_URL>
+  <PM_LIBS><![CDATA[]]></PM_LIBS>
+  <PM_FTP_CONNECTION><![CDATA[HOSTINGERADM25]]></PM_FTP_CONNECTION>
+  <PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR>
+  <PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:1]]></PM_FTP_UPLOAD_ON_SAVE>
+  <PM_LANGUAGE><![CDATA[]]></PM_LANGUAGE>
+ </settings>
+ <removed value=";C:\xampp\htdocs\ADM25\admn\auth1d_DELETE_AFTER_USE.php;"/>
+ <added value=""/>
+ <lastopfiles>
+  <lastactivefile name=""/>
+ </lastopfiles>
+ <errors version="1.12.0">
+  <errfile name="C:\xampp\htdocs\ADM25\admn\view\template\bytao\blog\author_form.twig">
+   <error val="0;20;0;20;0;1;PHP Parse error:  syntax error, unexpected token &quot;%&quot;, expecting end of file"/>
+  </errfile>
+  <errfile name="C:\xampp\htdocs\ADM25\admn\language\zh-cn\marketplace\openbay.php">
+   <error val="0;62;0;62;0;1;PHP Parse error:  syntax error, unexpected identifier &quot;text_patch_option&quot;"/>
+  </errfile>
+ </errors>
+ <cakedata/>
+ <dplmenupath/>
+ <laravael/>
+ <smartyassings/>
+ <twigtemplate/>
+ <yiidata/>
+ <todoblock>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\controller\common\header.php">
+   <todo pos="3;18" name="TODO byTAO added"/>
+   <todo pos="3;18" name="TODO byTAO added"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\controller\common\logout.php">
+   <todo pos="4;7" name="TODO bytao  session empty"/>
+   <todo pos="4;7" name="TODO bytao  session empty"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\controller\design\layout.php">
+   <todo pos="3;208" name="TODO byTAO"/>
+   <todo pos="3;208" name="TODO byTAO"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\controller\setting\setting.php">
+   <todo pos="3;7" name="TODO byTAO added"/>
+   <todo pos="3;7" name="TODO byTAO added"/>
+   <todo pos="6;16" name="TODO"/>
+   <todo pos="6;16" name="TODO"/>
+   <todo pos="3;149" name="TODO bytao store"/>
+   <todo pos="3;149" name="TODO bytao store"/>
+   <todo pos="6;231" name="TODO"/>
+   <todo pos="6;231" name="TODO"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\controller\setting\store.php">
+   <todo pos="3;6" name="TODO byTAO added"/>
+   <todo pos="3;6" name="TODO byTAO added"/>
+   <todo pos="6;16" name="TODO"/>
+   <todo pos="6;16" name="TODO"/>
+   <todo pos="3;354" name="TODO bytao store languages + currency"/>
+   <todo pos="3;354" name="TODO bytao store languages + currency"/>
+   <todo pos="6;658" name="TODO"/>
+   <todo pos="6;658" name="TODO"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\model\bytao\common.php">
+   <todo pos="3;370" name="TODO byTAO migration Content"/>
+   <todo pos="3;370" name="TODO byTAO migration Content"/>
+   <todo pos="3;419" name="TODO byTAO migration URL"/>
+   <todo pos="3;419" name="TODO byTAO migration URL"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\model\design\layout.php">
+   <todo pos="3;61" name="TODO byTAO"/>
+   <todo pos="3;61" name="TODO byTAO"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\bytao\js\summernote\summernote.js">
+   <todo pos="9;2554" name="TODO compare points and sort"/>
+   <todo pos="9;2554" name="TODO compare points and sort"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\bootstrap\js\bootstrap.bundle.js">
+   <todo pos="54;407" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="54;407" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;1074" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1074" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1290" name="TODO:v6 remove boolean support"/>
+   <todo pos="5;1290" name="TODO:v6 remove boolean support"/>
+   <todo pos="13;1337" name="TODO use `document.visibilityState`"/>
+   <todo pos="13;1337" name="TODO use `document.visibilityState`"/>
+   <todo pos="9;1542" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="9;1542" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;3888" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="7;3888" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="71;4108" name="todo:v6 remove"/>
+   <todo pos="71;4108" name="todo:v6 remove"/>
+   <todo pos="31;4206" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="31;4206" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="9;5712" name="todo v6 remove this OR make it optional"/>
+   <todo pos="9;5712" name="todo v6 remove this OR make it optional"/>
+   <todo pos="63;5819" name="todo: remove this check on v6"/>
+   <todo pos="63;5819" name="todo: remove this check on v6"/>
+   <todo pos="67;5826" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="67;5826" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="5;6255" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;6255" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;6263" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;6263" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="7;6327" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;6327" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="67;6328" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="67;6328" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="108;6550" name="todo:v6: could be only `tab`"/>
+   <todo pos="108;6550" name="todo:v6: could be only `tab`"/>
+   <todo pos="17;6564" name="todo: should Throw exception on v6"/>
+   <todo pos="17;6564" name="todo: should Throw exception on v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\bootstrap\js\bootstrap.esm.js">
+   <todo pos="52;403" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="52;403" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="3;1070" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="3;1070" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="3;1286" name="TODO:v6 remove boolean support"/>
+   <todo pos="3;1286" name="TODO:v6 remove boolean support"/>
+   <todo pos="11;1333" name="TODO use `document.visibilityState`"/>
+   <todo pos="11;1333" name="TODO use `document.visibilityState`"/>
+   <todo pos="7;1538" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;1538" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="5;2038" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="5;2038" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="69;2258" name="todo:v6 remove"/>
+   <todo pos="69;2258" name="todo:v6 remove"/>
+   <todo pos="29;2356" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="29;2356" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="7;3862" name="todo v6 remove this OR make it optional"/>
+   <todo pos="7;3862" name="todo v6 remove this OR make it optional"/>
+   <todo pos="61;3969" name="todo: remove this check on v6"/>
+   <todo pos="61;3969" name="todo: remove this check on v6"/>
+   <todo pos="65;3976" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="65;3976" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="3;4405" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;4405" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;4413" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;4413" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4477" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="5;4477" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="65;4478" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="65;4478" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="106;4700" name="todo:v6: could be only `tab`"/>
+   <todo pos="106;4700" name="todo:v6: could be only `tab`"/>
+   <todo pos="15;4714" name="todo: should Throw exception on v6"/>
+   <todo pos="15;4714" name="todo: should Throw exception on v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\bootstrap\js\bootstrap.js">
+   <todo pos="54;427" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="54;427" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;1094" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1094" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1310" name="TODO:v6 remove boolean support"/>
+   <todo pos="5;1310" name="TODO:v6 remove boolean support"/>
+   <todo pos="13;1357" name="TODO use `document.visibilityState`"/>
+   <todo pos="13;1357" name="TODO use `document.visibilityState`"/>
+   <todo pos="9;1562" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="9;1562" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;2062" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="7;2062" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="71;2282" name="todo:v6 remove"/>
+   <todo pos="71;2282" name="todo:v6 remove"/>
+   <todo pos="31;2380" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="31;2380" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="9;3886" name="todo v6 remove this OR make it optional"/>
+   <todo pos="9;3886" name="todo v6 remove this OR make it optional"/>
+   <todo pos="63;3993" name="todo: remove this check on v6"/>
+   <todo pos="63;3993" name="todo: remove this check on v6"/>
+   <todo pos="67;4000" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="67;4000" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="5;4429" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4429" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4437" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4437" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="7;4501" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;4501" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="67;4502" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="67;4502" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="108;4724" name="todo:v6: could be only `tab`"/>
+   <todo pos="108;4724" name="todo:v6: could be only `tab`"/>
+   <todo pos="17;4738" name="todo: should Throw exception on v6"/>
+   <todo pos="17;4738" name="todo: should Throw exception on v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\codemirror\lib\csslint.js">
+   <todo pos="17;1579" name="TODO: CSS3 Paged Media says only &quot;left&quot;, &quot;center&quot;, and &quot;right&quot; are allowed"/>
+   <todo pos="17;1579" name="TODO: CSS3 Paged Media says only &quot;left&quot;, &quot;center&quot;, and &quot;right&quot; are allowed"/>
+   <todo pos="13;4819" name="TODO: check channel"/>
+   <todo pos="13;4819" name="TODO: check channel"/>
+   <todo pos="5;5696" name="TODO: Needed?"/>
+   <todo pos="5;5696" name="TODO: Needed?"/>
+   <todo pos="13;7178" name="TODO: Store 5 somewhere"/>
+   <todo pos="13;7178" name="TODO: Store 5 somewhere"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\flot\excanvas.js">
+   <todo pos="11;158" name="TODO: use runtimeStyle and coordsize"/>
+   <todo pos="11;158" name="TODO: use runtimeStyle and coordsize"/>
+   <todo pos="11;165" name="TODO: use runtimeStyle and coordsize"/>
+   <todo pos="11;165" name="TODO: use runtimeStyle and coordsize"/>
+   <todo pos="5;618" name="TODO: Branch current matrix so that save/restore has no effect"/>
+   <todo pos="5;618" name="TODO: Branch current matrix so that save/restore has no effect"/>
+   <todo pos="9;943" name="TODO: Following is broken for curves due to"/>
+   <todo pos="9;943" name="TODO: Following is broken for curves due to"/>
+   <todo pos="7;1007" name="TODO: Gradients transformed with the transformation matrix."/>
+   <todo pos="7;1007" name="TODO: Gradients transformed with the transformation matrix."/>
+   <todo pos="22;1090" name="TODO: Figure out the correct size to fit the scale."/>
+   <todo pos="22;1090" name="TODO: Figure out the correct size to fit the scale."/>
+   <todo pos="7;1283" name="TODO: Fix the min and max params."/>
+   <todo pos="7;1283" name="TODO: Fix the min and max params."/>
+   <todo pos="5;1331" name="TODO: Implement"/>
+   <todo pos="5;1331" name="TODO: Implement"/>
+   <todo pos="5;1335" name="TODO: Implement"/>
+   <todo pos="5;1335" name="TODO: Implement"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\flot\jquery.flot.pie.js">
+   <todo pos="5;556" name="TODO: add extra shadow inside hole (with a mask) if the pie is tilted."/>
+   <todo pos="5;556" name="TODO: add extra shadow inside hole (with a mask) if the pie is tilted."/>
+   <todo pos="7;620" name="TODO: perhaps do some mathmatical trickery here with the Y-coordinate to compensate for pie tilt?"/>
+   <todo pos="7;620" name="TODO: perhaps do some mathmatical trickery here with the Y-coordinate to compensate for pie tilt?"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\flot\jquery.js">
+   <todo pos="4;2888" name="TODO: Stop taunting the data cache; remove global events and always attach to document"/>
+   <todo pos="4;2888" name="TODO: Stop taunting the data cache; remove global events and always attach to document"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\jquery-sortable.js">
+   <todo pos="32;423" name="TODO is this needed?"/>
+   <todo pos="32;423" name="TODO is this needed?"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\jquery-ui\jquery-ui.js">
+   <todo pos="3;424" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;424" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="2;900" name="TODO: make sure destroying one instance of mouse doesn't mess with"/>
+   <todo pos="2;900" name="TODO: make sure destroying one instance of mouse doesn't mess with"/>
+   <todo pos="3;3126" name="TODO: determine which cases actually cause this to happen"/>
+   <todo pos="3;3126" name="TODO: determine which cases actually cause this to happen"/>
+   <todo pos="5;3230" name="TODO : What's going on here?"/>
+   <todo pos="5;3230" name="TODO : What's going on here?"/>
+   <todo pos="3;3276" name="TODO: make renderAxis a prototype function"/>
+   <todo pos="3;3276" name="TODO: make renderAxis a prototype function"/>
+   <todo pos="3;3331" name="TODO: Unwrap at same DOM position"/>
+   <todo pos="3;3331" name="TODO: Unwrap at same DOM position"/>
+   <todo pos="4;3706" name="TODO: Seems like a bug to cache this.outerDimensions"/>
+   <todo pos="4;3706" name="TODO: Seems like a bug to cache this.outerDimensions"/>
+   <todo pos="24;3736" name="TODO: Don't modify option"/>
+   <todo pos="24;3736" name="TODO: Don't modify option"/>
+   <todo pos="3;4679" name="TODO: Still need to figure out a way to make relative sorting possible"/>
+   <todo pos="3;4679" name="TODO: Still need to figure out a way to make relative sorting possible"/>
+   <todo pos="39;5287" name="TODO: Logic to fuzzy, see line 316/317)"/>
+   <todo pos="39;5287" name="TODO: Logic to fuzzy, see line 316/317)"/>
+   <todo pos="3;6955" name="TODO: It should never be possible to not have an active item at this"/>
+   <todo pos="3;6955" name="TODO: It should never be possible to not have an active item at this"/>
+   <todo pos="7;7768" name="TODO pass through original event correctly (just as 2nd argument doesn't work)"/>
+   <todo pos="7;7768" name="TODO pass through original event correctly (just as 2nd argument doesn't work)"/>
+   <todo pos="2;8130" name="TODO rename to &quot;widget&quot; when switching to widget factory"/>
+   <todo pos="2;8130" name="TODO rename to &quot;widget&quot; when switching to widget factory"/>
+   <todo pos="3;10849" name="TODO: Remove hack when datepicker implements"/>
+   <todo pos="3;10849" name="TODO: Remove hack when datepicker implements"/>
+   <todo pos="3;12546" name="TODO: do we really want to consider this a stop?"/>
+   <todo pos="3;12546" name="TODO: do we really want to consider this a stop?"/>
+   <todo pos="4;12777" name="TODO: what should we do with values that can't be parsed?"/>
+   <todo pos="4;12777" name="TODO: what should we do with values that can't be parsed?"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\magnific\jquery.magnific-popup.js">
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\admn\view\javascript\jquery\timepicker\jquery.timepicker.js">
+   <todo pos="17;387" name="TODO: set selectedTime"/>
+   <todo pos="17;387" name="TODO: set selectedTime"/>
+   <todo pos="21;576" name="TODO: add documentaion about setTime being chainable"/>
+   <todo pos="21;576" name="TODO: add documentaion about setTime being chainable"/>
+   <todo pos="17;583" name="TODO: add documentation about this event"/>
+   <todo pos="17;583" name="TODO: add documentation about this event"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\catalog\view\javascript\bootstrap\js\bootstrap.bundle.js">
+   <todo pos="5;379" name="TODO: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;379" name="TODO: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;764" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;764" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1140" name="TODO:v6 remove boolean support"/>
+   <todo pos="5;1140" name="TODO:v6 remove boolean support"/>
+   <todo pos="13;1183" name="TODO use `document.visibilityState`"/>
+   <todo pos="13;1183" name="TODO use `document.visibilityState`"/>
+   <todo pos="9;1343" name="TODO: change tests that use empty divs to avoid this check"/>
+   <todo pos="9;1343" name="TODO: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;3601" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="7;3601" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="71;3775" name="TODO: v6 remove"/>
+   <todo pos="71;3775" name="TODO: v6 remove"/>
+   <todo pos="7;3857" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="7;3857" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="7;5144" name="TODO: v6 remove this or make it optional"/>
+   <todo pos="7;5144" name="TODO: v6 remove this or make it optional"/>
+   <todo pos="7;5230" name="TODO: remove this check in v6"/>
+   <todo pos="7;5230" name="TODO: remove this check in v6"/>
+   <todo pos="7;5235" name="TODO: v6 the following can be achieved with CSS only"/>
+   <todo pos="7;5235" name="TODO: v6 the following can be achieved with CSS only"/>
+   <todo pos="5;5606" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;5606" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;5614" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;5614" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="7;5673" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;5673" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;5676" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="7;5676" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="108;5872" name="TODO: could only be `tab` in v6"/>
+   <todo pos="108;5872" name="TODO: could only be `tab` in v6"/>
+   <todo pos="9;5886" name="TODO: should throw exception in v6"/>
+   <todo pos="9;5886" name="TODO: should throw exception in v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\catalog\view\javascript\bootstrap\js\bootstrap.esm.js">
+   <todo pos="3;375" name="TODO: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="3;375" name="TODO: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="3;760" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="3;760" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="3;1136" name="TODO:v6 remove boolean support"/>
+   <todo pos="3;1136" name="TODO:v6 remove boolean support"/>
+   <todo pos="11;1179" name="TODO use `document.visibilityState`"/>
+   <todo pos="11;1179" name="TODO use `document.visibilityState`"/>
+   <todo pos="7;1339" name="TODO: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;1339" name="TODO: change tests that use empty divs to avoid this check"/>
+   <todo pos="5;1758" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="5;1758" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="69;1932" name="TODO: v6 remove"/>
+   <todo pos="69;1932" name="TODO: v6 remove"/>
+   <todo pos="5;2014" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="5;2014" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="5;3301" name="TODO: v6 remove this or make it optional"/>
+   <todo pos="5;3301" name="TODO: v6 remove this or make it optional"/>
+   <todo pos="5;3387" name="TODO: remove this check in v6"/>
+   <todo pos="5;3387" name="TODO: remove this check in v6"/>
+   <todo pos="5;3392" name="TODO: v6 the following can be achieved with CSS only"/>
+   <todo pos="5;3392" name="TODO: v6 the following can be achieved with CSS only"/>
+   <todo pos="3;3763" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;3763" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;3771" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;3771" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;3830" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="5;3830" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="5;3833" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="5;3833" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="106;4029" name="TODO: could only be `tab` in v6"/>
+   <todo pos="106;4029" name="TODO: could only be `tab` in v6"/>
+   <todo pos="7;4043" name="TODO: should throw exception in v6"/>
+   <todo pos="7;4043" name="TODO: should throw exception in v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\catalog\view\javascript\bootstrap\js\bootstrap.js">
+   <todo pos="5;398" name="TODO: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;398" name="TODO: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;783" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;783" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1159" name="TODO:v6 remove boolean support"/>
+   <todo pos="5;1159" name="TODO:v6 remove boolean support"/>
+   <todo pos="13;1202" name="TODO use `document.visibilityState`"/>
+   <todo pos="13;1202" name="TODO use `document.visibilityState`"/>
+   <todo pos="9;1362" name="TODO: change tests that use empty divs to avoid this check"/>
+   <todo pos="9;1362" name="TODO: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;1781" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="7;1781" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="71;1955" name="TODO: v6 remove"/>
+   <todo pos="71;1955" name="TODO: v6 remove"/>
+   <todo pos="7;2037" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="7;2037" name="TODO: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.3/forms/input-group/"/>
+   <todo pos="7;3324" name="TODO: v6 remove this or make it optional"/>
+   <todo pos="7;3324" name="TODO: v6 remove this or make it optional"/>
+   <todo pos="7;3410" name="TODO: remove this check in v6"/>
+   <todo pos="7;3410" name="TODO: remove this check in v6"/>
+   <todo pos="7;3415" name="TODO: v6 the following can be achieved with CSS only"/>
+   <todo pos="7;3415" name="TODO: v6 the following can be achieved with CSS only"/>
+   <todo pos="5;3786" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;3786" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;3794" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;3794" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="7;3853" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;3853" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;3856" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="7;3856" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="108;4052" name="TODO: could only be `tab` in v6"/>
+   <todo pos="108;4052" name="TODO: could only be `tab` in v6"/>
+   <todo pos="9;4066" name="TODO: should throw exception in v6"/>
+   <todo pos="9;4066" name="TODO: should throw exception in v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\catalog\view\javascript\jquery\magnific\jquery.magnific-popup.js">
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\bootstrap\js\bootstrap.bundle.js">
+   <todo pos="54;407" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="54;407" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;1074" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1074" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1290" name="TODO:v6 remove boolean support"/>
+   <todo pos="5;1290" name="TODO:v6 remove boolean support"/>
+   <todo pos="13;1337" name="TODO use `document.visibilityState`"/>
+   <todo pos="13;1337" name="TODO use `document.visibilityState`"/>
+   <todo pos="9;1542" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="9;1542" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;3888" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="7;3888" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="71;4108" name="todo:v6 remove"/>
+   <todo pos="71;4108" name="todo:v6 remove"/>
+   <todo pos="31;4206" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="31;4206" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="9;5712" name="todo v6 remove this OR make it optional"/>
+   <todo pos="9;5712" name="todo v6 remove this OR make it optional"/>
+   <todo pos="63;5819" name="todo: remove this check on v6"/>
+   <todo pos="63;5819" name="todo: remove this check on v6"/>
+   <todo pos="67;5826" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="67;5826" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="5;6255" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;6255" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;6263" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;6263" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="7;6327" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;6327" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="67;6328" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="67;6328" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="108;6550" name="todo:v6: could be only `tab`"/>
+   <todo pos="108;6550" name="todo:v6: could be only `tab`"/>
+   <todo pos="17;6564" name="todo: should Throw exception on v6"/>
+   <todo pos="17;6564" name="todo: should Throw exception on v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\bootstrap\js\bootstrap.esm.js">
+   <todo pos="52;403" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="52;403" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="3;1070" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="3;1070" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="3;1286" name="TODO:v6 remove boolean support"/>
+   <todo pos="3;1286" name="TODO:v6 remove boolean support"/>
+   <todo pos="11;1333" name="TODO use `document.visibilityState`"/>
+   <todo pos="11;1333" name="TODO use `document.visibilityState`"/>
+   <todo pos="7;1538" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;1538" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="5;2038" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="5;2038" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="69;2258" name="todo:v6 remove"/>
+   <todo pos="69;2258" name="todo:v6 remove"/>
+   <todo pos="29;2356" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="29;2356" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="7;3862" name="todo v6 remove this OR make it optional"/>
+   <todo pos="7;3862" name="todo v6 remove this OR make it optional"/>
+   <todo pos="61;3969" name="todo: remove this check on v6"/>
+   <todo pos="61;3969" name="todo: remove this check on v6"/>
+   <todo pos="65;3976" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="65;3976" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="3;4405" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;4405" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;4413" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="3;4413" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4477" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="5;4477" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="65;4478" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="65;4478" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="106;4700" name="todo:v6: could be only `tab`"/>
+   <todo pos="106;4700" name="todo:v6: could be only `tab`"/>
+   <todo pos="15;4714" name="todo: should Throw exception on v6"/>
+   <todo pos="15;4714" name="todo: should Throw exception on v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\bootstrap\js\bootstrap.js">
+   <todo pos="54;427" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="54;427" name="todo: tooltip passes `false` instead of selector, so we need to check"/>
+   <todo pos="5;1096" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1096" name="TODO: this is now unused; remove later along with prev()"/>
+   <todo pos="5;1312" name="TODO:v6 remove boolean support"/>
+   <todo pos="5;1312" name="TODO:v6 remove boolean support"/>
+   <todo pos="13;1359" name="TODO use `document.visibilityState`"/>
+   <todo pos="13;1359" name="TODO use `document.visibilityState`"/>
+   <todo pos="9;1564" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="9;1564" name="todo: change tests that use empty divs to avoid this check"/>
+   <todo pos="7;2064" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="7;2064" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="71;2284" name="todo:v6 remove"/>
+   <todo pos="71;2284" name="todo:v6 remove"/>
+   <todo pos="31;2382" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="31;2382" name="todo: v6 revert #37011 &amp; change markup https://getbootstrap.com/docs/5.2/forms/input-group/"/>
+   <todo pos="9;3888" name="todo v6 remove this OR make it optional"/>
+   <todo pos="9;3888" name="todo v6 remove this OR make it optional"/>
+   <todo pos="63;3995" name="todo: remove this check on v6"/>
+   <todo pos="63;3995" name="todo: remove this check on v6"/>
+   <todo pos="67;4002" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="67;4002" name="todo: on v6 the following can be achieved with CSS only"/>
+   <todo pos="5;4431" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4431" name="TODO: v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4439" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="5;4439" name="TODO v6 @deprecated, keep it for backwards compatibility reasons"/>
+   <todo pos="7;4503" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="7;4503" name="TODO: on v6 target should be given explicitly &amp; remove the {target: 'ss-target'} case"/>
+   <todo pos="67;4504" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="67;4504" name="TODO: v6 Only for backwards compatibility reasons. Use rootMargin only"/>
+   <todo pos="108;4726" name="todo:v6: could be only `tab`"/>
+   <todo pos="108;4726" name="todo:v6: could be only `tab`"/>
+   <todo pos="17;4740" name="todo: should Throw exception on v6"/>
+   <todo pos="17;4740" name="todo: should Throw exception on v6"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\default\jquery\magnific\jquery.magnific-popup.js">
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\jquery-ui.js">
+   <todo pos="3;154" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;154" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;3531" name="TODO: is this right? should we include anything with css width specified as well"/>
+   <todo pos="3;3531" name="TODO: is this right? should we include anything with css width specified as well"/>
+   <todo pos="1;18185" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+   <todo pos="1;18185" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+   <todo pos="1;18682" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+   <todo pos="1;18682" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\jquery\magnific\jquery.magnific-popup.js">
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\light\jquery-ui.js">
+   <todo pos="3;154" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;154" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;3531" name="TODO: is this right? should we include anything with css width specified as well"/>
+   <todo pos="3;3531" name="TODO: is this right? should we include anything with css width specified as well"/>
+   <todo pos="1;18185" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+   <todo pos="1;18185" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+   <todo pos="1;18682" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+   <todo pos="1;18682" name="TODO: Switch return back to widget declaration at top of file when this is removed"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\light\jquery.magnific-popup.js">
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+   <todo pos="5;1309" name="TODO: find a way to avoid such cloning"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\light\smoothscroll.js">
+   <todo pos="9;138" name="TODO: attributeFilter?"/>
+   <todo pos="9;138" name="TODO: attributeFilter?"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\owlcarousel\owl.carousel.js">
+   <todo pos="5;329" name="TODO: Should be computed from number of min width items in stage"/>
+   <todo pos="5;329" name="TODO: Should be computed from number of min width items in stage"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\js\trivia\library\jquery-ui.js">
+   <todo pos="3;424" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;424" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="2;899" name="TODO: make sure destroying one instance of mouse doesn't mess with"/>
+   <todo pos="2;899" name="TODO: make sure destroying one instance of mouse doesn't mess with"/>
+   <todo pos="3;2725" name="TODO: It should never be possible to not have an active item at this"/>
+   <todo pos="3;2725" name="TODO: It should never be possible to not have an active item at this"/>
+   <todo pos="7;3538" name="TODO pass through original event correctly (just as 2nd argument doesn't work)"/>
+   <todo pos="7;3538" name="TODO pass through original event correctly (just as 2nd argument doesn't work)"/>
+   <todo pos="2;3900" name="TODO rename to &quot;widget&quot; when switching to widget factory"/>
+   <todo pos="2;3900" name="TODO rename to &quot;widget&quot; when switching to widget factory"/>
+   <todo pos="3;7001" name="TODO: determine which cases actually cause this to happen"/>
+   <todo pos="3;7001" name="TODO: determine which cases actually cause this to happen"/>
+   <todo pos="5;7104" name="TODO : What's going on here?"/>
+   <todo pos="5;7104" name="TODO : What's going on here?"/>
+   <todo pos="5;7144" name="TODO: What's that good for? There's not anything to be executed left"/>
+   <todo pos="5;7144" name="TODO: What's that good for? There's not anything to be executed left"/>
+   <todo pos="3;7151" name="TODO: make renderAxis a prototype function"/>
+   <todo pos="3;7151" name="TODO: make renderAxis a prototype function"/>
+   <todo pos="3;7207" name="TODO: Unwrap at same DOM position"/>
+   <todo pos="3;7207" name="TODO: Unwrap at same DOM position"/>
+   <todo pos="4;7582" name="TODO: Seems like a bug to cache this.outerDimensions"/>
+   <todo pos="4;7582" name="TODO: Seems like a bug to cache this.outerDimensions"/>
+   <todo pos="24;7612" name="TODO: Don't modify option"/>
+   <todo pos="24;7612" name="TODO: Don't modify option"/>
+   <todo pos="3;8891" name="TODO: Remove hack when datepicker implements"/>
+   <todo pos="3;8891" name="TODO: Remove hack when datepicker implements"/>
+   <todo pos="3;13690" name="TODO: Still need to figure out a way to make relative sorting possible"/>
+   <todo pos="3;13690" name="TODO: Still need to figure out a way to make relative sorting possible"/>
+   <todo pos="39;14292" name="TODO: Logic to fuzzy, see line 316/317)"/>
+   <todo pos="39;14292" name="TODO: Logic to fuzzy, see line 316/317)"/>
+   <todo pos="3;14951" name="TODO: do we really want to consider this a stop?"/>
+   <todo pos="3;14951" name="TODO: do we really want to consider this a stop?"/>
+   <todo pos="4;15182" name="TODO: what should we do with values that can't be parsed?"/>
+   <todo pos="4;15182" name="TODO: what should we do with values that can't be parsed?"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\vendors\ui-fliter\jquery-ui.js">
+   <todo pos="3;424" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="3;424" name="TODO: remove support for widgetEventPrefix"/>
+   <todo pos="2;900" name="TODO: make sure destroying one instance of mouse doesn't mess with"/>
+   <todo pos="2;900" name="TODO: make sure destroying one instance of mouse doesn't mess with"/>
+   <todo pos="3;2732" name="TODO: It should never be possible to not have an active item at this"/>
+   <todo pos="3;2732" name="TODO: It should never be possible to not have an active item at this"/>
+   <todo pos="7;3545" name="TODO pass through original event correctly (just as 2nd argument doesn't work)"/>
+   <todo pos="7;3545" name="TODO pass through original event correctly (just as 2nd argument doesn't work)"/>
+   <todo pos="2;3907" name="TODO rename to &quot;widget&quot; when switching to widget factory"/>
+   <todo pos="2;3907" name="TODO rename to &quot;widget&quot; when switching to widget factory"/>
+   <todo pos="3;7016" name="TODO: determine which cases actually cause this to happen"/>
+   <todo pos="3;7016" name="TODO: determine which cases actually cause this to happen"/>
+   <todo pos="5;7120" name="TODO : What's going on here?"/>
+   <todo pos="5;7120" name="TODO : What's going on here?"/>
+   <todo pos="3;7166" name="TODO: make renderAxis a prototype function"/>
+   <todo pos="3;7166" name="TODO: make renderAxis a prototype function"/>
+   <todo pos="3;7221" name="TODO: Unwrap at same DOM position"/>
+   <todo pos="3;7221" name="TODO: Unwrap at same DOM position"/>
+   <todo pos="4;7596" name="TODO: Seems like a bug to cache this.outerDimensions"/>
+   <todo pos="4;7596" name="TODO: Seems like a bug to cache this.outerDimensions"/>
+   <todo pos="24;7626" name="TODO: Don't modify option"/>
+   <todo pos="24;7626" name="TODO: Don't modify option"/>
+   <todo pos="3;8880" name="TODO: Remove hack when datepicker implements"/>
+   <todo pos="3;8880" name="TODO: Remove hack when datepicker implements"/>
+   <todo pos="3;13691" name="TODO: Still need to figure out a way to make relative sorting possible"/>
+   <todo pos="3;13691" name="TODO: Still need to figure out a way to make relative sorting possible"/>
+   <todo pos="39;14299" name="TODO: Logic to fuzzy, see line 316/317)"/>
+   <todo pos="39;14299" name="TODO: Logic to fuzzy, see line 316/317)"/>
+   <todo pos="3;14968" name="TODO: do we really want to consider this a stop?"/>
+   <todo pos="3;14968" name="TODO: do we really want to consider this a stop?"/>
+   <todo pos="4;15199" name="TODO: what should we do with values that can't be parsed?"/>
+   <todo pos="4;15199" name="TODO: what should we do with values that can't be parsed?"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\cdn\vendors\ui-fliter\nouislider.js">
+   <todo pos="2;135" name="todo"/>
+   <todo pos="2;135" name="todo"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier.php">
+   <todo pos="10;147" name="TODO: make the config merge in, instead of replace"/>
+   <todo pos="10;147" name="TODO: make the config merge in, instead of replace"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\AttrDef\CSS\ImportantDecorator.php">
+   <todo pos="10;38" name="TODO: optimization: test directly for !important and ! important"/>
+   <todo pos="10;38" name="TODO: optimization: test directly for !important and ! important"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\CSSDefinition.php">
+   <todo pos="9;444" name="TODO: support SLASH syntax"/>
+   <todo pos="9;444" name="TODO: support SLASH syntax"/>
+   <todo pos="18;531" name="TODO: Is this htmlspecialchars() call really necessary"/>
+   <todo pos="18;531" name="TODO: Is this htmlspecialchars() call really necessary"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\ChildDef\List.php">
+   <todo pos="17;68" name="ToDo: Make this more robust in the case of not ol/ul"/>
+   <todo pos="17;68" name="ToDo: Make this more robust in the case of not ol/ul"/>
+   <todo pos="93;78" name="ToDo"/>
+   <todo pos="93;78" name="ToDo"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\ChildDef\Required.php">
+   <todo pos="17;95" name="ToDo: Make configurable"/>
+   <todo pos="17;95" name="ToDo: Make configurable"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\HTMLModuleManager.php">
+   <todo pos="18;421" name="TODO:"/>
+   <todo pos="18;421" name="TODO:"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\HTMLModule\Scripting.php">
+   <todo pos="9;42" name="TODO: create custom child-definition for noscript that"/>
+   <todo pos="9;42" name="TODO: create custom child-definition for noscript that"/>
+   <todo pos="9;48" name="TODO: convert this to new syntax, main problem is getting"/>
+   <todo pos="9;48" name="TODO: convert this to new syntax, main problem is getting"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\Printer\ConfigForm.php">
+   <todo pos="21;322" name="TODO does this need a break"/>
+   <todo pos="21;322" name="TODO does this need a break"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\Strategy\FixNesting.php">
+   <todo pos="25;121" name="ToDo: I don't think it matters if it's def or"/>
+   <todo pos="25;121" name="ToDo: I don't think it matters if it's def or"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\ezyang\htmlpurifier\library\HTMLPurifier\Zipper.php">
+   <todo pos="34;13" name="ToDo: Maybe it's more user friendly"/>
+   <todo pos="34;13" name="ToDo: Maybe it's more user friendly"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\maennchen\zipstream-php\test\ZipStreamTest.php">
+   <todo pos="70;56" name="todo Throw Exception"/>
+   <todo pos="69;56" name="@todo Throw Exception"/>
+   <todo pos="70;56" name="todo Throw Exception"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Calculation\Financial\Depreciation.php">
+   <todo pos="9;62" name="TODO Handle period value between 0 and 1 (e.g. 0.5)"/>
+   <todo pos="9;62" name="TODO Handle period value between 0 and 1 (e.g. 0.5)"/>
+   <todo pos="9;124" name="TODO Handling for fractional $period values"/>
+   <todo pos="9;124" name="TODO Handling for fractional $period values"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Calculation\LookupRef\Matrix.php">
+   <todo pos="2;72" name="TODO Provide support for area_num, currently not supported"/>
+   <todo pos="2;72" name="TODO Provide support for area_num, currently not supported"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Calculation\Statistical\Distributions\Binomial.php">
+   <todo pos="2;140" name="TODO Add support for the cumulative flag not present for NEGBINOMDIST, but introduced for NEG"/>
+   <todo pos="2;140" name="TODO Add support for the cumulative flag not present for NEGBINOMDIST, but introduced for NEG"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Cell\DataType.php">
+   <todo pos="13;55" name="TODO: Sanitize Rich-Text string (max. character count is 32,767)"/>
+   <todo pos="13;55" name="TODO: Sanitize Rich-Text string (max. character count is 32,767)"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Cell\DataValidator.php">
+   <todo pos="9;33" name="TODO: write check on all cases"/>
+   <todo pos="9;33" name="TODO: write check on all cases"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Reader\Html.php">
+   <todo pos="13;298" name="TODO"/>
+   <todo pos="13;298" name="TODO"/>
+   <todo pos="21;627" name="TODO"/>
+   <todo pos="21;627" name="TODO"/>
+   <todo pos="2;751" name="TODO :"/>
+   <todo pos="2;751" name="TODO :"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Reader\Ods.php">
+   <todo pos="31;354" name="TODO :: Figure this out. This is only a partial implementation I guess."/>
+   <todo pos="31;354" name="TODO :: Figure this out. This is only a partial implementation I guess."/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Reader\Xls.php">
+   <todo pos="29;1140" name="TODO: Why is there no BSE Index"/>
+   <todo pos="29;1140" name="TODO: Why is there no BSE Index"/>
+   <todo pos="21;1309" name="TODO Provide support for named values"/>
+   <todo pos="21;1309" name="TODO Provide support for named values"/>
+   <todo pos="13;4211" name="todo: what if string is very long"/>
+   <todo pos="13;4211" name="todo: what if string is very long"/>
+   <todo pos="21;4737" name="todo: implement"/>
+   <todo pos="21;4737" name="todo: implement"/>
+   <todo pos="21;4946" name="TODO: Investigate structure for .xls SHEETLAYOUT record as saved by MS Office Excel 2007"/>
+   <todo pos="21;4946" name="TODO: Investigate structure for .xls SHEETLAYOUT record as saved by MS Office Excel 2007"/>
+   <todo pos="9;7182" name="todo: if cell range is just a single cell, should this funciton"/>
+   <todo pos="9;7182" name="todo: if cell range is just a single cell, should this funciton"/>
+   <todo pos="9;7239" name="TODO: if cell range is just a single cell, should this funciton"/>
+   <todo pos="9;7239" name="TODO: if cell range is just a single cell, should this funciton"/>
+   <todo pos="21;7404" name="todo: check if we have identified the whole set of special characters"/>
+   <todo pos="21;7404" name="todo: check if we have identified the whole set of special characters"/>
+   <todo pos="21;7415" name="TODO: external sheet support"/>
+   <todo pos="21;7415" name="TODO: external sheet support"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Reader\Xlsx.php">
+   <todo pos="29;1184" name="TODO: Autoshapes from twoCellAnchors!"/>
+   <todo pos="29;1184" name="TODO: Autoshapes from twoCellAnchors!"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Html.php">
+   <todo pos="13;1720" name="TODO: Same for columns"/>
+   <todo pos="13;1720" name="TODO: Same for columns"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Ods\Cell\Style.php">
+   <todo pos="19;70" name="TODO :: To be implemented"/>
+   <todo pos="19;70" name="TODO :: To be implemented"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Xls\Escher.php">
+   <todo pos="53;173" name="todo"/>
+   <todo pos="53;173" name="todo"/>
+   <todo pos="31;179" name="todo"/>
+   <todo pos="31;179" name="todo"/>
+   <todo pos="62;213" name="todo"/>
+   <todo pos="62;213" name="todo"/>
+   <todo pos="38;216" name="todo"/>
+   <todo pos="38;216" name="todo"/>
+   <todo pos="62;240" name="todo"/>
+   <todo pos="62;240" name="todo"/>
+   <todo pos="38;243" name="todo"/>
+   <todo pos="38;243" name="todo"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Xls\Parser.php">
+   <todo pos="9;538" name="TODO: use real error codes"/>
+   <todo pos="9;538" name="TODO: use real error codes"/>
+   <todo pos="9;614" name="TODO: possible class value 0,1,2 check Formula.pm"/>
+   <todo pos="9;614" name="TODO: possible class value 0,1,2 check Formula.pm"/>
+   <todo pos="13;619" name="TODO: use real error codes"/>
+   <todo pos="13;619" name="TODO: use real error codes"/>
+   <todo pos="13;635" name="TODO: use real error codes"/>
+   <todo pos="13;635" name="TODO: use real error codes"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Xls\Style\ColorMap.php">
+   <todo pos="1;77" name="TODO Try and map RGB value to nearest colour within the define pallette"/>
+   <todo pos="1;77" name="TODO Try and map RGB value to nearest colour within the define pallette"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Xls\Workbook.php">
+   <todo pos="10;442" name="TODO: store external SUPBOOK records and XCT and CRN records"/>
+   <todo pos="10;442" name="TODO: store external SUPBOOK records and XCT and CRN records"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\extension\export_import\system\library\export_import\vendor\phpoffice\phpspreadsheet\src\PhpSpreadsheet\Writer\Xls\Worksheet.php">
+   <todo pos="13;3096" name="TODO writeCFRule() => $blockLineStyle => Index Color for left line"/>
+   <todo pos="13;3096" name="TODO writeCFRule() => $blockLineStyle => Index Color for left line"/>
+   <todo pos="13;3097" name="TODO writeCFRule() => $blockLineStyle => Index Color for right line"/>
+   <todo pos="13;3097" name="TODO writeCFRule() => $blockLineStyle => Index Color for right line"/>
+   <todo pos="13;3098" name="TODO writeCFRule() => $blockLineStyle => Top-left to bottom-right on/off"/>
+   <todo pos="13;3098" name="TODO writeCFRule() => $blockLineStyle => Top-left to bottom-right on/off"/>
+   <todo pos="13;3099" name="TODO writeCFRule() => $blockLineStyle => Bottom-left to top-right on/off"/>
+   <todo pos="13;3099" name="TODO writeCFRule() => $blockLineStyle => Bottom-left to top-right on/off"/>
+   <todo pos="13;3101" name="TODO writeCFRule() => $blockColor => Index Color for top line"/>
+   <todo pos="13;3101" name="TODO writeCFRule() => $blockColor => Index Color for top line"/>
+   <todo pos="13;3102" name="TODO writeCFRule() => $blockColor => Index Color for bottom line"/>
+   <todo pos="13;3102" name="TODO writeCFRule() => $blockColor => Index Color for bottom line"/>
+   <todo pos="13;3103" name="TODO writeCFRule() => $blockColor => Index Color for diagonal line"/>
+   <todo pos="13;3103" name="TODO writeCFRule() => $blockColor => Index Color for diagonal line"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\ADM25\index.php">
+   <todo pos="2;18" name="TODO byTAO"/>
+   <todo pos="2;18" name="TODO byTAO"/>
+  </todofile>
+ </todoblock>
+ <dbgurls/>
+ <lasttime value="1771565920"/>
+</project>

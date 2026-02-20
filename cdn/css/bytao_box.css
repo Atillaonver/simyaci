@@ -1,0 +1,16 @@
+#bytao-box {
+	margin-top: 25px;
+}
+#bytao-box .col-xs-3, #bytao-box.col-xs-4, #bytao-box .col-xs-6, #bytao-box .col-xs-9, #bytao-box .col-xs-12, #bytao-box .col-sm-3, #bytao-box .col-sm-6, #bytao-box .col-sm-9, #bytao-box .col-sm-12, #bytao-box .col-md-3, #bytao-box .col-md-6, #bytao-box .col-md-9,#bytao-box .col-md-12, #bytao-box .col-lg-3, #bytao-box .col-lg-6, #bytao-box .col-lg-9, #bytao-box .col-lg-12 {
+    padding-right: 0px;
+    padding-left: 0px;
+    margin:0px;
+}
+#bytao-box .row {
+	margin-right: 0px;
+    margin-left: 0px;
+}
+
+#bytao-box .inner{
+	padding: 2px;
+}

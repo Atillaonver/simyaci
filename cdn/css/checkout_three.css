@@ -1,0 +1,148 @@
+
+
+.logon-page .sign-in, .logon-page #sign-up, .logon-page #persistent, .logon-page #guest-access,.logon-page > .sign-in-guest {
+    width: 48%;
+    display: inline-block;
+    float: left;
+}
+
+h1.head{
+	font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .9px;
+    color: #000;
+    padding: 0 0 30px;
+    background: 0 0;
+    display: table;
+    text-transform: uppercase;
+}
+/* form*/
+.col-label {
+    float: left;
+    width: calc(12% + 20px)!important;
+    margin-top: 6px;
+}
+
+.col-inputs {
+    float: left;
+    width: calc(48% + 20px)!important;
+    margin-top: 6px;
+}
+.col-validate {
+    float: left;
+    width: calc(20% + 20px)!important;
+    margin-top: 6px;
+}
+form .row{
+	height: 40px;
+	line-height: 2em;
+}
+
+form .row  input[type="text"], form .row  input[type="password"], form .row input[type="email"], form .row  textarea {
+    width: 280px;
+    height: auto;
+    padding: 0 2px;
+    border: none;
+    border-color: #afafaf;
+    border-image: none;
+    border-style: solid;
+    border-width: 0 0 1px;
+    color: #000;
+    margin-right: 10px;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 26px;
+    
+    border-radius: 0;
+}
+form select{
+    border-color: #afafaf;
+    border-image: none;
+    border-style: solid;
+    border-width: 0 0 1px;
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    margin-right: 0;
+    padding: 0 0 3px;
+    position: relative;
+    text-align: left;
+    vertical-align: middle;
+    font-size: 15px;
+    width: 280px;
+    margin-top: 7px;
+    
+    background: 0 0;
+}
+select:not(:-internal-list-box) {
+    overflow: visible !important;
+}
+
+#payment-existing select {
+	width:100% !important;
+}
+
+#payment-existing{
+	margin-bottom: 30px;
+	margin-top: 30px;
+}
+
+.valid {
+    color: green;
+}
+
+.valid:after {
+	font-family: FontAwesome;
+    position: relative;
+    left: -5px;
+    content: "\f00c";
+}
+
+.invalid {
+    color: red;
+}
+.invalid input,.invalid select,.invalid textarea{
+	border-color: red;
+}
+.invalid:after {
+	font-family: FontAwesome;
+    position: relative;
+    left: -5px;
+    content: "\f00d";
+}
+
+
+
+
+/* links */
+.logon-page #forget-password-link {
+    margin-bottom: 36px;
+    padding-top: 22px;
+}
+.logon-page #forget-password-link {
+    text-decoration: underline;
+    color: #595959;
+    clear: both;
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+h2 {
+    padding-bottom: 20px;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.logon-page h2 {
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#user-area.logon-page h2 {
+    font-size: 16px;
+}
+
