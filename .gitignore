@@ -18,9 +18,10 @@ php.ini
 *.zip
 *.bak
 *.tpl
+pdf/*
 cdn/*
 open/*
 local/*
 develope/*
 image/cache/*
-image/catalog/*
+image/catalog/*desktop.ini
