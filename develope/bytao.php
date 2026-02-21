@@ -152,20 +152,27 @@ function by_QRLink(string $url, int $size = 140,string $descriptionLong = '',str
 		return $QR;
 	}
 	
-function by_text_move(string $text) {
+function by_text_move(string $text, bool $to_placeholder = true) {
 	if (empty($text)) return $text;
 
-	// simyaci.tr üzerindeki resim linklerini yakala (src="...")
-	$pattern = '/src=["\'](https:\/\/www\.simyaci\.tr\/image\/([^"\']+))["\']/';
-	
-	return preg_replace_callback($pattern, function($matches) {
-		$full_url = $matches[1];
-		$relative_path = $matches[2];
+	if ($to_placeholder) {
+		// --- KAYDETME / TAŞIMA MODU ---
+		// simyaci.tr linklerini yakala -> |IMGROUTE| çevir ve dosyayı çek
+		$pattern = '/src=["\'](https:\/\/www\.simyaci\.tr\/image\/([^"\']+))["\']/';
 		
-		// Resmi alt siteye kopyala
-		by_move($relative_path);
+		return preg_replace_callback($pattern, function($matches) {
+			$relative_path = $matches[2];
+			
+			// Resmi alt siteye kopyala (Hızır Servis)
+			by_move($relative_path);
+			
+			// Veritabanına |IMGROUTE| ile kaydet
+			return 'src="|IMGROUTE|' . $relative_path . '"';
+		}, $text);
 		
-		// Metin içindeki linki yerel yola (image/...) çevir
-		return 'src="image/' . $relative_path . '"';
-	}, $text);
+	} else {
+		// --- GÖSTERME / YAYINLAMA MODU ---
+		// |IMGROUTE| gördüğünde yerel resim yoluna çevir
+		return str_replace('|IMGROUTE|', 'image/', $text);
+	}
 }
