@@ -24,7 +24,9 @@ pdf/*
 cdn/*
 open/*
 local/*
+!/develope/bytao.php
 develope/*
+
 image/cache/*
 image/catalog/
 desktop.ini
