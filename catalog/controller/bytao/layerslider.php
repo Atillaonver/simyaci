@@ -211,6 +211,8 @@ class Layerslider extends \Opencart\System\Engine\Controller
 					
 				}
 				
+				$this->log->write('thumbnail: '.$_slider['thumbnail']);	
+
 				$_slider['layers'] = $_slider['layersparams']->layers ? $this->layers($_slider['layersparams']->layers):[];
 				$slideData[$key] = $_slider;
 			}
@@ -313,6 +315,7 @@ class Layerslider extends \Opencart\System\Engine\Controller
 
 					}
 
+					$this->log->write('thumbnail: '.$_slider['thumbnail']);	
 					
 					$_slider['layers'] = $_slider['layersparams']->layers ? $this->layers($_slider['layersparams']->layers):[];
 					$sliders[$key] = $_slider;
@@ -347,7 +350,6 @@ class Layerslider extends \Opencart\System\Engine\Controller
 					$this->document->addScript('cdn/'.by_cdn('js/layerslider/revolution.extension.parallax.min.js'));
 					$this->document->addScript('cdn/'.by_cdn('js/layerslider/revolution.extension.slideanims.min.js'));
 					$this->document->addScript('cdn/'.by_cdn('js/layerslider/revolution.extension.video.min.js'));
-					
 
 					$returnData[$group['viewpos']] = $this->load->view($this->cPth.'_rev', $data);
 				}
