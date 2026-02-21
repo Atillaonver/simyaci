@@ -1,0 +1,28 @@
+name: 🚀 Otomatik Yayınla (FTP)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  web-deploy:
+    name: 🚚 Dosyaları Gönder
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Kodu Al
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: 📂 FTP ile Yükle
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Sadece GitHub'daki dosyaları gönderir (.gitignore'dakileri atlarsa bile güvenli olur)
+        exclude: |
+          **/.git*
+          **/.git*/**
+          **/node_modules/**

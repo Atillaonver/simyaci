@@ -14,7 +14,9 @@ php.ini
 *.md
 *.sql
 *.txt
+!/.github/workflows/
 *.yml
+
 *.zip
 *.bak
 *.tpl
