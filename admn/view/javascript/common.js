@@ -21,7 +21,7 @@ function getURLVar(key) {
         }
     }
 }
-	
+
 // On August 17 2021, Internet Explorer 11 (IE11) will no longer be supported by Microsoft's 365 applications and services.
 function isIE() {
     if (!!window.ActiveXObject || "ActiveXObject" in window) return true;
@@ -160,44 +160,44 @@ $(document).ready(function () {
     }
 
     $(document).on('click', 'button', by_alert);
-    
-    $(document).on('change','.word-check > input',function(){
-    	var W =$(this).val();
-    	var L = $(this).attr('lang');
-    	var K = $(this).attr('key');
-    	var Obj=$(this);
-    	var itemN =$('.item_id').attr('name');
-    	var itemID =$('.item_id').val();
-    	$.ajax({
-	        url: 'index.php?route=bytao/common.wordcheck&user_token=' + getURLVar('user_token')+"&"+itemN+"="+itemID,
-	        type: 'post',
-	        data: {word:W,language_id:L,key:K},
-	        dataType: 'json',
-	        contentType: 'application/x-www-form-urlencoded',
-	        success: function (json) {
-	        	$(Obj).find('i').removeClass('fa-xmark fa-check')
-	        	if(json['confirm']){
-					$(Obj).find('i').addClass('fa-check');	
-				}else{
-					$(Obj).find('i').addClass('fa-xmark');	
-				}
-	        }
-	    });
-	});
-	    
-    
+
+    $(document).on('change', '.word-check > input', function () {
+        var W = $(this).val();
+        var L = $(this).attr('lang');
+        var K = $(this).attr('key');
+        var Obj = $(this);
+        var itemN = $('.item_id').attr('name');
+        var itemID = $('.item_id').val();
+        $.ajax({
+            url: 'index.php?route=bytao/common.wordcheck&user_token=' + getURLVar('user_token') + "&" + itemN + "=" + itemID,
+            type: 'post',
+            data: { word: W, language_id: L, key: K },
+            dataType: 'json',
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (json) {
+                $(Obj).find('i').removeClass('fa-xmark fa-check')
+                if (json['confirm']) {
+                    $(Obj).find('i').addClass('fa-check');
+                } else {
+                    $(Obj).find('i').addClass('fa-xmark');
+                }
+            }
+        });
+    });
+
+
 });
 
 
-  // ajax content
+// ajax content
 $(document).on('click', '[data-oc-toggle=\'ajaxpaginate\']', function (e) {
     e.preventDefault();
-    $( $(this).parents('[data-oc-toggle=\'ajaxpaginate\']').attr('data-target') ).load( $(this).attr('href'), function() {});
-	
-	return false;
-}); 
+    $($(this).parents('[data-oc-toggle=\'ajaxpaginate\']').attr('data-target')).load($(this).attr('href'), function () { });
 
-  // ajax content
+    return false;
+});
+
+// ajax content
 $(document).on('click', 'a[data-by-toggle=\'ajax\']', function (e) {
     e.preventDefault();
     var action = $(this).attr('href');
@@ -208,182 +208,182 @@ $(document).on('click', 'a[data-by-toggle=\'ajax\']', function (e) {
         contentType: 'application/x-www-form-urlencoded',
         success: function (json) {
             if (json['refresh']) {
-            	location = location;
+                location = location;
             }
             if (json['success']) {
-                alertDivided(json['success'],'success');
+                alertDivided(json['success'], 'success');
             }
         }
     });
-	return false;
-});  
+    return false;
+});
 
 $(document).on('click', 'a[data-oc-toggle=\'ajax\']', function (e) {
     e.preventDefault();
     $('ul.toolbar active').removeClass('active');
     $(this).parent().addClass('active');
-    $($(this).attr('data-target')).load( $(this).attr('href'), function() {});
-	
-	return false;
-});  
+    $($(this).attr('data-target')).load($(this).attr('href'), function () { });
 
-  // ajax Modal
- 
+    return false;
+});
+
+// ajax Modal
+
 $(document).on('click', 'a[data-oc-toggle=\'ajax-modal\']', function (e) {
     e.preventDefault();
 
-    var action = $(this).attr('href'); 
-    if($(this).find('.fa-envelope-circle-check').length){
-		action = action+'&first=2'
-	}else{
-		action = action+'&first=1'
-	}
-    
-    $('#ajax-modal .modal-body').load(action, function() {
-    	 $('.tooltip').remove();
-    	$('#modal-ajax-comtent').modal('show');
+    var action = $(this).attr('href');
+    if ($(this).find('.fa-envelope-circle-check').length) {
+        action = action + '&first=2'
+    } else {
+        action = action + '&first=1'
+    }
+
+    $('#ajax-modal .modal-body').load(action, function () {
+        $('.tooltip').remove();
+        $('#modal-ajax-comtent').modal('show');
     });
-	return false;
-}); 
-  
+    return false;
+});
+
 // Forms
 $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
-	e.preventDefault();
+    e.preventDefault();
 
-	var element = this;
-	var form = e.target;
-	var action = $(form).attr('action');
+    var element = this;
+    var form = e.target;
+    var action = $(form).attr('action');
 
-	if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
-		var button = e.originalEvent.submitter;
-	} else {
-		var button = '';
-	}
+    if (e.originalEvent !== undefined && e.originalEvent.submitter !== undefined) {
+        var button = e.originalEvent.submitter;
+    } else {
+        var button = '';
+    }
 
-	var formaction = $(button).attr('formaction');
+    var formaction = $(button).attr('formaction');
 
-	if (formaction !== undefined) {
-		action = formaction;
-	}
+    if (formaction !== undefined) {
+        action = formaction;
+    }
 
-	var method = $(form).attr('method');
+    var method = $(form).attr('method');
 
-	if (method === undefined) {
-		method = 'post';
-	}
+    if (method === undefined) {
+        method = 'post';
+    }
 
-	var enctype = $(element).attr('enctype');
+    var enctype = $(element).attr('enctype');
 
-	if (enctype === undefined) {
-		enctype = 'application/x-www-form-urlencoded';
-	}
+    if (enctype === undefined) {
+        enctype = 'application/x-www-form-urlencoded';
+    }
 
-	// https://github.com/opencart/opencart/issues/9690
-	if (typeof CKEDITOR != 'undefined') {
-		for (instance in CKEDITOR.instances) {
-			CKEDITOR.instances[instance].updateElement();
-		}
-	}
+    // https://github.com/opencart/opencart/issues/9690
+    if (typeof CKEDITOR != 'undefined') {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+    }
 
-	$.ajax({
-		url: action.replaceAll('&amp;', '&'),
-		type: method,
-		data: $(form).serialize(),
-		dataType: 'json',
-		contentType: 'application/x-www-form-urlencoded',
-		beforeSend: function () {
-			$(button).button('loading');
-		},
-		complete: function () {
-			$(button).button('reset');
-		},
-		success: function (json) {
-			$('.taberr').remove();
-			$('.alert-dismissible').remove();
-			$(element).find('.is-invalid').removeClass('is-invalid');
-			$(element).find('.invalid-feedback').removeClass('d-block');
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
+    $.ajax({
+        url: action.replaceAll('&amp;', '&'),
+        type: method,
+        data: $(form).serialize(),
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded',
+        beforeSend: function () {
+            $(button).button('loading');
+        },
+        complete: function () {
+            $(button).button('reset');
+        },
+        success: function (json) {
+            $('.taberr').remove();
+            $('.alert-dismissible').remove();
+            $(element).find('.is-invalid').removeClass('is-invalid');
+            $(element).find('.invalid-feedback').removeClass('d-block');
+
+            if (json['redirect']) {
+                location = json['redirect'];
+            }
 
 
-			if (typeof json['error'] == 'string') {
-				if (json['error']['warning']) {
-					alertDivided(json['error']['warning'],'warning');
-				}
-			}
+            if (typeof json['error'] == 'string') {
+                if (json['error']['warning']) {
+                    alertDivided(json['error']['warning'], 'warning');
+                }
+            }
 
-			if (typeof json['error'] == 'object') {
-				if (json['error']['warning']) {
-					alertDivided(json['error']['warning'],'warning');
-				}
+            if (typeof json['error'] == 'object') {
+                if (json['error']['warning']) {
+                    alertDivided(json['error']['warning'], 'warning');
+                }
 
-				for (key in json['error']) {
-					$('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
-					$('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
+                for (key in json['error']) {
+                    $('#input-' + key.replaceAll('_', '-')).addClass('is-invalid').find('.form-control, .form-select, .form-check-input, .form-check-label').addClass('is-invalid');
+                    $('#error-' + key.replaceAll('_', '-')).html(json['error'][key]).addClass('d-block');
 
-					tabN = $('#input-' + key.replaceAll('_', '-')).closest('.tab-pane').attr('id');
+                    tabN = $('#input-' + key.replaceAll('_', '-')).closest('.tab-pane').attr('id');
 
-					if (!$("a[href='#"+tabN+"']").find('.taberr').length) {
-						$("a[href='#"+tabN+"']").css('position','relative').append('<span class="taberr">!</span>');
-					}
-				}
-			}
+                    if (!$("a[href='#" + tabN + "']").find('.taberr').length) {
+                        $("a[href='#" + tabN + "']").css('position', 'relative').append('<span class="taberr">!</span>');
+                    }
+                }
+            }
 
-			if (json['refresh']) {
-				//location = location;
-			}
+            if (json['refresh']) {
+                //location = location;
+            }
 
-			if (json['success']) {
-				alertDivided(json['success'],'success');
-				// Refresh
-				var url = $(form).attr('data-oc-load');
-				var target = $(form).attr('data-oc-target');
+            if (json['success']) {
+                alertDivided(json['success'], 'success');
+                // Refresh
+                var url = $(form).attr('data-oc-load');
+                var target = $(form).attr('data-oc-target');
 
-				if (url !== undefined && target !== undefined) {
-					$('#'+target).load(url, function() {
-						var goTO = $(form).attr('data-oc-go');
-						if (goTO !== undefined) {
-							$('html, body').animate({
-								scrollTop: $("#"+goTO).offset().top
-							}, 1000);
-						}
-					});
-				}
-			}
+                if (url !== undefined && target !== undefined) {
+                    $('#' + target).load(url, function () {
+                        var goTO = $(form).attr('data-oc-go');
+                        if (goTO !== undefined) {
+                            $('html, body').animate({
+                                scrollTop: $("#" + goTO).offset().top
+                            }, 1000);
+                        }
+                    });
+                }
+            }
 
-			if (json['incontent']) {
-				var target = $(form).attr('data-oc-target');
-				if (target !== undefined) {
-					$('#'+target).html(json['incontent']);
-				}
-				var goTO = $(form).attr('data-oc-go');
-				if (goTO !== undefined) {
-					$('html, body').animate({
-						scrollTop: $("#"+goTO).offset().top
-					}, 1000);
-				}
-			}
+            if (json['incontent']) {
+                var target = $(form).attr('data-oc-target');
+                if (target !== undefined) {
+                    $('#' + target).html(json['incontent']);
+                }
+                var goTO = $(form).attr('data-oc-go');
+                if (goTO !== undefined) {
+                    $('html, body').animate({
+                        scrollTop: $("#" + goTO).offset().top
+                    }, 1000);
+                }
+            }
 
-			if (json['set']) {
-				for (key in json['set']) {
-					$('#'+key).val(json['set'][key])
-				}
-			}
+            if (json['set']) {
+                for (key in json['set']) {
+                    $('#' + key).val(json['set'][key])
+                }
+            }
 
-			// Replace any form values that correspond to form names.
-			for (key in json) {
-				$(element).find('[name=\'' + key + '\']').val(json[key]);
-			}
-		}
-	});
+            // Replace any form values that correspond to form names.
+            for (key in json) {
+                $(element).find('[name=\'' + key + '\']').val(json[key]);
+            }
+        }
+    });
 });
 
 
 
-$(document).on('shown.bs.modal','#alerter', function (e) {
-  	setTimeout(function(){$('#alerter').modal('hide');} , 1000000);
+$(document).on('shown.bs.modal', '#alerter', function (e) {
+    setTimeout(function () { $('#alerter').modal('hide'); }, 1000000);
 })
 
 // Upload
@@ -400,7 +400,7 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
         $('#form-upload input[name=\'file\']').on('change', function (e) {
             if ((this.files[0].size / 1024) > $(element).attr('data-oc-size-max')) {
                 alert($(element).attr('data-oc-size-error'));
-				
+
                 $(this).val('');
             }
         });
@@ -431,11 +431,11 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                         console.log(json);
 
                         if (json['error']) {
-                            alertDivided(json['error'],'danger');
+                            alertDivided(json['error'], 'danger');
                         }
 
                         if (json['success']) {
-                            alertDivided(json['success'],'success');
+                            alertDivided(json['success'], 'success');
                         }
 
                         if (json['code']) {
@@ -486,25 +486,25 @@ $(document).on('click', '[data-oc-toggle=\'clear\']', function () {
 $(document).on('click', '[data-check-toggle]', function () {
     var element = this;
     var Clss = $(this).attr('data-check-toggle');
-    $('.'+Clss).prop("checked",$( element ).prop( "checked" ));
+    $('.' + Clss).prop("checked", $(element).prop("checked"));
 });
 
 // Image Manager
 
 $(document).on('click', '[data-oc-toggle=\'image\']', function (e) {
     var element = this;
-	li=$(this).data('li'),
-    
-    $('#modal-image').remove();
-    
-	if(li){
-		URL = 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token');
-	}else{
-		URL = 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(element).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(element).attr('data-oc-thumb'))
-	}
-	
+    li = $(this).data('li'),
+
+        $('#modal-image').remove();
+
+    if (li) {
+        URL = 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token');
+    } else {
+        URL = 'index.php?route=common/filemanager&user_token=' + getURLVar('user_token') + '&target=' + encodeURIComponent($(element).attr('data-oc-target')) + '&thumb=' + encodeURIComponent($(element).attr('data-oc-thumb'))
+    }
+
     $.ajax({
-        url: URL ,
+        url: URL,
         dataType: 'html',
         beforeSend: function () {
             $(element).button('loading');
@@ -556,8 +556,7 @@ class Chain {
 var chain = new Chain();
 
 // Autocomplete
-+function ($) 
-{
++function ($) {
     $.fn.autocomplete = function (option) {
         return this.each(function () {
             var element = this;
@@ -591,8 +590,8 @@ var chain = new Chain();
 
                 var value = $(this).attr('href');
                 var label = $(this).html();
-				if (element.items[value] !== undefined) {
-					element.select(element.items[value]);
+                if (element.items[value] !== undefined) {
+                    element.select(element.items[value]);
                     $dropdown.removeClass('show');
                 }
             });
@@ -653,11 +652,11 @@ var chain = new Chain();
 }(jQuery);
 
 // Button
-$(document).ready(function() {
-	
-    +function($) {
-        $.fn.button = function(state) {
-            return this.each(function() {
+$(document).ready(function () {
+
+    +function ($) {
+        $.fn.button = function (state) {
+            return this.each(function () {
                 var element = this;
 
                 if (state == 'loading') {
@@ -674,95 +673,4 @@ $(document).ready(function() {
         }
     }(jQuery);
 });
-/*
-(function() {
 
-	const MAX_CHUNK = 200000; // Her parçanın maksimum boyutu
-
-	// Chunked gönderim fonksiyonu
-	window.sendChunkedForm = function($form, callback) {
-		if (!$form || !$form.length)
-			return;
-		var formEl = $form[0];
-		if (!(formEl instanceof HTMLFormElement))
-			return;
-
-		// FormData to JSON
-		const formData = new FormData(formEl);
-		let json = {};
-		formData.forEach((v, k) => { json[k] = v; });
-		const raw = JSON.stringify(json);
-
-		// Küçük form → callback çağır
-		if (raw.length <= MAX_CHUNK) {
-			if (typeof callback === 'function')
-				callback();
-			return;
-		}
-
-		// Büyük form → chunklara ayır
-		let chunks = [];
-		for (let i = 0; i < raw.length; i += MAX_CHUNK) {
-			chunks.push(raw.substring(i, i + MAX_CHUNK));
-		}
-
-		let index = 0;
-
-		function sendNextChunk()
-		{
-			fetch('index.php?route=tool/chunk/save&user_token=' + oc.token, {
-				method: 'POST',
-				body: JSON.stringify({
-					index,
-					total: chunks.length,
-					data: chunks[index]
-				}),
-				headers: { 'Content-Type': 'application/json' }
-			})
-			.then(r => r.json())
-			.then(j => {
-				if (j.status === 'part') {
-					index++;
-					sendNextChunk();
-				} else if (j.status === 'done') {
-					if (typeof callback === 'function')
-						callback();
-				}
-			})
-			.catch(err => console.error('Chunk send error:', err));
-		}
-
-		sendNextChunk();
-	};
-
-	// Form submit override
-	$(document).ready(function() {
-		$(document).on('submit', 'form[data-oc-toggle="ajax"]', function(e) {
-			var $form = $(this);
-
-			// Tek seferlik chunk kontrolü
-			if ($form.data('chunked-processed'))
-				return;
-			$form.data('chunked-processed', true);
-
-			// Büyük form mu kontrol et
-			const formData = new FormData($form[0]);
-			let json = {};
-			formData.forEach((v,k)=>{ json[k]=v; });
-			const raw = JSON.stringify(json);
-
-			if (raw.length > MAX_CHUNK) {
-				e.preventDefault(); // normal submit engellendi
-
-				sendChunkedForm($form, function() {
-					// session’a chunks kaydedildi → OpenCart AJAX submit normal çalışacak
-					// Önemli: tekrar submit yok, çifte tetiklenmez
-				});
-			}
-			// Küçük formlar için hiçbir değişiklik yok
-		});
-	});
-
-})();
-
-*/

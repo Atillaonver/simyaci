@@ -1200,7 +1200,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
 
-		if (is_file(DIR_IMAGE . html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'))) {
+		if (is_file(DIR_IMAGE . html_entity_decode(by_move($data['image']), ENT_QUOTES, 'UTF-8'))) {
 			$data['thumb'] = $this->model_tool_image->resize(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8'), 100, 100);
 		} else {
 			$data['thumb'] = $data['placeholder'];
@@ -1218,7 +1218,7 @@ class Product extends \Opencart\System\Engine\Controller {
 
 		foreach ($product_images as $product_image) {
 			
-			if (is_file(DIR_IMAGE. html_entity_decode($product_image['image'], ENT_QUOTES, 'UTF-8'))) {
+			if (is_file(DIR_IMAGE. html_entity_decode(by_move($product_image['image']), ENT_QUOTES, 'UTF-8'))) {
 				$image = $product_image['image'];
 				$thumb = $product_image['image'];
 			} else {

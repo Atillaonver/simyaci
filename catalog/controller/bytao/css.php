@@ -22,7 +22,7 @@ class Css extends \Opencart\System\Engine\Controller {
 		}
 	}
 	
-	public static function writeToCdn(string $folder,string $file,string $value,string $e='css' ):void{
+	public static function writeToCdn(string $folder,string $file,string $value,string $e='css' ):void {
 			$file = $folder  . preg_replace('/[^A-Z0-9\._-]/i', '', $file).'.'.$e ;
 			$handle = fopen($file, 'w');
 	    	fwrite($handle, ($value));
@@ -30,6 +30,7 @@ class Css extends \Opencart\System\Engine\Controller {
 	    	//file_put_contents($file,$value);
 		}
 	
+		
 	public static function process( string $content , string $url ){
 		global $cssURL;   $cssURL = $url;
 		
