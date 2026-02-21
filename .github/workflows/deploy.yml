@@ -15,6 +15,13 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: 🩺 Bağlantı Testi (Debug)
+      run: |
+        echo "DNS Testi yapılıyor..."
+        nslookup simyaci.tr || echo "DNS bulunamadı"
+        echo "Sunucuya ping atılıyor..."
+        ping -c 3 ${{ secrets.FTP_SERVER }} || echo "Ping başarısız (normal olabilir)"
+
     - name: 📂 FTP ile Yükle
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
