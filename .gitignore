@@ -24,8 +24,7 @@ pdf/*
 cdn/*
 open/*
 local/*
-!/develope/bytao.php
-develope/*
+develope/
 
 image/cache/*
 image/catalog/
