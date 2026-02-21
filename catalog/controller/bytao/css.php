@@ -33,12 +33,23 @@ class Css extends \Opencart\System\Engine\Controller {
 	public static function process( string $content , string $url ){
 		global $cssURL;   $cssURL = $url;
 		
+		$content = str_replace('|IMGROUTE|', HTTPS_IMAGE , $content);
 		$content = str_replace('IMAGEROUTE', HTTPS_IMAGE , $content);
 		$content = str_replace('CDNROUTE', CDN_ROUTE , $content);
 		$content = str_replace('CDN_ROUTE', CDN_ROUTE , $content);
 		$content = str_replace('HTTP_SERVER', HTTPS_IMAGE , $content);
 		$content = str_replace('HTTP_ASSETS', HTTP_SERVER.'assets/' , $content);
 		$content = str_replace('HTTP_IMAGE', HTTPS_IMAGE , $content);
+
+		// Ana siteden gelen tam linkleri yakala, alt siteye çek ve yolu düzelt
+		if (function_exists('by_move')) {
+			$pattern = '/url\(["\']?(https:\/\/www\.simyaci\.tr\/image\/([^"\'\)]+))["\']?\)/';
+			$content = preg_replace_callback($pattern, function($matches) {
+				$relative_path = $matches[2];
+				by_move($relative_path);
+				return "url('" . HTTPS_IMAGE . $relative_path . "')";
+			}, $content);
+		}
 		$content = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $content);
 		$content = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), ' ', $content);
 		$content = str_replace(array("&amp;", "&gt;","&quot;"), array("&", ">",'"'), $content);
