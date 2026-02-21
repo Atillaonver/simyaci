@@ -151,3 +151,21 @@ function by_QRLink(string $url, int $size = 140,string $descriptionLong = '',str
 		$QR .='https://chart.googleapis.com/chart?choe='.$encoding.'&chs='.$size.'x'.$size.'&cht=qr&chld='.$errorCorrectionLevel.'|'.$margin.'&chl='.urlencode($url).'" alt="' . $heading_title . '" ></span>';
 		return $QR;
 	}
+	
+function by_text_move(string $text) {
+	if (empty($text)) return $text;
+
+	// simyaci.tr üzerindeki resim linklerini yakala (src="...")
+	$pattern = '/src=["\'](https:\/\/www\.simyaci\.tr\/image\/([^"\']+))["\']/';
+	
+	return preg_replace_callback($pattern, function($matches) {
+		$full_url = $matches[1];
+		$relative_path = $matches[2];
+		
+		// Resmi alt siteye kopyala
+		by_move($relative_path);
+		
+		// Metin içindeki linki yerel yola (image/...) çevir
+		return 'src="image/' . $relative_path . '"';
+	}, $text);
+}
