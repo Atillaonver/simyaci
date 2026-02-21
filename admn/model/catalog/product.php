@@ -985,8 +985,8 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($query->rows as $result) {
 			$product_description_data[$result['language_id']] = [
 				'name'             => $result['name'],
-				'description'      => $result['description'],
-				'description_alt'      => $result['description_alt'],
+				'description'      => by_text_move($result['description'],false,URL_IMAGE),
+				'description_alt'  => by_text_move($result['description_alt'],false,URL_IMAGE),
 				'bullet'      		=> $result['bullet'],
 				'filename'      	=> $result['filename'],
 				'meta_title'       => $result['meta_title'],
