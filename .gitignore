@@ -24,4 +24,6 @@ open/*
 local/*
 develope/*
 image/cache/*
-image/catalog/*desktop.ini
+image/catalog/
+desktop.ini
+
