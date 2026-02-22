@@ -2,9 +2,9 @@ name: 🚀 Otomatik Yayınla (FTP)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
+#  push:
+#    branches:
+#      - master
 
 jobs:
   web-deploy:
