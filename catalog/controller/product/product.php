@@ -328,8 +328,11 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
+			$this->log->write('config_customer_price:'.print_r($this->config->get('config_customer_price'),TRUE));
+
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				// her zaman vergi dahil fiyat
+				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], true), $this->session->data['currency']);
 			} else {
 				$data['price'] = false;
 			}
@@ -339,7 +342,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			$data['simple_price'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
 
 			if ((float)$product_info['special']) {
-				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				// özel fiyat için de vergi ekle
+				$data['special'] = $this->currency->format($this->tax->calculate($product_info['special'], $product_info['tax_class_id'], true), $this->session->data['currency']);
 			} else {
 				$data['special'] = false;
 			}
@@ -384,7 +388,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					foreach ($option['product_option_value'] as $option_value) {
 						if (!$option_value['subtract'] || ($option_value['quantity'] > 0)) {
 							if ((($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) && (float)$option_value['price']) {
-								$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], $this->config->get('config_tax') ? 'P' : false), $this->session->data['currency']);
+								$price = $this->currency->format($this->tax->calculate($option_value['price'], $product_info['tax_class_id'], 'P'), $this->session->data['currency']);
 							} else {
 								$price = false;
 							}
@@ -427,7 +431,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$description = '';
 
 				if ($result['trial_status']) {
-					$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+					$trial_price = $this->currency->format($this->tax->calculate($result['trial_price'], $product_info['tax_class_id'], true), $this->session->data['currency']);
 					$trial_cycle = $result['trial_cycle'];
 					$trial_frequency = $this->language->get('text_' . $result['trial_frequency']);
 					$trial_duration = $result['trial_duration'];
@@ -435,7 +439,7 @@ class Product extends \Opencart\System\Engine\Controller {
 					$description .= sprintf($this->language->get('text_subscription_trial'), $trial_price, $trial_cycle, $trial_frequency, $trial_duration);
 				}
 
-				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$price = $this->currency->format($this->tax->calculate($result['price'], $product_info['tax_class_id'], true), $this->session->data['currency']);
 				$cycle = $result['cycle'];
 				$frequency = $this->language->get('text_' . $result['frequency']);
 				$duration = $result['duration'];
@@ -475,14 +479,12 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 
 				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
+				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], true), $this->session->data['currency']);
 					$price = false;
 				}
 
 				if ((float)$result['special']) {
-					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
-				} else {
+				$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], true), $this->session->data['currency']);
 					$special = false;
 				}
 
