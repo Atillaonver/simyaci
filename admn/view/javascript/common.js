@@ -381,7 +381,6 @@ $(document).on('submit', 'form[data-oc-toggle=\'ajax\']', function (e) {
 });
 
 
-
 $(document).on('shown.bs.modal', '#alerter', function (e) {
     setTimeout(function () { $('#alerter').modal('hide'); }, 1000000);
 })
