@@ -26,8 +26,11 @@ cdn/*
 open/*
 local/*
 develope/*
-
+admn/language/*
+catalog/language/*
 image/cache/*
 image/catalog/*
 desktop.ini
+__MACOSX/
+**/__MACOSX/
 
