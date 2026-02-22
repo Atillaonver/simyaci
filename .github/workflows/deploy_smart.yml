@@ -61,7 +61,7 @@ jobs:
           while IFS= read -r file; do
             if [ -f "$file" ]; then
               # Uzak dizini oluştur ve dosyayı yükle
-              REMOTE_DIR="$(dirname "$file")"
+              REMOTE_DIR="public_html/$(dirname "$file")"
               echo "Yükleniyor: $file → $REMOTE_DIR/"
               lftp -c "
                 set ftp:ssl-allow no;
