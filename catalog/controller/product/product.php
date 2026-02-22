@@ -273,6 +273,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['filename'] = $this->url->link('product/product.download', 'language=' . $this->config->get('config_language') . '&brosur=' . $product_id);
 			}
 			
+
 			$data['description'] = html_entity_decode( by_text_move($product_info['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
@@ -356,6 +357,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				'TAX CLASS ID' => $product_info['tax_class_id'],
 				'TAX' => $this->config->get('config_tax')
 			], 0, 'PRICE_DEBUG');
+			
 			
 			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
