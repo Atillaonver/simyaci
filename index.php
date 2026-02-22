@@ -33,4 +33,3 @@ require_once(DIR_OPENCART . 'develope/bytao.php');
 
 // Framework
 require_once(DIR_SYSTEM . 'framework.php');
-

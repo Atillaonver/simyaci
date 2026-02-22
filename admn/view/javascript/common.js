@@ -218,7 +218,6 @@ $(document).on('click', 'a[data-by-toggle=\'ajax\']', function (e) {
     return false;
 });
 
-
 $(document).on('click', 'a[data-oc-toggle=\'ajax\']', function (e) {
     e.preventDefault();
     $('ul.toolbar active').removeClass('active');

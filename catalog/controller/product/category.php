@@ -149,7 +149,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['compare'] = $this->url->link('product/compare', 'language=' . $this->config->get('config_language'));
 
 			$url = '';
-			
 
 			if (isset($this->request->get['filter'])) {
 				$url .= '&filter=' . $this->request->get['filter'];
