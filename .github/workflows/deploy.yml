@@ -37,3 +37,8 @@ jobs:
           **/.git*/**
           **/node_modules/**
           develope/
+          image/**
+          cdn/**
+          system/storage/**
+          system/vendor/**
+          **/cache/**

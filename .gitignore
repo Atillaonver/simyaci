@@ -24,9 +24,9 @@ pdf/*
 cdn/*
 open/*
 local/*
-develope/
+develope/*
 
 image/cache/*
-image/catalog/
+image/catalog/*
 desktop.ini
 
