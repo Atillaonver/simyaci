@@ -14,8 +14,9 @@ php.ini
 *.md
 *.sql
 *.txt
-!/.github/workflows/
 *.yml
+!/.github/workflows/
+!/.github/workflows/*.yml
 .vscode/*
 *.zip
 *.bak
