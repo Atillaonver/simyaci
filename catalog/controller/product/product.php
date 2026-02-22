@@ -343,13 +343,13 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 			
 			if ($this->config->get('config_tax')) {
-				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
-				//$data['tax'] = $this->currency->format((float)$product_info['price'], $this->session->data['currency']);
+				//$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+				$data['tax'] = $this->currency->format((float)$product_info['price'], $this->session->data['currency']);
 			} else {
 				$data['tax'] = false;
 			}
 			
-			//$this->log->write('tax:'.print_r($data['tax'],TRUE));
+			$this->log->write('tax:'.print_r($data['tax'],TRUE));
 			
 			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
