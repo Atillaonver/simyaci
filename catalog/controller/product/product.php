@@ -334,6 +334,8 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['price'] = false;
 			}
 			
+			$this->log->write('price:'.print_r($data['price'],TRUE));
+
 			$data['simple_price'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
 
 			if ((float)$product_info['special']) {
