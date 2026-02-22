@@ -122,7 +122,7 @@ class Editor extends \Opencart\System\Engine\Model
 				'row_col_id'            => $result['row_col_id'],
 				'store_id'            => $result['store_id'],
 				'col_type'            => $result['col_type'],
-				'col_content'      => html_entity_decode($result['col_content'], ENT_QUOTES, 'UTF-8'),
+				'col_content'      => html_entity_decode(by_text_move($result['col_content'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8'),
 				'col_content_id'      => $result['col_content_id'],
 				'col_style'      => $result['col_style'],
 				'col_class'      => $result['col_class'],

@@ -319,7 +319,7 @@ class Article extends \Opencart\System\Engine\Model {
 	 * $this->model_cms_article->addDescription($article_id, $language_id, $article_data);
 	 */
 	public function addDescription(int $article_id, int $language_id, array $data): void {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape($data['description']) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "article_description` SET `article_id` = '" . (int)$article_id . "', `language_id` = '" . (int)$language_id . "', `image` = '" . $this->db->escape($data['image']) . "', `name` = '" . $this->db->escape($data['name']) . "', `description` = '" . $this->db->escape(by_text_move($data['description'],true,URL_IMAGE)) . "', `tag` = '" . $this->db->escape($data['tag']) . "', `meta_title` = '" . $this->db->escape($data['meta_title']) . "', `meta_description` = '" . $this->db->escape($data['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($data['meta_keyword']) . "'");
 	}
 
 	/**
@@ -376,6 +376,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 		foreach ($query->rows as $result) {
 			$article_description_data[$result['language_id']] = $result;
+			$article_description_data[$result['language_id']]['description'] = by_text_move($result['description'], false, URL_IMAGE);
 		}
 
 		return $article_description_data;

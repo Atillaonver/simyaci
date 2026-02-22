@@ -23,7 +23,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 			$content =implode('src="', $parts);
 			$content = str_replace('src="', HTTPS_IMAGE , $content);
 */
-			$data['html'] = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
+			$data['html'] = html_entity_decode(by_text_move($content,false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
 
 			return $this->load->view('extension/opencart/module/html', $data);
 		} else {

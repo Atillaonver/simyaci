@@ -16,7 +16,7 @@ php.ini
 *.txt
 !/.github/workflows/
 *.yml
-
+.vscode/*
 *.zip
 *.bak
 *.tpl

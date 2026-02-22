@@ -28,5 +28,7 @@ if(isset($_SERVER['HTTP_REFERER'])){
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+require_once(DIR_OPENCART . 'develope/bytao.php');
+
 // Framework
 require_once(DIR_SYSTEM . 'framework.php');

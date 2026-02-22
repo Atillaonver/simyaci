@@ -50,8 +50,8 @@ class Information extends \Opencart\System\Engine\Controller {
 				];
 				$data['heading_title'] = $information_info['title'];
 
-				$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
-				$data['page_script'] =  html_entity_decode($information_info['page_script'], ENT_QUOTES, 'UTF-8');
+				$data['description'] = html_entity_decode(by_text_move($information_info['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
+				$data['page_script'] =  html_entity_decode(by_text_move($information_info['page_script'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
 
 				$data['HTTP_IMAGE'] = HTTPS_IMAGE;
 
@@ -144,7 +144,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		if ($information_info) {
 			$data['title'] = $information_info['title'];
-			$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['description'] = html_entity_decode(by_text_move($information_info['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
 
 			$this->response->addHeader('X-Robots-Tag: noindex');
 			$this->response->setOutput($this->load->view('information/information_info', $data));
@@ -166,7 +166,7 @@ class Information extends \Opencart\System\Engine\Controller {
 
 		if ($information_info) {
 			$json['title'] = $information_info['title'];
-			$data['description'] = html_entity_decode($information_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['description'] = html_entity_decode(by_text_move($information_info['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
 			$json['view'] = $this->load->view('information/information_info', $data);
 			
 		}

@@ -17,7 +17,7 @@ class Latest extends \Opencart\System\Engine\Controller {
 		if ($results) {
 			foreach ($results as $result) {
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height']);
+					$image = $this->model_tool_image->resize(html_entity_decode(by_move($result['image']), ENT_QUOTES, 'UTF-8'), $setting['width'], $setting['height']);
 				} else {
 					$image = $this->model_tool_image->resize('placeholder.png', $setting['width'], $setting['height']);
 				}
@@ -44,7 +44,7 @@ class Latest extends \Opencart\System\Engine\Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'       => $image,
 					'name'        => $result['name'],
-					'description' => oc_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
+					'description' => oc_substr(trim(strip_tags(html_entity_decode(by_text_move($result['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'       => $price,
 					'special'     => $special,
 					'tax'         => $tax,

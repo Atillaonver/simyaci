@@ -45,6 +45,8 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['rating'] = (int)$query->row['rating'];
 			$product_data['reviews'] = $query->row['reviews'] ? $query->row['reviews'] : 0;
 
+			$product_data['description'] = by_text_move($product_data['description'], false,URL_IMAGE);
+
 			return $product_data;
 		} else {
 			return [];

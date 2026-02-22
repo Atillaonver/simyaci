@@ -246,6 +246,7 @@ class Topic extends \Opencart\System\Engine\Controller {
 
 			foreach ($results as $key => $result) {
 				$data['topic_description'][$key] = $result;
+				$data['topic_description'][$key]['description'] = by_text_move($result['description'], false, URL_IMAGE);
 
 				if ($result['image'] && is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
 					$data['topic_description'][$key]['thumb'] = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_default_width'), $this->config->get('config_image_default_height'));

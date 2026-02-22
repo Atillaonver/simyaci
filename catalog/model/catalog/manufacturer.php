@@ -3,7 +3,9 @@ namespace Opencart\Catalog\Model\Catalog;
 class Manufacturer extends \Opencart\System\Engine\Model {
 	public function getManufacturer(int $manufacturer_id = 0): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "manufacturer` m LEFT JOIN `" . DB_PREFIX . "manufacturer_to_store` m2s ON (m.`manufacturer_id` = m2s.`manufacturer_id`) WHERE m.`manufacturer_id` = '" . (int)$manufacturer_id . "' AND m2s.`store_id` = '" . (int)$this->config->get('config_store_id') . "'");
-
+		foreach ($query->row as $key => $value) {
+			$query->row[$key] = $key=='image'?by_move($value):$value;
+		}
 		return isset($query->row)?$query->row:[];
 	}
 

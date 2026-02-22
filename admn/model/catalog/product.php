@@ -14,7 +14,9 @@ class Product extends \Opencart\System\Engine\Model {
 
 		// Description
 		foreach ($data['product_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($value['description']) . "',`description_alt` = '" . $this->db->escape($value['description_alt']) . "',`bullet` = '" . $this->db->escape($value['bullet']) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$description = by_text_move($value['description'],true,URL_IMAGE);
+			$description_alt = by_text_move($value['description_alt'],true,URL_IMAGE);
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($description) . "',`description_alt` = '" . $this->db->escape($value['description_alt']) . "',`bullet` = '" . $this->db->escape($value['bullet']) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		// Categories
@@ -202,8 +204,8 @@ class Product extends \Opencart\System\Engine\Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($data['product_description'] as $language_id => $value) {
-			$description = by_text_move($value['description'],false,URL_IMAGE);
-			$description_alt = by_text_move($value['description_alt'],false,URL_IMAGE);
+			$description = by_text_move($value['description'],true,URL_IMAGE);
+			$description_alt = by_text_move($value['description_alt'],true,URL_IMAGE);
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($description) . "',`description_alt` = '" . $this->db->escape($description_alt) . "',`bullet` = '" . $this->db->escape($value['bullet']) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "',`meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 

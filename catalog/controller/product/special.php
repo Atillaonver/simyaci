@@ -90,8 +90,8 @@ class Special extends \Opencart\System\Engine\Controller {
 		$results = $this->model_catalog_product->getSpecials($filter_data);
 
 		foreach ($results as $result) {
-			if (is_file(DIR_IMAGE . html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'))) {
-				$image = $this->model_tool_image->resize(html_entity_decode($result['image'], ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
+			if (is_file(DIR_IMAGE . html_entity_decode(by_move($result['image']), ENT_QUOTES, 'UTF-8'))) {
+				$image = $this->model_tool_image->resize(html_entity_decode(by_move($result['image'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8'), $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 			} else {
 				$image = $this->model_tool_image->resize('placeholder.png', $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));
 			}

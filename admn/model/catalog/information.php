@@ -9,7 +9,8 @@ class Information extends \Opencart\System\Engine\Model {
 		$information_id = $this->db->getLastId();
 
 		foreach ($data['information_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "',`header` = '" . $this->db->escape($value['header']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$description = by_text_move($value['description'],true,URL_IMAGE);
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "',`header` = '" . $this->db->escape($value['header']) . "', `description` = '" . $this->db->escape($description) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
@@ -41,9 +42,9 @@ class Information extends \Opencart\System\Engine\Model {
 		$this->db->query("UPDATE `" . DB_PREFIX . "information` SET `sort_order` = '" . (int)$data['sort_order'] . "', `bottom` = '" . (isset($data['bottom']) ? (int)$data['bottom'] : 0) . "',`type_id` = '" . (isset($data['type_id']) ? (int)$data['type_id'] : 0) . "',`bimage` = '" . (isset($data['bimage']) ? $this->db->escape($data['bimage']) : '') . "',`timage` = '" . (isset($data['timage']) ? $this->db->escape($data['timage']) : '') . "',`fimage` = '" . (isset($data['fimage']) ? $this->db->escape($data['fimage']) : '') . "',`page_script` = '" . (isset($data['page_script']) ? $this->db->escape($data['page_script']) : '') . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "' WHERE `information_id` = '" . (int)$information_id . "'");
 
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "information_description` WHERE `information_id` = '" . (int)$information_id . "'");
-
 		foreach ($data['information_description'] as $language_id => $value) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "',`header` = '" . $this->db->escape($value['header']) . "', `description` = '" . $this->db->escape($value['description']) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$description = by_text_move($value['description'],true,URL_IMAGE);	
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "information_description` SET `information_id` = '" . (int)$information_id . "', `language_id` = '" . (int)$language_id . "', `title` = '" . $this->db->escape($value['title']) . "',`header` = '" . $this->db->escape($value['header']) . "', `description` = '" . $this->db->escape($description) . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 		
 		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;

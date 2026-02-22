@@ -10,5 +10,7 @@ if (is_file('config.php')) {
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
+require_once(DIR_OPENCART . 'develope/bytao.php');
+
 // Framework
 require_once(DIR_SYSTEM . 'framework.php');
