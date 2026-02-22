@@ -273,7 +273,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['filename'] = $this->url->link('product/product.download', 'language=' . $this->config->get('config_language') . '&brosur=' . $product_id);
 			}
 			
-			$data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
+			$data['description'] = html_entity_decode( by_text_move($product_info['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
 
 			if ($product_info['quantity'] <= 0) {
 				$this->load->model('localisation/stock_status');
@@ -348,7 +348,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['tax'] = false;
 			}
 
-			
+
 			$this->log->write([
 				'PRICE'   => $product_info['price'],
 				'CALC PRICE' => $data['price'],
