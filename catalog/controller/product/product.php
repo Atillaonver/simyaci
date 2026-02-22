@@ -348,6 +348,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['tax'] = false;
 			}
 
+			
 			$this->log->write([
 				'PRICE'   => $product_info['price'],
 				'CALC PRICE' => $data['price'],
