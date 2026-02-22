@@ -328,8 +328,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				}
 			}
 
-			$this->log->write('config_customer_price:'.print_r($this->config->get('config_customer_price'),TRUE));
-
+			
 			if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 				// her zaman vergi dahil fiyat
 				$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], true), $this->session->data['currency']);
@@ -337,6 +336,7 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['price'] = false;
 			}
 			
+			$this->log->write('product_info:'.print_r($product_info['price'],TRUE));
 			$this->log->write('price:'.print_r($data['price'],TRUE));
 
 			$data['simple_price'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
@@ -349,14 +349,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			}
 			
 			if ($this->config->get('config_tax')) {
-				//$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
-				$data['tax'] = $this->currency->format((float)$product_info['price'], $this->session->data['currency']);
+				$data['tax'] = $this->currency->format((float)$product_info['special'] ? $product_info['special'] : $product_info['price'], $this->session->data['currency']);
+				//$data['tax'] = $this->currency->format((float)$product_info['price'], $this->session->data['currency']);
 			} else {
 				$data['tax'] = false;
 			}
 			
 			$this->log->write('tax:'.print_r($data['tax'],TRUE));
 			
+
 			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
 			$data['discounts'] = [];
