@@ -332,10 +332,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			// her zaman vergi dahil fiyat göster (giriş şartı yok)
 			$data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], true), $this->session->data['currency']);
 			
-			file_put_contents(DIR_LOGS . 'product_debug.log',
-				date('Y-m-d H:i:s') . ' | product_price: ' . $product_info['price'] . ' | formatted: ' . $data['price'] . "\n",
-				FILE_APPEND);
-
 			$data['simple_price'] = $this->currency->format($product_info['price'], $this->session->data['currency']);
 
 			if ((float)$product_info['special']) {
@@ -351,12 +347,15 @@ class Product extends \Opencart\System\Engine\Controller {
 			} else {
 				$data['tax'] = false;
 			}
-			
-			file_put_contents(DIR_LOGS . 'product_debug.log',
-				date('Y-m-d H:i:s') . ' | tax: ' . print_r($data['tax'], true) . "\n",
-				FILE_APPEND);
-			
 
+			$this->log->write([
+				'PRICE'   => $product_info['price'],
+				'CALC PRICE' => $data['price'],
+				'SIMPLE PRICE'  => $data['simple_price'],
+				'TAX CLASS ID' => $product_info['tax_class_id'],
+				'TAX' => $this->config->get('config_tax')
+			], 0, 'PRICE_DEBUG');
+			
 			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
 			$data['discounts'] = [];

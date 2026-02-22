@@ -13,6 +13,7 @@ $_['text_guest']                          = 'Misafir Alışverişi';
 $_['text_return']                         = 'İadeler';
 $_['text_contact']                        = 'İletişim';
 $_['text_shipping']                       = 'Teslimat Adresi';
+$_['text_store']                          = 'Mağaza Adresi';
 $_['text_payment']                        = 'Fatura Adresi';
 $_['text_image']                          = 'Resimler';
 $_['text_image_size']                     = 'Resim Boyutları';

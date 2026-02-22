@@ -16,7 +16,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 		// Dashboard Extensions
 		$dashboards = [];
 
-		$uGId =$this->user->getGroupId();
+		$data['ADM'] =  $uGId =$this->user->getGroupId();
 		
 		$this->load->model('setting/extension');
 		// Get a list of installed modules
