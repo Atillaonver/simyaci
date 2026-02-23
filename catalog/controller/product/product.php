@@ -605,18 +605,10 @@ class Product extends \Opencart\System\Engine\Controller {
 					$seo = $this->model_design_seo_url->getSeoUrlByKeyValue('product_id',$product_info['product_id']);
 					$mask = basename($seo['keyword']).'.pdf';
 					
-					$this->log->write([
-						'MASKE'   => $mask,
-						'Keyword' => $seo['keyword'],
-						'product_id'  => $product_info['product_id'],
-						'brosur' => $brosur,
-						'file' => $file
-					], 0, 'BROSUR_DEBUG');
-
 					if (!headers_sent()) {
 						if (is_file($file)) {
 							header('Content-Type: application/octet-stream');
-							header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+							header('Content-Disposition: attachment; filename="' . $mask . '"');
 							header('Expires: 0');
 							header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 							header('Pragma: public');
