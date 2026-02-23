@@ -27,6 +27,7 @@ $_['entry_meta_description']  = 'Meta Açıklaması';
 $_['entry_store']             = 'Mağazalar';
 $_['entry_keyword']           = 'SEO Bağlantısı';
 $_['entry_parent']            = 'Ana Kategori';
+$_['entry_related']           = 'İlgili Kategoriler';
 $_['entry_filter']            = 'Filtreler';
 $_['entry_image']             = 'Resim';
 $_['entry_top']               = 'Üst';
