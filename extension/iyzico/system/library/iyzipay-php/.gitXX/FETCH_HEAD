@@ -1,0 +1,15 @@
+eccfa97465d78143dbe112886baeaf863619c074		branch 'master' of https://github.com/iyzico/iyzipay-php
+0fdfdf3e57e862d7b4b1b81e16503c5bc618c159	not-for-merge	branch 'feature-mdStatusAndSignature' of https://github.com/iyzico/iyzipay-php
+df0a95c3113739b946cb1e2fa0075ed8e78ba731	not-for-merge	branch 'feature-plusInstallmentUsage' of https://github.com/iyzico/iyzipay-php
+d94ad7d675a739b036e20db052feb07924361e12	not-for-merge	branch 'feature-shippingAmountExcluded' of https://github.com/iyzico/iyzipay-php
+1f16e828f07c27963f3230ad055fb495743f573c	not-for-merge	branch 'feature-withholdingTax' of https://github.com/iyzico/iyzipay-php
+24d59092cae791a41dea3bf12afc39f89235140f	not-for-merge	branch 'feyzullahdemir-patch-1' of https://github.com/iyzico/iyzipay-php
+9cefa1c33c8eaeaa73ed08319137a6d0ac7ab31a	not-for-merge	branch 'gitlab-ci-test' of https://github.com/iyzico/iyzipay-php
+c1dcbe4d750864800637eb011d4b512c9f337cf2	not-for-merge	branch 'ok-complete' of https://github.com/iyzico/iyzipay-php
+f6413c95c1e137857e3491e03b92cd4ff2269015	not-for-merge	branch 'ok-fixes' of https://github.com/iyzico/iyzipay-php
+ce4a4a9780af54717bdc48001559503445356198	not-for-merge	branch 'ok-pull-requests' of https://github.com/iyzico/iyzipay-php
+b28fbf5d46937cb32dc81924852bf8f3ee7b5fbe	not-for-merge	branch 'pecco_was_removed' of https://github.com/iyzico/iyzipay-php
+ce659e7def108cb4a52e44149f8a41df749c751b	not-for-merge	branch 'ramazanyetis-patch-1' of https://github.com/iyzico/iyzipay-php
+16b5f5380ca3a0edd388abb1be7396b2ba8ce422	not-for-merge	branch 'reportingPaymentIdSupport' of https://github.com/iyzico/iyzipay-php
+6aa951a573bf799d5702de1c0d82217febe8fe94	not-for-merge	branch 'subscription-card-update' of https://github.com/iyzico/iyzipay-php
+03f1cc84487c448db010161dfb0f2eebacb67c6d	not-for-merge	branch 'update_readme_file' of https://github.com/iyzico/iyzipay-php
