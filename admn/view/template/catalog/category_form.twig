@@ -204,6 +204,8 @@
                   
                 </div>
               </div>
+
+              {% if ADM == 1 %}
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">{{ entry_store }}</label>
                 <div class="col-sm-10">
@@ -216,7 +218,8 @@
                   </div>
                 </div>
               </div>
-              
+              {% endif %}
+
                <div class="row mb-3">
                 <label class="col-sm-2 control-label" for="input-stock-status">size Chart</label>
                 <div class="col-sm-10">

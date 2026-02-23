@@ -3,9 +3,9 @@ namespace Opencart\Admin\Model\Catalog;
 class Category extends \Opencart\System\Engine\Model {
 	
 	public function addCategory(array $data): int {
-		
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "',`ctype` = '" . (int)$data['ctype'] . "',`size_chart_id` = '" . (int)$data['size_chart_id'] . "',`material_id` = '" . (int)$data['material_id'] . "',`productcare_id` = '" . (int)$data['productcare_id'] . "',`measurement_id` = '" . (int)$data['measurement_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
 
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '" . (int)$data['parent_id'] . "', `top` = '" . (isset($data['top']) ? (int)$data['top'] : 0) . "', `column` = '" . (int)$data['column'] . "',`ctype` = '" . (int)$data['ctype'] . "',`size_chart_id` = '" . (int)$data['size_chart_id'] . "',`material_id` = '" . (int)$data['material_id'] . "',`productcare_id` = '" . (int)$data['productcare_id'] . "',`measurement_id` = '" . (int)$data['measurement_id'] . "', `sort_order` = '" . (int)$data['sort_order'] . "', `status` = '" . (bool)(isset($data['status']) ? $data['status'] : 0) . "', `date_modified` = NOW(), `date_added` = NOW()");
 		$category_id = $this->db->getLastId();
 
 		if (isset($data['image'])) {
@@ -49,7 +49,9 @@ class Category extends \Opencart\System\Engine\Model {
 			foreach ($data['category_store'] as $store_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "'");
 			}
-		}
+		}else{
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "'");
+		}	
 
 		// Seo urls on categories need to be done differently to they include the full keyword path
 		$parent_path = $this->getPath((int)$data['parent_id']);
@@ -61,7 +63,7 @@ class Category extends \Opencart\System\Engine\Model {
 		}
 
 		$this->load->model('design/seo_url');
-		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
+		
 
 		if (isset($data['category_seo_url'])) {
 			foreach ($data['category_seo_url'] as $language_id => $keyword) {
@@ -168,9 +170,9 @@ class Category extends \Opencart\System\Engine\Model {
 			}
 		}
 		
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");
-
+		
 		if (isset($data['category_store'])) {
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "category_to_store` WHERE `category_id` = '" . (int)$category_id . "'");
 			foreach ($data['category_store'] as $store_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '" . (int)$category_id . "', `store_id` = '" . (int)$store_id . "'");
 			}

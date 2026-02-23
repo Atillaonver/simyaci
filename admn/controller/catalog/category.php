@@ -454,6 +454,7 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['category_layout'] = [];
 		}
 		
+		$data['ADM'] = $uGId =$this->user->getGroupId();
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
