@@ -349,15 +349,6 @@ class Product extends \Opencart\System\Engine\Controller {
 				$data['tax'] = false;
 			}
 
-			$this->log->write([
-				'PRICE'   => $product_info['price'],
-				'CALC PRICE' => $data['price'],
-				'SIMPLE PRICE'  => $data['simple_price'],
-				'TAX CLASS ID' => $product_info['tax_class_id'],
-				'TAX' => $this->config->get('config_tax')
-			], 0, 'PRICE_DEBUG');
-			
-			
 			$discounts = $this->model_catalog_product->getDiscounts($product_id);
 
 			$data['discounts'] = [];
