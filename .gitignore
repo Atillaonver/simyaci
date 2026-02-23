@@ -33,5 +33,10 @@ image/catalog/*
 desktop.ini
 __MACOSX/
 **/__MACOSX/
+**/iyzipay-php_yedek/**
+
 **/iyzipay-php/samples/
 **/iyzipay-php/samples/**
+**/.git/
+**/.gitmodules
+**/.gitattributes
