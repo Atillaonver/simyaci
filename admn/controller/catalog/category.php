@@ -175,8 +175,8 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addStyle('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.css');
 		$this->document->addStyle('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/theme/monokai.css');
-		$this->document->addStyle('//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css');
-		$this->document->addScript('https://code.jquery.com/ui/1.13.2/jquery-ui.js');
+		//$this->document->addStyle('//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css');
+		//$this->document->addScript('https://code.jquery.com/ui/1.13.2/jquery-ui.js');
 		$this->document->addScript('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/codemirror.js');
 		$this->document->addScript('//cdnjs.cloudflare.com/ajax/libs/codemirror/3.20.0/mode/xml/xml.js');
 		$this->document->addScript('//cdnjs.cloudflare.com/ajax/libs/codemirror/2.36.0/formatting.js');
@@ -453,7 +453,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['category_layout'] = [];
 		}
-		
+
 		$data['ADM'] = $uGId =$this->user->getGroupId();
 		$data['user_token'] = $this->session->data['user_token'];
 

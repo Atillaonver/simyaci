@@ -21,7 +21,9 @@
           <ul class="nav nav-tabs">
             <li class="nav-item"><a href="#tab-general" data-bs-toggle="tab" class="nav-link active">{{ tab_general }}</a></li>
             <li class="nav-item"><a href="#tab-data" data-bs-toggle="tab" class="nav-link">{{ tab_data }}</a></li>
+            {% if ADM == 1 %}
             <li class="nav-item"><a href="#tab-design" data-bs-toggle="tab" class="nav-link">{{ tab_design }}</a></li>
+            {% endif %} 
           </ul>
           <div class="tab-content">
             <div id="tab-general" class="tab-pane tab-pane-top active">
@@ -341,7 +343,7 @@
                 </div>
               </div>
             </div>
-           
+           {% if ADM == 1 %}
             <div id="tab-design" class="tab-pane tab-pane-top">
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -367,6 +369,7 @@
                 </table>
               </div>
             </div>
+            {% endif %}
           </div>
           <input type="hidden" name="category_id" value="{{ category_id }}" id="input-category-id"/></form>
       </div>
@@ -376,10 +379,10 @@
 <script type="text/javascript"><!--
 
 // Category
-$('#related-category').autocomplete({
+$('#category_related').autocomplete({
     'source': function (request, response) {
         $.ajax({
-			url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request.term),
+			url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
@@ -391,27 +394,28 @@ $('#related-category').autocomplete({
             }
         });
     },
-	'select': function ( ui) {
-        $('#related-category').val('');
-        $('#related-category-' + ui.value).remove();
+	'select': function (ui) {
+    console.log(ui);  
+        $('#category_related').val('');
+        $('#category_related-' + ui.value).remove();
 
-        html = '<tr id="related-category-' + ui.value + '">';
-        html += '  <td>' + ui.label + '<input type="hidden" name="related_category[]" value="' + ui.value + '"/></td>';
+        html = '<tr id="category_related-' + ui.value + '">';
+        html += '  <td>' + ui.label + '<input type="hidden" name="category_related[]" value="' + ui.value + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
-        $('#related-category tbody').append(html);
+        $('#category_related tbody').append(html);
     }
 });
 
-$('#related-category').on('click', '.btn', function () {
+$('#category_related').on('click', '.btn', function () {
     $(this).parent().parent().remove();
 });
 
 $('#input-parent').autocomplete({
     'source': function (request, response) {
         $.ajax({
-            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request.term),
+            url: 'index.php?route=catalog/category.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 json.unshift({
@@ -438,7 +442,7 @@ $('#input-parent').autocomplete({
 $('#input-filter').autocomplete({
     'source': function (request, response) {
         $.ajax({
-			url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request.term),
+			url: 'index.php?route=catalog/filter.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
             dataType: 'json',
             success: function (json) {
                 response($.map(json, function (item) {
