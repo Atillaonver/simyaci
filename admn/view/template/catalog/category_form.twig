@@ -388,13 +388,13 @@ $('#related-category').autocomplete({
             }
         });
     },
-	'select': function (event, item) {
+	'select': function ( ui) {
         $('#related-category').val('');
 
-        $('#related-category-' + item['value']).remove();
+        $('#related-category-' + ui.value).remove();
 
-        html = '<tr id="related-category-' + item['value'] + '">';
-        html += '  <td>' + item['label'] + '<input type="hidden" name="related_category[]" value="' + item['value'] + '"/></td>';
+        html = '<tr id="related-category-' + ui.value + '">';
+        html += '  <td>' + ui.label + '<input type="hidden" name="related_category[]" value="' + ui.value + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
@@ -426,10 +426,10 @@ $('#input-parent').autocomplete({
             }
         });
     },
-    'select': function  (event, ui) {
+    'select': function ( ui) {
         
-        $('#input-parent').val(ui.item.label);
-        $('#input-parent-id').val(ui.item.value);
+        $('#input-parent').val(ui.label);
+        $('#input-parent-id').val(ui.value);
     }
 });
 
@@ -448,13 +448,13 @@ $('#input-filter').autocomplete({
             }
         });
     },
-	'select': function (event, item) {
+	'select':  function ( ui) {
         $('#input-filter').val('');
 
-        $('#category-filter-' + item['value']).remove();
+        $('#category-filter-' + ui.value).remove();
 
-        html = '<tr id="category-filter-' + item['value'] + '">';
-        html += '  <td>' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '"/></td>';
+        html = '<tr id="category-filter-' + ui.value + '">';
+        html += '  <td>' + ui.label + '<input type="hidden" name="category_filter[]" value="' + ui.value + '"/></td>';
         html += '  <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>';
         html += '</tr>';
 
