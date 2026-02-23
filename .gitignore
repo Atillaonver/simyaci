@@ -33,4 +33,5 @@ image/catalog/*
 desktop.ini
 __MACOSX/
 **/__MACOSX/
-
+**/iyzipay-php/samples/
+**/iyzipay-php/samples/**
