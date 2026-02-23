@@ -44,7 +44,7 @@ class Dashboard extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $dashboards);
 
-		// Split the array so the columns width is not more than 12 on each row.
+		// Split the array so the columns width is not more than 12 on each row. Bootstrap grid system
 		$width = 0;
 		$column = [];
 		$data['rows'] = [];

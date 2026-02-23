@@ -64,7 +64,8 @@ jobs:
             # Eğer FTP sizi direkt public_html içine atıyorsa burayı 'cd /' yapın.
             # Eğer FTP ana dizine (root) atıyorsa 'cd public_html' yapın.
             cd public_html; 
-            
+            #cd /;
+
             mirror -R deploy_temp/ ./;
             quit;
           "
