@@ -2,7 +2,9 @@
 namespace Opencart\Admin\Model\Catalog;
 class Filter extends \Opencart\System\Engine\Model {
 	public function addFilter(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `sort_order` = '" . (int)$data['sort_order'] . "'");
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
+
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "filter_group` SET `store_id` = '" . (int)$store_id . "', `sort_order` = '" . (int)$data['sort_order'] . "'");
 
 		$filter_group_id = $this->db->getLastId();
 
@@ -68,7 +70,8 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	public function getGroups(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` fg LEFT JOIN `" . DB_PREFIX . "filter_group_description` fgd ON (fg.`filter_group_id` = fgd.`filter_group_id`) WHERE fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
+		$sql = "SELECT * FROM `" . DB_PREFIX . "filter_group` fg LEFT JOIN `" . DB_PREFIX . "filter_group_description` fgd ON (fg.`filter_group_id` = fgd.`filter_group_id`) WHERE fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND fg.`store_id` = '" . (int)$store_id . "'";
 
 		$sort_data = [
 			'fgd.name',
@@ -117,13 +120,15 @@ class Filter extends \Opencart\System\Engine\Model {
 	}
 
 	public function getFilter(int $filter_id): array {
-		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "filter_group_description` fgd WHERE f.`filter_group_id` = fgd.`filter_group_id` AND fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` f LEFT JOIN `" . DB_PREFIX . "filter_description` fd ON (f.`filter_id` = fd.`filter_id`) WHERE f.`filter_id` = '" . (int)$filter_id . "' AND fd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;	
+		$query = $this->db->query("SELECT *, (SELECT `name` FROM `" . DB_PREFIX . "filter_group_description` fgd WHERE f.`filter_group_id` = fgd.`filter_group_id` AND fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` f LEFT JOIN `" . DB_PREFIX . "filter_description` fd ON (f.`filter_id` = fd.`filter_id`) WHERE f.`filter_id` = '" . (int)$filter_id . "' AND fd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND f.`store_id` = '" . (int)$store_id . "'");
 
 		return $query->row;
 	}
 
 	public function getFilters(array $data): array {
-		$sql = "SELECT *, (SELECT name FROM `" . DB_PREFIX . "filter_group_description` fgd WHERE f.`filter_group_id` = fgd.`filter_group_id` AND fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` f LEFT JOIN `" . DB_PREFIX . "filter_description` fd ON (f.`filter_id` = fd.`filter_id`) WHERE fd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
+		$sql = "SELECT *, (SELECT name FROM `" . DB_PREFIX . "filter_group_description` fgd WHERE f.`filter_group_id` = fgd.`filter_group_id` AND fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` f LEFT JOIN `" . DB_PREFIX . "filter_description` fd ON (f.`filter_id` = fd.`filter_id`) WHERE fd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND f.`store_id` = '" . (int)$store_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND fd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";

@@ -2,7 +2,8 @@
 namespace Opencart\Admin\Model\Catalog;
 class Download extends \Opencart\System\Engine\Model {
 	public function addDownload(array $data): int {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "', `date_added` = NOW()");
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;	
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "download` SET `store_id` = '" . (int)$store_id . "', `filename` = '" . $this->db->escape((string)$data['filename']) . "', `mask` = '" . $this->db->escape((string)$data['mask']) . "', `date_added` = NOW()");
 
 		$download_id = $this->db->getLastId();
 
@@ -29,13 +30,15 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	public function getDownload(int $download_id): array {
+		
 		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "download` d LEFT JOIN `" . DB_PREFIX . "download_description` dd ON (d.`download_id` = dd.`download_id`) WHERE d.`download_id` = '" . (int)$download_id . "' AND dd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
 		return $query->row;
 	}
 
 	public function getDownloads(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "download` d LEFT JOIN `" . DB_PREFIX . "download_description` dd ON (d.`download_id` = dd.`download_id`) WHERE dd.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;	
+		$sql = "SELECT * FROM `" . DB_PREFIX . "download` d LEFT JOIN `" . DB_PREFIX . "download_description` dd ON (d.`download_id` = dd.`download_id`) WHERE dd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND d.`store_id` = '" . (int)$store_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND dd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
@@ -88,7 +91,8 @@ class Download extends \Opencart\System\Engine\Model {
 	}
 
 	public function getTotalDownloads(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download`");
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;	
+		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "download` WHERE `store_id` = '" . (int)$store_id . "'");
 
 		return (int)$query->row['total'];
 	}
