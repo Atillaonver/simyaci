@@ -999,8 +999,8 @@ class Product extends \Opencart\System\Engine\Model {
 			
 			$product_description_data[$result['language_id']] = [
 				'name'             => $result['name'],
-				'description'      => by_text_move($result['description'],false,$this->session->data['store_path'] ),
-				'description_alt'  => by_text_move($result['description_alt'],false,$this->session->data['store_path'] ),
+				'description'      => by_text_move($result['description'],false,URL_IMAGE),
+				'description_alt'  => by_text_move($result['description_alt'],false,URL_IMAGE),
 				'bullet'      		=> $bullet_array,
 				'filename'      	=> $result['filename'],
 				'meta_title'       => $result['meta_title'],
