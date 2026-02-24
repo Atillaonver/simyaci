@@ -214,7 +214,9 @@
 								<button type="button" id="button-upload-{{ language.language_id }}" class="btn btn-primary uploadbutton">
 									<i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
 									<input type="text" name="product_description[{{ language.language_id }}][filename]" value="{{ product_description[language.language_id] ? product_description[language.language_id].filename }}" placeholder="{{ entry_pdf }}" id="input-filename-{{ language.language_id }}" class="form-control inputFilename"/>
-									<button type="button" id="button-download-{{ language.language_id }}" class="btn btn-outline-secondary downloadbutton"{% if not filename %} disabled{% endif %}>
+                  <button type="button" id="button-clear-{{ language.language_id }}" data-by-toggle="clear" data-by-target="input-filename-{{ language.language_id }}" class="btn btn-danger clearbutton"{% if not product_description[language.language_id].filename %} disabled{% endif %}>
+									<i class="fa-solid fa-trash"></i> {{ button_clear }}</button> 
+									<button type="button" id="button-download-{{ language.language_id }}" class="btn btn-outline-secondary downloadbutton"{% if not product_description[language.language_id].filename %} disabled{% endif %}>
 									<i class="fa-solid fa-download"></i> {{ button_download }}</button>
 							</div>
 							<div class="form-text">{{ help_filename }}</div>
