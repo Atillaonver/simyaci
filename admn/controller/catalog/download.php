@@ -451,12 +451,11 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
-			$extension = pathinfo($filename, PATHINFO_EXTENSION);
-			$_filename = explode(".", $filename);
-			$filename = by_seo_url($_filename[0]).".".$extension;	
+			$extension = pathinfo($this->request->files['file']['name'], PATHINFO_EXTENSION);
+			$original_name = pathinfo($this->request->files['file']['name'], PATHINFO_FILENAME);
+			$filename = by_seo_url($original_name) . "." . strtolower($extension);
 			$file = $filename . '.' . oc_token(32);
-
-			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
+move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 
 			$json['filename'] = $file;
 			$json['mask'] = $filename;
