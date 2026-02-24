@@ -451,6 +451,9 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 
 		if (!$json) {
+			$extension = pathinfo($filename, PATHINFO_EXTENSION);
+			$_filename = explode(".", $filename);
+			$filename = by_seo_url($_filename[0]).".".$extension;	
 			$file = $filename . '.' . oc_token(32);
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
