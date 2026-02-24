@@ -45,8 +45,8 @@ class Product extends \Opencart\System\Engine\Model {
 			$product_data['rating'] = (int)$query->row['rating'];
 			$product_data['reviews'] = $query->row['reviews'] ? $query->row['reviews'] : 0;
 
-			$product_data['description'] = by_text_move($product_data['description'], false,$this->config->get('config_url'));
-			$product_data['description_alt'] = by_text_move($product_data['description_alt'], false,$this->config->get('config_url'));
+			$product_data['description'] = by_catalog_text_move($product_data['description']);
+			$product_data['description_alt'] = by_catalog_text_move($product_data['description_alt']);
 
 			$raw_bullet = html_entity_decode($product_data['bullet'], ENT_QUOTES, 'UTF-8');
 			$product_data['bullet'] = explode("\x1F", $raw_bullet);
