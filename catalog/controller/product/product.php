@@ -275,6 +275,8 @@ class Product extends \Opencart\System\Engine\Controller {
 			
 
 			$data['description'] = html_entity_decode( by_text_move($product_info['description'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
+			$data['description_alt'] = html_entity_decode( by_text_move($product_info['description_alt'],false,URL_IMAGE), ENT_QUOTES, 'UTF-8');
+			$data['bullet'] = $product_info['bullet'];
 
 			if ($product_info['quantity'] <= 0) {
 				$this->load->model('localisation/stock_status');

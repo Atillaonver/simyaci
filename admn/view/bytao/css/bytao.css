@@ -296,6 +296,9 @@ button.process {
     background: transparent;
     border: 0;
     -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
     display: none;
 }
 
@@ -332,8 +335,6 @@ ol.productsort li.placeholder:before {
     position: absolute;
     overflow: auto;
 }
-
-.sort-span {}
 
 .sort-span-move {
     margin-top: -20px;
@@ -413,6 +414,9 @@ ol.productsort li.placeholder:before {
     width: 150px;
     margin: 0;
     -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .group-buttonT {
@@ -423,6 +427,9 @@ ol.productsort li.placeholder:before {
     width: 70px;
     margin: 0;
     -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .group-buttonIm {
@@ -433,6 +440,9 @@ ol.productsort li.placeholder:before {
     width: 70px;
     margin: 0;
     -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .btnI {
@@ -451,6 +461,9 @@ ol.productsort li.placeholder:before {
     line-height: 1.42857143;
     border-radius: 3px;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .btnT {
@@ -470,6 +483,9 @@ ol.productsort li.placeholder:before {
     line-height: 1.42857143;
     border-radius: 2px;
     -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .colorGroup {
@@ -633,14 +649,14 @@ table#product-category tr {
 
 #form-product ul.item-promo {
     list-style-type: none;
-    display: inline-block;
     float: left;
+    display: block;
     color: #ccc;
     padding-left: 1px;
     font-size: 1.2em;
     width: 30px;
     height: max-content;
-    float: left;
+    overflow: hidden;
 }
 
 #form-product ul.item-promo li {
@@ -854,13 +870,15 @@ a.nav-link.active {
 
 #alerter .modal-header,
 #staticBackdrop .modal-header {
-    height: 56px;
-    display: block;
-    opacity: 0.1;
-    font-size: 50px !important;
-    line-height: 61px;
-    vertical-align: middle;
-    padding: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    opacity: 1;
+    font-size: 32px !important;
+    line-height: 1;
+    padding: 0 15px;
+    border-bottom: 1px solid #dee2e6;
 }
 
 #alerter .modal-icon {
@@ -1143,6 +1161,7 @@ symbol#info-fill {
     background-color: #ff000030 !important;
     color: #666;
 }
+
 
 @media (min-width: 992px) {
 

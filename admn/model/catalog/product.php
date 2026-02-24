@@ -16,7 +16,11 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($data['product_description'] as $language_id => $value) {
 			$description = by_text_move($value['description'],true,URL_IMAGE);
 			$description_alt = by_text_move($value['description_alt'],true,URL_IMAGE);
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($description) . "',`description_alt` = '" . $this->db->escape($value['description_alt']) . "',`bullet` = '" . $this->db->escape($value['bullet']) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$bullet_string = "";
+			if (isset($value['bullet']) && is_array($value['bullet'])) {
+				$bullet_string = implode("\x1F", array_filter($value['bullet']));
+			}
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($description) . "',`description_alt` = '" . $this->db->escape($value['description_alt']) . "',`bullet` = '" . $this->db->escape($bullet_string) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "', `meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 		// Categories
@@ -206,7 +210,11 @@ class Product extends \Opencart\System\Engine\Model {
 		foreach ($data['product_description'] as $language_id => $value) {
 			$description = by_text_move($value['description'],true,URL_IMAGE);
 			$description_alt = by_text_move($value['description_alt'],true,URL_IMAGE);
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($description) . "',`description_alt` = '" . $this->db->escape($description_alt) . "',`bullet` = '" . $this->db->escape($value['bullet']) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "',`meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
+			$bullet_string = "";
+			if (isset($value['bullet']) && is_array($value['bullet'])) {
+				$bullet_string = implode("\x1F", array_filter($value['bullet']));
+			}
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "product_description` SET `product_id` = '" . (int)$product_id . "', `language_id` = '" . (int)$language_id . "', `name` = '" . $this->db->escape($value['name']) . "', `description` = '" . $this->db->escape($description) . "',`description_alt` = '" . $this->db->escape($description_alt) . "',`bullet` = '" . $this->db->escape($bullet_string) . "', `tag` = '" . (isset($value['tag'])?$this->db->escape($value['tag']):"") . "', `filename` = '" . (isset($value['filename'])?$this->db->escape($value['filename']):"") . "',`meta_title` = '" . $this->db->escape($value['meta_title']) . "', `meta_description` = '" . $this->db->escape($value['meta_description']) . "', `meta_keyword` = '" . $this->db->escape($value['meta_keyword']) . "'");
 		}
 
 
@@ -987,11 +995,13 @@ class Product extends \Opencart\System\Engine\Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_description` WHERE `product_id` = '" . (int)$product_id . "'");
 
 		foreach ($query->rows as $result) {
+			$bullet_array = !empty($result['bullet']) ? explode("\x1F", $result['bullet']) : [];
+			
 			$product_description_data[$result['language_id']] = [
 				'name'             => $result['name'],
 				'description'      => by_text_move($result['description'],false,URL_IMAGE),
 				'description_alt'  => by_text_move($result['description_alt'],false,URL_IMAGE),
-				'bullet'      		=> $result['bullet'],
+				'bullet'      		=> $bullet_array,
 				'filename'      	=> $result['filename'],
 				'meta_title'       => $result['meta_title'],
 				'meta_description' => $result['meta_description'],

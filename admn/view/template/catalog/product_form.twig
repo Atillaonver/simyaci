@@ -190,23 +190,32 @@
                         </div>
                       </div>
                     </div>
-                     <div class="row mb-3">
-                      <label for="input-bullet-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_bullet }}</label>
-                      <div class="col-sm-10">
-                        <div class="input-group">
-                          <div class="form-control h-100 p-0 border-0 rounded-0">
-                            <textarea rows="6" name="product_description[{{ language.language_id }}][bullet]" placeholder="{{ entry_bullet }}" id="input-bullet-{{ language.language_id }}" class="w-100 position-relative">{{ product_description[language.language_id] ? product_description[language.language_id].bullet }}</textarea>
-                          </div>
-                          {% if master_id %}
-                            <div class="input-group-text">
-                              <div class="form-check form-switch">
-                                <input type="checkbox" name="override[product_description_alt][{{ language.language_id }}][bullet]" value="1" id="input-variant-description-{{ language.language_id }}" data-oc-toggle="switch" data-oc-target="input-bullet-{{ language.language_id }}" class="form-check-input"{% if override.product_description[language.language_id].description %} checked{% endif %}/> <label for="input-variant-description-{{ language.language_id }}" class="form-check-label"></label>
-                              </div>
-                            </div>
-                          {% endif %}
-                        </div>
-                      </div>
-                    </div>
+                <div class="row mb-3">
+						<label for="input-bullet-text-{{ language.language_id }}" class="col-sm-2 col-form-label">{{ entry_bullet }}</label>
+						<div class="col-sm-10">
+							<div class="input-group">
+									<input type="text" placeholder="{{ entry_bullet }}"   id="input-bullet-text-{{ language.language_id }}" value=""  class="form-control"/>
+									<button type="button" id="button-add-{{ language.language_id }}" data-language-id="{{ language.language_id }}"   class="btn btn-outline-secondary addbullet">
+									<i class="fa-solid fa-circle-plus"></i> {{ button_add }}</button>
+							</div>
+              <div class="form-control p-0" style="height: 150px; overflow: auto;">
+                  <table id="bullet-table-{{ language.language_id }}" class="table table-sm m-0 bullet-table">
+                    <tbody>
+                      {% for bullet in product_description[language.language_id].bullet %}
+                        <tr>
+                          <td>{{ bullet }}<input type="hidden" name="product_description[{{ language.language_id }}][bullet][]" value="{{ bullet }}"/></td>
+                          <td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>  
+							<div class="form-text">{{ help_bullet }}</div>
+						</div>
+					</div>
+                </div>
+          
+
 					<div class="row mb-3 byUPP" data-Lid="{{ language.language_id }}">
 						<label for="input-filename" class="col-sm-2 col-form-label">{{ entry_pdf }}</label>
 						<div class="col-sm-10">
@@ -1774,6 +1783,23 @@
 </div>
 
 <script type="text/javascript"><!--
+
+  $('.addbullet').on('click', function (e) {
+    e.preventDefault();
+    var element = this;
+    
+    var language_id = $(element).data('language-id');
+    var bullet = $('#input-bullet-text-' + language_id).val();
+    
+    if (bullet) {
+      $('#bullet-table-' + language_id).append('<tr><td>' + bullet + '<input type="hidden" name="product_description[' + language_id + '][bullet][]" value="' + bullet + '"/></td><td class="text-end"><button type="button" class="btn btn-danger btn-sm"><i class="fa-solid fa-minus-circle"></i></button></td></tr>');
+      $('#input-bullet-text-' + language_id).val('');
+    }
+  });
+
+  $('.bullet-table').on('click', '.btn', function () {
+    $(this).parent().parent().remove();
+});
 
 	$('.uploadbutton').on('click', function () {
 		var element = this;

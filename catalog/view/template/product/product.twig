@@ -276,7 +276,20 @@
         </ul>
         <div class="tab-content">
 
-          <div id="tab-description" class="tab-pane fade show active mb-4">{{ description }}</div>
+          <div id="tab-description" class="tab-pane fade show active mb-4">
+          {{ description }}
+          {% if (description_alt) %}
+          <br>
+          {{ description_alt }}
+          {% endif %}
+          {% if (bullet) %}
+          <ul>
+          {% for bul in bullet %}
+          <li>{{ bul }}</li>
+          {% endfor %}
+          </ul>
+          {% endif %} 
+          </div>
 
           {% if attribute_groups %}
             <div id="tab-specification" class="tab-pane fade">

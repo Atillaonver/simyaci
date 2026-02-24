@@ -608,6 +608,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['product_description'] = [];
 		}
+			
 
 		if (!empty($product_info)) {
 			$data['model'] = $product_info['model'];
