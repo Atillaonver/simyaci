@@ -59,11 +59,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 	public function rewrite(string $link): string {
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
-		
-		
-		// Build the url
 		$url = '';
-
 		if ($url_info['scheme']) {
 			$url .= $url_info['scheme'];
 		}
@@ -79,11 +75,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 
 		parse_str($url_info['query'], $query);
-
-		// Start changing the URL query into a path
 		$paths = [];
-		
-		// Parse the query into its separate parts
 		$parts = explode('&', $url_info['query']);
 		$language='';
 		foreach ($parts as $part) {
@@ -131,7 +123,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 
 		array_multisort($sort_order, SORT_ASC, $paths);
 
-		// Build the path
 		$url .= str_replace('/index.php', '', $url_info['path']);
 		
 		foreach ($paths as $result) {
@@ -140,11 +131,9 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			}
 		}
 
-		// Rebuild the URL query
 		if ($query) {
 			$url .= '?' . str_replace(['%2F'], ['/'], http_build_query($query));
 		}
-		
 		return $url;
 	}
 }
