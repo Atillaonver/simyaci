@@ -428,7 +428,6 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                         $(element).button('reset');
                     },
                     success: function (json) {
-                        console.log(json);
 
                         if (json['error']) {
                             alertDivided(json['error'], 'danger');
@@ -441,11 +440,11 @@ $(document).on('click', '[data-oc-toggle=\'upload\']', function () {
                         if (json['code']) {
                             $($(element).attr('data-oc-target')).val(json['code']);
 
-                            $(element).parent().find('[data-oc-toggle=\'download\'], [data-oc-toggle=\'clear\']').prop('disabled', false);
+                            $(element).parent().find('[data-oc-toggle=\'download\'],[data-by-toggle=\'download\'], [data-oc-toggle=\'clear\'], [data-by-toggle=\'clear\']').prop('disabled', false);
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        alertDivided(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText, 'danger');
                     }
                 });
             }
@@ -481,6 +480,15 @@ $(document).on('click', '[data-oc-toggle=\'clear\']', function () {
     }
 
     $($(this).attr('data-oc-target')).val('');
+});
+
+$(document).on('click', '[data-by-toggle=\'clear\']', function (e) {
+    e.preventDefault();
+
+    $('#' + $(this).attr('data-by-target')).val('');
+    $(this).next().prop('disabled', true);
+    $(this).prop('disabled', true);
+
 });
 
 $(document).on('click', '[data-check-toggle]', function () {

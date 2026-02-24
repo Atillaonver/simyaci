@@ -211,7 +211,7 @@
 						<label for="input-filename" class="col-sm-2 col-form-label">{{ entry_pdf }}</label>
 						<div class="col-sm-10">
 							<div class="input-group">
-								<button type="button" id="button-upload-{{ language.language_id }}" class="btn btn-primary uploadbutton">
+								<button type="button" id="button-pdf-upload-{{ language.language_id }}" class="btn btn-primary uploadbutton">
 									<i class="fa-solid fa-upload"></i> {{ button_upload }}</button>
 									<input type="text" name="product_description[{{ language.language_id }}][filename]" value="{{ product_description[language.language_id] ? product_description[language.language_id].filename }}" placeholder="{{ entry_pdf }}" id="input-filename-{{ language.language_id }}" class="form-control inputFilename"/>
                   <button type="button" id="button-clear-{{ language.language_id }}" data-by-toggle="clear" data-by-target="input-filename-{{ language.language_id }}" class="btn btn-danger clearbutton"{% if not product_description[language.language_id].filename %} disabled{% endif %}>
@@ -1821,10 +1821,9 @@
 
 						if (json['success']) {
 							LID = $(element).parents('.byUPP').data("lid");
-							alert(LID)
 							$('#input-filename-'+LID).val(json['filename']);
-
 							$('#button-download-'+LID).prop('disabled', false);
+              $('#button-clear-'+LID).prop('disabled', false);
 						}
 					},
 					error: function (xhr, ajaxOptions, thrownError) {
