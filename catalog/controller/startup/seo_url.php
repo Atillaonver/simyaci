@@ -10,8 +10,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			$this->load->model('design/layout');
 			$this->load->model('localisation/language');
 			if (isset($this->request->get['_route_'])) {
-				//$this->log->write('_route_:'.print_r($this->request->get['_route_'],TRUE));
-				
 				$parts = explode('/', $this->request->get['_route_']);
 				if (oc_strlen(end($parts)) == 0) {
 					array_pop($parts);
@@ -36,7 +34,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
                 }
                 else
                 {
-                    	$this->request->get['route'] = $this->config->get('action_default');
+                    $this->request->get['route'] = $this->config->get('action_default');
                 }
                 
 				if (!isset($this->request->get['route'])) {
@@ -49,16 +47,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			} 
 			elseif(isset($this->request->get['route']))
 			{
-				//$this->log->write('route:'.print_r($this->request->get,TRUE));
 				$this->request->get['route'] = $this->request->get['route'];
 			} else {
-				
-				
-				$route = $this->model_design_layout->getRoute($this->config->get('config_layout_id'),$this->config->get('config_store_id'));
-				//$this->log->write('else Route:'.print_r($this->config->get('config_layout_id'),TRUE).'-'.print_r($this->config->get('config_layout_id'),TRUE));
-				//$this->log->write('else Route:'.print_r($this->config->get('config_store_id'),TRUE));
-				//$this->log->write('else Route:'.print_r($route,TRUE));
-				$this->request->get['route'] = $route;
+			$route = $this->model_design_layout->getRoute($this->config->get('config_layout_id'),$this->config->get('config_store_id'));
+			$this->request->get['route'] = $route;
 			}
 		}
 
