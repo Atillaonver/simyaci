@@ -128,7 +128,7 @@ class Filter extends \Opencart\System\Engine\Model {
 
 	public function getFilters(array $data): array {
 		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
-		$sql = "SELECT *, (SELECT name FROM `" . DB_PREFIX . "filter_group_description` fgd WHERE f.`filter_group_id` = fgd.`filter_group_id` AND fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` f LEFT JOIN `" . DB_PREFIX . "filter_description` fd ON (f.`filter_id` = fd.`filter_id`) WHERE fd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND f.`store_id` = '" . (int)$store_id . "'";
+		$sql = "SELECT *, (SELECT name FROM `" . DB_PREFIX . "filter_group_description` fgd WHERE f.`filter_group_id` = fgd.`filter_group_id` AND fgd.`language_id` = '" . (int)$this->config->get('config_language_id') . "') AS `group` FROM `" . DB_PREFIX . "filter` f LEFT JOIN `" . DB_PREFIX . "filter_description` fd ON (f.`filter_id` = fd.`filter_id`) LEFT JOIN `" . DB_PREFIX . "filter_group` fg ON (f.`filter_group_id` = fg.`filter_group_id`) WHERE fd.`language_id` = '" . (int)$this->config->get('config_language_id') . "' AND fg.`store_id` = '" . (int)$store_id . "'";
 
 		if (!empty($data['filter_name'])) {
 			$sql .= " AND fd.`name` LIKE '" . $this->db->escape((string)$data['filter_name'] . '%') . "'";
