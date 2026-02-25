@@ -67,7 +67,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 			$data['module_description'] = $module_info['module_description'];
 			foreach($data['module_description'] as $language_id => $values){
 				if (isset($values['description'])) { 
-					$data['module_description'][$language_id]['description'] = by_text_move($values['description'], true);
+					$data['module_description'][$language_id]['description'] = by_text_move($values['description'], false);
 				}
 			}
 		} else {
@@ -116,7 +116,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 			$this->load->model('setting/module');
 			foreach($this->request->post['module_description'] as $language_id => $values){
 				if (isset($values['description'])) { 
-					$this->request->post['module_description'][$language_id]['description'] = by_text_move($values['description'], false);
+					$this->request->post['module_description'][$language_id]['description'] = by_text_move($values['description'], true);
 				}
 			}
 
