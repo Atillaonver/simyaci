@@ -110,7 +110,7 @@ class HTML extends \Opencart\System\Engine\Controller {
 		if (!$json) {
 			$this->load->model('setting/module');
 			
-			$this->request->post['module_description'] = by_text_move($this->request->post['module_description'], true);
+			$this->request->post['module_description'] = by_text_move($this->request->post['module_description'], true,URL_IMAGE);
 
 			if (!$this->request->post['module_id']) {
 				$json['module_id'] = $this->model_setting_module->addModule('opencart.html', $this->request->post);
