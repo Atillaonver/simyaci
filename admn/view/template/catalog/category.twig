@@ -47,43 +47,38 @@ $(document).on('click','#form-category [data-bs-toggle=\'modalX\']', function (e
             }
         });
     });
-    
-$(document).on('click', '.btn-modal-trigger', function (e) {
+
+$(document).on('click', '.btn-order-trigger', function (e) {
     e.preventDefault();
     var element = this;
-    var targetUrl = $(element).attr('data-link');
-
-    // Varsa eski modalı DOM'dan tamamen temizle
+    
+    // 1. Önceki modal kalıntılarını temizle (Backdrop hatasını engeller)
     $('#modal-category-product-order').remove();
-    $('.modal-backdrop').remove(); // Kalan gölgeleri temizler
-    $('body').removeClass('modal-open').css('overflow', ''); // Body kilidini açar
+    $('.modal-backdrop').remove(); 
+    $('body').removeClass('modal-open').css('overflow', '');
 
     $.ajax({
-        url: targetUrl,
+        url: $(element).attr('data-link'),
         dataType: 'html',
-        beforeSend: function() {
-            $(element).prop('disabled', true).addClass('loading');
-        },
         success: function (html) {
-            $(element).prop('disabled', false).removeClass('loading');
-            
-            // 1. HTML'i body'e ekle
+            // 2. Yeni HTML'i ekle
             $('body').append(html);
             
-            // 2. DOM'a yeni eklenen modal elementini seç
-            var modalEl = document.getElementById('modal-category-product-order');
+            var modalElement = document.getElementById('modal-category-product-order');
             
-            // 3. Modalı başlat ve göster
-            var modalInstance = new bootstrap.Modal(modalEl, {
-                backdrop: 'static', // Dışarı tıklayınca kapanmasın (sıralama yaparken güvenli)
+            // 3. Modalı Manuel Başlat
+            var myModal = new bootstrap.Modal(modalElement, {
+                backdrop: 'static', // Yanlışlıkla dışarı tıklayıp sıralamayı kaybetmemek için
                 keyboard: true
             });
             
-            modalInstance.show();
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            $(element).prop('disabled', false);
+            myModal.show();
+
+            // 4. Modal açıldıktan sonra Sortable'ı tetikle
+            modalElement.addEventListener('shown.bs.modal', function () {
+                // Eğer sortable hala çalışmıyorsa burada tekrar initialize edebilirsin
+                if (typeof readyAll === "function") readyAll();
+            });
         }
     });
 });
