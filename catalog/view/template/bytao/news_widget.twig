@@ -1,0 +1,28 @@
+<section id="newsletter-subscribe-widget">
+	<div id="newsletter_{{ newsletter_module_id }}">
+			
+			<form id="form-newsletter" action="{{ action }}" method="post" data-oc-toggle="ajax">
+				<div class="w3-row w3-center">
+					<div class="wapper">
+						
+						<div class="input-form required">
+							<input type="email" name="email" id="input-email" value="" placeholder="{{ default_input_text }}" class="form-control input-md inputNew">
+							<div id="error-email" class="invalid-feedback"></div>
+						</div>
+						<div class="button-submit w3-padding-16">
+								<button type="submit" name="submitNewsletter" class="button-secondary">{{ button_subscribe }}</button>
+						</div>	
+						<input type="hidden" value="1" name="action">
+						<div class="description">{{ description  }}</div>
+						<div id="success-message" class="valid-feedback"></div>
+					</div>
+				</div>	
+			</form>
+			<div class="description">{{ social }} </div>
+
+	</div>
+
+	
+</section>
+
+
