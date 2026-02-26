@@ -32,9 +32,9 @@
 					            	 			<span class="sort-span-move float-start box-absolute">
 					            	 				<i class="fa fa-arrows-alt" title="Drag Drop"></i>
 					            	 			</span>
-					            	 			
+					            	 			{% if not product.quantity %}<span class="zero-qty">Tükendi</span>{% endif %}
 					                	 		<span class="sort-span-dot float-end {% if product.status ==1 %}green{% else %}red{% endif %} box-absolute">
-					                	 			<i class="fa fa-circle" title="{% if product.status == 1 %}Enabled{% else %}Disabled{% endif %}">{{ product.quantity }}</i>
+					                	 			<i class="fa fa-circle" title="{% if product.status == 1 %}Enabled{% else %}Disabled{% endif %}"></i>
 					                	 		</span>
 					            	 		</div>
 					            	 	</div>
