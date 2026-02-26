@@ -9,14 +9,14 @@
       <div class="modal-body">
 			<div class="tab-pane active" id="tab-{{ cat_id }}">
 				<form method="post" id="ajaxform{{ cat_id }}" class="form-horizontal">
-					<div id="list-preview" class="">
+					<aside class="sidebar bg-light border-end">
 						<div class="preview-container" id="preview-container"></div>
 						<div class="preview-management">
 							<span class="view-controls"><a href="#" class="by_control-set-view v1" data-cells="1" data-cells-mask="12" title="1/1"></a><a href="#" class="by_control-set-view v9" data-cells="9" data-cells-mask="12" title="1/2"></a><a class="by_control-set-view v2" href="#" data-cells="2" data-cells-mask="12" title="1/2"></a><a href="#" class="by_control-set-view  v3" data-cells="3" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v4" data-cells="4" data-cells-mask="12" title="1/3"></a><a class="by_control-set-view v5" href="#" data-cells="5" data-cells-mask="12" title="1/3"></a><a class="by_control-set-view v6" href="#" data-cells="6" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v7" data-cells="7" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v8" data-cells="8" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v10" data-cells="10" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v11" data-cells="11" data-cells-mask="12" title="1/3"></a><a href="#" class="by_control-set-view v12" data-cells="12" data-cells-mask="12" title="1/3"></a></span>
 						</div>
-					</div>
+					</aside>
 					
-						<div id="sortDiv" class="sortDiv">
+					<main class="content-area flex-grow-1">
 							<input type="hidden" name="cat_id" id="cat_id" value="{{ cat_id }}" />
 							<input type="hidden" name="typ" id="typ" value="{{ typ }}" />
 						    <ol id="productsort" class='productsort'>
@@ -50,7 +50,7 @@
 					               </li>
 					            {% endfor %}
 					        </ol>
-						</div>     
+						</main>     
 				</form>
     		</div>
 	</div>
