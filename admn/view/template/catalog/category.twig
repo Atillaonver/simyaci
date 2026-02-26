@@ -35,7 +35,7 @@ $(document).ready(function()
 $(document).on('click','#form-category [data-bs-toggle=\'modal\']', function (e) {
         e.preventDefault();
         var element = this;
-        $('#modal-list-order').remove();
+         $('#modal-category-product-order').remove();
         $.ajax({
             url: $(element).attr('data-link'),
             dataType: 'html',
