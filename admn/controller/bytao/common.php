@@ -253,6 +253,7 @@ class Common extends \Opencart\System\Engine\Controller {
 					'status'    => $result['status'],
 					'image'     => $image,
 					'name'      => $result['name'],
+					'quantity'      => $result['quantity'],
 					'model'     => $result['model']
 				];
 			}
