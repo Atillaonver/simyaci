@@ -32,6 +32,44 @@ $(document).ready(function()
 	{% endif %}
 });
 
+$(document).on('click', '#form-category [data-bs-toggle=\'modal\']', function (e) {
+    e.preventDefault();
+    var element = this;
+    var targetUrl = $(element).attr('data-link');
+
+    // 1. TAM TEMİZLİK (Hata buradaki kalıntılardan çıkıyor)
+    $('.modal-backdrop').remove(); // Eski karartmaları sil
+    $('#modal-category-product-order').remove(); // Eski modalı sil
+    $('body').removeClass('modal-open').css('overflow', ''); // Sayfa kilidini aç
+
+    $.ajax({
+        url: targetUrl,
+        dataType: 'html',
+        success: function (html) {
+            // 2. HTML'i ekle
+            $('body').append(html);
+
+            var modalEl = document.getElementById('modal-category-product-order');
+            
+            // 3. ÖNCE ÖRNEĞİ OLUŞTUR, SONRA GÖSTER
+            // getOrCreateInstance kullanarak çakışmayı önlüyoruz
+            var modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl, {
+                backdrop: 'static',
+                keyboard: true
+            });
+
+            modalInstance.show();
+
+            // 4. SORTABLE'I TETİKLE
+            modalEl.addEventListener('shown.bs.modal', function () {
+                if (typeof readyAll === 'function') {
+                    readyAll();
+                }
+            });
+        }
+    });
+});
+
 $(document).on('click','#form-category [data-bs-toggle=\'modalX\']', function (e) {
         e.preventDefault();
         var element = this;
@@ -48,7 +86,7 @@ $(document).on('click','#form-category [data-bs-toggle=\'modalX\']', function (e
         });
     });
 
-$(document).on('click', '.btn-order-trigger', function (e) {
+$(document).on('click', '.btn-order-triggerX', function (e) {
     e.preventDefault();
     var element = this;
     
