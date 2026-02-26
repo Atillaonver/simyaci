@@ -40,9 +40,8 @@ $(document).on('click','#form-category [data-bs-toggle=\'modal\']', function (e)
             url: $(element).attr('data-link'),
             dataType: 'html',
             success: function (html) {
-                //$('body').append(html);
-                //$('#modal-list-order').modal('show');
-                var element = document.querySelector('#modal-list-order');
+                $('body').append(html);
+                var element = document.querySelector('#modal-category-product-order');
                 var modal = new bootstrap.Modal(element);
                 modal.show();
             }
