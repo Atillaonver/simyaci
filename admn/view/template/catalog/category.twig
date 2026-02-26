@@ -32,7 +32,7 @@ $(document).ready(function()
 	{% endif %}
 });
 
-$(document).on('click','#form-category [data-bs-toggle=\'modal\']', function (e) {
+$(document).on('click','#form-category [data-bs-toggle=\'modalX\']', function (e) {
         e.preventDefault();
         var element = this;
          $('#modal-category-product-order').remove();
@@ -47,6 +47,46 @@ $(document).on('click','#form-category [data-bs-toggle=\'modal\']', function (e)
             }
         });
     });
+$(document).on('click', '.btn-modal-trigger', function (e) {
+    e.preventDefault();
+    var element = this;
+    var targetUrl = $(element).attr('data-link');
+
+    // Varsa eski modalı DOM'dan tamamen temizle
+    $('#modal-category-product-order').remove();
+    $('.modal-backdrop').remove(); // Kalan gölgeleri temizler
+    $('body').removeClass('modal-open').css('overflow', ''); // Body kilidini açar
+
+    $.ajax({
+        url: targetUrl,
+        dataType: 'html',
+        beforeSend: function() {
+            $(element).prop('disabled', true).addClass('loading');
+        },
+        success: function (html) {
+            $(element).prop('disabled', false).removeClass('loading');
+            
+            // 1. HTML'i body'e ekle
+            $('body').append(html);
+            
+            // 2. DOM'a yeni eklenen modal elementini seç
+            var modalEl = document.getElementById('modal-category-product-order');
+            
+            // 3. Modalı başlat ve göster
+            var modalInstance = new bootstrap.Modal(modalEl, {
+                backdrop: 'static', // Dışarı tıklayınca kapanmasın (sıralama yaparken güvenli)
+                keyboard: true
+            });
+            
+            modalInstance.show();
+        },
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            $(element).prop('disabled', false);
+        }
+    });
+});
+
 $(document).on('show.bs.modal','#modal-list-order', function (event) {
   var button = $(event.relatedTarget)
   var recipient = button.data('link')
