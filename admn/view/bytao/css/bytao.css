@@ -1,4 +1,20 @@
-/* Modal Body'nin ekran yüksekliğini hesaplaması gerekir */
+.zero-qty {
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+    font-size: 20px;
+    position: absolute;
+    margin-left: -4px;
+    margin-top: 31px;
+    -webkit-transform: rotate(-30deg);
+    -moz-transform: rotate(-30deg);
+    transform: rotate(-50deg);
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #7e111f45;
+    padding: 5px;
+    z-index: 2;
+}
+
 .modal-fullscreen .modal-body {
     height: calc(100vh - 56px);
     /* 56px standart modal-header yüksekliğidir */
