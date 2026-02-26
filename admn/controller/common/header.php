@@ -17,7 +17,7 @@ class Header extends \Opencart\System\Engine\Controller {
 		$data['uicss'] = 'https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css';
 		
 		//TODO byTAO added 
-		$data['bytao'] = 'view/bytao/css/bytao.css?v200';
+		$data['bytao'] = 'view/bytao/css/bytao.css?v201';
 		$data['bytaoJS'] = 'view/bytao/js/bytao.js?v100';
 
 		

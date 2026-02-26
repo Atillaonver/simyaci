@@ -22,35 +22,6 @@
     </div>
   </div>
 </div>
-<style>
-/* Modal Header Yüksekliği genelde 56px - 60px civarıdır */
-.modal-body {
-  height: calc(100vh - 61px); 
-  display: flex ! supremacy;
-}
-
-.sidebar-area {
-  width: 260px; /* İstediğin darlıkta ayarlayabilirsin */
-  flex-shrink: 0;
-  overflow-y: auto; /* İçerik uzarsa sadece bu kısım kayar */
-}
-
-.content-area {
-  overflow-y: auto; /* Sağ taraf bağımsız kayar */
-  background-color: #ffffff;
-}
-
-/* Scrollbar'ı daha modern yapmak istersen (Opsiyonel) */
-.sidebar-area::-webkit-scrollbar, 
-.content-area::-webkit-scrollbar {
-  width: 6px;
-}
-.sidebar-area::-webkit-scrollbar-thumb,
-.content-area::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 10px;
-}
-</style>
 <script type="text/javascript"><!--
 $(document).ready(function()
 {
