@@ -1,4 +1,29 @@
-/* Modal Header Yüksekliği genelde 56px - 60px civarıdır */
+/* Modal Body'nin ekran yüksekliğini hesaplaması gerekir */
+.modal-fullscreen .modal-body {
+    height: calc(100vh - 56px);
+    /* 56px standart modal-header yüksekliğidir */
+}
+
+/* Formun body içine tam oturması için */
+#ajaxform {
+        {
+        cat_id
+    }
+}
+
+    {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* Panellerin bağımsız kaydırılması için */
+.sidebar,
+.content-area {
+    height: 100%;
+    overflow-y: auto;
+}
+
 .modal-body {
     height: calc(100vh - 61px);
     display: flex ! supremacy;
