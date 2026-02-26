@@ -6,8 +6,7 @@
         <h5 class="modal-title">{{ title }} </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-      <div class="modal-body">
-			<div class="tab-pane active d-flex p-0 overflow-hidden" id="tab-{{ cat_id }}">
+      <div class="modal-body d-flex p-0 overflow-hidden">
 				<form method="post" id="ajaxform{{ cat_id }}" class="form-horizontal">
 					<aside class="sidebar bg-light border-end">
 						<div class="preview-container" id="preview-container"></div>
@@ -52,8 +51,7 @@
 					        </ol>
 						</main>     
 				</form>
-    		</div>
-	</div>
+		</div>
 
 		<script>
 
