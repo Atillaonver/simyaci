@@ -248,12 +248,19 @@ class Common extends \Opencart\System\Engine\Controller {
 				{
 					$image = $this->model_tool_image->resize('no_image.png', 200, 200);
 				}
+
+				if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				} else {
+					$price = false;
+				}
+
 				$products[] = [
 					'product_id'=> $result['product_id'],
 					'status'    => $result['status'],
 					'image'     => $image,
 					'name'      => $result['name'],
-					'price'     => $result['price'],
+					'price'     => $price,
 					'quantity'  => $result['quantity'],
 					'model'     => $result['model']
 				];
