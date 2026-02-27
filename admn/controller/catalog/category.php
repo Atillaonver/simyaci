@@ -56,18 +56,18 @@ class Category extends \Opencart\System\Engine\Controller {
 
 	protected function getList(): string {
 		
-		$this->document->addStyle('view/bytao/css/products.css?v18');
+		$this->document->addStyle('view/bytao/css/products.css?v19');
 		
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'p2c.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
-			$order = 'ASC';
+			$order = 'DESC';
 		}
 
 		if (isset($this->request->get['page'])) {
