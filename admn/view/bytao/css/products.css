@@ -676,6 +676,10 @@ a.by_active {
 	right: 24px;
 }
 
+.sort-span-price {
+	margin-right: 25px;
+}
+
 .box-relative {
 	position: relative;
 }
