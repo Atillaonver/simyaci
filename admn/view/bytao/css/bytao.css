@@ -294,48 +294,6 @@ button.process {
     margin-top: -2px;
 }
 
-body.dragging,
-body.dragging * {
-    cursor: move !important;
-}
-
-.dragged {
-    position: absolute;
-    opacity: 0.5;
-    z-index: 2000;
-}
-
-ol.productsort li.placeholder {
-    position: relative;
-    /** More li styles **/
-}
-
-ol.productsort li.placeholder:before {
-    position: absolute;
-    /** Define arrowhead **/
-}
-
-.productsort img {
-    border: none !important;
-}
-
-.sort-div {
-    position: absolute;
-    overflow: auto;
-}
-
-.sort-span-move {
-    margin-top: -20px;
-    margin-left: -18px;
-    cursor: move;
-}
-
-.sort-span-dot {
-    margin-top: -22px;
-    margin-right: -18px;
-    opacity: 0.3;
-}
-
 .red {
     color: #ff0000;
 }

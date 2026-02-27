@@ -1,3 +1,16 @@
+body.dragging,
+body.dragging * {
+	cursor: move !important;
+}
+
+.dragged {
+	position: absolute;
+	opacity: 0.5;
+	z-index: 2000;
+}
+
+
+
 .zero-qty {
 	border-top: solid 1px;
 	border-bottom: solid 1px;
@@ -143,7 +156,8 @@ span.td-pid {
 	margin-bottom: 25px;
 }
 
-#sortable {
+#sortable,
+#productsort {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
@@ -157,6 +171,37 @@ span.td-pid {
 	-ms-user-select: none;
 	/* IE 10+ */
 	user-select: none;
+}
+
+ol.productsort li.placeholder {
+	position: relative;
+	/** More li styles **/
+}
+
+ol.productsort li.placeholder:before {
+	position: absolute;
+	/** Define arrowhead **/
+}
+
+.productsort img {
+	border: none !important;
+}
+
+.sort-div {
+	position: absolute;
+	overflow: auto;
+}
+
+.sort-span-move {
+	margin-top: -20px;
+	margin-left: -18px;
+	cursor: move;
+}
+
+.sort-span-dot {
+	margin-top: -22px;
+	margin-right: -18px;
+	opacity: 0.3;
 }
 
 #sortable li {
