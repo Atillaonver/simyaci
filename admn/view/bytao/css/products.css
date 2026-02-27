@@ -44,7 +44,7 @@ body.dragging * {
 	overflow-y: auto;
 }
 
-.modal-body {
+.modal-fullscreen .modal-body {
 	height: calc(100vh - 61px);
 	display: flex !important;
 }
