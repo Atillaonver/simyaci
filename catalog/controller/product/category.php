@@ -27,7 +27,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'p.quantity';
+			$sort = 'p2c.sort_order';
 		}
 
 		if (isset($this->request->get['order'])) {
