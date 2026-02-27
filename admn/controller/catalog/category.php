@@ -56,7 +56,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 	protected function getList(): string {
 		
-		$this->document->addStyle('view/bytao/css/products.css?v14');
+		$this->document->addStyle('view/bytao/css/products.css?v15');
 		
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
