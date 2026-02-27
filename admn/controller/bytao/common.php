@@ -250,7 +250,7 @@ class Common extends \Opencart\System\Engine\Controller {
 				}
 
 				
-				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')), $this->session->data['currency']);
+				$price = $this->currency->format($result['price'], $this->config->get('config_currency'));
 				
 
 				$products[] = [
