@@ -43,8 +43,10 @@
 					            	 		<div class="box-relative">
 					            	 			<span class="sort-span-move float-start box-absolute">
 					            	 				<i class="fa fa-arrows-alt" title="Drag Drop"></i>
-													{{ product.price }}
 					            	 			</span>
+												<span class="sort-span-price float-end box-absolute">
+													{{ product.price }}
+												</span>	
 					            	 			{% if not product.quantity %}<span class="zero-qty">Tükendi</span>{% endif %}
 					                	 		<span class="sort-span-dot float-end {% if product.status ==1 %}green{% else %}red{% endif %} box-absolute">
 					                	 			<i class="fa fa-circle" title="{% if product.status == 1 %}Enabled{% else %}Disabled{% endif %}"></i>
