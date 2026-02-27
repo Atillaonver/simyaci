@@ -70,11 +70,6 @@ span.td-pid {
 	transform: rotate(90deg);
 }
 
-
-
-
-
-
 .sort-order-content {
 	display: flex;
 }
@@ -493,7 +488,7 @@ a.by_active {
 .preview-container {
 	position: relative;
 	width: 180px;
-	height: 500px;
+	height: calc(100vh - 100px);
 	margin-top: 10px;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -529,7 +524,7 @@ a.by_active {
 
 .preview-management {
 	width: 40px;
-	height: 500px;
+	height: calc(100vh - 100px);
 	background-color: #f2f1f2;
 	display: inline-block;
 	text-align: center;
