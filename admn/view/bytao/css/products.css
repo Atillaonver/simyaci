@@ -149,6 +149,7 @@ span.td-pid {
 	padding: 0;
 	margin-left: 9%;
 	margin-right: 9%;
+	height: calc(100vh - 100px);
 	-webkit-user-select: none;
 	/* Chrome all / Safari all */
 	-moz-user-select: none;
@@ -475,7 +476,7 @@ a.by_active {
 }
 
 #modal-list-order #sortDiv {
-	height: 500px;
+	height: calc(100vh - 100px);
 	overflow-y: auto;
 	display: inline-block;
 	width: 76%;
