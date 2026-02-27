@@ -288,7 +288,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 			$data['sorts'][] = [
 				'text'  => $this->language->get('text_default'),
-				'value' => 'p.sort_order-ASC',
+				'value' => 'p2c.sort_order-ASC',
 				'href'  => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&sort=p.sort_order&order=ASC' . $url)
 			];
 
