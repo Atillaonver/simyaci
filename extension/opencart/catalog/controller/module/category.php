@@ -22,6 +22,12 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['child_id'] = 0;
 		}
 		
+		if (isset($parts[2])) {
+			$data['child2_id'] = $parts[2];
+		} else 	{
+			$data['child2_id'] = 0;
+		}
+		
 		if ($this->customer->isLogged()) {
 			$groupId = $this->customer->getGroupId();
 		}else{
@@ -56,7 +62,7 @@ class Category extends \Opencart\System\Engine\Controller {
 							foreach ($_child2 as $child2) {
 								$filter_data2 = [
 									'filter_category_id'  => $child2['category_id'], 
-									'filter_sub_category' => false
+									'filter_sub_category' => true
 								];	
 								$children2[] = [
 									'category_id' => $child2['category_id'],
