@@ -33,11 +33,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		}else{
 			$groupId =0;
 		}
-$this->log->write([
-				'child2_id' => $data['child2_id'],
-				'child_id' => $data['child_id'],
-				'category_id' => $data['category_id']
-			], 0, 'CATEGORY_DEBUG');
+
 
 		$this->load->model('catalog/category');
 		
@@ -159,6 +155,12 @@ $this->log->write([
 			$data['categories']  = $menu_data;
 		}
 
+		$this->log->write([
+									'child2_id' => $data['child2_id'],
+									'child_id' => $data['child_id'],
+									'category_id' => $data['category_id'],	
+									'categories' => $data['categories']
+								], 0, 'CATEGORY_DEBUG');	
 
 		return $this->load->view('extension/opencart/module/category', $data);
 	}
