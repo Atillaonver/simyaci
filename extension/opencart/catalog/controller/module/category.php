@@ -54,10 +54,14 @@ class Category extends \Opencart\System\Engine\Controller {
 						if ($child['category_id'] == $data['child_id']) {
 							$_child2 =  $this->model_catalog_category->getCategories($data['child_id']);
 							foreach ($_child2 as $child2) {
+								$filter_data2 = [
+									'filter_category_id'  => $child2['category_id'], 
+									'filter_sub_category' => false
+								];	
 								$children2[] = [
 									'category_id' => $child2['category_id'],
 									'name'        => $child2['name'],
-									'name_count'  => $child2['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+									'name_count'  => $child2['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data2) . ')' : ''),
 									'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'] . '_' . $child['category_id'] . '_' . $child2['category_id'])
 								];
 							}
