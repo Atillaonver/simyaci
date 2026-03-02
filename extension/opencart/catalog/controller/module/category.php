@@ -41,8 +41,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			$categories = $this->model_catalog_category->getCategories(0);
 			foreach ($categories as $category) {
 				$children_data = [];
-
-				//if ($category['category_id'] == $data['category_id']) {
 					$children = $this->model_catalog_category->getCategories($category['category_id']);
 
 					foreach ($children as $child) {
@@ -51,17 +49,28 @@ class Category extends \Opencart\System\Engine\Controller {
 							'filter_sub_category' => true
 						];
 
+						$children2 = [];	
+						
+						if ($child['category_id'] == $data['child_id']) {
+							$_child2 =  $this->model_catalog_category->getCategories($data['child_id']);
+							foreach ($_child2 as $child2) {
+								$children2[] = [
+									'category_id' => $child2['category_id'],
+									'name'        => $child2['name'],
+									'name_count'  => $child2['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
+									'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'] . '_' . $child['category_id'] . '_' . $child2['category_id'])
+								];
+							}
+						}
 						$children_data[] = [
 							'type'	=> '0',
 							'category_id' => $child['category_id'],
 							'name'        => $child['name'],
 							'name_count'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
-							
+							'children2'   => $children2,
 							'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'] . '_' . $child['category_id'])
 						];
 					}
-				//}
-
 				$filter_data = [
 					'filter_category_id'  => $category['category_id'],
 					'filter_sub_category' => true
