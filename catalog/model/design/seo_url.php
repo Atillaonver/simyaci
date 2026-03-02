@@ -12,7 +12,7 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$language_id = $language_id <> 0 ?$language_id:(int)$this->config->get('config_language_id') ;
 		
 		if($key == 'path'){
-			$SQL = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $value . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `language_id` = '" . (int)$language_id . "' LIMIT 1";
+			$SQL = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '%" . $this->db->escape($key) . "' AND `value` LIKE '" . $value . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `language_id` = '" . (int)$language_id . "' LIMIT 1";
 		}else{
 			$SQL = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` = '" . $this->db->escape($value) . "' AND `store_id` = '" . (int)$this->config->get('config_store_id') . "' AND `language_id` = '" . (int)$language_id . "' ";
 		}
