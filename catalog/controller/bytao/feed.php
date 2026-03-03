@@ -401,7 +401,7 @@ class Feed extends \Opencart\System\Engine\Controller {
 
 		$products = $this->model_catalog_product->getProducts();
 
-		$this->log->write('PRODUCTS: ' . print_r($products, true));
+		//$this->log->write('PRODUCTS: ' . print_r($products, true));
 
 		foreach ($products as $product) {
 			if (!in_array($product['product_id'], $product_data) && $product['description']) {

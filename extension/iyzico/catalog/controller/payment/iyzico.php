@@ -185,7 +185,13 @@
 			
 			try {
 				
-				//$this->log->write('Iyzico:'.$webhook.' -> '.print_r( $_REQUEST,TRUE));
+				$this->log->write([
+				'PRICE'   => $webhook,
+				'CALC PRICE' => $webhookPaymentConversationId,
+				'SIMPLE PRICE'  => $webhookToken,
+				'TAX CLASS ID' => $webhookIyziEventType,
+				'TAX' => $_REQUEST
+			], 2, 'PRICE_DEBUG');
 				
 				$this->load->language('extension/iyzico/payment/iyzico');
 
