@@ -173,7 +173,13 @@
 			
 			$response = \Iyzipay\Model\CheckoutFormInitialize::create($iyzico, $options);
 			$data['checkoutFormType']    = $this->config->get('payment_iyzico_design');
-			$this->log->write('$response:'.print_r($response,TRUE));
+			
+
+			$this->log->write([
+				'response' => $response,
+				'iyzico' => $iyzico,
+			], 1, 'IYZICO_DEBUG');	
+
 			$data['checkoutFormContent'] = $response->getCheckoutFormContent();
 			
 			return $this->load->view('extension/iyzico/payment/iyzico_form', $data);
@@ -244,7 +250,13 @@
 
 				$request_response = \Iyzipay\Model\CheckoutForm::retrieve($detail_object, $options);
 				if ($webhook == "webhook" && $webhookIyziEventType != 'CREDIT_PAYMENT_AUTH' && $request_response->getStatus() == 'failure') {
-					//$this->log->write('Iyzico:'.print_r( $request_response->getErrorMessage(),TRUE));
+					$this->log->write([
+						'request_response' => $request_response,
+						'webhookIyziEventType' => $webhookIyziEventType,
+						'webhookPaymentConversationId' => $webhookPaymentConversationId,
+						'webhookToken'  => $webhookToken,	
+					], 1, 'IYZICO_DEBUG');
+
 					return $this->webhookHttpResponse("errorCode: " . $request_response->getErrorCode() . " - " . $request_response->getErrorMessage(), 404);
 				}
 
@@ -369,13 +381,25 @@
 			} catch (\Exception $e) {
 				if ($webhook == 'webhook') {
 					$errorMessage=$request_response->getErrorMessage() !== null ? $request_response->getErrorMessage() : $e->getMessage();
-					$this->log->write('Iyzico:357'.$webhook.' -> '.print_r( $errorMessage,TRUE));
+					$this->log->write([
+						'request_response' => $request_response,
+						'webhookIyziEventType' => $webhookIyziEventType,
+						'webhook' => $webhook,
+						'webhookToken'  => $e,	
+					], 1, 'IYZICO_ERROR Iyzico:357');	
+
 					return $this->webhookHttpResponse("errorCode: " . $request_response->getErrorCode() . " - " . $request_response->getErrorMessage(), 404);
 				}
 				
 				$errorMessage=$request_response->getErrorMessage() !== null ? $request_response->getErrorMessage() : $e->getMessage();
 				$this->session->data['iyzico_error_message'] = $errorMessage;
-				$this->log->write('Iyzico:360'.$webhook.' -> '.print_r( $errorMessage,TRUE));
+				$this->log->write([
+					'request_response' => $request_response,
+					'webhookIyziEventType' => $webhookIyziEventType,
+					'webhook' => $webhook,
+					'webhookToken'  => $e,	
+				], 1, 'IYZICO_ERROR Iyzico:360');
+				
 				return $this->response->redirect($this->url->link('extension/iyzico/payment/iyzico.errorpage'));
 			}
 
