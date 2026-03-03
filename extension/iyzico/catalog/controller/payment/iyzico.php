@@ -191,7 +191,7 @@
 				'SIMPLE PRICE'  => $webhookToken,
 				'TAX CLASS ID' => $webhookIyziEventType,
 				'TAX' => $_REQUEST
-			], 2, 'PRICE_DEBUG');
+			], 1, 'PRICE_DEBUG');
 				
 				$this->load->language('extension/iyzico/payment/iyzico');
 
