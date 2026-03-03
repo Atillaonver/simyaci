@@ -186,12 +186,12 @@
 			try {
 				
 				$this->log->write([
-				'PRICE'   => $webhook,
-				'CALC PRICE' => $webhookPaymentConversationId,
-				'SIMPLE PRICE'  => $webhookToken,
-				'TAX CLASS ID' => $webhookIyziEventType,
-				'TAX' => $_REQUEST
-			], 1, 'PRICE_DEBUG');
+					'PRICE'   => $webhook,
+					'CALC PRICE' => $webhookPaymentConversationId,
+					'SIMPLE PRICE'  => $webhookToken,
+					'TAX CLASS ID' => $webhookIyziEventType,
+					'TAX' => $_REQUEST
+				], 1, 'PRICE_DEBUG');
 				
 				$this->load->language('extension/iyzico/payment/iyzico');
 
@@ -252,9 +252,15 @@
 				if ($webhook == "webhook") {
 					
 					$order_id = $request_response->getBasketId();
-					//$this->log->write('Iyzico:249'.$webhook.' -> '.print_r( $order_id,TRUE));
 					$this->model_checkout_order->getOrder($order_id);
-					
+					$this->log->write([
+						'order_id'   => $order_id,
+						'webhookPaymentConversationId' => $webhookPaymentConversationId,
+						'webhookToken'  => $webhookToken,
+						'webhookIyziEventType' => $webhookIyziEventType,
+						'request_response' => $request_response
+					], 1, 'CALLBACK_DEBUG');
+
 					if ($webhookIyziEventType == 'CREDIT_PAYMENT_AUTH' && $request_response->getPaymentStatus() == 'PENDING_CREDIT') {
 						$orderMessage = 'Alışveriş kredisi başvurusu sürecindedir.';
 						$this->model_checkout_order->addHistory($request_response->getBasketId(), 1, $orderMessage);
