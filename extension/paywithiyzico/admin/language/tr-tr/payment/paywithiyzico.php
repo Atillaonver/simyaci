@@ -53,3 +53,5 @@
 	$_['new_version_name']              = 'Yeni Sürümünüz:';
 	$_['description_name']              = 'Açıklama:';
 	$_['pwi_module_setting_logo']       = 'paywithiyzico';
+
+	

@@ -185,6 +185,11 @@
 		}
 
 
+		/**
+		 * iyzico extension: getCallBack methods
+		 *
+		 * @return void
+		 */
 		public function getCallBack()
 		{
 			try {

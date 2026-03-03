@@ -104,7 +104,7 @@
 			}
 		}
 
-
+		
 		/**
 		 * iyzico extension: index methods
 		 *

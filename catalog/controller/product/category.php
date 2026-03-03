@@ -128,10 +128,10 @@ class Category extends \Opencart\System\Engine\Controller {
 			}
 
 			// Set the last category breadcrumb
-			/*$data['breadcrumbs'][] = [
+			$data['breadcrumbs'][] = [
 				'text' => $category_info['name'],
 				'href' => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . $url)
-			];*/
+			];
 
 			$data['heading_title'] = $category_info['name'];
 

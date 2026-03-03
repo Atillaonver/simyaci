@@ -155,13 +155,6 @@ class Category extends \Opencart\System\Engine\Controller {
 			$data['categories']  = $menu_data;
 		}
 
-		$this->log->write([
-									'child2_id' => $data['child2_id'],
-									'child_id' => $data['child_id'],
-									'category_id' => $data['category_id'],	
-									'categories' => $data['categories']
-								], 0, 'CATEGORY_DEBUG');	
-
 		return $this->load->view('extension/opencart/module/category', $data);
 	}
 }

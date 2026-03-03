@@ -31,6 +31,7 @@
 			) ENGINE=MyISAM DEFAULT COLLATE=utf8_general_ci;");
 		}
 
+		
 		public function uninstall()
 		{
 			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "iyzico_order`;");
