@@ -397,9 +397,11 @@ class Feed extends \Opencart\System\Engine\Controller {
 
 		$this->load->model('tool/image');
 
-		$product_data = array();
+		$product_data = [];
 
 		$products = $this->model_catalog_product->getProducts();
+
+		$this->log->write('PRODUCTS: ' . print_r($products, true));
 
 		foreach ($products as $product) {
 			if (!in_array($product['product_id'], $product_data) && $product['description']) {
@@ -503,6 +505,7 @@ class Feed extends \Opencart\System\Engine\Controller {
 
 		$this->response->addHeader('Content-Type: application/xml');
 		$this->response->setOutput($output);
+
 	}
 
 	public function yandex()
