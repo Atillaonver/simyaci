@@ -30,6 +30,7 @@ admn/language/*
 catalog/language/*
 image/cache/*
 image/catalog/*
+image/img/*
 desktop.ini
 __MACOSX/
 **/__MACOSX/
