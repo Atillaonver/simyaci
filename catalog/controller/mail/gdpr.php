@@ -76,6 +76,11 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 			$mail->setSubject(sprintf($this->language->get('text_subject'), $store_name));
 			$mail->setHtml($this->load->view('mail/gdpr', $data));
 			$mail->send();
+			$this->log->write([
+				'from'   => $this->config->get('config_email'),
+				'to' => $email,
+				'subject'  => sprintf($this->language->get('text_subject'), $store_name)
+			], 2, 'GDPR_MAIL');			
 		}
 	}
 

@@ -364,10 +364,15 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setHtml($this->load->view('mail/order_invoice', $data));
 			if ($data['contract_link']) {
 				$dir = DIR_PDF."contracts/satis-sozlesmesi-".$order_info['order_id']."-{$token}.pdf";
-				$this->log->write('contract_link:'.$dir);
+				//$this->log->write('contract_link:'.$dir);
 				$mail->addAttachment($dir);
 			}
 			$mail->send();
+			$this->log->write([
+				'from'   => $from,
+				'to' => $order_info['email'],
+				'subject'  => $subject
+			], 2, 'ORDER_MAIL');
 		}
 	}
 
@@ -474,6 +479,11 @@ class Order extends \Opencart\System\Engine\Controller {
 			$mail->setSubject($subject);
 			$mail->setHtml($this->load->view('mail/order_history', $data));
 			$mail->send();
+			$this->log->write([
+				'from'   => $from,
+				'to' => $order_info['email'],
+				'subject'  => $subject
+			], 2, 'ORDER_MAIL');	
 		}
 	}
 

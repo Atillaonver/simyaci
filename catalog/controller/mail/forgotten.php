@@ -53,6 +53,11 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 					$mail->setSubject($subject);
 					$mail->setHtml($this->load->view('mail/forgotten', $data));
 					$mail->send();
+					$this->log->write([
+						'from'   => $this->config->get('config_email'),
+						'to' => $args[0],
+						'subject'  => $subject
+					], 2, 'FORGOT_MAIL');				
 				}
 			}
 		}
