@@ -387,13 +387,13 @@ class Register extends \Opencart\System\Engine\Controller {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
-			if ($this->request->post['account']) {
+			if ($this->request->post['account'] && 	$this->request->post['account'] == '1') {
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
 
 				if ($information_info && !$this->request->post['agree']) {
-					//$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 				}
 			}
 
