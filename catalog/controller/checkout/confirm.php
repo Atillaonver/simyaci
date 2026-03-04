@@ -76,6 +76,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			//$this->log->write('config_checkout_id:'.$status);
 		}
 
+		
 		// Generate order if payment method is set
 		if ($status) {
 			$order_data = [];

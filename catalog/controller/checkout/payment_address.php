@@ -187,13 +187,13 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 
 		if (!isset($this->session->data['customer'])) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-			$this->log->write('redirect:1');
+			//$this->log->write('redirect:1');
 		}
 
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-			$this->log->write('redirect:1');
+			//$this->log->write('redirect:1');
 		}
 
 		// Validate minimum quantity requirements.
