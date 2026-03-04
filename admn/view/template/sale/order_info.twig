@@ -407,14 +407,17 @@
 	              <div class="form-control border rounded-start">
 	              	<form id="form-cargo" class="mb-3">
 		              	<div class="input-group form-floating">
-		              		
-                  			
+		              			
                   			<select name="cargo" id="input-cargo" class="form-select">
-                  				<option value="">Select Cargo</option>
+                  				<option value="">{{ text_cargo }}</option>
+                          <option value="ARAS" {{ cargo=='ARAS'?'selected="selected"':'' }}>ARAS KARGO</option>
+                          <option value="YURTICI" {{ cargo=='YURTICI'?'selected="selected"':'' }}>YURTİÇİ KARGO</option>
+                          <option value="MNG" {{ cargo=='MNG'?'selected="selected"':'' }}>MNG KARGO</option>
+                          <option value="Sendeo" {{ cargo=='Sendeo'?'selected="selected"':'' }}>Sendeo</option>
                   				<option value="FEDEX" {{ cargo=='FEDEX'?'selected="selected"':'' }}>FEDEX</option>
                   				<option value="UPS" {{ cargo=='UPS'?'selected="selected"':'' }}>UPS</option>
                   			</select>
-                  			<label for="input-cargo">Cargo</label>
+                  			<label for="input-cargo">{{ text_cargo }}</label>
                   <button type="submit" id="button-cargo-refresh" data-bs-toggle="tooltip" title="{{ button_refresh }}" class="btn btn-outline-primary"><i class="fa-solid fa-rotate"></i></button>
                 
                 </div>
