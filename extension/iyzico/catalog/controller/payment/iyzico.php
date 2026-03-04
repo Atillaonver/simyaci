@@ -675,6 +675,12 @@
 		public function webhookHttpResponse($message, $status)
 		{
 			$httpMessage = array('message' => $message);
+
+			$this->log->write([
+				'message' => $message,
+				'status' => $status,
+			], 1, 'IYZICO_WEBHOOK');
+
 			header('Content-Type: application/json, Status: ' . $status, true, $status);
 			echo json_encode($httpMessage);
 			exit();

@@ -383,11 +383,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 
 			// If account register password required
-			if ($this->request->post['account'] && (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
+			if ($this->request->post['account'] && $this->request->post['account'] == '1' && (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) < 4) || (oc_strlen(html_entity_decode($this->request->post['password'], ENT_QUOTES, 'UTF-8')) > 40)) {
 				$json['error']['password'] = $this->language->get('error_password');
 			}
 
-			if ($this->request->post['account'] && 	$this->request->post['account'] == '1') {
+			if ($this->request->post['account'] && $this->request->post['account'] == '1') {
 				$this->load->model('catalog/information');
 
 				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_account_id'));
@@ -426,7 +426,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			];
 
 			// Register
-			if ($this->request->post['account']) {
+			if ($this->request->post['account'] && $this->request->post['account'] == '1') {
 				$customer_data['customer_id'] = $this->model_account_customer->addCustomer($this->request->post);
 			}
 
@@ -495,7 +495,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				];
 
 				// Add
-				if ($this->request->post['account']) {
+				if ($this->request->post['account'] && $this->request->post['account'] == '1') {
 					$payment_address_data['default'] = 1;
 
 					$payment_address_data['address_id'] = $this->model_account_address->addAddress($customer_data['customer_id'], $payment_address_data);
@@ -574,7 +574,7 @@ class Register extends \Opencart\System\Engine\Controller {
 					];
 
 					// Add
-					if ($this->request->post['account']) {
+					if ($this->request->post['account'] && $this->request->post['account'] == '1') {
 						if (!$this->config->get('config_checkout_payment_address')) {
 							$shipping_address_data['default'] = 1;
 						}
@@ -601,7 +601,7 @@ class Register extends \Opencart\System\Engine\Controller {
 
 			// If everything good login
 			if (!$customer_group_info['approval']) {
-				if ($this->request->post['account']) {
+				if ($this->request->post['account'] && $this->request->post['account'] == '1') {
 					$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
 					// Create customer token
