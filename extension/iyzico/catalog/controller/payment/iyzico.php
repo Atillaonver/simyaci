@@ -192,11 +192,11 @@
 			try {
 				
 				$this->log->write([
-					'PRICE'   => $webhook,
-					'CALC PRICE' => $webhookPaymentConversationId,
-					'SIMPLE PRICE'  => $webhookToken,
-					'TAX CLASS ID' => $webhookIyziEventType,
-					'TAX' => $_REQUEST
+					'webhook'   => $webhook,
+					'webhookPaymentConversationId' => $webhookPaymentConversationId,
+					'webhookToken'  => $webhookToken,
+					'webhookIyziEventType' => $webhookIyziEventType,
+					'REQUEST' => $_REQUEST
 				], 1, 'PRICE_DEBUG');
 				
 				$this->load->language('extension/iyzico/payment/iyzico');
