@@ -23,14 +23,16 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 		
 		if ($information_info) {
-			
-			$headers = apache_request_headers();
-			$is_ajax = (isset($headers['X-Requested-With']) && $headers['X-Requested-With'] == 'XMLHttpRequest');
-
-			if (isset($this->request->server['HTTP_X_REQUESTED_WITH']) && strtolower($this->request->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+			if (!$this->isAjaxRequest()) {
+				$contract=false;
+				if($information_id == $this->config->get('config_checkout_id')){
+					$contract=true;
+				}
+				
 				$hData = [
 					'content'   => $information_info['description'],
 					'route'   => 'information/information',
+					'contract'   => $contract
 				];
 				
 				$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);
@@ -129,6 +131,19 @@ class Information extends \Opencart\System\Engine\Controller {
 			$this->response->setOutput($this->load->view('error/not_found', $data));
 		}
 	}
+
+	private function isAjaxRequest(): bool {
+    // AJAX kontrolü
+    $isAjax = isset($this->request->server['HTTP_X_REQUESTED_WITH']) &&
+              strtolower($this->request->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+
+    // Same-origin kontrolü
+    $siteUrl      = HTTP_SERVER;
+    $referer      = $this->request->server['HTTP_REFERER'] ?? '';
+    $isSameOrigin = !empty($referer) && str_starts_with($referer, $siteUrl);
+
+    return $isAjax && $isSameOrigin;
+}
 
 	public function info(): void {
 		if (isset($this->request->get['information_id'])) {
