@@ -24,15 +24,14 @@ class Information extends \Opencart\System\Engine\Controller {
 		
 		if ($information_info) {
 			if (!$this->isAjaxRequest()) {
-				$contract=false;
+				$data['contract']=false;
 				if($information_id == $this->config->get('config_checkout_id')){
-					$contract=true;
+					$data['contract']=true;
 				}
 				
 				$hData = [
 					'content'   => $information_info['description'],
-					'route'   => 'information/information',
-					'contract'   => $contract
+					'route'   => 'information/information'
 				];
 				
 				$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);
