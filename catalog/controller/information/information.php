@@ -35,7 +35,7 @@ class Information extends \Opencart\System\Engine\Controller {
 					$data['contract']=true;
 					$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);
 					$find = ['|MUSTERI|','|TELEPHON|','|EMAIL|','|TARIH|','|URUNLER|','|ALICI|','|ADRES|'];	
-					$replace = '<b class="text-danger">**********</b>';
+					$replace = '<b class="text-danger"> ********** </b>';
 					$data['description'] = str_replace($find, $replace, $data['description']);
 				}else{
 					$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);

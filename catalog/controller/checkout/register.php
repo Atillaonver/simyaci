@@ -45,7 +45,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		if (isset($this->session->data['customer']['customer_id'])) {
 			$data['account'] = $this->session->data['customer']['customer_id'];
 		} else {
-			$data['account'] = 1;
+			$data['account'] = 0;
 		}
 
 		if (isset($this->session->data['customer'])) {
