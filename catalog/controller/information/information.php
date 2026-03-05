@@ -27,8 +27,7 @@ class Information extends \Opencart\System\Engine\Controller {
 			$headers = apache_request_headers();
 			$is_ajax = (isset($headers['X-Requested-With']) && $headers['X-Requested-With'] == 'XMLHttpRequest');
 
-			if ($is_ajax) {
-				
+			if (isset($this->request->server['HTTP_X_REQUESTED_WITH']) && strtolower($this->request->server['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
 				$hData = [
 					'content'   => $information_info['description'],
 					'route'   => 'information/information',
