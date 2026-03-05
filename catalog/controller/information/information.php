@@ -24,17 +24,26 @@ class Information extends \Opencart\System\Engine\Controller {
 		
 		if ($information_info) {
 			if (!$this->isAjaxRequest()) {
+
 				$data['contract']=false;
-				if($information_id == $this->config->get('config_checkout_id')){
-					$data['contract']=true;
-				}
-				
 				$hData = [
 					'content'   => $information_info['description'],
 					'route'   => 'information/information'
 				];
+
+				if($information_id == $this->config->get('config_checkout_id')){
+					$data['contract']=true;
+					$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);
+					$find = ['|MUSTERI|','|TELEPHON|','|EMAIL|','||TARIH|','||URUNLER|','|ALICI|','|ADRES|'];	
+					$replace = ['<b>**********</b>'];
+					$data['description'] = str_replace($find, $replace, $data['description']);
+				}else{
+					$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);
+				}
 				
-				$data['description'] = $this->load->controller('checkout/confirm.orderconfirm',$hData);
+				
+				
+				
 				$data['title'] = $information_info['title'];
 				$this->response->addHeader('X-Robots-Tag: noindex');
 				$this->response->setOutput($this->load->view('information/information_info', $data));
