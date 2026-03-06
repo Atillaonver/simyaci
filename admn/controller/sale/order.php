@@ -2644,14 +2644,6 @@ class Order extends \Opencart\System\Engine\Controller {
 
 		// Call the required API controller
 		$store->load->controller($store->request->get['route']);
-
-		$this->log->write([
-				'store_id'   => $store_id,
-				'language' => $language,
-				'session_id' => $session_id,
-				'route' => $action
-			], 2, 'ORDER_KARGO');	
-
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput($store->response->getOutput());
 			
