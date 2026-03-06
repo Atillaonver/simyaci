@@ -606,4 +606,97 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	/**
+	* @return void
+	*/
+	public function kargo(): void {
+		this->load->language('api/sale/order');
+
+		$json = [];
+
+		if (isset($this->request->get['order_id'])) {
+			$order_id = (int)$this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+
+		$this->load->model('checkout/order');
+
+		$order_info = $this->model_checkout_order->getOrder($order_id);
+
+		if (!$order_info) {
+			$json['error'] = $this->language->get('error_order');
+		}
+
+		if (!$json) {
+			$this->session->data['order_id'] = $order_id;
+
+			// Customer Details
+			$this->session->data['customer'] = [
+				'customer_id'       => $order_info['customer_id'],
+				'customer_group_id' => $order_info['customer_group_id'],
+				'firstname'         => $order_info['firstname'],
+				'lastname'          => $order_info['lastname'],
+				'email'             => $order_info['email'],
+				'telephone'         => $order_info['telephone'],
+				'custom_field'      => $order_info['custom_field']
+			];
+
+			// Payment Details
+			if ($this->config->get('config_checkout_payment_address')) {
+				$this->session->data['payment_address'] = [
+					'address_id'     => $order_info['payment_address_id'],
+					'firstname'      => $order_info['payment_firstname'],
+					'lastname'       => $order_info['payment_lastname'],
+					'company'        => $order_info['payment_company'],
+					'address_1'      => $order_info['payment_address_1'],
+					'address_2'      => $order_info['payment_address_2'],
+					'postcode'       => $order_info['payment_postcode'],
+					'city'           => $order_info['payment_city'],
+					'zone_id'        => $order_info['payment_zone_id'],
+					'zone'           => $order_info['payment_zone'],
+					'zone_code'      => $order_info['payment_zone_code'],
+					'country_id'     => $order_info['payment_country_id'],
+					'country'        => $order_info['payment_country'],
+					'iso_code_2'     => $order_info['payment_iso_code_2'],
+					'iso_code_3'     => $order_info['payment_iso_code_3'],
+					'address_format' => $order_info['payment_address_format'],
+					'custom_field'   => $order_info['payment_custom_field']
+				];
+			} else {
+				unset($this->session->data['payment_address']);
+			}
+
+			$this->session->data['payment_method'] = $order_info['payment_method'];
+
+			if ($order_info['shipping_method']) {
+				$this->session->data['shipping_address'] = [
+					'address_id'     => $order_info['shipping_address_id'],
+					'firstname'      => $order_info['shipping_firstname'],
+					'lastname'       => $order_info['shipping_lastname'],
+					'company'        => $order_info['shipping_company'],
+					'address_1'      => $order_info['shipping_address_1'],
+					'address_2'      => $order_info['shipping_address_2'],
+					'postcode'       => $order_info['shipping_postcode'],
+					'city'           => $order_info['shipping_city'],
+					'zone_id'        => $order_info['shipping_zone_id'],
+					'zone'           => $order_info['shipping_zone'],
+					'zone_code'      => $order_info['shipping_zone_code'],
+					'country_id'     => $order_info['shipping_country_id'],
+					'country'        => $order_info['shipping_country'],
+					'iso_code_2'     => $order_info['shipping_iso_code_2'],
+					'iso_code_3'     => $order_info['shipping_iso_code_3'],
+					'address_format' => $order_info['shipping_address_format'],
+					'custom_field'   => $order_info['shipping_custom_field']
+				];
+
+				$this->session->data['shipping_method'] = $order_info['shipping_method'];
+			}
+
+			if ($order_info['comment']) {
+				$this->session->data['comment'] = $order_info['comment'];
+			}
+		}
+	}
 }

@@ -2562,9 +2562,65 @@ class Order extends \Opencart\System\Engine\Controller {
 		
 		$this->request->get['store_id'] = $store_id = $this->session->data['store_id'];
 		$this->request->get['action']	= $action =	'sale/order.addHistory';
-		$this->request->post['order_status_id']	= '5'; //'3-shipped 5-completed;
-		$this->request->post['notify']	= '0';
-		$this->request->post['override']	= '0';
+		$this->request->post['order_status_id']	= '3'; //'3-shipped 5-completed;
+		$this->request->post['notify']	= '1';
+		$this->request->post['override']	= '1';
+		$this->request->post['order_id']	= $order_id;
+		
+		
+		if (isset($this->session->data['api_session'])) {
+			$session_id = $this->session->data['api_session'];
+		} else {
+			$session_id = '';
+		}
+
+		$this->load->model('setting/store');
+
+		$store = $this->model_setting_store->createStoreInstance($store_id, $language, $session_id);
+
+		// 2. Add the request vars and remove the unneeded ones
+		$store->request->get = $this->request->get;
+		$store->request->post = $this->request->post;
+
+		$store->request->get['route'] = 'api/' . $action;
+
+		// 3. Remove the unneeded keys
+		unset($store->request->get['action']);
+		unset($store->request->get['user_token']);
+
+		// Call the required API controller
+		$store->load->controller($store->request->get['route']);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput($store->response->getOutput());
+			
+	}
+
+	public function kargo(): void {
+		$this->load->language('sale/order');
+		$json = [];
+	
+		$this->load->model('sale/order');
+		$this->model_sale_order->kargo();
+		
+		
+		if (isset($this->request->get['order_id'])) {
+			$order_id = $this->request->get['order_id'];
+		} else {
+			$order_id = 0;
+		}
+		
+		if (isset($this->request->get['language'])) {
+			$language = $this->request->get['language'];
+		} else {
+			$language = $this->config->get('config_language');
+		}
+		
+		$this->request->get['store_id'] = $store_id = $this->session->data['store_id'];
+		$this->request->get['action']	= $action =	'sale/order.kargo';
+		$this->request->post['order_status_id']	= '3'; //'3-shipped 5-completed;
+		$this->request->post['notify']	= '1';
+		$this->request->post['override']	= '1';
 		$this->request->post['order_id']	= $order_id;
 		
 		
