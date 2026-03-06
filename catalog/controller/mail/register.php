@@ -62,6 +62,11 @@ class Register extends \Opencart\System\Engine\Controller {
 			$mail->setSubject($subject);
 			$mail->setHtml($this->load->view('mail/register', $data));
 			$mail->send();
+			$this->log->write([
+				'from'   => $this->config->get('config_email'),
+				'to' => $args[0]['email'],
+				'subject'  => $subject
+			], 2, 'REGISTER_MAIL');				
 		}
 	}
 

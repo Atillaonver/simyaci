@@ -668,6 +668,12 @@ class Order extends \Opencart\System\Engine\Controller {
 	}
 
 	public function kargo(string &$route, array &$args): void {
+
+		$this->log->write([
+				'route'   => $route,
+				'args' => $args
+			], 2, 'ORDER_KARGO');		
+			
 		if (isset($args[0])) {
 			$order_id = $args[0];
 		} else {

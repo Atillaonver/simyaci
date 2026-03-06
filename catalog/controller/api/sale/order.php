@@ -668,35 +668,12 @@ class Order extends \Opencart\System\Engine\Controller {
 				unset($this->session->data['payment_address']);
 			}
 
-			$this->session->data['payment_method'] = $order_info['payment_method'];
-
-			if ($order_info['shipping_method']) {
-				$this->session->data['shipping_address'] = [
-					'address_id'     => $order_info['shipping_address_id'],
-					'firstname'      => $order_info['shipping_firstname'],
-					'lastname'       => $order_info['shipping_lastname'],
-					'company'        => $order_info['shipping_company'],
-					'address_1'      => $order_info['shipping_address_1'],
-					'address_2'      => $order_info['shipping_address_2'],
-					'postcode'       => $order_info['shipping_postcode'],
-					'city'           => $order_info['shipping_city'],
-					'zone_id'        => $order_info['shipping_zone_id'],
-					'zone'           => $order_info['shipping_zone'],
-					'zone_code'      => $order_info['shipping_zone_code'],
-					'country_id'     => $order_info['shipping_country_id'],
-					'country'        => $order_info['shipping_country'],
-					'iso_code_2'     => $order_info['shipping_iso_code_2'],
-					'iso_code_3'     => $order_info['shipping_iso_code_3'],
-					'address_format' => $order_info['shipping_address_format'],
-					'custom_field'   => $order_info['shipping_custom_field']
-				];
-
-				$this->session->data['shipping_method'] = $order_info['shipping_method'];
-			}
-
-			if ($order_info['comment']) {
-				$this->session->data['comment'] = $order_info['comment'];
-			}
+			$this->log->write([
+				'from'   => $this->config->get('config_email'),
+				'to' => $order_info['email'],
+				'subject'  => $this->language->get('text_kargo')
+			], 2, 'ORDER_KARGO');		
+			
 		}
 	}
 }

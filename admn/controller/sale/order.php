@@ -2601,8 +2601,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$json = [];
 	
 		$this->load->model('sale/order');
-		$this->model_sale_order->kargo();
-		
 		
 		if (isset($this->request->get['order_id'])) {
 			$order_id = $this->request->get['order_id'];
