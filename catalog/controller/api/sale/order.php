@@ -622,58 +622,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		}
 
 		$this->load->model('checkout/order');
+		$this->model_checkout_order->kargo();
 
-		$order_info = $this->model_checkout_order->getOrder($order_id);
-
-		if (!$order_info) {
-			$json['error'] = $this->language->get('error_order');
-		}
-
-		if (!$json) {
-			$this->session->data['order_id'] = $order_id;
-
-			// Customer Details
-			$this->session->data['customer'] = [
-				'customer_id'       => $order_info['customer_id'],
-				'customer_group_id' => $order_info['customer_group_id'],
-				'firstname'         => $order_info['firstname'],
-				'lastname'          => $order_info['lastname'],
-				'email'             => $order_info['email'],
-				'telephone'         => $order_info['telephone'],
-				'custom_field'      => $order_info['custom_field']
-			];
-
-			// Payment Details
-			if ($this->config->get('config_checkout_payment_address')) {
-				$this->session->data['payment_address'] = [
-					'address_id'     => $order_info['payment_address_id'],
-					'firstname'      => $order_info['payment_firstname'],
-					'lastname'       => $order_info['payment_lastname'],
-					'company'        => $order_info['payment_company'],
-					'address_1'      => $order_info['payment_address_1'],
-					'address_2'      => $order_info['payment_address_2'],
-					'postcode'       => $order_info['payment_postcode'],
-					'city'           => $order_info['payment_city'],
-					'zone_id'        => $order_info['payment_zone_id'],
-					'zone'           => $order_info['payment_zone'],
-					'zone_code'      => $order_info['payment_zone_code'],
-					'country_id'     => $order_info['payment_country_id'],
-					'country'        => $order_info['payment_country'],
-					'iso_code_2'     => $order_info['payment_iso_code_2'],
-					'iso_code_3'     => $order_info['payment_iso_code_3'],
-					'address_format' => $order_info['payment_address_format'],
-					'custom_field'   => $order_info['payment_custom_field']
-				];
-			} else {
-				unset($this->session->data['payment_address']);
-			}
-
-			$this->log->write([
-				'from'   => $this->config->get('config_email'),
-				'to' => $order_info['email'],
-				'subject'  => $this->language->get('text_kargo')
+		$this->log->write([
+				'order_id'   => $order_id
 			], 2, 'ORDER_KARGO');		
 			
-		}
+		
 	}
 }
