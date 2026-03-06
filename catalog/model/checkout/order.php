@@ -546,4 +546,13 @@ class Order extends \Opencart\System\Engine\Model {
 			$this->cache->delete('product');
 		}
 	}
+
+	/**
+	 * @param int $order_id
+	 *
+	 * @return array
+	 */
+	public function kargo(): void {
+		
+	}
 }
