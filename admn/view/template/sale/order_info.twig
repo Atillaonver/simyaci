@@ -1296,7 +1296,7 @@ $('#form-send').on('submit', function(e) {
     e.preventDefault();
 
     $.ajax({
-        url: 'index.php?route=sale/order.updatesend&user_token={{ user_token }}&order_id={{ order_id }}&language=' + $('#input-language').val(),
+        url: 'index.php?route=sale/order.kargo&user_token={{ user_token }}&order_id={{ order_id }}&language=' + $('#input-language').val(),
         type: 'post',
         data: $('#form-send').serialize(),
         dataType: 'json',
