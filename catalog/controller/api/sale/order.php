@@ -611,7 +611,7 @@ class Order extends \Opencart\System\Engine\Controller {
 	* @return void
 	*/
 	public function kargo(): void {
-		this->load->language('api/sale/order');
+		//this->load->language('sale/order');
 
 		$json = [];
 
