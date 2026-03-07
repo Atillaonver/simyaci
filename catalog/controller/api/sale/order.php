@@ -625,9 +625,19 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->model_checkout_order->kargo();
 
 		$this->log->write([
-				'order_id'   => $order_id
-			], 2, 'ORDER_KARGO');		
-			
+				'order_id'   => $order_id,
+				'post' => $this->request->post,
+				'get' => $this->request->get
+			], 2, 'ORDER_KARGO');	
+				
+		if (!$json) {
+			$this->model_checkout_order->addHistory((int)$this->request->post['order_id'], (int)$this->request->post['order_status_id'], (string)$this->request->post['comment'], (bool)$this->request->post['notify'], (bool)$this->request->post['override']);
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));	
 		
 	}
 }
