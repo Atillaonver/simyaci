@@ -23,7 +23,7 @@ class Information extends \Opencart\System\Engine\Controller {
 		}
 		
 		if ($information_info) {
-			if (!$this->isAjaxRequest()) {
+			if ($this->isAjaxRequest()) {
 
 				$data['contract']=false;
 				$hData = [
