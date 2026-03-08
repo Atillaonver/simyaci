@@ -69,8 +69,8 @@ class Information extends \Opencart\System\Engine\Controller {
 				$data['fimage'] = !isset($information_info['fimage'])?(!$this->config->get('config_footer_image')?by_move($this->config->get('config_footer_image')):''):by_move($information_info['fimage']);
 
 				$data['timage'] = !isset($information_info['timage'])?(!$this->config->get('config_footer_image')?by_move($this->config->get('config_footer_image')):''):by_move($information_info['timage']);
-
-
+				
+				
 				$data['continue'] = $this->url->home();
 
 				$data['column_left'] = $this->load->controller('common/column_left');
@@ -79,6 +79,10 @@ class Information extends \Opencart\System\Engine\Controller {
 				$data['content_bottom'] = $this->load->controller('common/content_bottom');
 				
 				$cHead = $this->config->get('config_store_head');
+				$this->log->write([
+				'HEAD'   => $cHead
+			], 0, 'HEAD_DEBUG');
+			
 				if ((int)$cHead) {
 					$data['footer'] = $this->load->controller('common/footer');
 					$data['header'] = $this->load->controller('common/header');
