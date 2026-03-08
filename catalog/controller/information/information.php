@@ -79,9 +79,6 @@ class Information extends \Opencart\System\Engine\Controller {
 				$data['content_bottom'] = $this->load->controller('common/content_bottom');
 				
 				$cHead = $this->config->get('config_store_head');
-				$this->log->write([
-				'HEAD'   => $cHead
-			], 0, 'HEAD_DEBUG');
 			
 				if ((int)$cHead) {
 					$data['footer'] = $this->load->controller('common/footer');
@@ -154,10 +151,6 @@ class Information extends \Opencart\System\Engine\Controller {
     $referer      = $this->request->server['HTTP_REFERER'] ?? '';
     $isSameOrigin = !empty($referer) && str_starts_with($referer, $siteUrl);
 		$cHead = $this->config->get('config_store_head');
-		$this->log->write([
-				'AJAX'   => $isAjax,
-				'SAME'   => $isSameOrigin
-			], 0, 'HEAD_DEBUG');
 			
     //return $isAjax && $isSameOrigin;
 		return $isAjax;
