@@ -230,7 +230,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			}
 			
 			if ($this->request->post['password']!= $this->request->post['password_confirm']) {
-				$json['error']['password_confirm'] = $this->language->get('error_password_confirm');
+				$json['error']['password_confirm'] = $this->language->get('error_confirm');
 			}
 
 			// Captcha
