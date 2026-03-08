@@ -159,8 +159,9 @@ class Information extends \Opencart\System\Engine\Controller {
 				'SAME'   => $isSameOrigin
 			], 0, 'HEAD_DEBUG');
 			
-    return $isAjax && $isSameOrigin;
-}
+    //return $isAjax && $isSameOrigin;
+		return $isAjax;
+	}
 
 	public function info(): void {
 		if (isset($this->request->get['information_id'])) {
