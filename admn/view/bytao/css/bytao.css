@@ -1,3 +1,8 @@
+.btn-dspld {
+    position: absolute;
+    top: 0px;
+}
+
 .top-store-div>div {
     display: none;
 }
