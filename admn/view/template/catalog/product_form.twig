@@ -94,7 +94,7 @@
 							<div class="row mb-3">
 								<div class="form-check form-switch btn-dspld">
 									<input type="hidden" name="product_category_change" value="0"/>
-									<input type="checkbox" name="product_category_change" value="1" data-oc-toggle="switch" data-oc-target="input-dspld" class="form-check-input"/>
+									<input type="checkbox" name="product_category_change" value="1" data-oc-toggle="switch" data-oc-target="input-dspld" class="form-check-input dspld"/>
 									<label for="input-dspld" class="form-check-label"><i class="fa-solid fa-pen-to-square text-danger"></i></label>
 								</div>
 								<label class="col-sm-2 col-form-label">{{ entry_category }}</label>
@@ -2236,8 +2236,6 @@
 	});
 
 	$('.dspld').on('change', function () {
-		parent = $(this).parent().find('.pdspld');
-		$(parent).addClass('dspld-div');
 		var CH = $(this).prop('checked');
 		if(!CH){
 			$(this).parent().find('.fa-pen-to-square').removeClass('text-success').addClass('text-danger');

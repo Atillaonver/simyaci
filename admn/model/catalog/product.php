@@ -219,7 +219,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 
 		// Categories
-		if (isset($data['product_category'])) {
+		if (isset($data['product_category']) && $data['product_category_change']) {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "product_to_category` WHERE `product_id` = '" . (int)$product_id . "'");
 			foreach ($data['product_category'] as $category_id) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_category` SET `product_id` = '" . (int)$product_id . "', `category_id` = '" . (int)$category_id . "'");
