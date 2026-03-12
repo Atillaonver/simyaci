@@ -2236,6 +2236,7 @@
 
 	$('.dspld').on('change', function () {
 		parent = $(this).parent().find('.pdspld');
+		$(parent).addClass('dspld-div');
 		var CH = $(this).prop('checked');
 		if(!CH){
 			$(this).parent().find('.fa-pen-to-square').removeClass('text-success').addClass('text-danger');
