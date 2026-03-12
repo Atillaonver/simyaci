@@ -93,7 +93,8 @@
 
 							<div class="row mb-3">
 								<div class="form-check form-switch btn-dspld">
-									<input type="checkbox" value="1" data-oc-toggle="switch" data-oc-target="input-dspld" class="form-check-input dspld"/>
+									<input type="hidden" name="product_category_change" value="0"/>
+									<input type="checkbox" name="product_category_change" value="1" data-oc-toggle="switch" data-oc-target="input-dspld" class="form-check-input"/>
 									<label for="input-dspld" class="form-check-label"><i class="fa-solid fa-pen-to-square text-danger"></i></label>
 								</div>
 								<label class="col-sm-2 col-form-label">{{ entry_category }}</label>
@@ -2243,15 +2244,6 @@
 		}else{
 			$(this).parent().find('.fa-pen-to-square').removeClass('text-danger').addClass('text-success');
 		}
-			
-		$(parent).find('input[type="text"],input[type="hidden"],input[type="password"],input[type="checkbox"],input[type="radio"],input[type="file"],input[type="number"],input[type="email"],input[type="url"],input[type="search"],input[type="tel"],input[type="url"],select,textarea').each(function(ind, elem) {
-			if(!CH){
-				$(elem).removeAttr('disabled');
-			}else{
-				$(elem).attr('disabled','disabled');
-			}
-		});
-
 	});
 
 
