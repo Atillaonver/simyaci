@@ -15,6 +15,8 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$data['logged']=0;
 			$data['groupId'] =0;
 		}
+
+		$data['cdn_server'] = CDN_SERVER;	
 		
 		$data['rows'] = $this->load->controller('bytao/editor.rowBender',['ctrl'=>'footer']);
 		
