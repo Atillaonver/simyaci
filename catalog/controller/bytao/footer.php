@@ -72,7 +72,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		
 		$data['contact'] = $this->url->link('information/contact','language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		
-		$data['return'] = $this->url->link('account/return|add','language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
+		$data['return'] = $this->url->link('account/return.add','language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		$data['sitemap'] = $this->url->link('information/sitemap','language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
 		
 		$data['tracking'] = $this->url->link('information/tracking','language=' . $this->config->get('config_language') . (isset($this->session->data['customer_token']) ? '&customer_token=' . $this->session->data['customer_token'] : ''));
