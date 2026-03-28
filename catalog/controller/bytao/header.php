@@ -38,6 +38,8 @@ class Header extends \Opencart\System\Engine\Controller {
 		//$data['jquery'] = 'https://cdn.simyaci.tr/js/masterslider/jquery.min.js';
 		$data['jquery'] = 'https://code.jquery.com/jquery-3.7.1.js';
 		$data['ui'] = 'https://code.jquery.com/ui/1.14.1/jquery-ui.js';
+		$data['cdn_server'] = CDN_SERVER;	
+		
 
 		$data['links'] = $this->document->getLinks();
 		$data['styles'] = $this->document->getStyles();
