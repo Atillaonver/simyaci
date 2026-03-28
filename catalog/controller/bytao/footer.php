@@ -54,7 +54,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 			$data['logo'] = '';
 		}
 		
-		
+		$data['css'] = $this->load->controller('bytao/css.addhead');
 
 		$data['onam'] = $this->url->link('bytao/forms','language=' . $this->config->get('config_language'). '&forms_id=4');
 		$data['blog'] = $this->url->link('cms/blog','language=' . $this->config->get('config_language'),false,false);
