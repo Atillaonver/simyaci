@@ -132,7 +132,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		}
 		
 		$data['fscripts'] = $this->document->getScripts('footer');
-		
+		$data['jqscript'] = $this->load->controller('bytao/jqscript.addhead');
 		
 		$data['scrpt_footer'] = $this->load->controller('bytao/script.footer',$hData);
 		
