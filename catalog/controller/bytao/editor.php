@@ -64,8 +64,8 @@ class Editor extends \Opencart\System\Engine\Controller
 			foreach($rows as $ind => $ROW)
 			{
 				$pass=true;
-				$has_not_user = $ROW['row_data']['has_not_user']?1:0;
-				$has_user = $ROW['row_data']['has_user']?1:0;
+				$has_not_user = isset($ROW['row_data']['has_not_user'])?$ROW['row_data']['has_not_user']:0;
+				$has_user = isset($ROW['row_data']['has_user'])?$ROW['row_data']['has_user']:0;
 				if($isLogged && $has_not_user){
 					$pass=false;
 				}else if(!$isLogged && $has_user){
@@ -93,10 +93,15 @@ class Editor extends \Opencart\System\Engine\Controller
 							$resp        = $this->LYMD[$Divs[$colC]][$this->Cr];
 							$colC++;
 							$sub_content = '';
+							$col_content_data = [];	
+							
 							if($COLS['sub_rows']){
 								foreach($COLS['sub_rows'] as $indx => $SROW)
 								{
-
+									$col_content_data['col_class'] = $COLS['col_class'];
+									$col_content_data['col_type'] = $COLS['col_type'];
+									$col_content_data['col_tag_id'] = $COLS['col_tag_id'];
+									$col_content_data['col_data'] = $COLS['col_data'];	
 									$sub_content .= '<div class="SR '.($SROW['row_class']?$SROW['row_class']:'').'"'.($SROW['image']?' data-image="'.HTTP_IMAGE.$SROW['image'].'"':'').' id="'.($SROW['row_tag_id']?$SROW['row_tag_id']:'srow'.$ind).'" >';
 									foreach($SROW['cols'] as $SCOLS)
 									{
@@ -329,11 +334,16 @@ class Editor extends \Opencart\System\Engine\Controller
 							}
 							else
 							{
+								$col_content_data['col_class'] = $COLS['col_class'];
+								$col_content_data['col_type'] = $COLS['col_type'];
+								$col_content_data['col_tag_id'] = $COLS['col_tag_id'];
+								$col_content_data['col_data'] = $COLS['col_data'];	
+
 								switch($COLS['col_type'])
 								{
 									case 1:// Text - image - movie(zengin editor)
 									{
-										$sub_content .= '<div class="RT '.$COLS['col_class'].'" id="'.$COLS['col_tag_id'].'">';
+										//$sub_content .= '<div class="RT '.$COLS['col_class'].'" id="'.$COLS['col_tag_id'].'">';
 										$colclasses = explode(' ',$COLS['col_class']);
 
 										if(in_array("hasAjaxForm", $colclasses))
@@ -533,11 +543,13 @@ class Editor extends \Opencart\System\Engine\Controller
 									
 								}
 							}
+							$col_content_data['content'] = $sub_content;
+							$col_container = $this->load->view('bytao/row_col_content', $col_content_data);
 							$rcData['COL'] = [
 								'col_cell' => $COLS['col_cell'],
 								'resp' => $resp,
 								'nclss'=> in_array("no-rclss", $rowclasses)?1:0,
-								'sub_content'=> $sub_content
+								'sub_content'=> $col_container
 							];
 							$row_content .= $this->load->view('bytao/row_col', $rcData);
 						}
