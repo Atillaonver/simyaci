@@ -1,0 +1,5 @@
+<div class="SC {{ not COL.nclss?COL.resp:'' }} {{ COL.sub_rows?COL.col_class :'' }}" col-type="{{ COL.col_type }}">
+{% if COL.col_data['has_container'] %}<div class="{{ COL.cr }}">{% endif %}
+{{ COL.sub_content }}
+{% if COL.col_data['has_container'] %}</div>{% endif %}
+</div>
