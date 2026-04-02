@@ -370,18 +370,18 @@ class Sectioner extends \Opencart\System\Engine\Controller {
 			'start' => '',
 			'limit' => ''
 		];
-		
+		$vData = [];
 		$results = $this->model->{$this->getFunc('get','s')}($filter_data);
 
 		foreach ($results as $result) {
 			if($result['status']){
-				$data['items'][] = [
+				$vData['items'][] = [
 					'item_id' 	=> $result[$this->ID],
 					'title'     => $result['name'],
 				];
 			}
 		}
-		$json['view'] = $this->load->view($this->cPth.'_widget_form', $data);
+		$json['view'] = $this->load->view($this->cPth.'_widget_form', $vData);
 		
 		
 		if( isset($ndata[1])){
