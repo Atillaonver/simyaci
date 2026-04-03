@@ -163,7 +163,7 @@ class Editor extends \Opencart\System\Engine\Model
 			}
 			$col_content = html_entity_decode($result['col_content'], ENT_QUOTES, 'UTF-8');
 			//$col_content = str_replace(['"https://simyaci.tr/','"https://www.simyaci.tr/','"https://www.bytao.net.tr/'], '"', $col_content);
-			$col_content = str_replace(['url(IMGROOTE'], 'url(https://simyaci.tr/', $col_content);
+			$col_content = str_replace(['url(IMGROOTE'], 'url('.URL_IMAGE, $col_content);
 
 			$row_col_data[] = [
 				'row_col_id'    => $result['row_col_id'],
