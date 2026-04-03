@@ -372,6 +372,8 @@ class Editor extends \Opencart\System\Engine\Controller
 												}
 											}
 											$content = str_replace(['"https://simyaci.tr/','"https://www.simyaci.tr/','"https://www.bytao.net.tr/'],'"',$col_content);
+											$content = str_replace(['url(IMGROOTE'],'url(',$content);
+
 											//$content = str_replace('"https://www.bytao.net.tr/','"',$col_content);
 											$sub_content .= html_entity_decode($content, ENT_QUOTES, 'UTF-8');
 											str_replace('ROWID',$COLS['col_content_id'],$sub_content);

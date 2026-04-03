@@ -161,12 +161,15 @@ class Editor extends \Opencart\System\Engine\Model
 				$y = (int)substr($result['col_cell'],1,1);
 				$xy = (12/$y)*$x;
 			}
-			
+			$col_content = html_entity_decode($result['col_content'], ENT_QUOTES, 'UTF-8');
+			//$col_content = str_replace(['"https://simyaci.tr/','"https://www.simyaci.tr/','"https://www.bytao.net.tr/'], '"', $col_content);
+			$col_content = str_replace(['url(IMGROOTE'], 'url(https://simyaci.tr/', $col_content);
+
 			$row_col_data[] = [
 				'row_col_id'    => $result['row_col_id'],
 				'store_id'      => $this->session->data['store_id'],
 				'col_type'      => $result['col_type'],
-				'col_content'   => html_entity_decode($result['col_content'], ENT_QUOTES, 'UTF-8'),
+				'col_content'   => $col_content,
 				'col_content_id'=> $result['col_content_id'],
 				'col_style'     => $result['col_style'],
 				'col_class'     => $result['col_class'],
