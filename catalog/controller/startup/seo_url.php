@@ -88,6 +88,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		}
 		
 		$lcount = count($this->config->get('config_store_languages'));
+		$this->log->write([
+				'language'   => $language,
+				'lcount' => $lcount,
+			], 0, 'URL_DEBUG');
 		$language_id = $language<>''?$this->model_localisation_language->getLanguageIdByCode($language):0;
 		
 		foreach ($parts as $part) {
