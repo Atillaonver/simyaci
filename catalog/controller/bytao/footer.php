@@ -65,7 +65,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		} else {
 			$data['gdpr'] = '';
 		}
-
+		$data['cookie'] = $this->load->controller('common/cookie');	
 		$data['css'] = $this->load->controller('bytao/css.addhead');
 
 		$data['onam'] = $this->url->link('bytao/forms','language=' . $this->config->get('config_language'). '&forms_id=4');
