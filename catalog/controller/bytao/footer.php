@@ -49,11 +49,23 @@ class Footer extends \Opencart\System\Engine\Controller {
 		$data['categories'] = [];
 		
 		if (is_file(DIR_IMAGE . by_move($this->config->get('config_logo')))) {
-			$data['logo'] = HTTPS_IMAGE .  $this->config->get('config_logo');
+			$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 		} else {
 			$data['logo'] = '';
 		}
+        
+        if (is_file(DIR_IMAGE . by_move($this->config->get('config_logo_negative')))) {
+			$data['logo_negative'] =  $this->config->get('config_url') . 'image/' . $this->config->get('config_logo_negative');
+		} else {
+			$data['logo_negative'] = '';
+		}
 		
+		if ($this->config->get('config_gdpr_id')) {
+			$data['gdpr'] = $this->url->link('information/gdpr', 'language=' . $this->config->get('config_language'));
+		} else {
+			$data['gdpr'] = '';
+		}
+
 		$data['css'] = $this->load->controller('bytao/css.addhead');
 
 		$data['onam'] = $this->url->link('bytao/forms','language=' . $this->config->get('config_language'). '&forms_id=4');
