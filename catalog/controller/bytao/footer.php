@@ -55,7 +55,7 @@ class Footer extends \Opencart\System\Engine\Controller {
 		}
         
         if (is_file(DIR_IMAGE . by_move($this->config->get('config_logo_negative')))) {
-			$data['logo_negative'] =  $this->config->get('config_url') . 'image/' . $this->config->get('config_logo_negative');
+			$data['logo_negative'] =  'image/' . $this->config->get('config_logo_negative');
 		} else {
 			$data['logo_negative'] = '';
 		}
