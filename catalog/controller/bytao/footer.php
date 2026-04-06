@@ -76,6 +76,8 @@ class Footer extends \Opencart\System\Engine\Controller {
 		
 		$data['treemenu'] ='';
 		$data['telephone'] = $this->config->get('config_telephone');
+		$data['mobile'] = $this->config->get('config_mobile');
+		$data['fax'] = $this->config->get('config_fax');
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
 		$data['geocode'] = $this->config->get('config_geocode');
