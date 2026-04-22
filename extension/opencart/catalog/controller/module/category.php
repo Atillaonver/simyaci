@@ -41,7 +41,7 @@ class Category extends \Opencart\System\Engine\Controller {
 
 		$data['categories'] = [];
 		
-		$menu_data = $this->cache->get('module.category.' . (int)$this->config->get('config_language_id').'.'.$groupId.'.'.$this->config->get('config_store_id'));
+		$menu_data = $this->cache->get('module.category.' . (int)$this->config->get('config_language_id').'.'.$groupId.'.'.$this->config->get('config_store_id'),$this->config->get('config_store_id'));
 		
 		
 		if (!$menu_data) {
@@ -150,7 +150,7 @@ class Category extends \Opencart\System\Engine\Controller {
 					'href'        => $this->url->link('product/category', 'language=' . $this->config->get('config_language') . '&path=' . $category['category_id'])
 				];
 			}
-			$this->cache->set('module.category.' . (int)$this->config->get('config_language_id').'.'.$groupId.'.'.$this->config->get('config_store_id'), $data['categories']);	
+			$this->cache->set('module.category.' . (int)$this->config->get('config_language_id').'.'.$groupId.'.'.$this->config->get('config_store_id'), $data['categories'],$this->config->get('config_store_id'));	
 		}else{
 			$data['categories']  = $menu_data;
 		}
