@@ -67,6 +67,43 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 		
+	public function clear_cache(): void {
+		$this->load->language('common/developer');
+
+		$store_id = isset($this->session->data['store_id'])?$this->session->data['store_id']:0;
+		
+		$json = [];
+		
+		if (!$this->user->hasPermission('modify', 'common/developer')) {
+			$json['error'] = $this->language->get('error_permission');
+		}
+
+		if (!$json) {
+			$directories = glob(DIR_CACHE . 'store'.$store_id.'/*', GLOB_ONLYDIR);
+
+			if ($directories) {
+				foreach ($directories as $directory) {
+					$files = glob($directory . '/*');
+					
+					foreach ($files as $file) { 
+						if (is_file($file)) {
+							unlink($file);
+						}
+					}
+					
+					if (is_dir($directory)) {
+						rmdir($directory);
+					}
+				}
+			}
+						
+			$json['success'] = sprintf($this->language->get('text_cache'), $this->language->get('text_clear_cache'));
+		}
+		
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+		
 	public function sass(): void {
 		$this->load->language('common/developer');
 		
