@@ -10,6 +10,20 @@
 	    color: red !important;
 	}
   </style>
+  <div class="page-header">
+		<div class="container-fluid">
+			<div class="page-ctrl-controls" data-iwidth="" data-owidth="">
+				<span class="ctrl-control-seperator"></span>
+        		<button id="tool-image" data-oc-toggle="image" class="btn btn-light"><i class="fa-solid fa-images"></i></button>
+			</div>
+			<h1>{{ heading_title }}</h1>
+			<ol class="breadcrumb">
+				{% for breadcrumb in breadcrumbs %}
+					<li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+				{% endfor %}
+			</ol>
+		</div>
+	</div>
   <div class="container-fluid">
     <div class="panel panel-default">
       <div class="panel-heading">
