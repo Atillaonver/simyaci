@@ -44,11 +44,11 @@ class Home extends \Opencart\System\Engine\Controller {
 			if($home_info['meta_title']) $this->document->setTitle($home_info['meta_title']);
 			else  $this->document->setTitle($this->config->get('config_meta_title_'.$language_id));
 			
-			if($home_info['meta_title']) $this->document->setDescription($home_info['meta_description']);
-			else  $this->document->setTitle($this->config->get('config_meta_description_'.$language_id));
+			if($home_info['meta_description']) $this->document->setDescription($home_info['meta_description']);
+			else  $this->document->setDescription($this->config->get('config_meta_description_'.$language_id));
 			
 			if($home_info['meta_keyword'])$this->document->setKeywords($home_info['meta_keyword']);
-			else  $this->document->setTitle($this->config->get('config_meta_keyword_'.$language_id));
+			else  $this->document->setKeywords($this->config->get('config_meta_keyword_'.$language_id));
 			
 			$data['breadcrumbs'][] = [
 				'text' => $home_info['title'],
