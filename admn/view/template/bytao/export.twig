@@ -13,10 +13,28 @@
 			<div class="row mb-3" style="margin:0px;">
 				<div class="col-sm-12">{{ entry_export }}</div>
 			</div>
+			<div class="row mb-3">
+				<label for="xmlIt" class="col-sm-2 col-form-label">With XML data </label>
+				<div class="col-sm-10">
+					<div class="form-check form-switch form-switch-lg">
+						<input type="checkbox" name="xml" value="yes" id="xmlIt" class="form-check-input"/>
+					</div>
+				</div>
+			</div> 
+			<div class="row mb-3">
+				<label for="IDImg" class="col-sm-2 col-form-label">With Images</label>
+				<div class="col-sm-10">
+					<div class="form-check form-switch form-switch-lg">
+						<input type="checkbox" name="zipfile" value="yes" id="IDImg" class="form-check-input"/>
+					</div>
+				</div>
+			</div>
+			
 			<div class="row mb-3" style="margin:0px;">
 				<div class="col-sm-12">
 					<input type="hidden" name="selected" id="IDs" />
-					<a onclick="exportData();" class="btn btn-primary"><span>{{ button_export }}</span></a>
+					<input type="hidden" name="category" id="cat" />
+					<a onclick="exportData();" class="btn btn-primary"><span> {{ button_export }} </span></a>  
 				</div>
 			</div>
 		</form>
@@ -337,7 +355,15 @@ count_product = {{ count_product?count_product:'0' }};
 
 {% if export %}
 function exportData() {
-	$('#IDs').val($('#form-{{ ex_type }}').serialize())
+	var IDS ='';
+	$('#form-{{ ex_type }} [type="checkbox"]').each(function(e){
+		if ($(this).prop('checked')) {
+			IDS += $(this).val()+',';
+		}
+	});
+	$('#IDs').val(IDS);
+	var inputCat = $("#input-category option:selected").text();
+	$('#cat').val(inputCat);
 	$('#export').submit();
 }
 {% endif %}

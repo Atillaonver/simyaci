@@ -159,7 +159,92 @@ class Export extends \Opencart\System\Engine\Model
 				$objWriter->save('php://output');
 			}
 
+			if (isset($data['productIDs'])) {
+				
+					$worksheet_index = 0;
+					$this->setProdTitles();
+					$workbook->setActiveSheetIndex($worksheet_index++);
+					$worksheet       = $workbook->getActiveSheet();
+					$worksheet->setTitle( $data['texts']['products'] );
+					$this->populateProductsWorksheet($worksheet,isset($data['productIDs'])?$data['productIDs']:[]);
+					$worksheet->freezePaneByColumnAndRow( 2, 2 );
 
+
+					$workbook->createSheet();
+					$workbook->setActiveSheetIndex($worksheet_index++);
+					$worksheet = $workbook->getActiveSheet();
+					$worksheet->setTitle( $data['texts']['references'] );
+					$this->populateReferenceDataWorksheet( $worksheet, $this->getLanguages(), $this->formats['box'], $this->formats['text'],$data['texts'], $offset, $rows, $min_id, $max_id);
+					$worksheet->freezePaneByColumnAndRow( 1, 2 );
+					$workbook->setActiveSheetIndex(0);
+					
+					$filename = $this->session->data['long_name'].'-'.$data['texts']['products'].($data['category']?'-'.$data['category']:'').'-'.$datetime.'-downloaded.xlsx';
+					
+					
+					$objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($workbook, 'Xlsx');
+					$objWriter->setPreCalculateFormulas(false);
+					
+					if (isset($data['zipfile'])) {
+						$objWriter->save($filename);
+						$productIDs= isset($data['productIDs'])?$data['productIDs']:[];
+						$zipName = $this->session->data['long_name'].'-'.$data['texts']['products'].($data['category']?'-'.$data['category']:'').'-'.$datetime.'-images.zip';
+						$zipPath = DIR_DOWNLOAD . $zipName;  // tam yol
+						
+						$zip = new ZipArchive();
+						if ($zip->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
+							foreach ($productIDs as $productID) {
+								$sql = "SELECT DISTINCT PI.image,P.model ";
+								$sql .= " FROM `".DB_PREFIX."product_image` PI LEFT JOIN `".DB_PREFIX."product` P ON(P.product_id = PI.product_id) ";
+								$sql .= " WHERE PI.product_id ='".$productID."'";
+								$sql .= " ORDER BY PI.sort_order,PI.color_id;";
+								$result = $this->db->query( $sql );
+								foreach ($result->rows as $row) {
+									$file = DIR_IMAGE . $row['image'];
+									if (file_exists($file)) {
+										$zip->addFile($file, strtolower($row['model']) . '/' . basename($file));
+									} else {
+										$this->log->write('Dosya yok: ' . $file);
+									}
+								}
+							}
+							if (file_exists($filename)) {
+								$zip->addFile($filename, basename($filename));
+							}
+							$zip->close();
+							unlink($filename);
+						} else {
+							exit("Failed to create ZIP file.");
+						}
+
+						if (ob_get_level()) {
+							ob_end_clean();
+						}
+
+						if (file_exists($zipPath)) {
+							header('Content-Type: application/zip');
+							header('Content-Disposition: attachment; filename="' . basename($zipPath) . '"');
+							header('Content-Length: ' . filesize($zipPath));
+							header('Pragma: no-cache');
+							header('Expires: 0');
+							readfile($zipPath);
+							unlink($zipPath);
+							
+						} else {
+							$this->log->write('ZIP bulunamadi: ' . $zipPath);
+						}
+						
+					} else {
+						header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+						header('Content-Disposition: attachment;filename="'.$filename.'"');
+						header('Cache-Control: max-age=0');
+						$objWriter->save('php://output');
+					}	
+					
+					$this->clearSpreadsheetCache();
+					exit;
+				
+			}
+/*
 			if(isset($data['productIDs'])){
 
 				$worksheet_index = 0;
@@ -193,7 +278,9 @@ class Export extends \Opencart\System\Engine\Model
 
 
 			}
+			*/
 
+			
 			if(isset($data['customers'])){
 
 				$worksheet_index = 0;

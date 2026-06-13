@@ -809,15 +809,16 @@ class Export extends \Opencart\System\Engine\Controller {
 		$data['products'] = [];
 
 		$products = [];
-
+		
 		if(isset($this->request->post['selected']))
 		{
-			$selected = explode('&',$this->request->post['selected']);
+			//$selected = explode('&',$this->request->post['selected']);
+			$selected = explode(',',$this->request->post['selected']);
 			foreach($selected as $value){
-				$con = explode('=',$value);
-				if(isset($con[1])){
-					$products []=$con[1];
-				}
+				//$con = explode('=',$value);
+				$con = explode(':',$value);
+				//if(isset($con[1])){	$products []=$con[1];}
+				if(isset($con[0])){	$products []=$con[0];}
 			}
 			
 			
@@ -825,6 +826,21 @@ class Export extends \Opencart\System\Engine\Controller {
 		elseif(isset($this->request->get['order_id']))
 		{
 			$products[] = $this->request->get['order_id'];
+		}
+		
+		if (isset($this->request->post['zipfile'])&& $this->request->post['zipfile']=='yes') {
+			$data['zipfile']='image';
+		}
+		if (isset($this->request->post['xml'])&& $this->request->post['xml']=='yes') {
+			$data['xml']='xml';
+		}
+		
+		$data['category']='';
+		if (isset($this->request->post['category'])) {
+			$raw   = html_entity_decode(urldecode($this->request->post['category']), ENT_QUOTES, 'UTF-8');
+			$parts = explode('>', $raw);
+			$last  = trim(end($parts));
+			$data['category'] = by_SEO($last);
 		}
 
 		$data['productIDs'] = $products;
@@ -834,31 +850,7 @@ class Export extends \Opencart\System\Engine\Controller {
 		$data['texts']['category_name'] = $this->language->get( 'text_category_name' );
 		$data['texts']['last_product_id'] = $this->language->get( 'text_last_product_id' );
 
-		/*
-		foreach ($products as $product_id) {
-		$product_info = $this->model_catalog_product->getProduct($product_id);
-		$category = $this->model_catalog_product->getProductCategoryNames($product_id);
-
-		$data['products'][] = array(
-		'image'     => $product_info['image'],
-		'category'    => $category,
-		'name'    => $product_info['name'],
-		'model'    => $product_info['model'],
-		'description'    => $product_info['description'],
-		'option_name'    => $product_info['price'],
-		'option_value'    => $product_info['price'],
-		'quantity'    => $product_info['quantity'],
-		'price'    => $product_info['price'],
-		'total'    => $product_info['price']*$product_info['quantity'],
-		);
-
-		}
-		*/
-		
-		
-		
 		$data['text_product_titles'] = $this->language->get('text_product_titles');
-
 		$this->model_bytao_export->download($data);
 
 	}
