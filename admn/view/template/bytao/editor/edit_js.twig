@@ -1,0 +1,48 @@
+<style>
+	.ui-front {
+	    z-index: 9999;
+	}
+	
+</style>
+<script type="text/javascript">
+	var cCounter=0;
+	var sender='';
+	var partType=0;
+	var epID=0;
+	var langID=0;
+	var row_col_id=0;
+	var ctrl='{{ ctrl }}';
+	var actRow;
+	var actCol='';
+	var placeholder='{{ placeholder }}'
+	$('.by-editor').hide();  
+	var cPath ="bytao/simple-config.js";
+	var pOContent='';
+	var codemirror;
+	var cllps = 0;
+	var activeM=0;
+	var Changed='';
+	$(function(){
+		$.event.special.remove = {
+			remove: function(o) {
+				if (o.handler) {
+					o.handler.apply(this, arguments);
+				}
+			}
+		}
+		$('<div class="by-content-languages" id="language-contents"></div>').appendTo($('body'));
+		html='';
+		html+='<ul class="nav nav-tabs">';
+		{% for language in languages %}
+        html+='<li class="nav-item"><a href="#tab-language-{{ language.language_id }}" data-bs-toggle="tab" class="nav-link">{{ language.name }}</a></li>';	
+		{% endfor %}	
+        html+='  </ul>';
+        html+='  <div class="tab-content">';
+		{% for language in languages %}
+            html+='<div id="tab-language-{{ language.language_id }}" class="tab-pane{% if loop.first %} active{% endif %}">';
+			html+='</div>';
+        {% endfor %}
+		html+='  </div>';
+		$('#language-contents').append(html);									
+	});
+</script>

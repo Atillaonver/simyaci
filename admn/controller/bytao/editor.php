@@ -127,6 +127,38 @@ class Editor extends \Opencart\System\Engine\Controller {
 		return $this->load->view($this->cPth.'/'.$this->C.'_js', $data);
 	}
 	
+	public function jsetting($comes=[]):string {
+		
+		$this->getML('ML');	
+		$data['ctrl'] = $ctrl = $comes['control'];
+		$data['button_update']=$this->language->get('button_update');
+		$data['button_cancel']=$this->language->get('button_cancel');
+		
+		$data['entry_himage']=$this->language->get('entry_himage');
+		$data['entry_fimage']=$this->language->get('entry_fimage');
+		
+		$data['text_select']=$this->language->get('text_select');
+		$data['text_none']=$this->language->get('text_none');
+		
+		$data['mTypes'] = $this->model->{$this->getFunc('getEditorColumnTypes')}();
+		
+		
+		$this->load->model('tool/image');
+		
+		$data['HTTP_IMAGE'] = URL_IMAGE;
+		$data['thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		$data['placeholder'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+		
+		$data['modals'] = $this->load->view($this->cPth.'/'.$this->C.'_modal', $data);
+		
+		$data['ADM']= $this->user->getGroupId();
+		
+		$this->document->addStyle('view/bytao/css/editorv8.css?v8.1');
+		
+		$data[$this->Tkn] = $this->session->data[$this->Tkn];
+		return $this->load->view($this->cPth.'/'.$this->C.'8_js', $data);
+	}
+	
 	public function modal($comes=[]):string {
 		
 		$this->getML('ML');	
