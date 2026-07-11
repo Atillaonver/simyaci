@@ -8,13 +8,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			$gi = $data['gID'] = $this->user->getGroupId();
 			
 			if($gi == $this->config->get('config_store_user_group_id')){
-				$this->log->write([
-					'group_id'   => $gi,
-					'store_user_group_id' => $this->config->get('config_store_user_group_id'),
-					'user_id'  => $this->user->getId(),
-					'user_group_id' => $gi,
-					'session' => $this->session->data,
-				], 0, 'GROUPID 1');
+				
 
 				$data['uGDI'] = $this->config->get('config_store_user_group_id');
 				$this->load->model('bytao/muser');
@@ -29,9 +23,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 				$menus = $this->model_bytao_muser->getMenuRender(null,0,$this->user->getId());
 
 				$this->log->write([
-				'menus'   => $menus,
-				
-			], 0, 'MENU_ITEMS');
+					'group_id'   => $gi,
+					'store_user_group_id' => $this->config->get('config_store_user_group_id'),
+					'user_id'  => $this->user->getId(),
+					'user_group_id' => $gi,
+					'session' => $this->session->data,
+					'menus'   => $menus
+					
+				], 0, 'MENU_ITEMS');
 
 				$data['menus'] = $result = array_merge($_menus, $menus);
 			}
