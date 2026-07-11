@@ -7,9 +7,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			
 			$gi = $data['gID'] = $this->user->getGroupId();
 			
-			if($gi == $this->config->get('config_store_user_group_id')){
-				
-
+			if(($gi !=1) && ($gi == $this->config->get('config_store_user_group_id'))){
 				$data['uGDI'] = $this->config->get('config_store_user_group_id');
 				$this->load->model('bytao/muser');
 				$_menus[] = [
