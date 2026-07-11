@@ -7,6 +7,14 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 			
 			$gi = $data['gID'] = $this->user->getGroupId();
 			
+			$this->log->write([
+				'PRICE'   => $gi,
+				'CALC PRICE' => $this->config->get('config_store_user_group_id'),
+				'SIMPLE PRICE'  => $gi,
+				'TAX CLASS ID' => $gi,
+				'TAX' => $gi
+			], 0, 'GROUPID');
+			
 			if($gi == $this->config->get('config_store_user_group_id')){
 				$data['uGDI'] = $this->config->get('config_store_user_group_id');
 				$this->load->model('bytao/muser');
