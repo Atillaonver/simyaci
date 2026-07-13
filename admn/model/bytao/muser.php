@@ -2,7 +2,7 @@
 namespace Opencart\Admin\Model\Bytao;
 class Muser extends \Opencart\System\Engine\Model {
 	
-	protected $children = array();
+	protected $children = [];
 
 	public function editMenuData( array $data ):int {
 		
