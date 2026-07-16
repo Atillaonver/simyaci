@@ -153,11 +153,8 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$data['config_language_admin'] = $this->config->get('config_language_admin');
 		
 		// TODO bytao store 
-		
-		if($this->user->getGroupId() == $this->config->get('config_store_user_group_id'))
-		{
-			$data['is_ad']=false;
-		}else{
+		$data['is_ad']=FALSE;
+		if($group_id ==1 ){
 			$data['is_ad']=TRUE;
 		}
 			
