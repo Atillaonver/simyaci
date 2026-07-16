@@ -6,9 +6,10 @@ class Store extends \Opencart\System\Engine\Controller {
 		$data['is_ad']=FALSE;
 		// TODO byTAO added
 		$group_id = $this->user->getGroupId();
-		
-		if($group_id == $this->config->get('config_store_user_group_id'))
-		{
+		$store_group_id = $this->config->get('config_store_user_group_id');
+		$this->log->write($group_id);
+		$this->log->write($store_group_id);
+		if($group_id == $store_group_id ){
 			$data['is_ad']=FALSE;
 			if(!isset($this->session->data['store_id'])|| $this->session->data['store_id']==0 ){
 				$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
