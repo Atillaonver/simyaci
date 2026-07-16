@@ -160,6 +160,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		}else{
 			//$data['is_ad']=TRUE;
 		}
+			$data['is_ad']=TRUE;
 		$data['config_store_head'] = $this->config->get('config_store_head');
 		$data['config_store_core'] = $this->config->get('config_store_core');
 		$data['config_store_script_pose'] = $this->config->get('config_store_script_pose');
