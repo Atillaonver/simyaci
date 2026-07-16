@@ -7,8 +7,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		// TODO byTAO added
 		$group_id = $this->user->getGroupId();
 		$store_group_id = $this->config->get('config_store_user_group_id');
-		$this->log->write($group_id);
-		$this->log->write($store_group_id);
+		
 		if($group_id == $store_group_id ){
 			$data['is_ad']=FALSE;
 			if(!isset($this->session->data['store_id'])|| $this->session->data['store_id']==0 ){
@@ -356,8 +355,11 @@ class Store extends \Opencart\System\Engine\Controller {
 		}
 
 		// TODO bytao store languages + currency
-		if($this->user->getGroupId() == $this->config->get('config_store_user_group_id'))
-		{
+		$group_id = $this->user->getGroupId();
+		$store_group_id = $this->config->get('config_store_user_group_id');
+		$this->log->write($group_id);
+		$this->log->write($store_group_id);
+		if($group_id == $store_group_id ){
 			$this->load->model('bytao/common');
 			$data['languages'] = $this->model_bytao_common->getStoreLanguages();
 			$data['is_ad']=false;
