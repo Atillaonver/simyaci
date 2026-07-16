@@ -359,10 +359,11 @@ class Store extends \Opencart\System\Engine\Controller {
 		$store_group_id = $this->config->get('config_store_user_group_id');
 		$this->log->write($group_id);
 		$this->log->write($store_group_id);
-		if($group_id == $store_group_id ){
+
+		if($group_id ==1 || $group_id == $store_group_id ){
 			$this->load->model('bytao/common');
 			$data['languages'] = $this->model_bytao_common->getStoreLanguages();
-			$data['is_ad']=false;
+			$data['is_ad']=TRUE;
 		}else{
 			$this->load->model('localisation/language');
 			$data['languages'] = $this->model_localisation_language->getLanguages();
