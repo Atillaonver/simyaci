@@ -12,11 +12,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->log->write('2:store_group_id'.$store_group_id);
 		
 		if($group_id ==1 ){
-			$data['is_ad']=TRUE;
+			
 			if(!isset($this->session->data['store_id'])|| $this->session->data['store_id']==0 ){
-				//$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
+				$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
 			}else{
-				//$this->response->redirect($this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token']));
+				$this->response->redirect($this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token']));
 			}
 		}
 		// endTODO 
@@ -156,11 +156,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		
 		if($this->user->getGroupId() == $this->config->get('config_store_user_group_id'))
 		{
-			//$data['is_ad']=false;
+			$data['is_ad']=false;
 		}else{
-			//$data['is_ad']=TRUE;
-		}
 			$data['is_ad']=TRUE;
+		}
+			
 		$data['config_store_head'] = $this->config->get('config_store_head');
 		$data['config_store_core'] = $this->config->get('config_store_core');
 		$data['config_store_script_pose'] = $this->config->get('config_store_script_pose');
