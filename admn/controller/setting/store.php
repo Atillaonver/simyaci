@@ -367,7 +367,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		}else{
 			$this->load->model('localisation/language');
 			$data['languages'] = $this->model_localisation_language->getLanguages();
-			$data['is_ad']=TRUE;
+			$data['is_ad']=false;
 		}
 		
 		
