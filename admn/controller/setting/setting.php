@@ -11,11 +11,11 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->log->write('1:group_id'.$group_id);
 		$this->log->write('2:store_group_id'.$store_group_id);
 		
-		if($group_id ==1 || $group_id == $store_group_id ){
+		if($group_id ==1 ){
 			if(!isset($this->session->data['store_id'])|| $this->session->data['store_id']==0 ){
-				$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
+				//$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
 			}else{
-				$this->response->redirect($this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token']));
+				//$this->response->redirect($this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token']));
 			}
 		}
 		// endTODO 
