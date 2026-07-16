@@ -360,7 +360,7 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->log->write($group_id);
 		$this->log->write($store_group_id);
 
-		if($group_id ==1 || $group_id == $store_group_id ){
+		if($group_id == $store_group_id ){
 			$this->load->model('bytao/common');
 			$data['languages'] = $this->model_bytao_common->getStoreLanguages();
 			$data['is_ad']=TRUE;
