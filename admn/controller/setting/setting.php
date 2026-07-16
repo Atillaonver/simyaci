@@ -156,9 +156,9 @@ class Setting extends \Opencart\System\Engine\Controller {
 		
 		if($this->user->getGroupId() == $this->config->get('config_store_user_group_id'))
 		{
-			$data['is_ad']=false;
+			//$data['is_ad']=false;
 		}else{
-			$data['is_ad']=TRUE;
+			//$data['is_ad']=TRUE;
 		}
 		$data['config_store_head'] = $this->config->get('config_store_head');
 		$data['config_store_core'] = $this->config->get('config_store_core');
