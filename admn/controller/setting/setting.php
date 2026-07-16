@@ -6,8 +6,12 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->load->language('bytao/setting');
 		
 		// TODO byTAO added
-		if($this->user->getGroupId() == $this->config->get('config_store_user_group_id'))
-		{
+		$group_id = $this->user->getGroupId();
+		$store_group_id = $this->config->get('config_store_user_group_id');
+		$this->log->write('1:group_id'.$group_id);
+		$this->log->write('2:store_group_id'.$store_group_id);
+		
+		if($group_id ==1 || $group_id == $store_group_id ){
 			if(!isset($this->session->data['store_id'])|| $this->session->data['store_id']==0 ){
 				$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
 			}else{
