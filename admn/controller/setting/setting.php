@@ -10,6 +10,7 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$store_group_id = $this->config->get('config_store_user_group_id');
 		$this->log->write('1:group_id'.$group_id);
 		$this->log->write('2:store_group_id'.$store_group_id);
+		$this->log->write('3:store_id'.$this->session->data['store_id']);
 		
 		if($group_id ==1 ){
 			
