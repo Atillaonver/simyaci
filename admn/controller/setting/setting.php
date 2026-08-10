@@ -13,9 +13,9 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->log->write('3:store_id'.$this->session->data['store_id']);
 		
 		if($group_id ==1 ){
-			
-			if(!isset($this->session->data['store_id'])|| $this->session->data['store_id']==0 ){
-				$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
+			$store_id=$this->request->get['store_id'];
+			if($store_id==0 ){
+				//$this->response->redirect($this->url->link('setting/setting', 'user_token=' . $this->session->data['user_token']));
 			}else{
 				$this->response->redirect($this->url->link('setting/store.form', 'user_token=' . $this->session->data['user_token']));
 			}
