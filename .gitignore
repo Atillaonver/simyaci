@@ -46,6 +46,8 @@ system/storage/logs/
 system/storage/session/
 zip/
 export_html/
+vqmod/
+ocmod/
 vendor/
 .DS_Store
 Thumbs.db
