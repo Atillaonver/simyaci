@@ -29,26 +29,16 @@ class SeoUrl extends \Opencart\System\Engine\Controller
 
 						if ($seo_url_info) {
 							if ($seo_url_info['key'] == 'route') {
-								$this->request->get['route'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+								$this->request->get['route'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');;
 							} elseif ($seo_url_info['key'] == 'language') {
 								$this->request->get['language'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 							} else {
-								// GET parametresini diziye ekle (manufacturer_id, category_id vb.)
-								if (!empty($seo_url_info['key']) && $seo_url_info['key'] != '0') {
-									$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
-								}
-
-								// Eğer gelen parametre manufacturer_id ise route'u doğrudan manufacturer/info yap
-								if ($seo_url_info['key'] == 'manufacturer_id' || isset($this->request->get['manufacturer_id'])) {
-									$this->request->get['route'] = 'product/manufacturer/info';
-								} elseif (!empty($seo_url_info['route'])) {
-									$this->request->get['route'] = html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');
-								}
+								$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+								$this->request->get['route'] = html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');;
 							}
 							unset($parts[$key]);
 						} else {
 							$this->request->get['route'] = $this->config->get('action_error');
-							break;
 						}
 					}
 				} else {
