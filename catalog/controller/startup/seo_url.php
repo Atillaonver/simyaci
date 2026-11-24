@@ -26,6 +26,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller
 
 					foreach ($parts as $key => $value) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
+						$this->log->write([
+							'key'   => $key,
+							'value' => $value,
+							'seo_url_info' => $seo_url_info
+						], 0, 'SEO_URL_DEBUG');
 						if ($seo_url_info) {
 							if ($seo_url_info['key'] == 'route') {
 								$this->request->get['route'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');;
