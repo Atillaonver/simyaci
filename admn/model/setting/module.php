@@ -23,7 +23,7 @@ class Module extends \Opencart\System\Engine\Model
 	{
 		$store_id = isset($this->session->data['store_id']) ? $this->session->data['store_id'] : 0;
 
-		if (isset($data['status']) && $data['status']) {
+		if (isset($data['status']) && $data['status'] == "1") {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "module_status` SET `module_id` = '" . (int)$module_id . "',store_id='" . $store_id . "'");
 		} else {
 			$this->db->query("DELETE FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "',store_id='" . $store_id . "'");
@@ -47,7 +47,7 @@ class Module extends \Opencart\System\Engine\Model
 
 		if ($query->row) {
 			$rSetting = json_decode($query->row['setting'], true);
-			$rSetting['status'] = isset($this->session->data['store_id']) ? $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' and store_id=" . $store_id)->row['store_id'] : 0;
+			$rSetting['status'] = isset($this->session->data['store_id']) ? $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' and store_id=" . $store_id)->row['status'] : 0;
 			return $rSetting;
 		} else {
 			return [];
