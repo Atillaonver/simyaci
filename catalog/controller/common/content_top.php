@@ -70,7 +70,13 @@ class ContentTop extends \Opencart\System\Engine\Controller
 		$data['modules'] = [];
 
 		$modules = $this->model_design_layout->getModules($layout_id, 'content_top');
+		$this->log->write([
+			'PRICE'   => $modules,
+			'LAYOUT ID' => $layout_id,
+			'ROUTE' => $route,
+			'content_top' => 'content_top'
 
+		], 0, 'PRICE_DEBUG');
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
 

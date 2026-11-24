@@ -5,10 +5,6 @@ namespace Opencart\Catalog\Model\Setting;
 class Status extends \Opencart\System\Engine\Model
 {
 	/**
-	 * layout_module.code değerinden module_id'yi çıkarır.
-	 * code formatı: "extension/module/banner.42" → module_id = 42
-	 * Nokta yoksa 0 döner (uzantı tipi modüller — her zaman aktif).
-	 *
 	 * @param string $code
 	 *
 	 * @return int
@@ -36,7 +32,6 @@ class Status extends \Opencart\System\Engine\Model
 	{
 		$module_id = $this->moduleIdFromCode($code);
 
-		// module_id çıkarılamazsa (ör. doğrudan uzantı) → aktif say
 		if ($module_id === 0) {
 			return true;
 		}
