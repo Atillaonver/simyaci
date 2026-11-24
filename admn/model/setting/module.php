@@ -47,7 +47,7 @@ class Module extends \Opencart\System\Engine\Model
 
 		if ($query->row) {
 			$rSetting = json_decode($query->row['setting'], true);
-			$rSetting['status'] = isset($this->session->data['store_id']) ? $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' and store_id=" . $store_id)->row['status'] : 0;
+			$rSetting['status'] = isset($this->session->data['store_id']) ? $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' and store_id=" . $store_id)->row['module_id'] : 0;
 			return $rSetting;
 		} else {
 			return [];
