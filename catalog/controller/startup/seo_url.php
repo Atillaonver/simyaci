@@ -1,9 +1,13 @@
 <?php
+
 namespace Opencart\Catalog\Controller\Startup;
-class SeoUrl extends \Opencart\System\Engine\Controller {
+
+class SeoUrl extends \Opencart\System\Engine\Controller
+{
 	private array $data = [];
-	public function index() {
-	    	
+	public function index()
+	{
+
 		if ($this->config->get('config_seo_url')) {
 			$this->url->addRewrite($this);
 			$this->load->model('design/seo_url');
@@ -14,29 +18,32 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				if (oc_strlen(end($parts)) == 0) {
 					array_pop($parts);
 				}
-				if(count($parts)){
-				    foreach ($parts as $key => $value) {
-    					$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
-    					if ($seo_url_info) {
-    						if($seo_url_info['key']=='route'){
-    							$this->request->get['route']= html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');;
-    						}elseif($seo_url_info['key']=='language'){
-    							$this->request->get['language'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
-    						}else{
-    							$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
-    							$this->request->get['route']= html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');;
-    						}
-    						unset($parts[$key]);
-    					}else{
+				if (count($parts)) {
+					$this->log->write([
+						'count'   => count($parts),
+						'parts' => $parts
+					], 0, 'SEO_URL_DEBUG');
+
+					foreach ($parts as $key => $value) {
+						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
+						if ($seo_url_info) {
+							if ($seo_url_info['key'] == 'route') {
+								$this->request->get['route'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');;
+							} elseif ($seo_url_info['key'] == 'language') {
+								$this->request->get['language'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+							} else {
+								$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+								$this->request->get['route'] = html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');;
+							}
+							unset($parts[$key]);
+						} else {
 							$this->request->get['route'] = $this->config->get('action_error');
-    					}
-    				}
-                }
-                else
-                {
-                    $this->request->get['route'] = $this->config->get('action_default');
-                }
-                
+						}
+					}
+				} else {
+					$this->request->get['route'] = $this->config->get('action_default');
+				}
+
 				if (!isset($this->request->get['route'])) {
 					$this->request->get['route'] = $this->config->get('action_default');
 				}
@@ -44,20 +51,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 				if ($parts) {
 					$this->request->get['route'] = $this->config->get('action_error');
 				}
-			} 
-			elseif(isset($this->request->get['route']))
-			{
+			} elseif (isset($this->request->get['route'])) {
 				$this->request->get['route'] = $this->request->get['route'];
 			} else {
-			$route = $this->model_design_layout->getRoute($this->config->get('config_layout_id'),$this->config->get('config_store_id'));
-			$this->request->get['route'] = $route;
+				$route = $this->model_design_layout->getRoute($this->config->get('config_layout_id'), $this->config->get('config_store_id'));
+				$this->request->get['route'] = $route;
 			}
 		}
 
 		return null;
 	}
 
-	public function rewrite(string $link): string {
+	public function rewrite(string $link): string
+	{
 		$url_info = parse_url(str_replace('&amp;', '&', $link));
 		$url = '';
 		if ($url_info['scheme']) {
@@ -77,19 +83,19 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		parse_str($url_info['query'], $query);
 		$paths = [];
 		$parts = explode('&', $url_info['query']);
-		$language='';
+		$language = '';
 		foreach ($parts as $part) {
 			$pair = explode('=', $part);
 			if (isset($pair[1])) {
-				if($pair[0]=='language' ){
+				if ($pair[0] == 'language') {
 					$language = $pair[1];
 				}
 			}
 		}
-		
+
 		$lcount = count($this->config->get('config_store_languages'));
-		$language_id = $language<>''?$this->model_localisation_language->getLanguageIdByCode($language):0;
-		
+		$language_id = $language <> '' ? $this->model_localisation_language->getLanguageIdByCode($language) : 0;
+
 		foreach ($parts as $part) {
 			$pair = explode('=', $part);
 
@@ -102,11 +108,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 			} else {
 				$value = '';
 			}
-			
-			$index = $key . '=' . $value.'-'.$language_id;
+
+			$index = $key . '=' . $value . '-' . $language_id;
 
 			if (!isset($this->data[$index])) {
-				$this->data[$index] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value,(int)$language_id);
+				$this->data[$index] = $this->model_design_seo_url->getSeoUrlByKeyValue((string)$key, (string)$value, (int)$language_id);
 			}
 
 			if ($this->data[$index]) {
@@ -124,10 +130,10 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		array_multisort($sort_order, SORT_ASC, $paths);
 
 		$url .= str_replace('/index.php', '', $url_info['path']);
-		
+
 		foreach ($paths as $result) {
 			if (($result['key'] == 'language' && $lcount > 1) || $result['key'] != 'language') {
-					$url .= '/' . $result['keyword'];
+				$url .= '/' . $result['keyword'];
 			}
 		}
 
@@ -137,5 +143,3 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		return $url;
 	}
 }
-	
-

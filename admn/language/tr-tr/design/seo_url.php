@@ -33,6 +33,7 @@ $_['entry_keyword']           = 'Anahtar Kelime';
 $_['entry_sort_order']        = 'Sıralama';
 
 
+
 // Help
 $_['help_keyword']            = 'Sadece a-z ya da 0-9 karakterlerini ve boşluk içinde - ya da _ kullanın. Sadece çevreyi kaldırmak istiyorsanız boş bırakın.';
 $_['help_sort_order']         = 'URL\'deki anahtar kelimelerin sıralama düzeni.';
