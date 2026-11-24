@@ -67,7 +67,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller
 
 
 		$this->log->write([
-			'RESULTS'   => $results,
+			'RESULTS'   => $modules,
 		], 0, 'LAYOUT_DEBUG');
 
 
