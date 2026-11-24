@@ -98,22 +98,18 @@ class ContentTop extends \Opencart\System\Engine\Controller
 			$part = explode('.', $module['code']);
 			$store_id = (int)$this->config->get('config_store_id');
 
-			// 1. Durum: Standart modüller için mağaza bazlı status kontrolü
 			if (isset($part[1]) && $this->config->get('module_' . $part[1] . '_' . $store_id . '_status')) {
-				$module_data = $this->load->controller('extension/' . $part[0] . '/module/' . $part[1]);
+				$output = $this->load->controller('extension/' . $part[0] . '/module/' . $part[1]);
 
-				if ($module_data) {
-					$data['modules'][] = $module_data;
+				if ($output) {
+					$data['modules'][] = $output;
 				}
 			}
 
-			// 2. Durum: Çoklu örnek (multi-instance) modüller için store_id ve status kontrolü
 			if (isset($part[2])) {
 				$setting_info = $this->model_setting_module->getModule($part[2]);
 
-				// Modülün aktif olması ve ilgili store_id'ye ait/uygun olması şartı eklenir
 				if ($setting_info && !empty($setting_info['status'])) {
-					// Eğer setting içinde store_id dizisi varsa veya mağaza eşleşmesi kontrol edilecekse:
 					$module_store_ids = isset($setting_info['store_id']) ? (array)$setting_info['store_id'] : [$store_id];
 
 					if (in_array($store_id, $module_store_ids)) {
