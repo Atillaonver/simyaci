@@ -63,10 +63,16 @@ class Module extends \Opencart\System\Engine\Controller
 					} else {
 						$setting_info = [];
 					}
+					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					$store_id = isset($this->session->data['store_id']) ? $this->session->data['store_id'] : 0;
+					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module['module_id'] . "' AND store_id=" . $store_id);
+					if (isset($query->row['module_id'])) {
+						$status = $this->language->get('text_enabled');
+					}
 
 					$module_data[] = [
 						'name'   => $module['name'],
-						'status' => $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+						'status' => $status,
 						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
 						'delete' => $this->url->link('extension/module.delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];
@@ -76,6 +82,11 @@ class Module extends \Opencart\System\Engine\Controller
 					$status = '';
 				} else {
 					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					$store_id = isset($this->session->data['store_id']) ? $this->session->data['store_id'] : 0;
+					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' AND store_id=" . $store_id);
+					if (isset($query->row['module_id'])) {
+						$status = $this->language->get('text_enabled');
+					}
 				}
 
 				$data['extensions'][] = [
