@@ -26,23 +26,30 @@ class SeoUrl extends \Opencart\System\Engine\Controller
 
 					foreach ($parts as $key => $value) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
-						$this->log->write([
-							'key'   => $key,
-							'value' => $value,
-							'seo_url_info' => $seo_url_info
-						], 0, 'SEO_URL_DEBUG');
+
 						if ($seo_url_info) {
-							if ($seo_url_info['key'] == 'route') {
-								$this->request->get['route'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');;
+							// Eğer key 'route' metni ise VEYA veritabanından gelen value bir route yolunu belirtiyorsa (örn: product/... gibi / veya key numeric/boşsa)
+							if ($seo_url_info['key'] == 'route' || (empty($seo_url_info['key']) && strpos($seo_url_info['value'], '/') !== false)) {
+								$this->request->get['route'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 							} elseif ($seo_url_info['key'] == 'language') {
 								$this->request->get['language'] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
 							} else {
-								$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
-								$this->request->get['route'] = html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');;
+								// Eğer key alanı dolu ve geçerli bir GET parametresiyse (örn: manufacturer_id, category_id vb.)
+								if (!empty($seo_url_info['key']) && $seo_url_info['key'] != '0') {
+									$this->request->get[$seo_url_info['key']] = html_entity_decode($seo_url_info['value'], ENT_QUOTES, 'UTF-8');
+								}
+
+								// Route bilgisi dolu ise set et, değilse ve key manufacturer_id ise varsayılan manufacturer route'unu ver
+								if (!empty($seo_url_info['route'])) {
+									$this->request->get['route'] = html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');
+								} elseif (isset($this->request->get['manufacturer_id'])) {
+									$this->request->get['route'] = 'product/manufacturer/info';
+								}
 							}
 							unset($parts[$key]);
 						} else {
 							$this->request->get['route'] = $this->config->get('action_error');
+							break;
 						}
 					}
 				} else {
