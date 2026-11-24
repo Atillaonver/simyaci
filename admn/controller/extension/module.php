@@ -52,6 +52,7 @@ class Module extends \Opencart\System\Engine\Controller
 				$code = basename($result['path'], '.php');
 
 				$this->load->language('extension/' . $extension . '/module/' . $code, $code);
+				$store_id = isset($this->session->data['store_id']) ? $this->session->data['store_id'] : 0;
 
 				$module_data = [];
 
@@ -64,7 +65,6 @@ class Module extends \Opencart\System\Engine\Controller
 						$setting_info = [];
 					}
 					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
-					$store_id = isset($this->session->data['store_id']) ? $this->session->data['store_id'] : 0;
 					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module['module_id'] . "' AND store_id=" . $store_id);
 					if (isset($query->row['module_id'])) {
 						$status = $this->language->get('text_enabled');
@@ -82,8 +82,7 @@ class Module extends \Opencart\System\Engine\Controller
 					$status = '';
 				} else {
 					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
-					$store_id = isset($this->session->data['store_id']) ? $this->session->data['store_id'] : 0;
-					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' AND store_id=" . $store_id);
+					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module['module_id'] . "' AND store_id=" . $store_id);
 					if (isset($query->row['module_id'])) {
 						$status = $this->language->get('text_enabled');
 					}
