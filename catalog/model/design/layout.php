@@ -18,8 +18,14 @@ class Layout extends \Opencart\System\Engine\Model
 	public function getModules(int $layout_id, string $position): array
 	{
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "layout_module` WHERE `layout_id` = '" . (int)$layout_id . "' AND `position` = '" . $this->db->escape($position) . "' ORDER BY `sort_order`");
-
-		return $query->rows;
+		$results = [];
+		foreach ($query->rows as $result) {
+			$this->load->model('setting/status');
+			if ($this->model_setting_status->isEnabled($result['module_id'], $this->config->get('config_store_id'))) {
+				$results[] = $result;
+			}
+		}
+		return $results;
 	}
 
 	public function getRoute(int $layout_id, int $store_id): string
