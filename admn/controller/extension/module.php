@@ -1,11 +1,16 @@
 <?php
+
 namespace Opencart\Admin\Controller\Extension;
-class Module extends \Opencart\System\Engine\Controller {
-	public function index(): void {
+
+class Module extends \Opencart\System\Engine\Controller
+{
+	public function index(): void
+	{
 		$this->response->setOutput($this->getList());
 	}
 
-	public function getList(): string {
+	public function getList(): string
+	{
 		$this->load->language('extension/module');
 
 		$this->load->model('setting/module');
@@ -59,9 +64,10 @@ class Module extends \Opencart\System\Engine\Controller {
 						$setting_info = [];
 					}
 
+
 					$module_data[] = [
 						'name'   => $module['name'],
-						'status' => $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+						'status' => $this->config->get('module_' . $code . '_' . (int)$this->session->data['store_id'] . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
 						'delete' => $this->url->link('extension/module.delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];
@@ -70,7 +76,7 @@ class Module extends \Opencart\System\Engine\Controller {
 				if ($module_data) {
 					$status = '';
 				} else {
-					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					$status = $this->config->get('module_' . $code . '_' . (int)$this->session->data['store_id'] . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
 				}
 
 				$data['extensions'][] = [
@@ -98,7 +104,8 @@ class Module extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/module', $data);
 	}
 
-	public function install(): void {
+	public function install(): void
+	{
 		$this->load->language('extension/module');
 
 		$json = [];
@@ -159,7 +166,8 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function uninstall(): void {
+	public function uninstall(): void
+	{
 		$this->load->language('extension/module');
 
 		$json = [];
@@ -187,7 +195,8 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function add(): void {
+	public function add(): void
+	{
 		$this->load->language('extension/module');
 
 		$json = [];
@@ -210,7 +219,8 @@ class Module extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function delete(): void {
+	public function delete(): void
+	{
 		$this->load->language('extension/module');
 
 		$json = [];
