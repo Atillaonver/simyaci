@@ -59,6 +59,7 @@ class Module extends \Opencart\System\Engine\Controller
 				$modules = $this->model_setting_module->getModulesByCode($extension . '.' . $code);
 
 				foreach ($modules as $module) {
+
 					if ($module['setting']) {
 						$setting_info = json_decode($module['setting'], true);
 					} else {
@@ -81,11 +82,11 @@ class Module extends \Opencart\System\Engine\Controller
 				if ($module_data) {
 					$status = '';
 				} else {
-					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
-					$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module['module_id'] . "' AND store_id=" . $store_id);
-					if (isset($query->row['module_id'])) {
-						$status = $this->language->get('text_enabled');
-					}
+					//$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
+					//$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module['module_id'] . "' AND store_id=" . $store_id);
+					//if (isset($query->row['module_id'])) {
+					$status = $this->language->get('text_enabled');
+					//}
 				}
 
 				$data['extensions'][] = [
