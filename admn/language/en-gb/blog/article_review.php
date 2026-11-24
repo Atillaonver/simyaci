@@ -1,0 +1,41 @@
+<?php
+// Heading
+$_['heading_title']     = 'Article Review';
+
+// Text
+$_['text_success']      = 'Success<br/>You have modified article reviews!';
+$_['text_list']         = 'Article Review List';
+$_['text_add']          = 'Add Article Review';
+$_['text_edit']         = 'Edit Article Review';
+$_['text_filter']       = 'Filter';
+
+// Column
+$_['column_product']    = 'Product';
+$_['column_author']     = 'Author';
+$_['column_rating']     = 'Rating';
+$_['column_status']     = 'Status';
+$_['column_date_added'] = 'Date Added';
+$_['column_action']     = 'Action';
+
+// Entry
+$_['entry_product']     = 'Article';
+$_['entry_author']      = 'Author';
+$_['entry_rating']      = 'Rating';
+$_['entry_status']      = 'Status';
+$_['entry_text']        = 'Text';
+$_['entry_date_from']   = 'Date From';
+$_['entry_date_to']     = 'Date To';
+$_['entry_reviews']     = 'Article Review';
+$_['entry_pieces']     = 'Total Review/s';
+$_['entry_widget_type']     = 'Widget Type';
+
+// Help
+$_['help_product']      = '(Autocomplete)';
+
+// Error
+$_['error_warning']     = 'Warning<br/>Please check the form carefully for errors!';
+$_['error_permission']  = 'Warning<br/>You do not have permission to modify reviews!';
+$_['error_product']     = 'Product required!';
+$_['error_author']      = 'Author must be between 3 and 64 characters!';
+$_['error_text']        = 'Review Text must be at least 1 character!';
+$_['error_rating']      = 'Review rating required!';

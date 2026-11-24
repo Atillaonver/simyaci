@@ -26,7 +26,6 @@ cdn/*
 open/*
 local/*
 develope/*
-admn/language/*
 catalog/language/*
 image/cache/*
 image/catalog/*
