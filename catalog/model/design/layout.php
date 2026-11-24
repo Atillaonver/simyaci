@@ -21,7 +21,7 @@ class Layout extends \Opencart\System\Engine\Model
 		$results = [];
 		foreach ($query->rows as $result) {
 			$this->load->model('setting/status');
-			if ($this->model_setting_status->isEnabled($result['module_id'], $this->config->get('config_store_id'))) {
+			if ($this->model_setting_status->isEnabled((string)$result['code'], (int)$this->config->get('config_store_id'))) {
 				$results[] = $result;
 			}
 		}
