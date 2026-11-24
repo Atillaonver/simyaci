@@ -26,6 +26,11 @@ class SeoUrl extends \Opencart\System\Engine\Controller
 
 					foreach ($parts as $key => $value) {
 						$seo_url_info = $this->model_design_seo_url->getSeoUrlByKeyword($value);
+						$this->log->write([
+							'seo_url_info' => $seo_url_info,
+							'part' => $key,
+							'value' => $value
+						], 0, 'SEO_URL_PARTS_DEBUG');
 
 						if ($seo_url_info) {
 							// Eğer key 'route' metni ise VEYA veritabanından gelen value bir route yolunu belirtiyorsa (örn: product/... gibi / veya key numeric/boşsa)
@@ -43,7 +48,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller
 								if (!empty($seo_url_info['route'])) {
 									$this->request->get['route'] = html_entity_decode($seo_url_info['route'], ENT_QUOTES, 'UTF-8');
 								} elseif (isset($this->request->get['manufacturer_id'])) {
-									$this->request->get['route'] = 'product/manufacturer/info';
+									$this->request->get['route'] = 'product/manufacturer.info';
 								}
 							}
 							unset($parts[$key]);
