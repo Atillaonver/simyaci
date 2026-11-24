@@ -81,7 +81,7 @@ class Module extends \Opencart\System\Engine\Controller
 
 				$data['extensions'][] = [
 					'name'      => $this->language->get($code . '_heading_title'),
-					'status'    => $status,
+					'status'    => $status . '_' . (int)$this->session->data['store_id'],
 					'module'    => $module_data,
 					'install'   => $this->url->link('extension/module.install', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
 					'uninstall' => $this->url->link('extension/module.uninstall', 'user_token=' . $this->session->data['user_token'] . '&extension=' . $extension . '&code=' . $code),
