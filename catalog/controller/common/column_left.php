@@ -65,6 +65,9 @@ class ColumnLeft extends \Opencart\System\Engine\Controller
 
 		$modules = $this->model_design_layout->getModules($layout_id, 'column_left');
 
+
+		$this->log->write(print_r($modules, true));
+
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
 

@@ -25,6 +25,11 @@ class Layout extends \Opencart\System\Engine\Model
 				$results[] = $result;
 			}
 		}
+
+		$this->log->write([
+			'RESULTS'   => $results,
+		], 0, 'LAYOUT_DEBUG');
+
 		return $results;
 	}
 
