@@ -1,15 +1,19 @@
 <?php
+
 namespace Opencart\Catalog\Controller\Product;
+
 /**
  * Class Manufacturer
  *
  * @package Opencart\Catalog\Controller\Product
  */
-class Manufacturer extends \Opencart\System\Engine\Controller {
+class Manufacturer extends \Opencart\System\Engine\Controller
+{
 	/**
 	 * @return void
 	 */
-	public function index(): void {
+	public function index(): void
+	{
 		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
@@ -65,7 +69,8 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 	/**
 	 * @return void
 	 */
-	public function info(): \Opencart\System\Engine\Action|null {
+	public function info(): \Opencart\System\Engine\Action|null
+	{
 		$this->load->language('product/manufacturer');
 
 		if (isset($this->request->get['manufacturer_id'])) {
@@ -198,6 +203,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 					'tax'         => $tax,
 					'minimum'     => $result['minimum'] > 0 ? $result['minimum'] : 1,
 					'rating'      => $result['rating'],
+					'quantity'      => $result['quantity'],
 					'href'        => $this->url->link('product/product', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
 				];
 
@@ -317,7 +323,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 
 			// http://googlewebmastercentral.blogspot.com/2011/09/pagination-with-relnext-and-relprev.html
 			if ($page == 1) {
-			    $this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
+				$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
 			} else {
 				$this->document->addLink($this->url->link('product/manufacturer.info', 'language=' . $this->config->get('config_language') . '&manufacturer_id=' . $this->request->get['manufacturer_id'] . '&page=' . $page), 'canonical');
 			}
