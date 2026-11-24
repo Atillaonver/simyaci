@@ -26,7 +26,7 @@ class Module extends \Opencart\System\Engine\Model
 		if (isset($data['status']) && $data['status'] == "1") {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "module_status` SET `module_id` = '" . (int)$module_id . "',store_id='" . $store_id . "'");
 		} else {
-			$this->db->query("DELETE FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "',store_id='" . $store_id . "'");
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "module_status` WHERE `module_id` = '" . (int)$module_id . "' AND store_id='" . $store_id . "'");
 		}
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "module` SET `name` = '" . $this->db->escape((string)$data['name']) . "', `setting` = '" . $this->db->escape(json_encode($data)) . "' WHERE `module_id` = '" . (int)$module_id . "'");
