@@ -70,7 +70,7 @@ class ContentBottom extends \Opencart\System\Engine\Controller
 		$data['modules'] = [];
 
 		$modules = $this->model_design_layout->getModules($layout_id, 'content_bottom');
-		/*
+
 		foreach ($modules as $module) {
 			$part = explode('.', $module['code']);
 
@@ -90,34 +90,6 @@ class ContentBottom extends \Opencart\System\Engine\Controller
 
 					if ($output) {
 						$data['modules'][] = $output;
-					}
-				}
-			}
-		}*/
-		foreach ($modules as $module) {
-			$part = explode('.', $module['code']);
-			$store_id = (int)$this->config->get('config_store_id');
-
-			if (isset($part[1]) && $this->config->get('module_' . $part[1] . '_' . $store_id . '_status')) {
-				$output = $this->load->controller('extension/' . $part[0] . '/module/' . $part[1]);
-
-				if ($output) {
-					$data['modules'][] = $output;
-				}
-			}
-
-			if (isset($part[2])) {
-				$setting_info = $this->model_setting_module->getModule($part[2]);
-
-				if ($setting_info && !empty($setting_info['status'])) {
-					$module_store_ids = isset($setting_info['store_id']) ? (array)$setting_info['store_id'] : [$store_id];
-
-					if (in_array($store_id, $module_store_ids)) {
-						$output = $this->load->controller('extension/' . $part[0] . '/module/' . $part[1], $setting_info);
-
-						if ($output) {
-							$data['modules'][] = $output;
-						}
 					}
 				}
 			}

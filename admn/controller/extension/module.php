@@ -64,10 +64,9 @@ class Module extends \Opencart\System\Engine\Controller
 						$setting_info = [];
 					}
 
-
 					$module_data[] = [
 						'name'   => $module['name'],
-						'status' => $this->config->get('module_' . $code . '_' . (int)$this->session->data['store_id'] . '_status') ? $this->language->get('text_enabled') . '_' . (int)$this->session->data['store_id'] : $this->language->get('text_disabled'),
+						'status' => $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 						'edit'   => $this->url->link('extension/' . $extension . '/module/' . $code, 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id']),
 						'delete' => $this->url->link('extension/module.delete', 'user_token=' . $this->session->data['user_token'] . '&module_id=' . $module['module_id'])
 					];
@@ -76,7 +75,7 @@ class Module extends \Opencart\System\Engine\Controller
 				if ($module_data) {
 					$status = '';
 				} else {
-					$status = $this->config->get('module_' . $code . '_' . (int)$this->session->data['store_id'] . '_status') ? $this->language->get('text_enabled')  : $this->language->get('text_disabled');
+					$status = $this->config->get('module_' . $code . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled');
 				}
 
 				$data['extensions'][] = [
